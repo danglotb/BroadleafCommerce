@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,112 +15,32 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.sitemap.domain;
 
-import org.broadleafcommerce.common.sitemap.service.type.SiteMapChangeFreqType;
-import org.broadleafcommerce.common.sitemap.service.type.SiteMapPriorityType;
 
-import java.io.Serializable;
-import java.util.Date;
+public interface SiteMapUrlEntry extends java.io.Serializable {
+    public java.lang.Long getId();
 
-/**
- * Sample URL entry
- * 
- * <url>
- *   <loc>http://www.heatclinic.com/hot-sauces</loc>
- *   <lastmod>2009-11-07</lastmod>
- *   <changefreq>weekly</changefreq>
- *   <priority>0.5</priority>
- * </url>
- * 
- * @author Josh
- */
-public interface SiteMapUrlEntry extends Serializable {
+    public void setId(java.lang.Long id);
 
-    /**
-     * Returns the SiteMapURLEntry Id.
-     * 
-     * @return
-     */
-    public Long getId();
+    public java.lang.String getLocation();
 
-    /**
-     * Sets the SiteMapURLEntry Id.
-     * 
-     * @param id
-     */
-    public void setId(Long id);
+    public void setLocation(java.lang.String location);
 
-    /**
-     * Returns the URL location.
-     * 
-     * @return
-     */
-    public String getLocation();
-    
-    /**
-     * Sets the URL location.
-     * 
-     * @param location
-     */
-    public void setLocation(String location);
-    
-    /**
-     * Returns the last modified date.
-     * 
-     * @return
-     */
-    public Date getLastMod();
-    
-    /**
-     * Sets the last modified date.
-     * 
-     * @param date
-     */
-    public void setLastMod(Date date);
+    public java.util.Date getLastMod();
 
-    /**
-     * Returns the SiteMapChangeFreqType.
-     * 
-     * @return
-     */
-    public SiteMapChangeFreqType getSiteMapChangeFreq();
-    
-    /**
-     * Sets the SiteMapChangeFreqType.
-     * 
-     * @param siteMapChangeFreq
-     */
-    public void setSiteMapChangeFreq(SiteMapChangeFreqType siteMapChangeFreq);
-    
-    /**
-     * Returns the SiteMapPriority.
-     * 
-     * @return
-     */
-    public SiteMapPriorityType getSiteMapPriority();
+    public void setLastMod(java.util.Date date);
 
-    /**
-     * Sets the SiteMapPriority.  Must be a two digit value between 0.0 and 1.0.
-     * 
-     * @param siteMapPriority
-     */
-    public void setSiteMapPriority(SiteMapPriorityType siteMapPriority);
+    public org.broadleafcommerce.common.sitemap.service.type.SiteMapChangeFreqType getSiteMapChangeFreq();
 
-    /**
-     * Returns the SiteMapGeneratorConfiguration.
-     * 
-     * @return
-     */
-    public CustomUrlSiteMapGeneratorConfiguration getCustomUrlSiteMapGeneratorConfiguration();
+    public void setSiteMapChangeFreq(org.broadleafcommerce.common.sitemap.service.type.SiteMapChangeFreqType siteMapChangeFreq);
 
-    /**
-     * Sets the SiteMapGeneratorConfiguration.
-     * 
-     * 
-     * @param siteMapGeneratorConfiguration
-     */
-    public void setCustomUrlSiteMapGeneratorConfiguration(CustomUrlSiteMapGeneratorConfiguration customUrlSiteMapGeneratorConfiguration);
+    public org.broadleafcommerce.common.sitemap.service.type.SiteMapPriorityType getSiteMapPriority();
 
+    public void setSiteMapPriority(org.broadleafcommerce.common.sitemap.service.type.SiteMapPriorityType siteMapPriority);
+
+    public org.broadleafcommerce.common.sitemap.domain.CustomUrlSiteMapGeneratorConfiguration getCustomUrlSiteMapGeneratorConfiguration();
+
+    public void setCustomUrlSiteMapGeneratorConfiguration(org.broadleafcommerce.common.sitemap.domain.CustomUrlSiteMapGeneratorConfiguration customUrlSiteMapGeneratorConfiguration);
 }
+

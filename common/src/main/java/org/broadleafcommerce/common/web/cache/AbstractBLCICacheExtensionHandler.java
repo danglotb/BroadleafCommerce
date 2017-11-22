@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,23 +17,16 @@
  */
 package org.broadleafcommerce.common.web.cache;
 
-import org.broadleafcommerce.common.extension.AbstractExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.presentation.cache.BroadleafTemplateCacheContext;
 
-/**
- * @author Chad Harchar (charchar)
- */
-public abstract class AbstractBLCICacheExtensionHandler extends AbstractExtensionHandler implements BLCICacheExtensionHandler {
-
-    @Override
-    public ExtensionResultStatusType putCache(Object key, Object value, BroadleafTemplateCacheContext blciCache) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+public abstract class AbstractBLCICacheExtensionHandler extends org.broadleafcommerce.common.extension.AbstractExtensionHandler implements org.broadleafcommerce.common.web.cache.BLCICacheExtensionHandler {
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType putCache(java.lang.Object key, java.lang.Object value, org.broadleafcommerce.presentation.cache.BroadleafTemplateCacheContext blciCache) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 
-    @Override
-    public ExtensionResultStatusType getCache(Object key, ExtensionResultHolder<Object> erh, BroadleafTemplateCacheContext blciCache) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType getCache(java.lang.Object key, org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.Object> erh, org.broadleafcommerce.presentation.cache.BroadleafTemplateCacheContext blciCache) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 }
+

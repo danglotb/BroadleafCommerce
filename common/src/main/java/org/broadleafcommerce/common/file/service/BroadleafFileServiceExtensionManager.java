@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Common Enterprise
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,19 +17,11 @@
  */
 package org.broadleafcommerce.common.file.service;
 
-import org.broadleafcommerce.common.extension.ExtensionManager;
-import org.springframework.stereotype.Component;
 
-/**
- * Extension manager for {@link BroadleafFileService}
- *
- * @author Jeff Fischer
- */
-@Component("blBroadleafFileServiceExtensionManager")
-public class BroadleafFileServiceExtensionManager extends ExtensionManager<BroadleafFileServiceExtensionHandler> {
-
+@org.springframework.stereotype.Component("blBroadleafFileServiceExtensionManager")
+public class BroadleafFileServiceExtensionManager extends org.broadleafcommerce.common.extension.ExtensionManager<org.broadleafcommerce.common.file.service.BroadleafFileServiceExtensionHandler> {
     public BroadleafFileServiceExtensionManager() {
-        super(BroadleafFileServiceExtensionHandler.class);
+        super(org.broadleafcommerce.common.file.service.BroadleafFileServiceExtensionHandler.class);
     }
-
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,29 +17,25 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.hibernate.proxy.HibernateProxy;
-import org.hibernate.proxy.LazyInitializer;
 
-/**
- * Hibernate convenience methods
- *
- * @author Philip Baggett (pbaggett)
- */
 public class HibernateUtils {
-    /**
-     * <p>Ensure a domain object is an actual persisted object and not a Hibernate proxy object by getting its real implementation.
-     *
-     * <p>This is primarily useful when retrieving a lazy loaded object that has been subclassed and you have the intention of casting it.
-     *
-     * @param t the domain object to deproxy
-     * @return the actual persisted object or the passed in object if it is not a Hibernate proxy
-     */
     public static <T> T deproxy(T t) {
-        if (t instanceof HibernateProxy) {
-            HibernateProxy proxy = (HibernateProxy)t;
-            LazyInitializer lazyInitializer = proxy.getHibernateLazyInitializer();
-            return (T)lazyInitializer.getImplementation();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.HibernateUtils.__L6356, (t instanceof org.hibernate.proxy.HibernateProxy))) {
+            org.hibernate.proxy.HibernateProxy proxy = ((org.hibernate.proxy.HibernateProxy) (t));
+            org.hibernate.proxy.LazyInitializer lazyInitializer = proxy.getHibernateLazyInitializer();
+            return ((T) (lazyInitializer.getImplementation()));
         }
         return t;
     }
+
+    public static perturbation.location.PerturbationLocation __L6356;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.HibernateUtils.__L6356 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/HibernateUtils.java:38)", 6356, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.HibernateUtils.initPerturbationLocation0();
+    }
 }
+

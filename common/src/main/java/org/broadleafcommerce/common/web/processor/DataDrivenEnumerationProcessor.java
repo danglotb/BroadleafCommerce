@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,61 +17,41 @@
  */
 package org.broadleafcommerce.common.web.processor;
 
-import org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumeration;
-import org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue;
-import org.broadleafcommerce.common.enumeration.service.DataDrivenEnumerationService;
-import org.broadleafcommerce.common.web.expression.DataDrivenEnumVariableExpression;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
-import org.broadleafcommerce.presentation.dialect.AbstractBroadleafVariableModifierProcessor;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateContext;
-import org.springframework.stereotype.Component;
 
-import com.google.common.collect.ImmutableMap;
+@java.lang.Deprecated
+@org.springframework.stereotype.Component("blDataDrivenEnumerationProcessor")
+@org.broadleafcommerce.presentation.condition.ConditionalOnTemplating
+public class DataDrivenEnumerationProcessor extends org.broadleafcommerce.presentation.dialect.AbstractBroadleafVariableModifierProcessor {
+    @javax.annotation.Resource(name = "blDataDrivenEnumerationService")
+    protected org.broadleafcommerce.common.enumeration.service.DataDrivenEnumerationService enumService;
 
-import java.util.List;
-import java.util.Map;
+    @javax.annotation.Resource
+    protected org.broadleafcommerce.common.web.expression.DataDrivenEnumVariableExpression ddeVariableExpression;
 
-import javax.annotation.Resource;
-
-
-/**
- * Processor that adds a list of {@link DataDriveEnumerationValue}s onto the model for a particular key.
- *  This will add a new variable on the model called 'enumValues'
- *
- * @param key (required) key for the {@link DataDrivenEnumeration} that the {@link DataDrivenEnumerationValue}s should be
- * apart of. This corresponds to {@link DataDrivenEnumeration#getKey()}.
- * 
- * @param sort (optional) <i>ASCENDING</i> or <i>DESCENDING</i> if the resulting values should be sorted by not. The sort will be on
- *          {@link DataDrivenEnumerationValue#getDisplay()}
- *
- * @author Phillip Verheyden (phillipuniverse)
- * @deprecated use {@link DataDrivenEnumVariableExpression} instead
- */
-@Deprecated
-@Component("blDataDrivenEnumerationProcessor")
-@ConditionalOnTemplating
-public class DataDrivenEnumerationProcessor extends AbstractBroadleafVariableModifierProcessor {
-
-    @Resource(name = "blDataDrivenEnumerationService")
-    protected DataDrivenEnumerationService enumService;
-    
-    @Resource
-    protected DataDrivenEnumVariableExpression ddeVariableExpression;
-    
-    @Override
-    public String getName() {
+    @java.lang.Override
+    public java.lang.String getName() {
         return "enumeration";
     }
-    
-    @Override
+
+    @java.lang.Override
     public int getPrecedence() {
-        return 10000;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.processor.DataDrivenEnumerationProcessor.__L7413, 10000);
     }
 
-    @Override
-    public Map<String, Object> populateModelVariables(String tagName, Map<String, String> tagAttributes, BroadleafTemplateContext context) {
-        List<DataDrivenEnumerationValue> enumValues = ddeVariableExpression.getEnumValues(tagAttributes.get("key"), tagAttributes.get("sort"));
-        return ImmutableMap.of("enumValues", (Object) enumValues);
+    @java.lang.Override
+    public java.util.Map<java.lang.String, java.lang.Object> populateModelVariables(java.lang.String tagName, java.util.Map<java.lang.String, java.lang.String> tagAttributes, org.broadleafcommerce.presentation.model.BroadleafTemplateContext context) {
+        java.util.List<org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue> enumValues = ddeVariableExpression.getEnumValues(tagAttributes.get("key"), tagAttributes.get("sort"));
+        return com.google.common.collect.ImmutableMap.of("enumValues", ((java.lang.Object) (enumValues)));
     }
 
+    public static perturbation.location.PerturbationLocation __L7413;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.processor.DataDrivenEnumerationProcessor.__L7413 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/DataDrivenEnumerationProcessor.java:68)", 7413, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.processor.DataDrivenEnumerationProcessor.initPerturbationLocation0();
+    }
 }
+

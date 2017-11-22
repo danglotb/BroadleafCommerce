@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,28 +17,10 @@
  */
 package org.broadleafcommerce.common.payment.service;
 
-import org.broadleafcommerce.common.payment.PaymentGatewayType;
-import org.springframework.web.context.request.WebRequest;
 
-/**
- * @author Elbert Bautista (elbertbautista)
- */
 public interface PaymentGatewayResolver {
+    public boolean isHandlerCompatible(org.broadleafcommerce.common.payment.PaymentGatewayType handlerType);
 
-    /**
-     * Used by Transparent Redirect Solutions that utilize Thymeleaf Processors and Expressions.
-     * This method should determine whether or not an extension handler should run for a particular gateway.
-     * @param handlerType
-     * @return
-     */
-    public boolean isHandlerCompatible(PaymentGatewayType handlerType);
-
-    /**
-     * Resolves a {@link org.broadleafcommerce.common.payment.PaymentGatewayType}
-     * based on a {@link org.springframework.web.context.request.WebRequest}
-     * @param request
-     * @return
-     */
-    public PaymentGatewayType resolvePaymentGateway(WebRequest request);
-
+    public org.broadleafcommerce.common.payment.PaymentGatewayType resolvePaymentGateway(org.springframework.web.context.request.WebRequest request);
 }
+

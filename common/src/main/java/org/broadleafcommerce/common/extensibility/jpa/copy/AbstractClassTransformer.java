@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,49 +17,57 @@
  */
 package org.broadleafcommerce.common.extensibility.jpa.copy;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-import org.springframework.beans.factory.InitializingBean;
+public abstract class AbstractClassTransformer implements org.springframework.beans.factory.InitializingBean {
+    protected static final java.util.Set<java.lang.String> alreadyLoadedClasses = new java.util.HashSet<java.lang.String>();
 
-/**
- * This provides a useful mechanism to pre-load/initialize classes that are required by a child class during class transformation, 
- * but that may not have been loaded or initialized by the JVM.
- * 
- * @author Kelly Tisdell
- *
- */
-public abstract class AbstractClassTransformer implements InitializingBean {
+    protected java.util.List<java.lang.String> preLoadClassNamePatterns = new java.util.ArrayList<java.lang.String>();
 
-	protected static final Set<String> alreadyLoadedClasses = new HashSet<String>();
-	protected List<String> preLoadClassNamePatterns = new ArrayList<String>();
-	
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		if (preLoadClassNamePatterns != null && ! preLoadClassNamePatterns.isEmpty()) {
-			synchronized (alreadyLoadedClasses) {
-				for (String className : preLoadClassNamePatterns) {
-					try {
-						if (!alreadyLoadedClasses.contains(className)) {
-							Class.forName(className);
-							alreadyLoadedClasses.add(className);
-						}
-					} catch (ClassNotFoundException e) {
-						throw new RuntimeException("Unable to force load class with name " + className + " in the DirectCopyClassTransformer", e);
-					}
-				}
-			}
-		}
-	}
-	
-	/**
-	 * Fully qualified list of class names to pre-load
-	 * 
-	 * @param fullyQualifiedClassNames
-	 */
-	public void setPreLoadClassNamePatterns(List<String> fullyQualifiedClassNames) {
-    	this.preLoadClassNamePatterns = fullyQualifiedClassNames;
+    @java.lang.Override
+    public void afterPropertiesSet() throws java.lang.Exception {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer.__L1969, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer.__L1966, ((preLoadClassNamePatterns) != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer.__L1968, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer.__L1967, preLoadClassNamePatterns.isEmpty())))))))) {
+            synchronized(org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer.alreadyLoadedClasses) {
+                for (java.lang.String className : preLoadClassNamePatterns) {
+                    try {
+                        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer.__L1971, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer.__L1970, org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer.alreadyLoadedClasses.contains(className)))))) {
+                            java.lang.Class.forName(className);
+                            org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer.alreadyLoadedClasses.add(className);
+                        }
+                    } catch (java.lang.ClassNotFoundException e) {
+                        throw new java.lang.RuntimeException((("Unable to force load class with name " + className) + " in the DirectCopyClassTransformer"), e);
+                    }
+                }
+            }
+        }
+    }
+
+    public void setPreLoadClassNamePatterns(java.util.List<java.lang.String> fullyQualifiedClassNames) {
+        this.preLoadClassNamePatterns = fullyQualifiedClassNames;
+    }
+
+    public static perturbation.location.PerturbationLocation __L1966;
+
+    public static perturbation.location.PerturbationLocation __L1967;
+
+    public static perturbation.location.PerturbationLocation __L1968;
+
+    public static perturbation.location.PerturbationLocation __L1969;
+
+    public static perturbation.location.PerturbationLocation __L1970;
+
+    public static perturbation.location.PerturbationLocation __L1971;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer.__L1966 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/AbstractClassTransformer.java:41)", 1966, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer.__L1967 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/AbstractClassTransformer.java:41)", 1967, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer.__L1968 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/AbstractClassTransformer.java:41)", 1968, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer.__L1969 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/AbstractClassTransformer.java:41)", 1969, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer.__L1970 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/AbstractClassTransformer.java:45)", 1970, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer.__L1971 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/AbstractClassTransformer.java:45)", 1971, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer.initPerturbationLocation0();
     }
 }
+

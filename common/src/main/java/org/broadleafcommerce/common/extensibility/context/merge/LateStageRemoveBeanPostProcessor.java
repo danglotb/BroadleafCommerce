@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,39 +17,30 @@
  */
 package org.broadleafcommerce.common.extensibility.context.merge;
 
-import org.springframework.core.Ordered;
 
-/**
- * Use this merge processor for collection member removal duties that should take place later in the Spring startup lifecycle.
- * This would include items that should be removed after the initialization of the persistence layer, like beans
- * that rely on EntityManager injection in some way. This is the most commonly used merge processor. Less
- * commonly used is the {@link org.broadleafcommerce.common.extensibility.context.merge.EarlyStageRemoveBeanPostProcessor}. See {@link org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor} for
- * usage information.
- *
- * @see org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor
- * @author Jeff Fischer
- */
-public class LateStageRemoveBeanPostProcessor extends AbstractRemoveBeanPostProcessor implements Ordered {
+public class LateStageRemoveBeanPostProcessor extends org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor implements org.springframework.core.Ordered {
+    protected int order = java.lang.Integer.MAX_VALUE;
 
-    protected int order = Integer.MAX_VALUE;
-
-    /**
-     * The regular ordering for this post processor in relation to other post processors. The default
-     * value is Integer.MAX_VALUE.
-     */
-    @Override
+    @java.lang.Override
     public int getOrder() {
-        return order;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.LateStageRemoveBeanPostProcessor.__L1636, order);
     }
 
-    /**
-     * The regular ordering for this post processor in relation to other post processors. The default
-     * value is Integer.MAX_VALUE.
-     *
-     * @param order the regular ordering
-     */
     public void setOrder(int order) {
-        this.order = order;
+        this.order = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.LateStageRemoveBeanPostProcessor.__L1637, order);
     }
 
+    public static perturbation.location.PerturbationLocation __L1636;
+
+    public static perturbation.location.PerturbationLocation __L1637;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.extensibility.context.merge.LateStageRemoveBeanPostProcessor.__L1636 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/LateStageRemoveBeanPostProcessor.java:42)", 1636, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.LateStageRemoveBeanPostProcessor.__L1637 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/LateStageRemoveBeanPostProcessor.java:52)", 1637, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.extensibility.context.merge.LateStageRemoveBeanPostProcessor.initPerturbationLocation0();
+    }
 }
+

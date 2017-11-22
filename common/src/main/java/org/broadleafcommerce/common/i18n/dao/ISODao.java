@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,18 +17,12 @@
  */
 package org.broadleafcommerce.common.i18n.dao;
 
-import org.broadleafcommerce.common.i18n.domain.ISOCountry;
-import java.util.List;
 
-/**
- * @author Elbert Bautista (elbertbautista)
- */
 public interface ISODao {
+    public java.util.List<org.broadleafcommerce.common.i18n.domain.ISOCountry> findISOCountries();
 
-    public List<ISOCountry> findISOCountries();
+    public org.broadleafcommerce.common.i18n.domain.ISOCountry findISOCountryByAlpha2Code(java.lang.String alpha2);
 
-    public ISOCountry findISOCountryByAlpha2Code(String alpha2);
-
-    public ISOCountry save(ISOCountry isoCountry);
-
+    public org.broadleafcommerce.common.i18n.domain.ISOCountry save(org.broadleafcommerce.common.i18n.domain.ISOCountry isoCountry);
 }
+

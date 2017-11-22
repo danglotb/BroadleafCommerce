@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,31 +17,31 @@
  */
 package org.broadleafcommerce.common.breadcrumbs.service;
 
-import org.broadleafcommerce.common.breadcrumbs.dto.BreadcrumbDTO;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+@org.springframework.stereotype.Service("blBreadcrumbService")
+public class BreadcrumbServiceImpl implements org.broadleafcommerce.common.breadcrumbs.service.BreadcrumbService {
+    @javax.annotation.Resource(name = "blBreadcrumbServiceExtensionManager")
+    protected org.broadleafcommerce.common.breadcrumbs.service.BreadcrumbServiceExtensionManager extensionManager;
 
-import javax.annotation.Resource;
-
-@Service("blBreadcrumbService")
-public class BreadcrumbServiceImpl implements BreadcrumbService {
-
-    @Resource(name = "blBreadcrumbServiceExtensionManager")
-    protected BreadcrumbServiceExtensionManager extensionManager;
-    
-    public List<BreadcrumbDTO> buildBreadcrumbDTOs(String baseUrl, Map<String, String[]> params) {
-        List<BreadcrumbDTO> dtos = new ArrayList<BreadcrumbDTO>();
-
-        if (extensionManager != null) {
-            ExtensionResultHolder<List<BreadcrumbDTO>> holder = new ExtensionResultHolder<List<BreadcrumbDTO>>();
+    public java.util.List<org.broadleafcommerce.common.breadcrumbs.dto.BreadcrumbDTO> buildBreadcrumbDTOs(java.lang.String baseUrl, java.util.Map<java.lang.String, java.lang.String[]> params) {
+        java.util.List<org.broadleafcommerce.common.breadcrumbs.dto.BreadcrumbDTO> dtos = new java.util.ArrayList<org.broadleafcommerce.common.breadcrumbs.dto.BreadcrumbDTO>();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.breadcrumbs.service.BreadcrumbServiceImpl.__L112, ((extensionManager) != null))) {
+            org.broadleafcommerce.common.extension.ExtensionResultHolder<java.util.List<org.broadleafcommerce.common.breadcrumbs.dto.BreadcrumbDTO>> holder = new org.broadleafcommerce.common.extension.ExtensionResultHolder<java.util.List<org.broadleafcommerce.common.breadcrumbs.dto.BreadcrumbDTO>>();
             holder.setResult(dtos);
             extensionManager.getProxy().modifyBreadcrumbList(baseUrl, params, holder);
             dtos = holder.getResult();
         }
         return dtos;
     }
+
+    public static perturbation.location.PerturbationLocation __L112;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.breadcrumbs.service.BreadcrumbServiceImpl.__L112 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/breadcrumbs/service/BreadcrumbServiceImpl.java:39)", 112, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.breadcrumbs.service.BreadcrumbServiceImpl.initPerturbationLocation0();
+    }
 }
+

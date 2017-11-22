@@ -17,73 +17,27 @@
  */
 package org.broadleafcommerce.common.web.controller.annotation;
 
-import org.springframework.core.annotation.AliasFor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 
-/**
- * This annotation behaves exactly like {@link RequestMapping} except it is used inside {@link FrameworkController} and
- * {@link FrameworkRestController} controllers.
- * <p>
- * This reasoning for this annotation instead of just using {@link RequestMapping} is that when framework controllers
- * haven't been enabled and a framework controller is extended by a class annotated with {@link
- * org.springframework.stereotype.Controller} or {@link org.springframework.web.bind.annotation.RestController} then the
- * undesired {@link RequestMapping}s will get picked up once again due to Spring's annotation inheritance mechanics.
- *
- * @see RequestMapping
- * @see FrameworkController
- * @see FrameworkRestController
- * @since 5.2
- */
-@Target({ElementType.TYPE, ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
+@java.lang.annotation.Target({ java.lang.annotation.ElementType.TYPE, java.lang.annotation.ElementType.METHOD })
+@java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
+@java.lang.annotation.Documented
 public @interface FrameworkMapping {
+    java.lang.String name() default "";
 
-    /**
-     * @see RequestMapping#name()
-     */
-    String name() default "";
+    @org.springframework.core.annotation.AliasFor("path")
+    java.lang.String[] value() default {  };
 
-    /**
-     * @see RequestMapping#value()
-     */
-    @AliasFor("path")
-    String[] value() default {};
+    @org.springframework.core.annotation.AliasFor("value")
+    java.lang.String[] path() default {  };
 
-    /**
-     * @see RequestMapping#path()
-     */
-    @AliasFor("value")
-    String[] path() default {};
+    org.springframework.web.bind.annotation.RequestMethod[] method() default {  };
 
-    /**
-     * @see RequestMapping#method()
-     */
-    RequestMethod[] method() default {};
+    java.lang.String[] params() default {  };
 
-    /**
-     * @see RequestMapping#params()
-     */
-    String[] params() default {};
+    java.lang.String[] headers() default {  };
 
-    /**
-     * @see RequestMapping#headers()
-     */
-    String[] headers() default {};
+    java.lang.String[] consumes() default {  };
 
-    /**
-     * @see RequestMapping#consumes()
-     */
-    String[] consumes() default {};
-
-    /**
-     * @see RequestMapping#produces()
-     */
-    String[] produces() default {};
+    java.lang.String[] produces() default {  };
 }
+

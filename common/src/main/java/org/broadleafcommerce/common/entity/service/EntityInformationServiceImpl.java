@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,80 +17,63 @@
  */
 package org.broadleafcommerce.common.entity.service;
 
-import org.broadleafcommerce.common.entity.dto.EntityInformationDto;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.site.domain.Catalog;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.Set;
-import javax.annotation.Resource;
 
-/**
- * 
- * @author bpolster
- *
- */
-@Service("blEntityInformationService")
-public class EntityInformationServiceImpl implements EntityInformationService {
+@org.springframework.stereotype.Service("blEntityInformationService")
+public class EntityInformationServiceImpl implements org.broadleafcommerce.common.entity.service.EntityInformationService {
+    @javax.annotation.Resource(name = "blEntityInformationServiceExtensionManager")
+    protected org.broadleafcommerce.common.entity.service.EntityInformationServiceExtensionManager extensionManager;
 
-    @Resource(name = "blEntityInformationServiceExtensionManager")
-    protected EntityInformationServiceExtensionManager extensionManager;
-
-    public EntityInformationDto buildEntityInformationForObject(Object o) {
-        EntityInformationDto dto = createEntityInformationDto(o);
+    public org.broadleafcommerce.common.entity.dto.EntityInformationDto buildEntityInformationForObject(java.lang.Object o) {
+        org.broadleafcommerce.common.entity.dto.EntityInformationDto dto = createEntityInformationDto(o);
         extensionManager.updateEntityInformationDto(dto, o);
         return dto;
     }
 
-    @Override
-    public Long getBaseProfileIdForSite(Site site) {
-        ExtensionResultHolder<Long> erh = new ExtensionResultHolder<Long>();
+    @java.lang.Override
+    public java.lang.Long getBaseProfileIdForSite(org.broadleafcommerce.common.site.domain.Site site) {
+        org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.Long> erh = new org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.Long>();
         extensionManager.getBaseProfileIdForSite(site, erh);
         return erh.getResult();
     }
 
-    @Override
-    public Set<Long> getChildSiteIdsForProfile(Site profile) {
-        ExtensionResultHolder<Set<Long>> erh = new ExtensionResultHolder<>();
+    @java.lang.Override
+    public java.util.Set<java.lang.Long> getChildSiteIdsForProfile(org.broadleafcommerce.common.site.domain.Site profile) {
+        org.broadleafcommerce.common.extension.ExtensionResultHolder<java.util.Set<java.lang.Long>> erh = new org.broadleafcommerce.common.extension.ExtensionResultHolder<>();
         extensionManager.getProxy().getChildSiteIdsForProfile(profile, erh);
         return erh.getResult();
     }
 
-    @Override
-    public Site getParentSiteForProfile(Site profile) {
-        ExtensionResultHolder<Site> erh = new ExtensionResultHolder<Site>();
+    @java.lang.Override
+    public org.broadleafcommerce.common.site.domain.Site getParentSiteForProfile(org.broadleafcommerce.common.site.domain.Site profile) {
+        org.broadleafcommerce.common.extension.ExtensionResultHolder<org.broadleafcommerce.common.site.domain.Site> erh = new org.broadleafcommerce.common.extension.ExtensionResultHolder<org.broadleafcommerce.common.site.domain.Site>();
         extensionManager.getParentSiteForProfile(profile, erh);
         return erh.getResult();
     }
 
-    @Override
-    public boolean getOkayToUseSiteDiscriminator(Object o) {
-        ExtensionResultHolder<Boolean> erh = new ExtensionResultHolder<Boolean>();
-        erh.setResult(Boolean.FALSE);
+    @java.lang.Override
+    public boolean getOkayToUseSiteDiscriminator(java.lang.Object o) {
+        org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.Boolean> erh = new org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.Boolean>();
+        erh.setResult(java.lang.Boolean.FALSE);
         extensionManager.getOkayToUseSiteDiscriminator(o, erh);
         return erh.getResult();
     }
 
-    @Override
-    public Long getDefaultCatalogIdForSite(Site site) {
-        ExtensionResultHolder<Long> erh = new ExtensionResultHolder<Long>();
+    @java.lang.Override
+    public java.lang.Long getDefaultCatalogIdForSite(org.broadleafcommerce.common.site.domain.Site site) {
+        org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.Long> erh = new org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.Long>();
         extensionManager.getDefaultCatalogIdForSite(site, erh);
         return erh.getResult();
     }
 
-    @Override
-    public List<Catalog> findAllCatalogs() {
-        ExtensionResultHolder<List<Catalog>> erh = new ExtensionResultHolder<List<Catalog>>();
+    @java.lang.Override
+    public java.util.List<org.broadleafcommerce.common.site.domain.Catalog> findAllCatalogs() {
+        org.broadleafcommerce.common.extension.ExtensionResultHolder<java.util.List<org.broadleafcommerce.common.site.domain.Catalog>> erh = new org.broadleafcommerce.common.extension.ExtensionResultHolder<java.util.List<org.broadleafcommerce.common.site.domain.Catalog>>();
         extensionManager.findAllCatalogs(erh);
         return erh.getResult();
     }
 
-    /**
-     * Factory method for instantiating the {@link EntityInformationDto}
-     * @return
-     */
-    protected EntityInformationDto createEntityInformationDto(Object o) {
-        return new EntityInformationDto();
+    protected org.broadleafcommerce.common.entity.dto.EntityInformationDto createEntityInformationDto(java.lang.Object o) {
+        return new org.broadleafcommerce.common.entity.dto.EntityInformationDto();
     }
 }
+

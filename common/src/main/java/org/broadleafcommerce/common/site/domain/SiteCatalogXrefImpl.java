@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,90 +17,62 @@
  */
 package org.broadleafcommerce.common.site.domain;
 
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-
-@Entity
-@Table(name = "BLC_SITE_CATALOG")
-@Inheritance(strategy = InheritanceType.JOINED)
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blSiteElements")
-@AdminPresentationClass(friendlyName = "SiteCatalogXrefImpl")
-public class SiteCatalogXrefImpl implements SiteCatalogXref, AdminMainEntity {
-
+@javax.persistence.Entity
+@javax.persistence.Table(name = "BLC_SITE_CATALOG")
+@javax.persistence.Inheritance(strategy = javax.persistence.InheritanceType.JOINED)
+@org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE, region = "blSiteElements")
+@org.broadleafcommerce.common.presentation.AdminPresentationClass(friendlyName = "SiteCatalogXrefImpl")
+public class SiteCatalogXrefImpl implements org.broadleafcommerce.common.admin.domain.AdminMainEntity , org.broadleafcommerce.common.site.domain.SiteCatalogXref {
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Use a separate primary key (rather than a composite key with @Embeddedid) to prevent
-     * ConcurrentModificationException from Ehcache
-     */
-    @Id
-    @GeneratedValue(generator = "SiteCatalogXrefId")
-    @GenericGenerator(
-        name="SiteCatalogXrefId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
-        parameters = {
-            @Parameter(name="segment_value", value="SiteCatalogXrefImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.common.site.domain.SiteCatalogXrefImpl")
-        }
-    )
-    @Column(name = "SITE_CATALOG_XREF_ID")
-    protected Long id;
+    @javax.persistence.Id
+    @javax.persistence.GeneratedValue(generator = "SiteCatalogXrefId")
+    @org.hibernate.annotations.GenericGenerator(name = "SiteCatalogXrefId", strategy = "org.broadleafcommerce.common.persistence.IdOverrideTableGenerator", parameters = { @org.hibernate.annotations.Parameter(name = "segment_value", value = "SiteCatalogXrefImpl"), @org.hibernate.annotations.Parameter(name = "entity_name", value = "org.broadleafcommerce.common.site.domain.SiteCatalogXrefImpl") })
+    @javax.persistence.Column(name = "SITE_CATALOG_XREF_ID")
+    protected java.lang.Long id;
 
-    @ManyToOne(targetEntity = SiteImpl.class, optional = false)
-    @JoinColumn(name = "SITE_ID")
-    protected Site site = new SiteImpl();
+    @javax.persistence.ManyToOne(targetEntity = org.broadleafcommerce.common.site.domain.SiteImpl.class, optional = false)
+    @javax.persistence.JoinColumn(name = "SITE_ID")
+    protected org.broadleafcommerce.common.site.domain.Site site = new org.broadleafcommerce.common.site.domain.SiteImpl();
 
-    @ManyToOne(targetEntity = CatalogImpl.class, optional = false)
-    @JoinColumn(name = "CATALOG_ID")
-    protected Catalog catalog = new CatalogImpl();
+    @javax.persistence.ManyToOne(targetEntity = org.broadleafcommerce.common.site.domain.CatalogImpl.class, optional = false)
+    @javax.persistence.JoinColumn(name = "CATALOG_ID")
+    protected org.broadleafcommerce.common.site.domain.Catalog catalog = new org.broadleafcommerce.common.site.domain.CatalogImpl();
 
-    @Override
-    public Long getId() {
+    @java.lang.Override
+    public java.lang.Long getId() {
         return id;
     }
 
-    @Override
-    public void setId(Long id) {
+    @java.lang.Override
+    public void setId(java.lang.Long id) {
         this.id = id;
     }
 
-    @Override
-    public Site getSite() {
+    @java.lang.Override
+    public org.broadleafcommerce.common.site.domain.Site getSite() {
         return site;
     }
 
-    @Override
-    public void setSite(Site site) {
+    @java.lang.Override
+    public void setSite(org.broadleafcommerce.common.site.domain.Site site) {
         this.site = site;
     }
 
-    @Override
-    public Catalog getCatalog() {
+    @java.lang.Override
+    public org.broadleafcommerce.common.site.domain.Catalog getCatalog() {
         return catalog;
     }
 
-    @Override
-    public void setCatalog(Catalog catalog) {
+    @java.lang.Override
+    public void setCatalog(org.broadleafcommerce.common.site.domain.Catalog catalog) {
         this.catalog = catalog;
     }
 
-    @Override
-    public String getMainEntityName() {
+    @java.lang.Override
+    public java.lang.String getMainEntityName() {
         return getCatalog().getName();
     }
 }
+

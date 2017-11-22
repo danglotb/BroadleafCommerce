@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,47 +17,28 @@
  */
 package org.broadleafcommerce.common.enumeration.domain;
 
-import org.broadleafcommerce.common.copy.MultiTenantCloneable;
 
-import java.io.Serializable;
-import java.util.List;
+public interface DataDrivenEnumeration extends java.io.Serializable , org.broadleafcommerce.common.copy.MultiTenantCloneable<org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumeration> {
+    public java.lang.Long getId();
 
-public interface DataDrivenEnumeration extends Serializable, MultiTenantCloneable<DataDrivenEnumeration> {
-    
-    public Long getId();
+    public void setId(java.lang.Long id);
 
-    public void setId(Long id);
+    public java.lang.String getKey();
 
-    public String getKey();
+    public void setKey(java.lang.String key);
 
-    public void setKey(String key);
+    public java.lang.Boolean getModifiable();
 
-    public Boolean getModifiable();
+    public void setModifiable(java.lang.Boolean modifiable);
 
-    public void setModifiable(Boolean modifiable);
+    public java.util.List<org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue> getEnumValues();
 
-    /**
-     * Gets list of values associated with this enumeration.
-     */
-    public List<DataDrivenEnumerationValue> getEnumValues();
+    public void setEnumValues(java.util.List<org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue> enumValues);
 
-    /**
-     * Sets list of values associated with this enumeration. 
-     */
-    public void setEnumValues(List<DataDrivenEnumerationValue> enumValues);
+    @java.lang.Deprecated
+    public java.util.List<org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue> getOrderItems();
 
-    /**
-     * Incorrectly named, kept purely for API consistency
-     * @deprecated use {@link #getEnumValues()} instead
-     */
-    @Deprecated
-    public List<DataDrivenEnumerationValue> getOrderItems();
-
-    /**
-     * Incorrectly named, kept purely for API consistency
-     * @deprecated use {@link #setEnumValues()} instead
-     */
-    @Deprecated
-    public void setOrderItems(List<DataDrivenEnumerationValue> orderItems);
-
+    @java.lang.Deprecated
+    public void setOrderItems(java.util.List<org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue> orderItems);
 }
+

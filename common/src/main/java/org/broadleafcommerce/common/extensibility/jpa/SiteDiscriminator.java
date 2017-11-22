@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,22 +17,10 @@
  */
 package org.broadleafcommerce.common.extensibility.jpa;
 
-/**
- * Represents the columns that get weaved into entities that are marked as site-specific.
- * 
- * @author Jeff Fischer
- */
-public interface SiteDiscriminator extends Discriminatable {
 
-    /**
-     * @return the site discriminator
-     */
-    public Long getSiteDiscriminator();
+public interface SiteDiscriminator extends org.broadleafcommerce.common.extensibility.jpa.Discriminatable {
+    public java.lang.Long getSiteDiscriminator();
 
-    /**
-     * Sets the site discriminator
-     * 
-     * @param siteDiscriminator
-     */
-    public void setSiteDiscriminator(Long siteDiscriminator);
+    public void setSiteDiscriminator(java.lang.Long siteDiscriminator);
 }
+

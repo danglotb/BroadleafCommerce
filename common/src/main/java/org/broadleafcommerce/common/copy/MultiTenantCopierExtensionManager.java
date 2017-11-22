@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,21 +17,25 @@
  */
 package org.broadleafcommerce.common.copy;
 
-import org.broadleafcommerce.common.extension.ExtensionManager;
-import org.springframework.stereotype.Service;
 
-@Service("blMultiTenantCopierExtensionManager")
-public class MultiTenantCopierExtensionManager extends ExtensionManager<MultiTenantCopierExtensionHandler> {
-    
+@org.springframework.stereotype.Service("blMultiTenantCopierExtensionManager")
+public class MultiTenantCopierExtensionManager extends org.broadleafcommerce.common.extension.ExtensionManager<org.broadleafcommerce.common.copy.MultiTenantCopierExtensionHandler> {
     public MultiTenantCopierExtensionManager() {
-        super(MultiTenantCopierExtensionHandler.class);
+        super(org.broadleafcommerce.common.copy.MultiTenantCopierExtensionHandler.class);
     }
 
-    /**
-     * By default,this extension manager will continue on handled allowing multiple handlers to interact with the order.
-     */
     public boolean continueOnHandled() {
-        return true;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.copy.MultiTenantCopierExtensionManager.__L610, true);
     }
 
+    public static perturbation.location.PerturbationLocation __L610;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.copy.MultiTenantCopierExtensionManager.__L610 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/copy/MultiTenantCopierExtensionManager.java:34)", 610, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.copy.MultiTenantCopierExtensionManager.initPerturbationLocation0();
+    }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,40 +17,24 @@
  */
 package org.broadleafcommerce.common.currency.domain;
 
-/**
- * The BroadleafCurrencyResolver can be implemented to set the currency (e.g. CurrencyToUse).   
- * 
- * This may differ from the currency that was requested (e.g. from the locale, etc.)   
- * 
- * By storing the desired currency, we have the opportunity for a later module (like PriceLists) to 
- * check the DesiredCurrency and possibly alter the currency for the request. 
- * 
- * @author bpolster
- *
- */
+
 public class BroadleafRequestedCurrencyDto {
+    org.broadleafcommerce.common.currency.domain.BroadleafCurrency currencyToUse;
 
-    BroadleafCurrency currencyToUse;
-    BroadleafCurrency requestedCurrency;
+    org.broadleafcommerce.common.currency.domain.BroadleafCurrency requestedCurrency;
 
-    public BroadleafRequestedCurrencyDto(BroadleafCurrency currencyToUse, BroadleafCurrency requestedCurrency) {
+    public BroadleafRequestedCurrencyDto(org.broadleafcommerce.common.currency.domain.BroadleafCurrency currencyToUse, org.broadleafcommerce.common.currency.domain.BroadleafCurrency requestedCurrency) {
         super();
         this.currencyToUse = currencyToUse;
         this.requestedCurrency = requestedCurrency;
     }
 
-    /**
-     * @return the currencyToUse
-     */
-    public BroadleafCurrency getCurrencyToUse() {
+    public org.broadleafcommerce.common.currency.domain.BroadleafCurrency getCurrencyToUse() {
         return currencyToUse;
     }
 
-    /**
-     * @return the requestedCurrency
-     */
-    public BroadleafCurrency getRequestedCurrency() {
+    public org.broadleafcommerce.common.currency.domain.BroadleafCurrency getRequestedCurrency() {
         return requestedCurrency;
     }
-
 }
+

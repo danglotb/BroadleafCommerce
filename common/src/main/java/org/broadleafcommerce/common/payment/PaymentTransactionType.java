@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,233 +17,183 @@
  */
 package org.broadleafcommerce.common.payment;
 
-import org.broadleafcommerce.common.BroadleafEnumerationType;
 
-import java.io.Serializable;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-/**
- * The PaymentTransactionType is used to represent the types of operations/transactions that could occur against a single payment.
- * In the Broadleaf core framework, these types appear on the org.broadleafcommerce.core.payment.domain.PaymentTransaction.
- *
- * @see {@link #AUTHORIZE}
- * @see {@link #CAPTURE}
- * @see {@link #AUTHORIZE_AND_CAPTURE}
- * @see {@link #SETTLED}
- * @see {@link #REFUND}
- * @see {@link #DETACHED_CREDIT}
- * @see {@link #VOID}
- * @see {@link #REVERSE_AUTH}
- * @see {@link #UNCONFIRMED}
- * @see {@link #PENDING}
- *
- *  The following is a depiction of the possible state flows for an Order Payment and the
- *  hierarchical relationship of all its transactions:
- *
- * +-------------+
- * | UNCONFIRMED |
- * +-+-----------+
- *   |
- *   | +--------------------+
- *   +-+ PENDING (Optional) |
- *     +-+----------------+-+
- *       |                |
- *       | +-----------+  |                +-----------------------+
- *       +-+ AUTHORIZE |  +----------------+ AUTHORIZE_AND_CAPTURE |
- *         +-+---------+                   +-+---------------------+
- *           |                             |
- *           | +-------------------+       | +------+
- *           +-+ REVERSE_AUTHORIZE |       +-+ VOID |
- *           | +-------------------+       | +------+
- *           |                             |
- *           | +---------+                 | +--------------------+
- *           +-+ CAPTURE |                 +-+ SETTLED (Optional) |
- *             +-+-------+                   +-+------------------+
- *               |                             |
- *               | +------+                    | +--------+
- *               +-+ VOID |                    +-+ REFUND |
- *               | +------+                      +--------+
- *               |
- *               | +--------------------+
- *               +-+ SETTLED (Optional) |
- *                 +-+------------------+
- *                   |
- *                   | +--------+
- *                   +-+ REFUND |
- *                     +--------+
- *
- * +-------------+
- * | UNCONFIRMED |
- * +-+-----------+
- *   |
- *   | +-----------------+
- *   +-+ DETACHED_CREDIT |
- *     +-+---------------+
- *
- * @author Jerry Ocanas (jocanas)
- * @author Phillip Verheyden (phillipuniverse)
- * @author Elbert Bautista (elbertbautista)
- */
-public class PaymentTransactionType implements Serializable, BroadleafEnumerationType {
-
+public class PaymentTransactionType implements java.io.Serializable , org.broadleafcommerce.common.BroadleafEnumerationType {
     private static final long serialVersionUID = 1L;
 
-    private static final Map<String, PaymentTransactionType> TYPES = new LinkedHashMap<String, PaymentTransactionType>();
+    private static final java.util.Map<java.lang.String, org.broadleafcommerce.common.payment.PaymentTransactionType> TYPES = new java.util.LinkedHashMap<java.lang.String, org.broadleafcommerce.common.payment.PaymentTransactionType>();
 
-    /**
-     * Funds have been authorized for capture. This might appear as a 'pending' transaction on a customer's credit
-     * card statement
-     */
-    public static final PaymentTransactionType AUTHORIZE = new PaymentTransactionType("AUTHORIZE", "Authorize");
-    
-    /**
-     * Funds have been charged/submitted/debited from the customer and payment is complete. Can <b>ONLY</b> occur after an
-     * amount has ben {@link #AUTHORIZE}d.
-     */
-    public static final PaymentTransactionType CAPTURE = new PaymentTransactionType("CAPTURE", "Capture");
-    
-    /**
-     * <p>Funds have been captured/authorized all at once. While this might be the simplest to
-     * implement from an order management perspective, the recommended approach is to {@link #AUTHORIZE} and then {@link #CAPTURE}
-     * in separate transactions and at separate times. For instance, an {@link AUTHORIZE} would happen once the {@link Order}
-     * has completed checkout but then a {@link CAPTURE} would happen once the {@link Order} has shipped.</p>
-     *
-     * <p>NOTE: Many Gateways like to refer to this as also a SALE transaction.</p>
-     * 
-     * <p>This should be treated the exact same as a {@link #CAPTURE}.</p>
-     */
-    public static final PaymentTransactionType AUTHORIZE_AND_CAPTURE = new PaymentTransactionType("AUTHORIZE_AND_CAPTURE", "Authorize and Capture");
-   
-    /**
-     * Can <b>ONLY</b> occur after a payment has been {@link #CAPTURE}d. This represents a payment that has been balanced by
-     * the payment provider. This represents more finality than a {@link #CAPTURE}. Some payment providers might not explicitly
-     * expose the details of settled transactions which are usually done in batches at the end of the day.
-     */
-    public static final PaymentTransactionType SETTLED = new PaymentTransactionType("SETTLED", "Settled");
-    
-    /**
-     * <p>Funds have been refunded/credited. This can <b>ONLY</b> occur after funds have been {@link #CAPTURE}d or
-     * {@link #SETTLED}. This should only be used when money goes back to a customer. This assumes that
-     * there will be a parent {@link #AUTHORIZE_AND_CAPTURE}, {@link #CAPTURE}, or {@link #SETTLED} transaction
-     * that this can be tied back to.</p>
-     *
-     * <p>NOTE: This can also be referred to as a "follow-on credit"</p>
-     */
-    public static final PaymentTransactionType REFUND = new PaymentTransactionType("REFUND", "Refund");
+    public static final org.broadleafcommerce.common.payment.PaymentTransactionType AUTHORIZE = new org.broadleafcommerce.common.payment.PaymentTransactionType("AUTHORIZE", "Authorize");
 
-    /**
-     * <p>Some payment processors allow you to issue credit to a customer that is not tied
-     * to an initial {@link #AUTHORIZE} or {@link #AUTHORIZE_AND_CAPTURE} transaction.
-     * Most payment gateways disable this feature by default because it is against
-     * card association (e.g. Visa, MasterCard) rules. However, there may be legitimate instances
-     * where you had a sale transaction but are not able to issue a refund (e.g. closed account of original payment etc...)
-     * Please contact your payment gateway provider to see how to enable this feature.</p>
-     *
-     * <p>NOTE: This can also be referred to as a "blind credit" or "stand-alone credit"</p>
-     */
-    public static final PaymentTransactionType DETACHED_CREDIT = new PaymentTransactionType("DETACHED_CREDIT", "Detached Credit");
-    
-    /**
-     * <p>Void can happen after a CAPTURE but before it has been SETTLED. Payment transactions are usually settled in batches
-     * at the end of the day.</p>
-     */
-    public static final PaymentTransactionType VOID = new PaymentTransactionType("VOID", "Void");
-    
-    /**
-     * The reverse of {@link #AUTHORIZE}. This can <b>ONLY</b> occur <b>AFTER</b> funds have been
-     * {@link #AUTHORIZE}d but <b>BEFORE</b> funds have been {@link #CAPTURE}d.
-     */
-    public static final PaymentTransactionType REVERSE_AUTH = new PaymentTransactionType("REVERSE_AUTH", "Reverse Auth");
+    public static final org.broadleafcommerce.common.payment.PaymentTransactionType CAPTURE = new org.broadleafcommerce.common.payment.PaymentTransactionType("CAPTURE", "Capture");
 
-    /**
-     * <p>This applies to payment types like "PayPal Express Checkout" and Credit Card tokens/nonce
-     * where a transaction must be confirmed at a later stage.
-     * A payment is considered "confirmed" if the gateway has actually processed a transaction against this user's card/account.
-     * There might be instances where payments have not been confirmed at the moment it has been added to the order.
-     *
-     * For example, there might be a scenario where it is desirable to show a 'review confirmation' page to the user before actually
-     * hitting 'submit' and completing the checkout workflow (this is also the desired case
-     * with gift cards and account credits).</p>
-     * 
-     * <p>It is important to note that all "UNCONFIRMED" transactions will be confirmed in the checkout workflow via the
-     * {@link ValidateAndConfirmPaymentActivity}. That means that any unconfirmed CREDIT_CARD transactions will be
-     * "Authorized" or "Authorized and Captured" at time of checkout. If the Order Payment is of any other type, then the activity
-     * will attempt to call the gateways implementation of:
-     * {@link org.broadleafcommerce.common.payment.service.PaymentGatewayTransactionConfirmationService#confirmTransaction(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO)}</p>
-     */
-    public static final PaymentTransactionType UNCONFIRMED = new PaymentTransactionType("UNCONFIRMED", "Not Confirmed");
+    public static final org.broadleafcommerce.common.payment.PaymentTransactionType AUTHORIZE_AND_CAPTURE = new org.broadleafcommerce.common.payment.PaymentTransactionType("AUTHORIZE_AND_CAPTURE", "Authorize and Capture");
 
-    /**
-     * <p>Some implementations may wish to defer any Authorization or Authorize and Capture transactions outside
-     * the scope of the checkout workflow. For example, some may wish to take all orders up front (possibly
-     * just doing AVS and CVV checks during checkout) and opt to process the users card offline or asynchronously
-     * through some other external mechanism or process. In this scenario, you may create an Order Payment with
-     * a transaction that "marks" it with the intention of being processed later. This allows the
-     * {@link ValidateAndConfirmPaymentActivity} to correctly compare the equality of all the successful payments on the order
-     * against the order total.</p>
-     *
-     * <p>NOTE: This differs from {@link #UNCONFIRMED} because at the time of checkout,
-     * the checkout workflow will try to AUTH or SALE any UNCONFIRMED transactions on all the payments.</p>
-     */
-    public static final PaymentTransactionType PENDING = new PaymentTransactionType("PENDING", "Pending Authorize or Authorize and Capture");
+    public static final org.broadleafcommerce.common.payment.PaymentTransactionType SETTLED = new org.broadleafcommerce.common.payment.PaymentTransactionType("SETTLED", "Settled");
 
+    public static final org.broadleafcommerce.common.payment.PaymentTransactionType REFUND = new org.broadleafcommerce.common.payment.PaymentTransactionType("REFUND", "Refund");
 
-    public static PaymentTransactionType getInstance(final String type) {
-        return TYPES.get(type);
+    public static final org.broadleafcommerce.common.payment.PaymentTransactionType DETACHED_CREDIT = new org.broadleafcommerce.common.payment.PaymentTransactionType("DETACHED_CREDIT", "Detached Credit");
+
+    public static final org.broadleafcommerce.common.payment.PaymentTransactionType VOID = new org.broadleafcommerce.common.payment.PaymentTransactionType("VOID", "Void");
+
+    public static final org.broadleafcommerce.common.payment.PaymentTransactionType REVERSE_AUTH = new org.broadleafcommerce.common.payment.PaymentTransactionType("REVERSE_AUTH", "Reverse Auth");
+
+    public static final org.broadleafcommerce.common.payment.PaymentTransactionType UNCONFIRMED = new org.broadleafcommerce.common.payment.PaymentTransactionType("UNCONFIRMED", "Not Confirmed");
+
+    public static final org.broadleafcommerce.common.payment.PaymentTransactionType PENDING = new org.broadleafcommerce.common.payment.PaymentTransactionType("PENDING", "Pending Authorize or Authorize and Capture");
+
+    private java.lang.String type;
+
+    private java.lang.String friendlyType;
+
+    public static org.broadleafcommerce.common.payment.PaymentTransactionType getInstance(final java.lang.String type) {
+        return org.broadleafcommerce.common.payment.PaymentTransactionType.TYPES.get(type);
     }
-
-    private String type;
-    private String friendlyType;
 
     public PaymentTransactionType() {
-        // do nothing
     }
 
-    public PaymentTransactionType(String type, String friendlyType) {
+    public PaymentTransactionType(java.lang.String type, java.lang.String friendlyType) {
         this.friendlyType = friendlyType;
         setType(type);
     }
 
-   @Override
-     public String getType() {
+    @java.lang.Override
+    public java.lang.String getType() {
         return type;
     }
 
-   @Override
-     public String getFriendlyType() {
+    @java.lang.Override
+    public java.lang.String getFriendlyType() {
         return friendlyType;
     }
 
-    private void setType(final String type) {
+    private void setType(final java.lang.String type) {
         this.type = type;
-        if (!TYPES.containsKey(type)){
-            TYPES.put(type, this);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4052, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4051, org.broadleafcommerce.common.payment.PaymentTransactionType.TYPES.containsKey(type)))))) {
+            org.broadleafcommerce.common.payment.PaymentTransactionType.TYPES.put(type, this);
         }
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((type == null) ? 0 : type.hashCode());
-        return result;
+        final int prime = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4053, 31);
+        int result = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4054, 1);
+        result = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4062, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4057, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4055, prime)) * (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4056, result))))) + (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4061, (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4058, ((type) == null)) ? perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4059, 0) : perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4060, type.hashCode()))))));
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4063, result);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (!getClass().isAssignableFrom(obj.getClass()))
-            return false;
-        PaymentTransactionType other = (PaymentTransactionType) obj;
-        if (type == null) {
-            if (other.type != null)
-                return false;
-        } else if (!type.equals(other.type))
-            return false;
-        return true;
+    @java.lang.Override
+    public boolean equals(java.lang.Object obj) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4064, ((this) == obj)))
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4065, true);
+
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4066, (obj == null)))
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4067, false);
+
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4069, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4068, getClass().isAssignableFrom(obj.getClass()))))))
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4070, false);
+
+        org.broadleafcommerce.common.payment.PaymentTransactionType other = ((org.broadleafcommerce.common.payment.PaymentTransactionType) (obj));
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4071, ((type) == null))) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4072, ((other.type) != null)))
+                return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4073, false);
+
+        }else
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4075, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4074, type.equals(other.type))))))
+                return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4076, false);
+
+
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentTransactionType.__L4077, true);
+    }
+
+    public static perturbation.location.PerturbationLocation __L4051;
+
+    public static perturbation.location.PerturbationLocation __L4052;
+
+    public static perturbation.location.PerturbationLocation __L4053;
+
+    public static perturbation.location.PerturbationLocation __L4054;
+
+    public static perturbation.location.PerturbationLocation __L4055;
+
+    public static perturbation.location.PerturbationLocation __L4056;
+
+    public static perturbation.location.PerturbationLocation __L4057;
+
+    public static perturbation.location.PerturbationLocation __L4058;
+
+    public static perturbation.location.PerturbationLocation __L4059;
+
+    public static perturbation.location.PerturbationLocation __L4060;
+
+    public static perturbation.location.PerturbationLocation __L4061;
+
+    public static perturbation.location.PerturbationLocation __L4062;
+
+    public static perturbation.location.PerturbationLocation __L4063;
+
+    public static perturbation.location.PerturbationLocation __L4064;
+
+    public static perturbation.location.PerturbationLocation __L4065;
+
+    public static perturbation.location.PerturbationLocation __L4066;
+
+    public static perturbation.location.PerturbationLocation __L4067;
+
+    public static perturbation.location.PerturbationLocation __L4068;
+
+    public static perturbation.location.PerturbationLocation __L4069;
+
+    public static perturbation.location.PerturbationLocation __L4070;
+
+    public static perturbation.location.PerturbationLocation __L4071;
+
+    public static perturbation.location.PerturbationLocation __L4072;
+
+    public static perturbation.location.PerturbationLocation __L4073;
+
+    public static perturbation.location.PerturbationLocation __L4074;
+
+    public static perturbation.location.PerturbationLocation __L4075;
+
+    public static perturbation.location.PerturbationLocation __L4076;
+
+    public static perturbation.location.PerturbationLocation __L4077;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4051 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:220)", 4051, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4052 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:220)", 4052, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4053 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:227)", 4053, "Numerical");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4054 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:228)", 4054, "Numerical");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4055 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:229)", 4055, "Numerical");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4056 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:229)", 4056, "Numerical");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4057 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:229)", 4057, "Numerical");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4058 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:229)", 4058, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4059 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:229)", 4059, "Numerical");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4060 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:229)", 4060, "Numerical");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4061 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:229)", 4061, "Numerical");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4062 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:229)", 4062, "Numerical");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4063 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:230)", 4063, "Numerical");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4064 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:235)", 4064, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4065 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:236)", 4065, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4066 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:237)", 4066, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4067 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:238)", 4067, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4068 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:239)", 4068, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4069 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:239)", 4069, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4070 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:240)", 4070, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4071 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:242)", 4071, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4072 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:243)", 4072, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4073 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:244)", 4073, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4074 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:245)", 4074, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4075 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:245)", 4075, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4076 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:246)", 4076, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentTransactionType.__L4077 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentTransactionType.java:247)", 4077, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.payment.PaymentTransactionType.initPerturbationLocation0();
     }
 }
+

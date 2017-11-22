@@ -17,41 +17,45 @@
  */
 package org.broadleafcommerce.common.util;
 
-import java.util.regex.Pattern;
 
-/**
- * Simple bean that can represent a key/value pair used by arbitrary components for the purpose of engaging exclusion behavior.
- * Generally, there will be a component listening for IgnorableItem instances of a specific key and will use the values regex
- * to engage some exclusion behavior.
- *
- * @author Jeff Fischer
- */
 public class IgnorableItem {
+    private java.lang.String key;
 
-    private String key;
-    private String value;
-    private Pattern compiled;
+    private java.lang.String value;
 
-    public String getKey() {
+    private java.util.regex.Pattern compiled;
+
+    public java.lang.String getKey() {
         return key;
     }
 
-    public void setKey(String key) {
+    public void setKey(java.lang.String key) {
         this.key = key;
     }
 
-    public String getValue() {
+    public java.lang.String getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(java.lang.String value) {
         this.value = value;
     }
 
-    public Pattern getCompiled() {
-        if (compiled == null) {
-            compiled = Pattern.compile(value);
+    public java.util.regex.Pattern getCompiled() {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.IgnorableItem.__L6357, ((compiled) == null))) {
+            compiled = java.util.regex.Pattern.compile(value);
         }
         return compiled;
     }
+
+    public static perturbation.location.PerturbationLocation __L6357;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.IgnorableItem.__L6357 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/IgnorableItem.java:52)", 6357, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.IgnorableItem.initPerturbationLocation0();
+    }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,68 +17,50 @@
  */
 package org.broadleafcommerce.common.sandbox.domain;
 
-import org.broadleafcommerce.common.persistence.Status;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
+public interface SandBox extends java.io.Serializable , org.broadleafcommerce.common.persistence.Status {
+    java.lang.Long getId();
 
-public interface SandBox extends Serializable, Status {
+    void setId(java.lang.Long id);
 
-    Long getId();
+    java.lang.String getName();
 
-    void setId(Long id);
+    void setName(java.lang.String name);
 
-    /**
-     * The name of the sandbox.
-     * Certain sandbox names are reserved in the system.    User created
-     * sandboxes cannot start with "", "approve_", or "deploy_".
-     *
-     * @return String sandbox name
-     */
-    String getName();
+    org.broadleafcommerce.common.sandbox.domain.SandBoxType getSandBoxType();
 
-    void setName(String name);
+    void setSandBoxType(org.broadleafcommerce.common.sandbox.domain.SandBoxType sandBoxType);
 
-    SandBoxType getSandBoxType();
+    java.lang.Long getAuthor();
 
-    void setSandBoxType(SandBoxType sandBoxType);
+    void setAuthor(java.lang.Long author);
 
-    Long getAuthor();
+    org.broadleafcommerce.common.sandbox.domain.SandBox getParentSandBox();
 
-    void setAuthor(Long author);
+    void setParentSandBox(org.broadleafcommerce.common.sandbox.domain.SandBox parentSandBox);
 
-    SandBox getParentSandBox();
+    java.lang.String getColor();
 
-    void setParentSandBox(SandBox parentSandBox);
+    void setColor(java.lang.String color);
 
-    String getColor();
+    java.util.Date getGoLiveDate();
 
-    void setColor(String color);
+    void setGoLiveDate(java.util.Date goLiveDate);
 
-    Date getGoLiveDate();
+    java.util.List<java.lang.Long> getSandBoxIdsForUpwardHierarchy(boolean includeInherited);
 
-    void setGoLiveDate(Date goLiveDate);
+    java.util.List<java.lang.Long> getSandBoxIdsForUpwardHierarchy(boolean includeInherited, boolean includeCurrent);
 
-    List<Long> getSandBoxIdsForUpwardHierarchy(boolean includeInherited);
+    java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> getChildSandBoxes();
 
-    List<Long> getSandBoxIdsForUpwardHierarchy(boolean includeInherited, boolean includeCurrent);
+    void setChildSandBoxes(java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> childSandBoxes);
 
-    List<SandBox> getChildSandBoxes();
-
-    void setChildSandBoxes(List<SandBox> childSandBoxes);
-
-    /**
-     * @return whether or not this sandbox, or any of its parent sandboxes, has type DEFAULT.
-     */
     public boolean getIsInDefaultHierarchy();
 
-    public void setArchived(Character archived);
+    public void setArchived(java.lang.Character archived);
 
-    public Character getArchived();
+    public java.lang.Character getArchived();
 
     public boolean isActive();
-
 }
-
 

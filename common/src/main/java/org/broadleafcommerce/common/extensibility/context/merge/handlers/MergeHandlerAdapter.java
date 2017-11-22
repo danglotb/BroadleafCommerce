@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,56 +17,48 @@
  */
 package org.broadleafcommerce.common.extensibility.context.merge.handlers;
 
-import org.w3c.dom.Node;
 
-import java.util.List;
-
-/**
- * This adapter class allows the developer to create a merge handler
- * instance and only override a subset of the functionality, instead of
- * having to provide an independent, full implementation of the MergeHandler
- * interface.
- * 
- * @author jfischer
- *
- */
-public class MergeHandlerAdapter implements MergeHandler {
-
-    public MergeHandler[] getChildren() {
+public class MergeHandlerAdapter implements org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandler {
+    public org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandler[] getChildren() {
         return null;
     }
 
-    public String getName() {
+    public java.lang.String getName() {
         return null;
     }
 
     public int getPriority() {
-        return 0;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandlerAdapter.__L1362, 0);
     }
 
-    public String getXPath() {
+    public java.lang.String getXPath() {
         return null;
     }
 
-    public Node[] merge(List<Node> nodeList1, List<Node> nodeList2,
-            List<Node> exhaustedNodes) {
+    public org.w3c.dom.Node[] merge(java.util.List<org.w3c.dom.Node> nodeList1, java.util.List<org.w3c.dom.Node> nodeList2, java.util.List<org.w3c.dom.Node> exhaustedNodes) {
         return null;
     }
 
-    public void setChildren(MergeHandler[] children) {
-        //do nothing
+    public void setChildren(org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandler[] children) {
     }
 
-    public void setName(String name) {
-        //do nothing
+    public void setName(java.lang.String name) {
     }
 
     public void setPriority(int priority) {
-        //do nothing
     }
 
-    public void setXPath(String xpath) {
-        //do nothing
+    public void setXPath(java.lang.String xpath) {
     }
 
+    public static perturbation.location.PerturbationLocation __L1362;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandlerAdapter.__L1362 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/handlers/MergeHandlerAdapter.java:44)", 1362, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandlerAdapter.initPerturbationLocation0();
+    }
 }
+

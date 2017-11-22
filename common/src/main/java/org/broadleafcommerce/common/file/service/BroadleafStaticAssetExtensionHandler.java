@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,25 +17,10 @@
  */
 package org.broadleafcommerce.common.file.service;
 
-import org.broadleafcommerce.common.extension.ExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.springframework.ui.Model;
 
-/**
- * 
- * @author Chris Kittrell (ckittrell)
- */
-public interface BroadleafStaticAssetExtensionHandler extends ExtensionHandler {
+public interface BroadleafStaticAssetExtensionHandler extends org.broadleafcommerce.common.extension.ExtensionHandler {
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType removeShareOptionsForMTStandardSite(org.springframework.ui.Model model, org.broadleafcommerce.common.site.domain.Site currentSite);
 
-    public ExtensionResultStatusType removeShareOptionsForMTStandardSite(Model model, Site currentSite);
-
-    /**
-     * Provide an extension point to modify the url for a StaticAsset in the case
-     * where multiple assets have the same url.
-     * @param urlBuilder
-     * @return
-     */
-    public ExtensionResultStatusType modifyDuplicateAssetURL(StringBuilder urlBuilder);
-
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType modifyDuplicateAssetURL(java.lang.StringBuilder urlBuilder);
 }
+

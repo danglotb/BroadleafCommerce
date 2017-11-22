@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,20 +17,8 @@
  */
 package org.broadleafcommerce.common.extensibility.context.merge;
 
-import org.springframework.context.ApplicationContext;
-
 
 public interface MergeBeanStatusProvider {
-    
-    /**
-     * Typically used by the {@link AbstractMergeBeanPostProcessor} class to determine whether or not certain
-     * lists should be processed or if they can be safely ignored.
-     * 
-     * @param bean
-     * @param beanName
-     * @param appCtx
-     * @return whether or not processing should be triggered
-     */
-    public boolean isProcessingEnabled(Object bean, String beanName, ApplicationContext appCtx);
-
+    public boolean isProcessingEnabled(java.lang.Object bean, java.lang.String beanName, org.springframework.context.ApplicationContext appCtx);
 }
+

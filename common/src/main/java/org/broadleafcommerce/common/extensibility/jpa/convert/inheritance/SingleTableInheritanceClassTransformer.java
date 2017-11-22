@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,74 +17,38 @@
  */
 package org.broadleafcommerce.common.extensibility.jpa.convert.inheritance;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.extensibility.jpa.convert.BroadleafClassTransformer;
-import org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.util.StringUtils;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.lang.instrument.IllegalClassFormatException;
-import java.security.ProtectionDomain;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
+public class SingleTableInheritanceClassTransformer extends org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer implements org.broadleafcommerce.common.extensibility.jpa.convert.BroadleafClassTransformer {
+    public static final java.lang.String SINGLE_TABLE_ENTITIES = "broadleaf.ejb.entities.override_single_table";
 
-import javassist.ClassPool;
-import javassist.bytecode.AnnotationsAttribute;
-import javassist.bytecode.ClassFile;
-import javassist.bytecode.ConstPool;
-import javassist.bytecode.annotation.Annotation;
-import javassist.bytecode.annotation.EnumMemberValue;
-import javassist.bytecode.annotation.IntegerMemberValue;
-import javassist.bytecode.annotation.StringMemberValue;
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.class);
 
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+    protected java.util.List<org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceInfo> infos = new java.util.ArrayList<org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceInfo>();
 
-/**
- * 
- * @author jfischer
- *
- */
-public class SingleTableInheritanceClassTransformer extends AbstractClassTransformer implements BroadleafClassTransformer {
-    
-    public static final String SINGLE_TABLE_ENTITIES = "broadleaf.ejb.entities.override_single_table";
-    
-    private static final Log LOG = LogFactory.getLog(SingleTableInheritanceClassTransformer.class);
-    protected List<SingleTableInheritanceInfo> infos = new ArrayList<SingleTableInheritanceInfo>();
-
-    @Override
-    public void compileJPAProperties(Properties props, Object key) throws Exception {
-        if (((String) key).equals(SINGLE_TABLE_ENTITIES)) {
-            String[] classes = StringUtils.tokenizeToStringArray(props.getProperty((String) key), ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS);
-            for (String clazz : classes) {
-                String keyName;
-                int pos = clazz.lastIndexOf(".");
-                if (pos >= 0) {
-                    keyName = clazz.substring(pos + 1, clazz.length());
-                } else {
+    @java.lang.Override
+    public void compileJPAProperties(java.util.Properties props, java.lang.Object key) throws java.lang.Exception {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1835, ((java.lang.String) (key)).equals(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.SINGLE_TABLE_ENTITIES))) {
+            java.lang.String[] classes = org.springframework.util.StringUtils.tokenizeToStringArray(props.getProperty(((java.lang.String) (key))), org.springframework.context.ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS);
+            for (java.lang.String clazz : classes) {
+                java.lang.String keyName;
+                int pos = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1836, clazz.lastIndexOf("."));
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1839, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1837, pos)) >= (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1838, 0))))) {
+                    keyName = clazz.substring(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1842, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1840, pos)) + (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1841, 1)))), perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1843, clazz.length()));
+                }else {
                     keyName = clazz;
                 }
-                SingleTableInheritanceInfo info = new SingleTableInheritanceInfo();
+                org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceInfo info = new org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceInfo();
                 info.setClassName(clazz);
-                String discriminatorName = props.getProperty("broadleaf.ejb."+keyName+".discriminator.name");
-                if (discriminatorName != null) {
+                java.lang.String discriminatorName = props.getProperty((("broadleaf.ejb." + keyName) + ".discriminator.name"));
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1844, (discriminatorName != null))) {
                     info.setDiscriminatorName(discriminatorName);
-                    String type = props.getProperty("broadleaf.ejb."+keyName+".discriminator.type");
-                    if (type != null) {
-                        info.setDiscriminatorType(DiscriminatorType.valueOf(type));
+                    java.lang.String type = props.getProperty((("broadleaf.ejb." + keyName) + ".discriminator.type"));
+                    if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1845, (type != null))) {
+                        info.setDiscriminatorType(javax.persistence.DiscriminatorType.valueOf(type));
                     }
-                    String length = props.getProperty("broadleaf.ejb."+keyName+".discriminator.length");
-                    if (length != null) {
-                        info.setDiscriminatorLength(Integer.parseInt(length));
+                    java.lang.String length = props.getProperty((("broadleaf.ejb." + keyName) + ".discriminator.length"));
+                    if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1846, (length != null))) {
+                        info.setDiscriminatorLength(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1847, java.lang.Integer.parseInt(length)));
                     }
                 }
                 infos.remove(info);
@@ -93,83 +57,167 @@ public class SingleTableInheritanceClassTransformer extends AbstractClassTransfo
         }
     }
 
-    @Override
-    public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
-        // Lambdas and anonymous methods in Java 8 do not have a class name defined and so no transformation should be done
-        if (className == null) {
+    @java.lang.Override
+    public byte[] transform(java.lang.ClassLoader loader, java.lang.String className, java.lang.Class<?> classBeingRedefined, java.security.ProtectionDomain protectionDomain, byte[] classfileBuffer) throws java.lang.instrument.IllegalClassFormatException {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1848, (className == null))) {
             return null;
         }
-        
-        if (infos.isEmpty()) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1849, infos.isEmpty())) {
             return null;
         }
-        String convertedClassName = className.replace('/', '.');
-        SingleTableInheritanceInfo key = new SingleTableInheritanceInfo();
+        java.lang.String convertedClassName = className.replace('/', '.');
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceInfo key = new org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceInfo();
         key.setClassName(convertedClassName);
-        int pos = infos.indexOf(key);
-        if (pos >= 0) {
+        int pos = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1850, infos.indexOf(key));
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1853, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1851, pos)) >= (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1852, 0))))) {
             try {
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("Converting " + convertedClassName + " to a SingleTable inheritance strategy."); 
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1854, org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.LOG.isDebugEnabled())) {
+                    org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.LOG.debug((("Converting " + convertedClassName) + " to a SingleTable inheritance strategy."));
                 }
-                SingleTableInheritanceInfo myInfo = infos.get(pos);
-                ClassFile classFile = new ClassFile(new DataInputStream(new ByteArrayInputStream(classfileBuffer)));
-                ConstPool constantPool = classFile.getConstPool();
-                AnnotationsAttribute annotationsAttribute = new AnnotationsAttribute(constantPool, AnnotationsAttribute.visibleTag);
-                List<?> attributes = classFile.getAttributes();
-                Iterator<?> itr = attributes.iterator();
-                while(itr.hasNext()) {
-                    Object object = itr.next();
-                    if (AnnotationsAttribute.class.isAssignableFrom(object.getClass())) {
-                        AnnotationsAttribute attr = (AnnotationsAttribute) object;
-                        Annotation[] items = attr.getAnnotations();
-                        for (Annotation annotation : items) {
-                            String typeName = annotation.getTypeName();
-                            if (!typeName.equals(Inheritance.class.getName())) {
+                org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceInfo myInfo = infos.get(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1855, pos));
+                javassist.bytecode.ClassFile classFile = new javassist.bytecode.ClassFile(new java.io.DataInputStream(new java.io.ByteArrayInputStream(classfileBuffer)));
+                javassist.bytecode.ConstPool constantPool = classFile.getConstPool();
+                javassist.bytecode.AnnotationsAttribute annotationsAttribute = new javassist.bytecode.AnnotationsAttribute(constantPool, javassist.bytecode.AnnotationsAttribute.visibleTag);
+                java.util.List<?> attributes = classFile.getAttributes();
+                java.util.Iterator<?> itr = attributes.iterator();
+                while (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1856, itr.hasNext())) {
+                    java.lang.Object object = itr.next();
+                    if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1857, javassist.bytecode.AnnotationsAttribute.class.isAssignableFrom(object.getClass()))) {
+                        javassist.bytecode.AnnotationsAttribute attr = ((javassist.bytecode.AnnotationsAttribute) (object));
+                        javassist.bytecode.annotation.Annotation[] items = attr.getAnnotations();
+                        for (javassist.bytecode.annotation.Annotation annotation : items) {
+                            java.lang.String typeName = annotation.getTypeName();
+                            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1859, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1858, typeName.equals(javax.persistence.Inheritance.class.getName())))))) {
                                 annotationsAttribute.addAnnotation(annotation);
                             }
                         }
                         itr.remove();
                     }
-                }
-                Annotation inheritance = new Annotation(Inheritance.class.getName(), constantPool);
-                ClassPool pool = ClassPool.getDefault();
+                } 
+                javassist.bytecode.annotation.Annotation inheritance = new javassist.bytecode.annotation.Annotation(javax.persistence.Inheritance.class.getName(), constantPool);
+                javassist.ClassPool pool = javassist.ClassPool.getDefault();
                 pool.importPackage("javax.persistence");
                 pool.importPackage("java.lang");
-                EnumMemberValue strategy = (EnumMemberValue) Annotation.createMemberValue(constantPool, pool.makeClass("InheritanceType"));
-                strategy.setType(InheritanceType.class.getName());
-                strategy.setValue(InheritanceType.SINGLE_TABLE.name());
+                javassist.bytecode.annotation.EnumMemberValue strategy = ((javassist.bytecode.annotation.EnumMemberValue) (javassist.bytecode.annotation.Annotation.createMemberValue(constantPool, pool.makeClass("InheritanceType"))));
+                strategy.setType(javax.persistence.InheritanceType.class.getName());
+                strategy.setValue(javax.persistence.InheritanceType.SINGLE_TABLE.name());
                 inheritance.addMemberValue("strategy", strategy);
                 annotationsAttribute.addAnnotation(inheritance);
-                if (myInfo.getDiscriminatorName() != null) {
-                    Annotation discriminator = new Annotation(DiscriminatorColumn.class.getName(), constantPool);
-                    StringMemberValue name = new StringMemberValue(constantPool);
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1860, ((myInfo.getDiscriminatorName()) != null))) {
+                    javassist.bytecode.annotation.Annotation discriminator = new javassist.bytecode.annotation.Annotation(javax.persistence.DiscriminatorColumn.class.getName(), constantPool);
+                    javassist.bytecode.annotation.StringMemberValue name = new javassist.bytecode.annotation.StringMemberValue(constantPool);
                     name.setValue(myInfo.getDiscriminatorName());
                     discriminator.addMemberValue("name", name);
-                    EnumMemberValue discriminatorType = (EnumMemberValue) Annotation.createMemberValue(constantPool, pool.makeClass("DiscriminatorType"));
-                    discriminatorType.setType(DiscriminatorType.class.getName());
+                    javassist.bytecode.annotation.EnumMemberValue discriminatorType = ((javassist.bytecode.annotation.EnumMemberValue) (javassist.bytecode.annotation.Annotation.createMemberValue(constantPool, pool.makeClass("DiscriminatorType"))));
+                    discriminatorType.setType(javax.persistence.DiscriminatorType.class.getName());
                     discriminatorType.setValue(myInfo.getDiscriminatorType().name());
                     discriminator.addMemberValue("discriminatorType", discriminatorType);
-                    IntegerMemberValue length = new IntegerMemberValue(constantPool);
-                    length.setValue(myInfo.getDiscriminatorLength());
+                    javassist.bytecode.annotation.IntegerMemberValue length = new javassist.bytecode.annotation.IntegerMemberValue(constantPool);
+                    length.setValue(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1861, myInfo.getDiscriminatorLength()));
                     discriminator.addMemberValue("length", length);
-                    
                     annotationsAttribute.addAnnotation(discriminator);
                 }
                 classFile.addAttribute(annotationsAttribute);
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                DataOutputStream os = new DataOutputStream(bos);
+                java.io.ByteArrayOutputStream bos = new java.io.ByteArrayOutputStream();
+                java.io.DataOutputStream os = new java.io.DataOutputStream(bos);
                 classFile.write(os);
                 os.close();
-
                 return bos.toByteArray();
-            } catch(Exception ex) {
+            } catch (java.lang.Exception ex) {
                 ex.printStackTrace();
-                throw new IllegalClassFormatException("Unable to convert " + convertedClassName + " to a SingleTable inheritance strategy: " + ex.getMessage());
+                throw new java.lang.instrument.IllegalClassFormatException(((("Unable to convert " + convertedClassName) + " to a SingleTable inheritance strategy: ") + (ex.getMessage())));
             }
-        } else {
+        }else {
             return null;
         }
     }
-    
+
+    public static perturbation.location.PerturbationLocation __L1835;
+
+    public static perturbation.location.PerturbationLocation __L1836;
+
+    public static perturbation.location.PerturbationLocation __L1837;
+
+    public static perturbation.location.PerturbationLocation __L1838;
+
+    public static perturbation.location.PerturbationLocation __L1839;
+
+    public static perturbation.location.PerturbationLocation __L1840;
+
+    public static perturbation.location.PerturbationLocation __L1841;
+
+    public static perturbation.location.PerturbationLocation __L1842;
+
+    public static perturbation.location.PerturbationLocation __L1843;
+
+    public static perturbation.location.PerturbationLocation __L1844;
+
+    public static perturbation.location.PerturbationLocation __L1845;
+
+    public static perturbation.location.PerturbationLocation __L1846;
+
+    public static perturbation.location.PerturbationLocation __L1847;
+
+    public static perturbation.location.PerturbationLocation __L1848;
+
+    public static perturbation.location.PerturbationLocation __L1849;
+
+    public static perturbation.location.PerturbationLocation __L1850;
+
+    public static perturbation.location.PerturbationLocation __L1851;
+
+    public static perturbation.location.PerturbationLocation __L1852;
+
+    public static perturbation.location.PerturbationLocation __L1853;
+
+    public static perturbation.location.PerturbationLocation __L1854;
+
+    public static perturbation.location.PerturbationLocation __L1855;
+
+    public static perturbation.location.PerturbationLocation __L1856;
+
+    public static perturbation.location.PerturbationLocation __L1857;
+
+    public static perturbation.location.PerturbationLocation __L1858;
+
+    public static perturbation.location.PerturbationLocation __L1859;
+
+    public static perturbation.location.PerturbationLocation __L1860;
+
+    public static perturbation.location.PerturbationLocation __L1861;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1835 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:66)", 1835, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1836 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:70)", 1836, "Numerical");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1837 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:71)", 1837, "Numerical");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1838 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:71)", 1838, "Numerical");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1839 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:71)", 1839, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1840 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:72)", 1840, "Numerical");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1841 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:72)", 1841, "Numerical");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1842 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:72)", 1842, "Numerical");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1843 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:72)", 1843, "Numerical");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1844 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:79)", 1844, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1845 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:82)", 1845, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1846 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:86)", 1846, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1847 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:87)", 1847, "Numerical");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1848 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:99)", 1848, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1849 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:103)", 1849, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1850 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:109)", 1850, "Numerical");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1851 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:110)", 1851, "Numerical");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1852 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:110)", 1852, "Numerical");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1853 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:110)", 1853, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1854 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:112)", 1854, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1855 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:115)", 1855, "Numerical");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1856 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:121)", 1856, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1857 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:123)", 1857, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1858 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:128)", 1858, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1859 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:128)", 1859, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1860 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:144)", 1860, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.__L1861 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/inheritance/SingleTableInheritanceClassTransformer.java:154)", 1861, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.extensibility.jpa.convert.inheritance.SingleTableInheritanceClassTransformer.initPerturbationLocation0();
+    }
 }
+

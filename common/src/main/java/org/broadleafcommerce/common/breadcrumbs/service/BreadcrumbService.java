@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,21 +17,8 @@
  */
 package org.broadleafcommerce.common.breadcrumbs.service;
 
-import org.broadleafcommerce.common.breadcrumbs.dto.BreadcrumbDTO;
-
-import java.util.List;
-import java.util.Map;
 
 public interface BreadcrumbService {
-
-    /**
-     * Builds a breadcrumb from the passed in url and parameter list.   By default, this method simply delegates its logic
-     * to the {@link BreadcrumbServiceExtensionManager} which will invoke {@link BreadcrumbServiceExtensionHandler}'s 
-     * in priority order to build the Breadcrumbs
-     * 
-     * @param baseUrl
-     * @param params
-     * @return
-     */
-    List<BreadcrumbDTO> buildBreadcrumbDTOs(String baseUrl, Map<String, String[]> params);
+    java.util.List<org.broadleafcommerce.common.breadcrumbs.dto.BreadcrumbDTO> buildBreadcrumbDTOs(java.lang.String baseUrl, java.util.Map<java.lang.String, java.lang.String[]> params);
 }
+

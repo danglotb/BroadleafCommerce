@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,131 +17,74 @@
  */
 package org.broadleafcommerce.common.util.dao;
 
-import org.apache.commons.collections.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-
-/**
- * Utility class to construct typed query-language queries. This has an advantage over CriteriaQuery in that it will
- * be automatically responsive to polymorphism thanks to Hibernate's handling of query-language strings.
- * 
- * @author Andre Azzolini (apazzolini)
- *
- * @param <T> the class that is being queried for
- */
 public class TypedQueryBuilder<T> {
-    
-    protected Class<T> rootClass;
-    protected String rootAlias;
-    protected List<TQRestriction> restrictions = new ArrayList<TQRestriction>();
-    protected List<TQJoin> joins = new ArrayList<TQJoin>();
-    protected List<TQOrder> orders = new ArrayList<TQOrder>();
-    protected Map<String, Object> paramMap = new HashMap<String, Object>();
+    protected java.lang.Class<T> rootClass;
 
-    /**
-     * Creates a new TypedQueryBuilder that will utilize the rootAlias as the named object of the class
-     * 
-     * @param rootClass
-     * @param rootAlias
-     */
-    public TypedQueryBuilder(Class<T> rootClass, String rootAlias) {
+    protected java.lang.String rootAlias;
+
+    protected java.util.List<org.broadleafcommerce.common.util.dao.TQRestriction> restrictions = new java.util.ArrayList<org.broadleafcommerce.common.util.dao.TQRestriction>();
+
+    protected java.util.List<org.broadleafcommerce.common.util.dao.TQJoin> joins = new java.util.ArrayList<org.broadleafcommerce.common.util.dao.TQJoin>();
+
+    protected java.util.List<org.broadleafcommerce.common.util.dao.TQOrder> orders = new java.util.ArrayList<org.broadleafcommerce.common.util.dao.TQOrder>();
+
+    protected java.util.Map<java.lang.String, java.lang.Object> paramMap = new java.util.HashMap<java.lang.String, java.lang.Object>();
+
+    public TypedQueryBuilder(java.lang.Class<T> rootClass, java.lang.String rootAlias) {
         this.rootClass = rootClass;
         this.rootAlias = rootAlias;
     }
-    
-    /**
-     * Adds a simple restriction to the query. Note that all restrictions present on the TypedQueryBuilder will be joined
-     * with an AND clause.
-     * 
-     * @param expression
-     * @param operation
-     * @param parameter
-     */
-    public TypedQueryBuilder<T> addRestriction(String expression, String operation, Object parameter) {
-        restrictions.add(new TQRestriction(expression, operation, parameter));
+
+    public org.broadleafcommerce.common.util.dao.TypedQueryBuilder<T> addRestriction(java.lang.String expression, java.lang.String operation, java.lang.Object parameter) {
+        restrictions.add(new org.broadleafcommerce.common.util.dao.TQRestriction(expression, operation, parameter));
         return this;
     }
-    
-    /**
-     * Adds an explicit TQRestriction object. Note that all restrictions present on the TypedQueryBuilder will be joined
-     * with an AND clause.
-     * 
-     * @param restriction
-     * @return
-     */
-    public TypedQueryBuilder<T> addRestriction(TQRestriction restriction) {
+
+    public org.broadleafcommerce.common.util.dao.TypedQueryBuilder<T> addRestriction(org.broadleafcommerce.common.util.dao.TQRestriction restriction) {
         restrictions.add(restriction);
         return this;
     }
 
-    public TypedQueryBuilder<T> addJoin(TQJoin join) {
+    public org.broadleafcommerce.common.util.dao.TypedQueryBuilder<T> addJoin(org.broadleafcommerce.common.util.dao.TQJoin join) {
         joins.add(join);
         return this;
     }
 
-    public TypedQueryBuilder<T> addOrder(TQOrder order) {
+    public org.broadleafcommerce.common.util.dao.TypedQueryBuilder<T> addOrder(org.broadleafcommerce.common.util.dao.TQOrder order) {
         orders.add(order);
         return this;
     }
-    
-    /**
-     * Generates the query string based on the current contents of this builder. As the string is generated, this method
-     * will also populate the paramMap, which binds actual restriction values.
-     * 
-     * Note that this method should typically not be invoked through DAOs. Instead, utilize {@link #toQuery(EntityManager)},
-     * which will automatically generate the TypedQuery and populate the required parameters.
-     * 
-     * @return the QL string
-     */
-    public String toQueryString() {
-        return toQueryString(false);
+
+    public java.lang.String toQueryString() {
+        return toQueryString(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5917, false));
     }
-    
-    /**
-     * Generates the query string based on the current contents of this builder. As the string is generated, this method
-     * will also populate the paramMap, which binds actual restriction values.
-     * 
-     * Note that this method should typically not be invoked through DAOs. Instead, utilize {@link #toQuery(EntityManager)},
-     * which will automatically generate the TypedQuery and populate the required parameters.
-     * 
-     * If you are using this as a COUNT query, you should look at the corresponding {@link #toCountQuery(EntityManager)}
-     * 
-     * @param whether or not the resulting query string should be used as a count query or not
-     * @return the QL string
-     */
-    public String toQueryString(boolean count) {
-        StringBuilder sb = getSelectClause(new StringBuilder(), count)
-                .append(" FROM ").append(rootClass.getName()).append(" ").append(rootAlias);
-        if (CollectionUtils.isNotEmpty(joins)) {
-            for (TQJoin join : joins) {
+
+    public java.lang.String toQueryString(boolean count) {
+        java.lang.StringBuilder sb = getSelectClause(new java.lang.StringBuilder(), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5918, count)).append(" FROM ").append(rootClass.getName()).append(" ").append(rootAlias);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5919, org.apache.commons.collections.CollectionUtils.isNotEmpty(joins))) {
+            for (org.broadleafcommerce.common.util.dao.TQJoin join : joins) {
                 sb.append(" JOIN");
                 sb.append(" ");
                 sb.append(join.toQl());
             }
         }
-        if (CollectionUtils.isNotEmpty(restrictions)) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5920, org.apache.commons.collections.CollectionUtils.isNotEmpty(restrictions))) {
             sb.append(" WHERE ");
-            for (int i = 0; i < restrictions.size(); i++) {
-                TQRestriction r = restrictions.get(i);
-                sb.append(r.toQl("p" + i, paramMap));
-                if (i != restrictions.size() - 1) {
+            for (int i = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5921, 0); perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5924, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5922, i)) < (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5923, restrictions.size())))); perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5925, (i++))) {
+                org.broadleafcommerce.common.util.dao.TQRestriction r = restrictions.get(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5926, i));
+                sb.append(r.toQl(("p" + i), paramMap));
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5931, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5927, i)) != (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5930, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5928, restrictions.size())) - (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5929, 1)))))))) {
                     sb.append(" AND ");
                 }
             }
         }
-        if (CollectionUtils.isNotEmpty(orders)) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5932, org.apache.commons.collections.CollectionUtils.isNotEmpty(orders))) {
             sb.append(" ORDER BY");
-            for (int j=0;j<orders.size();j++){
+            for (int j = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5933, 0); perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5936, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5934, j)) < (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5935, orders.size())))); perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5937, (j++))) {
                 sb.append(" ");
-                sb.append(orders.get(j).toQl());
-                if (j < orders.size() - 1) {
+                sb.append(orders.get(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5938, j)).toQl());
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5943, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5939, j)) < (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5942, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5940, orders.size())) - (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5941, 1)))))))) {
                     sb.append(",");
                 }
             }
@@ -149,53 +92,134 @@ public class TypedQueryBuilder<T> {
         return sb.toString();
     }
 
-    /**
-     * Adds the select query from {@link #toQueryString()}
-     * 
-     * @return <b>sb</b> with the select query appended to it
-     */
-    protected StringBuilder getSelectClause(StringBuilder sb, boolean count) {
+    protected java.lang.StringBuilder getSelectClause(java.lang.StringBuilder sb, boolean count) {
         sb.append("SELECT ");
-        if (count) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5944, count)) {
             return sb.append("COUNT(*)");
-        } else {
+        }else {
             return sb.append(rootAlias);
         }
     }
-    
-    /**
-     * Returns a TypedQuery that represents this builder object. It will already have all of the appropriate parameter
-     * values set and is able to be immediately queried against.
-     * 
-     * @param em
-     * @return the TypedQuery
-     */
-    public TypedQuery<T> toQuery(EntityManager em) {
-        TypedQuery<T> q = em.createQuery(toQueryString(), rootClass);
+
+    public javax.persistence.TypedQuery<T> toQuery(javax.persistence.EntityManager em) {
+        javax.persistence.TypedQuery<T> q = em.createQuery(toQueryString(), rootClass);
         fillParameterMap(q);
         return q;
     }
-    
-    public TypedQuery<Long> toCountQuery(EntityManager em) {
-        TypedQuery<Long> q = em.createQuery(toQueryString(true), Long.class);
+
+    public javax.persistence.TypedQuery<java.lang.Long> toCountQuery(javax.persistence.EntityManager em) {
+        javax.persistence.TypedQuery<java.lang.Long> q = em.createQuery(toQueryString(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5945, true)), java.lang.Long.class);
         fillParameterMap(q);
         return q;
     }
-    
-    protected void fillParameterMap(TypedQuery<?> q) {
-        for (Entry<String, Object> entry : paramMap.entrySet()) {
-            if (entry.getValue() != null) {
+
+    protected void fillParameterMap(javax.persistence.TypedQuery<?> q) {
+        for (java.util.Map.Entry<java.lang.String, java.lang.Object> entry : paramMap.entrySet()) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5946, ((entry.getValue()) != null))) {
                 q.setParameter(entry.getKey(), entry.getValue());
             }
         }
     }
-    
-    /**
-     * @return the paramMap
-     */
-    public Map<String, Object> getParamMap() {
+
+    public java.util.Map<java.lang.String, java.lang.Object> getParamMap() {
         return paramMap;
     }
-    
+
+    public static perturbation.location.PerturbationLocation __L5917;
+
+    public static perturbation.location.PerturbationLocation __L5918;
+
+    public static perturbation.location.PerturbationLocation __L5919;
+
+    public static perturbation.location.PerturbationLocation __L5920;
+
+    public static perturbation.location.PerturbationLocation __L5921;
+
+    public static perturbation.location.PerturbationLocation __L5922;
+
+    public static perturbation.location.PerturbationLocation __L5923;
+
+    public static perturbation.location.PerturbationLocation __L5924;
+
+    public static perturbation.location.PerturbationLocation __L5925;
+
+    public static perturbation.location.PerturbationLocation __L5926;
+
+    public static perturbation.location.PerturbationLocation __L5927;
+
+    public static perturbation.location.PerturbationLocation __L5928;
+
+    public static perturbation.location.PerturbationLocation __L5929;
+
+    public static perturbation.location.PerturbationLocation __L5930;
+
+    public static perturbation.location.PerturbationLocation __L5931;
+
+    public static perturbation.location.PerturbationLocation __L5932;
+
+    public static perturbation.location.PerturbationLocation __L5933;
+
+    public static perturbation.location.PerturbationLocation __L5934;
+
+    public static perturbation.location.PerturbationLocation __L5935;
+
+    public static perturbation.location.PerturbationLocation __L5936;
+
+    public static perturbation.location.PerturbationLocation __L5937;
+
+    public static perturbation.location.PerturbationLocation __L5938;
+
+    public static perturbation.location.PerturbationLocation __L5939;
+
+    public static perturbation.location.PerturbationLocation __L5940;
+
+    public static perturbation.location.PerturbationLocation __L5941;
+
+    public static perturbation.location.PerturbationLocation __L5942;
+
+    public static perturbation.location.PerturbationLocation __L5943;
+
+    public static perturbation.location.PerturbationLocation __L5944;
+
+    public static perturbation.location.PerturbationLocation __L5945;
+
+    public static perturbation.location.PerturbationLocation __L5946;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5917 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:104)", 5917, "Boolean");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5918 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:120)", 5918, "Boolean");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5919 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:122)", 5919, "Boolean");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5920 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:129)", 5920, "Boolean");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5921 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:131)", 5921, "Numerical");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5922 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:131)", 5922, "Numerical");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5923 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:131)", 5923, "Numerical");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5924 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:131)", 5924, "Boolean");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5925 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:131)", 5925, "Numerical");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5926 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:132)", 5926, "Numerical");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5927 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:134)", 5927, "Numerical");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5928 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:134)", 5928, "Numerical");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5929 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:134)", 5929, "Numerical");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5930 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:134)", 5930, "Numerical");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5931 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:134)", 5931, "Boolean");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5932 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:139)", 5932, "Boolean");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5933 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:141)", 5933, "Numerical");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5934 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:141)", 5934, "Numerical");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5935 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:141)", 5935, "Numerical");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5936 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:141)", 5936, "Boolean");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5937 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:141)", 5937, "Numerical");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5938 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:143)", 5938, "Numerical");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5939 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:144)", 5939, "Numerical");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5940 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:144)", 5940, "Numerical");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5941 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:144)", 5941, "Numerical");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5942 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:144)", 5942, "Numerical");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5943 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:144)", 5943, "Boolean");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5944 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:159)", 5944, "Boolean");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5945 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:180)", 5945, "Boolean");
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.__L5946 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TypedQueryBuilder.java:187)", 5946, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.dao.TypedQueryBuilder.initPerturbationLocation0();
+    }
 }
 

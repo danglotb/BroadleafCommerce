@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,28 +17,11 @@
  */
 package org.broadleafcommerce.common.rule;
 
-import javax.annotation.Nonnull;
-import java.io.Serializable;
 
-/**
- * Represents a class containing an MVEL rule
- *
- * @author Jeff Fischer
- */
-public interface SimpleRule extends Serializable {
+public interface SimpleRule extends java.io.Serializable {
+    public java.lang.String getMatchRule();
 
-    /**
-     * The rule in the form of an MVEL expression
-     *
-     * @return the rule as an MVEL string
-     */
-    public String getMatchRule();
-
-    /**
-     * Sets the match rule used to test this item.
-     *
-     * @param matchRule the rule as an MVEL string
-     */
-    public void setMatchRule(@Nonnull String matchRule);
-
+    public void setMatchRule(@javax.annotation.Nonnull
+    java.lang.String matchRule);
 }
+

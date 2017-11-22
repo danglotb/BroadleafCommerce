@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,18 +17,11 @@
  */
 package org.broadleafcommerce.common.web.cache;
 
-import org.broadleafcommerce.common.extension.ExtensionManager;
-import org.springframework.stereotype.Service;
 
-/**
- * Extension manager that holds the list of {@link BLCICacheExtensionHandler}.
- *
- * @author Chad Harchar (charchar)
- */
-@Service("blICacheExtensionManager")
-public class BLCICacheExtensionManager extends ExtensionManager<BLCICacheExtensionHandler> {
-
+@org.springframework.stereotype.Service("blICacheExtensionManager")
+public class BLCICacheExtensionManager extends org.broadleafcommerce.common.extension.ExtensionManager<org.broadleafcommerce.common.web.cache.BLCICacheExtensionHandler> {
     public BLCICacheExtensionManager() {
-        super(BLCICacheExtensionHandler.class);
+        super(org.broadleafcommerce.common.web.cache.BLCICacheExtensionHandler.class);
     }
 }
+

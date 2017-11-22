@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,28 +17,11 @@
  */
 package org.broadleafcommerce.common.web;
 
-import org.broadleafcommerce.common.currency.domain.BroadleafRequestedCurrencyDto;
-import org.springframework.web.context.request.WebRequest;
 
-import javax.servlet.http.HttpServletRequest;
-
-/**
- * Author: jerryocanas
- * Date: 9/6/12
- */
-
-/**
- * Responsible for returning the currency to use for the current request.
- */
 public interface BroadleafCurrencyResolver {
+    @java.lang.Deprecated
+    public org.broadleafcommerce.common.currency.domain.BroadleafRequestedCurrencyDto resolveCurrency(javax.servlet.http.HttpServletRequest request);
 
-    /**
-     * 
-     * @deprecated use {@link #resolveCurrency(WebRequest)} instead
-     */
-    @Deprecated
-    public BroadleafRequestedCurrencyDto resolveCurrency(HttpServletRequest request);
-    
-    public BroadleafRequestedCurrencyDto resolveCurrency(WebRequest request);
-
+    public org.broadleafcommerce.common.currency.domain.BroadleafRequestedCurrencyDto resolveCurrency(org.springframework.web.context.request.WebRequest request);
 }
+

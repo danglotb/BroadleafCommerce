@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,64 +17,98 @@
  */
 package org.broadleafcommerce.common.audit;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.util.BLCFieldUtils;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.BroadleafRequestCustomerResolverImpl;
 
-import java.lang.reflect.Field;
+public class AuditableListener extends org.broadleafcommerce.common.audit.AbstractAuditableListener {
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.audit.AuditableListener.class);
 
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-
-public class AuditableListener extends AbstractAuditableListener {
-
-    private static final Log LOG = LogFactory.getLog(AuditableListener.class);
-
-    @PrePersist
-    @Override
-    public void setAuditCreationAndUpdateData(Object entity) throws Exception {
-        setAuditCreationData(entity, new Auditable());
-        setAuditUpdateData(entity, new Auditable());
+    @javax.persistence.PrePersist
+    @java.lang.Override
+    public void setAuditCreationAndUpdateData(java.lang.Object entity) throws java.lang.Exception {
+        setAuditCreationData(entity, new org.broadleafcommerce.common.audit.Auditable());
+        setAuditUpdateData(entity, new org.broadleafcommerce.common.audit.Auditable());
     }
 
-    @PreUpdate
-    @Override
-    public void setAuditUpdateData(Object entity) throws Exception {
-        setAuditUpdateData(entity, new Auditable());
+    @javax.persistence.PreUpdate
+    @java.lang.Override
+    public void setAuditUpdateData(java.lang.Object entity) throws java.lang.Exception {
+        setAuditUpdateData(entity, new org.broadleafcommerce.common.audit.Auditable());
     }
 
-    @Override
-    protected void setAuditValueAgent(Field field, Object entity) throws IllegalArgumentException, IllegalAccessException {
+    @java.lang.Override
+    protected void setAuditValueAgent(java.lang.reflect.Field field, java.lang.Object entity) throws java.lang.IllegalAccessException, java.lang.IllegalArgumentException {
         try {
-            BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
-            if (context != null && context.getAdmin() && context.getAdminUserId() != null) {
-                field.setAccessible(true);
+            org.broadleafcommerce.common.web.BroadleafRequestContext context = org.broadleafcommerce.common.web.BroadleafRequestContext.getBroadleafRequestContext();
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.audit.AuditableListener.__L69, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.audit.AuditableListener.__L67, ((context != null) && (context.getAdmin())))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.audit.AuditableListener.__L68, ((context.getAdminUserId()) != null)))))) {
+                field.setAccessible(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.audit.AuditableListener.__L70, true));
                 field.set(entity, context.getAdminUserId());
-            } else if (context != null && context.getWebRequest() != null) {
-                Long customerId = 0L;
-                Object customer = BroadleafRequestCustomerResolverImpl.getRequestCustomerResolver().getCustomer();
-
-                if (customer != null) {
-                    Class<?> customerClass = customer.getClass();
-                    Field userNameField = BLCFieldUtils.getSingleField(customerClass, "username");
-                    userNameField.setAccessible(true);
-                    String username = (String) userNameField.get(customer);
-                    if (username != null) {
-                        //the customer has been persisted
-                        Field idField = BLCFieldUtils.getSingleField(customerClass, "id");
-                        idField.setAccessible(true);
-                        customerId = (Long) idField.get(customer);
+            }else
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.audit.AuditableListener.__L73, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.audit.AuditableListener.__L71, (context != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.audit.AuditableListener.__L72, ((context.getWebRequest()) != null)))))) {
+                    java.lang.Long customerId = perturbation.PerturbationEngine.plong(org.broadleafcommerce.common.audit.AuditableListener.__L74, ((long) (0L)));
+                    java.lang.Object customer = org.broadleafcommerce.common.web.BroadleafRequestCustomerResolverImpl.getRequestCustomerResolver().getCustomer();
+                    if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.audit.AuditableListener.__L75, (customer != null))) {
+                        java.lang.Class<?> customerClass = customer.getClass();
+                        java.lang.reflect.Field userNameField = org.broadleafcommerce.common.util.BLCFieldUtils.getSingleField(customerClass, "username");
+                        userNameField.setAccessible(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.audit.AuditableListener.__L76, true));
+                        java.lang.String username = ((java.lang.String) (userNameField.get(customer)));
+                        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.audit.AuditableListener.__L77, (username != null))) {
+                            java.lang.reflect.Field idField = org.broadleafcommerce.common.util.BLCFieldUtils.getSingleField(customerClass, "id");
+                            idField.setAccessible(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.audit.AuditableListener.__L78, true));
+                            customerId = ((java.lang.Long) (idField.get(customer)));
+                        }
                     }
+                    field.setAccessible(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.audit.AuditableListener.__L79, true));
+                    field.set(entity, customerId);
                 }
 
-                field.setAccessible(true);
-                field.set(entity, customerId);
-            }
-        } catch (Exception e) {
-            LOG.error("Error setting audit field.", e);
+        } catch (java.lang.Exception e) {
+            org.broadleafcommerce.common.audit.AuditableListener.LOG.error("Error setting audit field.", e);
         }
     }
 
+    public static perturbation.location.PerturbationLocation __L67;
+
+    public static perturbation.location.PerturbationLocation __L68;
+
+    public static perturbation.location.PerturbationLocation __L69;
+
+    public static perturbation.location.PerturbationLocation __L70;
+
+    public static perturbation.location.PerturbationLocation __L71;
+
+    public static perturbation.location.PerturbationLocation __L72;
+
+    public static perturbation.location.PerturbationLocation __L73;
+
+    public static perturbation.location.PerturbationLocation __L74;
+
+    public static perturbation.location.PerturbationLocation __L75;
+
+    public static perturbation.location.PerturbationLocation __L76;
+
+    public static perturbation.location.PerturbationLocation __L77;
+
+    public static perturbation.location.PerturbationLocation __L78;
+
+    public static perturbation.location.PerturbationLocation __L79;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.audit.AuditableListener.__L67 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/audit/AuditableListener.java:52)", 67, "Boolean");
+        org.broadleafcommerce.common.audit.AuditableListener.__L68 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/audit/AuditableListener.java:52)", 68, "Boolean");
+        org.broadleafcommerce.common.audit.AuditableListener.__L69 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/audit/AuditableListener.java:52)", 69, "Boolean");
+        org.broadleafcommerce.common.audit.AuditableListener.__L70 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/audit/AuditableListener.java:53)", 70, "Boolean");
+        org.broadleafcommerce.common.audit.AuditableListener.__L71 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/audit/AuditableListener.java:55)", 71, "Boolean");
+        org.broadleafcommerce.common.audit.AuditableListener.__L72 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/audit/AuditableListener.java:55)", 72, "Boolean");
+        org.broadleafcommerce.common.audit.AuditableListener.__L73 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/audit/AuditableListener.java:55)", 73, "Boolean");
+        org.broadleafcommerce.common.audit.AuditableListener.__L74 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/audit/AuditableListener.java:56)", 74, "Numerical");
+        org.broadleafcommerce.common.audit.AuditableListener.__L75 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/audit/AuditableListener.java:59)", 75, "Boolean");
+        org.broadleafcommerce.common.audit.AuditableListener.__L76 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/audit/AuditableListener.java:62)", 76, "Boolean");
+        org.broadleafcommerce.common.audit.AuditableListener.__L77 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/audit/AuditableListener.java:64)", 77, "Boolean");
+        org.broadleafcommerce.common.audit.AuditableListener.__L78 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/audit/AuditableListener.java:67)", 78, "Boolean");
+        org.broadleafcommerce.common.audit.AuditableListener.__L79 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/audit/AuditableListener.java:72)", 79, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.audit.AuditableListener.initPerturbationLocation0();
+    }
 }
+

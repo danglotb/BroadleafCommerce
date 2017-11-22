@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,69 +17,68 @@
  */
 package org.broadleafcommerce.common.payment.service;
 
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.payment.PaymentGatewayType;
-import org.broadleafcommerce.common.payment.PaymentTransactionType;
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
-import org.broadleafcommerce.common.vendor.service.exception.PaymentException;
-import org.springframework.stereotype.Service;
 
-@Service("blPassthroughPaymentTransactionService")
-public class PassthroughPaymentTransactionService extends AbstractPaymentGatewayTransactionService {
-
-    @Override
-    public PaymentResponseDTO authorize(PaymentRequestDTO paymentRequestDTO) throws PaymentException {
-        PaymentResponseDTO response = new PaymentResponseDTO(paymentRequestDTO.getPaymentType(), PaymentGatewayType.PASSTHROUGH)
-                .paymentTransactionType(PaymentTransactionType.AUTHORIZE)
-                .amount(new Money(paymentRequestDTO.getTransactionTotal()))
-                .successful(true);
+@org.springframework.stereotype.Service("blPassthroughPaymentTransactionService")
+public class PassthroughPaymentTransactionService extends org.broadleafcommerce.common.payment.service.AbstractPaymentGatewayTransactionService {
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO authorize(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO paymentRequestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        org.broadleafcommerce.common.payment.dto.PaymentResponseDTO response = new org.broadleafcommerce.common.payment.dto.PaymentResponseDTO(paymentRequestDTO.getPaymentType(), org.broadleafcommerce.common.payment.PaymentGatewayType.PASSTHROUGH).paymentTransactionType(org.broadleafcommerce.common.payment.PaymentTransactionType.AUTHORIZE).amount(new org.broadleafcommerce.common.money.Money(paymentRequestDTO.getTransactionTotal())).successful(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.service.PassthroughPaymentTransactionService.__L3837, true));
         return response;
     }
 
-    @Override
-    public PaymentResponseDTO capture(PaymentRequestDTO paymentRequestDTO) throws PaymentException {
-        PaymentResponseDTO response = new PaymentResponseDTO(paymentRequestDTO.getPaymentType(), PaymentGatewayType.PASSTHROUGH)
-                .paymentTransactionType(PaymentTransactionType.CAPTURE)
-                .amount(new Money(paymentRequestDTO.getTransactionTotal()))
-                .successful(true);
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO capture(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO paymentRequestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        org.broadleafcommerce.common.payment.dto.PaymentResponseDTO response = new org.broadleafcommerce.common.payment.dto.PaymentResponseDTO(paymentRequestDTO.getPaymentType(), org.broadleafcommerce.common.payment.PaymentGatewayType.PASSTHROUGH).paymentTransactionType(org.broadleafcommerce.common.payment.PaymentTransactionType.CAPTURE).amount(new org.broadleafcommerce.common.money.Money(paymentRequestDTO.getTransactionTotal())).successful(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.service.PassthroughPaymentTransactionService.__L3838, true));
         return response;
     }
 
-    @Override
-    public PaymentResponseDTO authorizeAndCapture(PaymentRequestDTO paymentRequestDTO) throws PaymentException {
-        PaymentResponseDTO response = new PaymentResponseDTO(paymentRequestDTO.getPaymentType(), PaymentGatewayType.PASSTHROUGH)
-                .paymentTransactionType(PaymentTransactionType.AUTHORIZE_AND_CAPTURE)
-                .amount(new Money(paymentRequestDTO.getTransactionTotal()))
-                .successful(true);
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO authorizeAndCapture(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO paymentRequestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        org.broadleafcommerce.common.payment.dto.PaymentResponseDTO response = new org.broadleafcommerce.common.payment.dto.PaymentResponseDTO(paymentRequestDTO.getPaymentType(), org.broadleafcommerce.common.payment.PaymentGatewayType.PASSTHROUGH).paymentTransactionType(org.broadleafcommerce.common.payment.PaymentTransactionType.AUTHORIZE_AND_CAPTURE).amount(new org.broadleafcommerce.common.money.Money(paymentRequestDTO.getTransactionTotal())).successful(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.service.PassthroughPaymentTransactionService.__L3839, true));
         return response;
     }
 
-    @Override
-    public PaymentResponseDTO reverseAuthorize(PaymentRequestDTO paymentRequestDTO) throws PaymentException {
-        PaymentResponseDTO response = new PaymentResponseDTO(paymentRequestDTO.getPaymentType(), PaymentGatewayType.PASSTHROUGH)
-                .paymentTransactionType(PaymentTransactionType.REVERSE_AUTH)
-                .amount(new Money(paymentRequestDTO.getTransactionTotal()))
-                .successful(true);
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO reverseAuthorize(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO paymentRequestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        org.broadleafcommerce.common.payment.dto.PaymentResponseDTO response = new org.broadleafcommerce.common.payment.dto.PaymentResponseDTO(paymentRequestDTO.getPaymentType(), org.broadleafcommerce.common.payment.PaymentGatewayType.PASSTHROUGH).paymentTransactionType(org.broadleafcommerce.common.payment.PaymentTransactionType.REVERSE_AUTH).amount(new org.broadleafcommerce.common.money.Money(paymentRequestDTO.getTransactionTotal())).successful(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.service.PassthroughPaymentTransactionService.__L3840, true));
         return response;
     }
 
-    @Override
-    public PaymentResponseDTO refund(PaymentRequestDTO paymentRequestDTO) throws PaymentException {
-        PaymentResponseDTO response = new PaymentResponseDTO(paymentRequestDTO.getPaymentType(), PaymentGatewayType.PASSTHROUGH)
-                .paymentTransactionType(PaymentTransactionType.REFUND)
-                .amount(new Money(paymentRequestDTO.getTransactionTotal()))
-                .successful(true);
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO refund(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO paymentRequestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        org.broadleafcommerce.common.payment.dto.PaymentResponseDTO response = new org.broadleafcommerce.common.payment.dto.PaymentResponseDTO(paymentRequestDTO.getPaymentType(), org.broadleafcommerce.common.payment.PaymentGatewayType.PASSTHROUGH).paymentTransactionType(org.broadleafcommerce.common.payment.PaymentTransactionType.REFUND).amount(new org.broadleafcommerce.common.money.Money(paymentRequestDTO.getTransactionTotal())).successful(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.service.PassthroughPaymentTransactionService.__L3841, true));
         return response;
     }
 
-    @Override
-    public PaymentResponseDTO voidPayment(PaymentRequestDTO paymentRequestDTO) throws PaymentException {
-        PaymentResponseDTO response = new PaymentResponseDTO(paymentRequestDTO.getPaymentType(), PaymentGatewayType.PASSTHROUGH)
-                .paymentTransactionType(PaymentTransactionType.VOID)
-                .amount(new Money(paymentRequestDTO.getTransactionTotal()))
-                .successful(true);
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO voidPayment(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO paymentRequestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        org.broadleafcommerce.common.payment.dto.PaymentResponseDTO response = new org.broadleafcommerce.common.payment.dto.PaymentResponseDTO(paymentRequestDTO.getPaymentType(), org.broadleafcommerce.common.payment.PaymentGatewayType.PASSTHROUGH).paymentTransactionType(org.broadleafcommerce.common.payment.PaymentTransactionType.VOID).amount(new org.broadleafcommerce.common.money.Money(paymentRequestDTO.getTransactionTotal())).successful(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.service.PassthroughPaymentTransactionService.__L3842, true));
         return response;
     }
 
+    public static perturbation.location.PerturbationLocation __L3837;
+
+    public static perturbation.location.PerturbationLocation __L3838;
+
+    public static perturbation.location.PerturbationLocation __L3839;
+
+    public static perturbation.location.PerturbationLocation __L3840;
+
+    public static perturbation.location.PerturbationLocation __L3841;
+
+    public static perturbation.location.PerturbationLocation __L3842;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.payment.service.PassthroughPaymentTransactionService.__L3837 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/service/PassthroughPaymentTransactionService.java:36)", 3837, "Boolean");
+        org.broadleafcommerce.common.payment.service.PassthroughPaymentTransactionService.__L3838 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/service/PassthroughPaymentTransactionService.java:45)", 3838, "Boolean");
+        org.broadleafcommerce.common.payment.service.PassthroughPaymentTransactionService.__L3839 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/service/PassthroughPaymentTransactionService.java:54)", 3839, "Boolean");
+        org.broadleafcommerce.common.payment.service.PassthroughPaymentTransactionService.__L3840 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/service/PassthroughPaymentTransactionService.java:63)", 3840, "Boolean");
+        org.broadleafcommerce.common.payment.service.PassthroughPaymentTransactionService.__L3841 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/service/PassthroughPaymentTransactionService.java:72)", 3841, "Boolean");
+        org.broadleafcommerce.common.payment.service.PassthroughPaymentTransactionService.__L3842 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/service/PassthroughPaymentTransactionService.java:81)", 3842, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.payment.service.PassthroughPaymentTransactionService.initPerturbationLocation0();
+    }
 }
+

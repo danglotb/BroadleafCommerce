@@ -15,127 +15,90 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-/**
- * 
- */
 package org.broadleafcommerce.common.web.boot.support;
 
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
-import org.springframework.util.ClassUtils;
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.ContextLoaderListener;
-import org.springframework.web.context.WebApplicationContext;
 
-import java.security.AccessController;
-import java.security.PrivilegedAction;
-import java.security.PrivilegedActionException;
+public class SpringBootBootstrappingServletContextListener implements javax.servlet.ServletContextListener {
+    public static final java.lang.String APPLICATION_CLASS = "listenerContextInitializerClass";
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.ServletException;
+    protected org.springframework.web.context.ContextLoaderListener delegateListener;
 
-/**
- * <p>
- * Bootstraps a Spring Boot application using a ServletContextListener rather than the default of using a ServletContextInitializer.
- * The use case here is when you absolutely have to use a web.xml and cannot rely on classpath scanning for a ServletContextInitializer
- * 
- * <p>
- * This is designed to work in conjunction with the {@link BroadleafBootServletContextInitializer} (although not requried) which serves
- * as a drop-in replacement for {@link SpringBootServletInitializer}.
- * 
- * <p>
- * Given an application that looks like this:
- * 
- * <pre>
- * package com.mycompany
- * 
- * {@literal @}SpringBootApplication
- * public class MyApplication extends BroadleafBootServletContextInitializer {
- * 
- * }
- * </pre>
- * 
- * <p>
- * A web.xml should contain the following listener configuration:
- * 
- * <pre>
- * {@code
- * <context-param>
- *   <param-name>listenerContextInitializerClass</param-name>
- *  <param-value>com.mycompany.MyApplication</param-value>
- * </context-param>
- * <listener>
- *   <listener-class>org.broadleafcommerce.common.web.boot.support.SpringBootBootstrappingServletContextListener</listener-class>
- * </listener>
- * }
- * </pre>
- * 
- * @author Phillip Verheyden (phillipuniverse)
- * @see BroadleafBootServletContextInitializer
- */
-public class SpringBootBootstrappingServletContextListener implements ServletContextListener {
-
-    public static final String APPLICATION_CLASS = "listenerContextInitializerClass";
-    
-    protected ContextLoaderListener delegateListener;
-    
-    @Override
-    public void contextInitialized(ServletContextEvent event) {
+    @java.lang.Override
+    public void contextInitialized(javax.servlet.ServletContextEvent event) {
         try {
-            ServletContext servletContext = event.getServletContext();
-            Class<WebApplicationInitializer> initializerClass = getInitializerClass(servletContext);
-            WebApplicationInitializer initializer = createInitializer(initializerClass);
+            javax.servlet.ServletContext servletContext = event.getServletContext();
+            java.lang.Class<org.springframework.web.WebApplicationInitializer> initializerClass = getInitializerClass(servletContext);
+            org.springframework.web.WebApplicationInitializer initializer = createInitializer(initializerClass);
             initializer.onStartup(servletContext);
-            
-            WebApplicationContext rootContext = (WebApplicationContext) servletContext.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
-            if (rootContext != null) {
-                delegateListener = new ContextLoaderListener(rootContext) {
-                    @Override
-                    public void contextInitialized(ServletContextEvent event) {
-                        // initionally umimplemented since it has already initialized
+            org.springframework.web.context.WebApplicationContext rootContext = ((org.springframework.web.context.WebApplicationContext) (servletContext.getAttribute(org.springframework.web.context.WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE)));
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.boot.support.SpringBootBootstrappingServletContextListener.__L7048, (rootContext != null))) {
+                delegateListener = new org.springframework.web.context.ContextLoaderListener(rootContext) {
+                    @java.lang.Override
+                    public void contextInitialized(javax.servlet.ServletContextEvent event) {
                     }
                 };
             }
-        } catch (ServletException | ClassNotFoundException | LinkageError | PrivilegedActionException e) {
-            throw new RuntimeException(e);
+        } catch (javax.servlet.ServletException | java.lang.ClassNotFoundException | java.lang.LinkageError | java.security.PrivilegedActionException e) {
+            throw new java.lang.RuntimeException(e);
         }
     }
-    
-    @Override
-    public void contextDestroyed(ServletContextEvent event) {
-        if (delegateListener != null) {
+
+    @java.lang.Override
+    public void contextDestroyed(javax.servlet.ServletContextEvent event) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.boot.support.SpringBootBootstrappingServletContextListener.__L7049, ((delegateListener) != null))) {
             delegateListener.contextDestroyed(event);
         }
     }
-    
-    @SuppressWarnings("unchecked")
-    protected Class<WebApplicationInitializer> getInitializerClass(ServletContext ctx) throws ClassNotFoundException, LinkageError {
-        String clazz = ctx.getInitParameter(APPLICATION_CLASS);
-        if (StringUtils.isBlank(clazz)) {
-            throw new IllegalStateException(String.format("A %s context-param must be defined that points to your main @SpringBootApplicatino class", APPLICATION_CLASS));
+
+    @java.lang.SuppressWarnings("unchecked")
+    protected java.lang.Class<org.springframework.web.WebApplicationInitializer> getInitializerClass(javax.servlet.ServletContext ctx) throws java.lang.ClassNotFoundException, java.lang.LinkageError {
+        java.lang.String clazz = ctx.getInitParameter(org.broadleafcommerce.common.web.boot.support.SpringBootBootstrappingServletContextListener.APPLICATION_CLASS);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.boot.support.SpringBootBootstrappingServletContextListener.__L7050, org.apache.commons.lang3.StringUtils.isBlank(clazz))) {
+            throw new java.lang.IllegalStateException(java.lang.String.format("A %s context-param must be defined that points to your main @SpringBootApplicatino class", org.broadleafcommerce.common.web.boot.support.SpringBootBootstrappingServletContextListener.APPLICATION_CLASS));
         }
-        Class<?> initializerClass = ClassUtils.forName(clazz, this.getClass().getClassLoader());
-        if (!WebApplicationInitializer.class.isAssignableFrom(initializerClass)) {
-            throw new IllegalStateException(String.format("The %s context-param must be an instance of ServletContextInitializer. Consider extending from %s", APPLICATION_CLASS, BroadleafBootServletContextInitializer.class.getName()));
+        java.lang.Class<?> initializerClass = org.springframework.util.ClassUtils.forName(clazz, this.getClass().getClassLoader());
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.boot.support.SpringBootBootstrappingServletContextListener.__L7052, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.boot.support.SpringBootBootstrappingServletContextListener.__L7051, org.springframework.web.WebApplicationInitializer.class.isAssignableFrom(initializerClass)))))) {
+            throw new java.lang.IllegalStateException(java.lang.String.format("The %s context-param must be an instance of ServletContextInitializer. Consider extending from %s", org.broadleafcommerce.common.web.boot.support.SpringBootBootstrappingServletContextListener.APPLICATION_CLASS, org.broadleafcommerce.common.web.boot.support.BroadleafBootServletContextInitializer.class.getName()));
         }
-        
-        return (Class<WebApplicationInitializer>) initializerClass;
+        return ((java.lang.Class<org.springframework.web.WebApplicationInitializer>) (initializerClass));
     }
-    
-    protected WebApplicationInitializer createInitializer(final Class<WebApplicationInitializer> initializerClass) throws PrivilegedActionException {
-        if (System.getSecurityManager() != null) {
-            return AccessController.doPrivileged(new PrivilegedAction<WebApplicationInitializer>() {
-                @Override
-                public WebApplicationInitializer run() {
-                    return BeanUtils.instantiateClass(initializerClass);
+
+    protected org.springframework.web.WebApplicationInitializer createInitializer(final java.lang.Class<org.springframework.web.WebApplicationInitializer> initializerClass) throws java.security.PrivilegedActionException {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.boot.support.SpringBootBootstrappingServletContextListener.__L7053, ((java.lang.System.getSecurityManager()) != null))) {
+            return java.security.AccessController.doPrivileged(new java.security.PrivilegedAction<org.springframework.web.WebApplicationInitializer>() {
+                @java.lang.Override
+                public org.springframework.web.WebApplicationInitializer run() {
+                    return org.springframework.beans.BeanUtils.instantiateClass(initializerClass);
                 }
-            }, AccessController.getContext());
-        } else {
-            return BeanUtils.instantiate(initializerClass);
+            }, java.security.AccessController.getContext());
+        }else {
+            return org.springframework.beans.BeanUtils.instantiate(initializerClass);
         }
     }
-    
+
+    public static perturbation.location.PerturbationLocation __L7048;
+
+    public static perturbation.location.PerturbationLocation __L7049;
+
+    public static perturbation.location.PerturbationLocation __L7050;
+
+    public static perturbation.location.PerturbationLocation __L7051;
+
+    public static perturbation.location.PerturbationLocation __L7052;
+
+    public static perturbation.location.PerturbationLocation __L7053;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.boot.support.SpringBootBootstrappingServletContextListener.__L7048 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/boot/support/SpringBootBootstrappingServletContextListener.java:94)", 7048, "Boolean");
+        org.broadleafcommerce.common.web.boot.support.SpringBootBootstrappingServletContextListener.__L7049 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/boot/support/SpringBootBootstrappingServletContextListener.java:109)", 7049, "Boolean");
+        org.broadleafcommerce.common.web.boot.support.SpringBootBootstrappingServletContextListener.__L7050 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/boot/support/SpringBootBootstrappingServletContextListener.java:117)", 7050, "Boolean");
+        org.broadleafcommerce.common.web.boot.support.SpringBootBootstrappingServletContextListener.__L7051 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/boot/support/SpringBootBootstrappingServletContextListener.java:121)", 7051, "Boolean");
+        org.broadleafcommerce.common.web.boot.support.SpringBootBootstrappingServletContextListener.__L7052 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/boot/support/SpringBootBootstrappingServletContextListener.java:121)", 7052, "Boolean");
+        org.broadleafcommerce.common.web.boot.support.SpringBootBootstrappingServletContextListener.__L7053 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/boot/support/SpringBootBootstrappingServletContextListener.java:129)", 7053, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.boot.support.SpringBootBootstrappingServletContextListener.initPerturbationLocation0();
+    }
 }
+

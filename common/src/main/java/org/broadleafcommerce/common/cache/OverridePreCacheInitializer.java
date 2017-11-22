@@ -1,6 +1,6 @@
 /*
  * #%L
- * broadleaf-multitenant-singleschema
+ * BroadleafCommerce Common Libraries
  * %%
  * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
@@ -17,30 +17,10 @@
  */
 package org.broadleafcommerce.common.cache;
 
-import org.broadleafcommerce.common.extension.StandardCacheItem;
 
-/**
- * Performs cache item initialization for a specific entity type.
- *
- * @author Jeff Fischer
- */
 public interface OverridePreCacheInitializer {
+    boolean isOverrideQualified(java.lang.Class<?> type);
 
-    /**
-     * Whether or not this initializer is qualified to work on the given entity type
-     *
-     * @param type
-     * @return
-     */
-    boolean isOverrideQualified(Class<?> type);
-
-    /**
-     * Perform any initialization tasks (e.g. exercising a lazy collection) and returns
-     * a StandardCacheItem instance.
-     *
-     * @param entity
-     * @return
-     */
-    StandardCacheItem initializeOverride(Object entity);
-
+    org.broadleafcommerce.common.extension.StandardCacheItem initializeOverride(java.lang.Object entity);
 }
+

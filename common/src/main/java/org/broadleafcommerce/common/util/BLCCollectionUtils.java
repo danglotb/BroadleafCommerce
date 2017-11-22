@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,132 +17,111 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-import org.springframework.util.ClassUtils;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
-
-/**
- * Convenience methods for interacting with collections.
- * 
- * @author Andre Azzolini (apazzolini)
- */
 public class BLCCollectionUtils {
-    
-    /**
-     * Delegates to {@link CollectionUtils#collect(Collection, Transformer)}, but performs the necessary type coercion 
-     * to allow the returned collection to be correctly casted based on the TypedTransformer.
-     * 
-     * @param inputCollection
-     * @param transformer
-     * @return the typed, collected Collection
-     */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static <T> Collection<T> collect(Collection inputCollection, TypedTransformer<T> transformer) {
-        return CollectionUtils.collect(inputCollection, transformer);
+    @java.lang.SuppressWarnings({ "unchecked", "rawtypes" })
+    public static <T> java.util.Collection<T> collect(java.util.Collection inputCollection, org.broadleafcommerce.common.util.TypedTransformer<T> transformer) {
+        return org.apache.commons.collections.CollectionUtils.collect(inputCollection, transformer);
     }
 
-    /**
-     * The same as {@link #collect(Collection, TypedTransformer)} but returns an ArrayList
-     * @param inputCollection
-     * @param transformer
-     * @return
-     */
-    @SuppressWarnings("rawtypes")
-    public static <T> List<T> collectList(Collection inputCollection, TypedTransformer<T> transformer) {
-        List<T> returnList = new ArrayList<T>();
-        for (Object obj : inputCollection) {
+    @java.lang.SuppressWarnings("rawtypes")
+    public static <T> java.util.List<T> collectList(java.util.Collection inputCollection, org.broadleafcommerce.common.util.TypedTransformer<T> transformer) {
+        java.util.List<T> returnList = new java.util.ArrayList<T>();
+        for (java.lang.Object obj : inputCollection) {
             T transformed = transformer.transform(obj);
             returnList.add(transformed);
         }
         return returnList;
     }
 
-    /**
-     * The same as {@link #collect(Collection, TypedTransformer)} but returns an array
-     * @param inputCollection
-     * @param transformer
-     * @return
-     */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    public static <T> T[] collectArray(Collection inputCollection, TypedTransformer<T> transformer, Class<T> clazz) {
-        T[] returnArray = (T[]) Array.newInstance(clazz, inputCollection.size());
-        int i = 0;
-        for (Object obj : inputCollection) {
+    @java.lang.SuppressWarnings({ "rawtypes", "unchecked" })
+    public static <T> T[] collectArray(java.util.Collection inputCollection, org.broadleafcommerce.common.util.TypedTransformer<T> transformer, java.lang.Class<T> clazz) {
+        T[] returnArray = ((T[]) (java.lang.reflect.Array.newInstance(clazz, perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.BLCCollectionUtils.__L6085, inputCollection.size()))));
+        int i = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.BLCCollectionUtils.__L6086, 0);
+        for (java.lang.Object obj : inputCollection) {
             T transformed = transformer.transform(obj);
-            returnArray[i++] = transformed;
+            returnArray[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.BLCCollectionUtils.__L6087, (i++))] = transformed;
         }
         return returnArray;
     }
 
-    /**
-     * Delegates to {@link CollectionUtils#select(Collection, org.apache.commons.collections.Predicate)}, but will
-     * force the return type to be a List<T>.
-     * 
-     * @param inputCollection
-     * @param predicate
-     * @return
-     */
-    public static <T> List<T> selectList(Collection<T> inputCollection, TypedPredicate<T> predicate) {
-        ArrayList<T> answer = new ArrayList<T>(inputCollection.size());
-        CollectionUtils.select(inputCollection, predicate, answer);
+    public static <T> java.util.List<T> selectList(java.util.Collection<T> inputCollection, org.broadleafcommerce.common.util.TypedPredicate<T> predicate) {
+        java.util.ArrayList<T> answer = new java.util.ArrayList<T>(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.BLCCollectionUtils.__L6088, inputCollection.size()));
+        org.apache.commons.collections.CollectionUtils.select(inputCollection, predicate, answer);
         return answer;
     }
-    
-    /**
-     * It is common to want to make sure that a collection you receive is not null. Instead, we'd rather have
-     * an empty list.
-     * 
-     * @param list
-     * @return the passed in list if not null, otherwise a new ArrayList of the same type
-     */
-    public static <T> List<T> createIfNull(List<T> list) {
-        return (list == null) ? new ArrayList<T>() : list;
+
+    public static <T> java.util.List<T> createIfNull(java.util.List<T> list) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCCollectionUtils.__L6089, (list == null)) ? new java.util.ArrayList<T>() : list;
     }
 
-    /**
-     * Create a collection proxy that will perform some piece of work whenever modification methods are called on the
-     * proxy. This includes the add, allAll, remove, removeAll, clear methods. Additionally, calling remove on an iterator
-     * created from this collection is also covered.
-     *
-     * @param work the work to perform on collection modification
-     * @param original the original collection to make change aware
-     * @param <T> the collection type (e.g. List, Set, etc...)
-     * @return the proxied collection
-     */
-    public static <T extends Collection> T createChangeAwareCollection(final WorkOnChange work, final Collection original) {
-        T proxy = (T) Proxy.newProxyInstance(BLCCollectionUtils.class.getClassLoader(), ClassUtils.getAllInterfacesForClass(original.getClass()), new InvocationHandler() {
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                if (method.getName().startsWith("add") || method.getName().startsWith("remove") || method.getName()
-                        .startsWith("clear")) {
+    public static <T extends java.util.Collection> T createChangeAwareCollection(final org.broadleafcommerce.common.util.WorkOnChange work, final java.util.Collection original) {
+        T proxy = ((T) (java.lang.reflect.Proxy.newProxyInstance(org.broadleafcommerce.common.util.BLCCollectionUtils.class.getClassLoader(), org.springframework.util.ClassUtils.getAllInterfacesForClass(original.getClass()), new java.lang.reflect.InvocationHandler() {
+            @java.lang.Override
+            public java.lang.Object invoke(java.lang.Object proxy, java.lang.reflect.Method method, java.lang.Object[] args) throws java.lang.Throwable {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCCollectionUtils.__L6094, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCCollectionUtils.__L6092, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCCollectionUtils.__L6090, method.getName().startsWith("add"))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCCollectionUtils.__L6091, method.getName().startsWith("remove")))))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCCollectionUtils.__L6093, method.getName().startsWith("clear")))))) {
                     work.doWork(original);
                 }
-                if (method.getName().equals("iterator")) {
-                    final Iterator itr = (Iterator) method.invoke(original, args);
-                    Iterator proxyItr = (Iterator) Proxy.newProxyInstance(getClass().getClassLoader(), ClassUtils.getAllInterfacesForClass(itr.getClass()), new InvocationHandler() {
-                        @Override
-                        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                            if (method.getName().equals("remove")) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCCollectionUtils.__L6095, method.getName().equals("iterator"))) {
+                    final java.util.Iterator itr = ((java.util.Iterator) (method.invoke(original, args)));
+                    java.util.Iterator proxyItr = ((java.util.Iterator) (java.lang.reflect.Proxy.newProxyInstance(getClass().getClassLoader(), org.springframework.util.ClassUtils.getAllInterfacesForClass(itr.getClass()), new java.lang.reflect.InvocationHandler() {
+                        @java.lang.Override
+                        public java.lang.Object invoke(java.lang.Object proxy, java.lang.reflect.Method method, java.lang.Object[] args) throws java.lang.Throwable {
+                            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCCollectionUtils.__L6096, method.getName().equals("remove"))) {
                                 work.doWork(original);
                             }
                             return method.invoke(itr, args);
                         }
-                    });
+                    })));
                     return proxyItr;
                 }
                 return method.invoke(original, args);
             }
-        });
+        })));
         return proxy;
     }
+
+    public static perturbation.location.PerturbationLocation __L6085;
+
+    public static perturbation.location.PerturbationLocation __L6086;
+
+    public static perturbation.location.PerturbationLocation __L6087;
+
+    public static perturbation.location.PerturbationLocation __L6088;
+
+    public static perturbation.location.PerturbationLocation __L6089;
+
+    public static perturbation.location.PerturbationLocation __L6090;
+
+    public static perturbation.location.PerturbationLocation __L6091;
+
+    public static perturbation.location.PerturbationLocation __L6092;
+
+    public static perturbation.location.PerturbationLocation __L6093;
+
+    public static perturbation.location.PerturbationLocation __L6094;
+
+    public static perturbation.location.PerturbationLocation __L6095;
+
+    public static perturbation.location.PerturbationLocation __L6096;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.BLCCollectionUtils.__L6085 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCCollectionUtils.java:78)", 6085, "Numerical");
+        org.broadleafcommerce.common.util.BLCCollectionUtils.__L6086 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCCollectionUtils.java:79)", 6086, "Numerical");
+        org.broadleafcommerce.common.util.BLCCollectionUtils.__L6087 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCCollectionUtils.java:82)", 6087, "Numerical");
+        org.broadleafcommerce.common.util.BLCCollectionUtils.__L6088 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCCollectionUtils.java:96)", 6088, "Numerical");
+        org.broadleafcommerce.common.util.BLCCollectionUtils.__L6089 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCCollectionUtils.java:109)", 6089, "Boolean");
+        org.broadleafcommerce.common.util.BLCCollectionUtils.__L6090 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCCollectionUtils.java:126)", 6090, "Boolean");
+        org.broadleafcommerce.common.util.BLCCollectionUtils.__L6091 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCCollectionUtils.java:126)", 6091, "Boolean");
+        org.broadleafcommerce.common.util.BLCCollectionUtils.__L6092 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCCollectionUtils.java:126)", 6092, "Boolean");
+        org.broadleafcommerce.common.util.BLCCollectionUtils.__L6093 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCCollectionUtils.java:126)", 6093, "Boolean");
+        org.broadleafcommerce.common.util.BLCCollectionUtils.__L6094 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCCollectionUtils.java:126)", 6094, "Boolean");
+        org.broadleafcommerce.common.util.BLCCollectionUtils.__L6095 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCCollectionUtils.java:130)", 6095, "Boolean");
+        org.broadleafcommerce.common.util.BLCCollectionUtils.__L6096 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCCollectionUtils.java:135)", 6096, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.BLCCollectionUtils.initPerturbationLocation0();
+    }
 }
+

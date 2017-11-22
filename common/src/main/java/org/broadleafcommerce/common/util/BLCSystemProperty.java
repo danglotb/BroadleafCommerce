@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,86 +17,85 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.broadleafcommerce.common.config.service.SystemPropertiesPropertySourceRegistrar;
-import org.broadleafcommerce.common.config.service.SystemPropertiesService;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.core.env.Environment;
-import org.springframework.core.env.PropertySource;
-import org.springframework.stereotype.Service;
 
-/**
- * Convenience class to faciliate getting system properties
- * 
- * Note that this class is scanned as a bean to pick up the applicationContext, but the methods
- * this class provides should be invoked statically.
- * 
- * @author Andre Azzolini (apazzolini)
- * @deprecated this class should not be used to statically obtain referenes to properties. Instead, you should either inject
- * an instead of the {@link SystemPropertiesService} directly _or_ inject an {@link Environment} to get properties that way,
- * since {@link SystemPropertiesPropertySourceRegistrar} adds a {@link SystemPropertiesService} {@link PropertySource}
- */
-@Deprecated
-@Service("blBLCSystemProperty")
-public class BLCSystemProperty implements ApplicationContextAware {
+@java.lang.Deprecated
+@org.springframework.stereotype.Service("blBLCSystemProperty")
+public class BLCSystemProperty implements org.springframework.context.ApplicationContextAware {
+    protected static org.springframework.context.ApplicationContext applicationContext;
 
-    protected static ApplicationContext applicationContext;
-    
-    /**
-     * @see SystemPropertiesService#resolveSystemProperty(String)
-     */
-    public static String resolveSystemProperty(String name) {
-        return getSystemPropertiesService().resolveSystemProperty(name);
-    }
-    
-    public static String resolveSystemProperty(String name, String defaultValue) {
-        return getSystemPropertiesService().resolveSystemProperty(name, defaultValue);
+    public static java.lang.String resolveSystemProperty(java.lang.String name) {
+        return org.broadleafcommerce.common.util.BLCSystemProperty.getSystemPropertiesService().resolveSystemProperty(name);
     }
 
-    /**
-     * @see SystemPropertiesService#resolveIntSystemProperty(String)
-     */
-    public static int resolveIntSystemProperty(String name) {
-        return getSystemPropertiesService().resolveIntSystemProperty(name);
-    }
-    
-    public static int resolveIntSystemProperty(String name, int defaultValue) {
-        return getSystemPropertiesService().resolveIntSystemProperty(name, defaultValue);
+    public static java.lang.String resolveSystemProperty(java.lang.String name, java.lang.String defaultValue) {
+        return org.broadleafcommerce.common.util.BLCSystemProperty.getSystemPropertiesService().resolveSystemProperty(name, defaultValue);
     }
 
-    /**
-     * @see SystemPropertiesService#resolveBooleanSystemProperty(String)
-     */
-    public static boolean resolveBooleanSystemProperty(String name) {
-        return getSystemPropertiesService().resolveBooleanSystemProperty(name);
-    }
-    
-    public static boolean resolveBooleanSystemProperty(String name, boolean defaultValue) {
-        return getSystemPropertiesService().resolveBooleanSystemProperty(name, defaultValue);
+    public static int resolveIntSystemProperty(java.lang.String name) {
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.BLCSystemProperty.__L6218, org.broadleafcommerce.common.util.BLCSystemProperty.getSystemPropertiesService().resolveIntSystemProperty(name));
     }
 
-    /**
-     * @see SystemPropertiesService#resolveLongSystemProperty(String)
-     */
-    public static long resolveLongSystemProperty(String name) {
-        return getSystemPropertiesService().resolveLongSystemProperty(name);
-    }
-    
-    public static long resolveLongSystemProperty(String name, long defaultValue) {
-        return getSystemPropertiesService().resolveLongSystemProperty(name, defaultValue);
-    }
-    
-    /**
-     * @return the "blSystemPropertiesService" bean from the application context
-     */
-    protected static SystemPropertiesService getSystemPropertiesService() {
-        return (SystemPropertiesService) applicationContext.getBean("blSystemPropertiesService");
+    public static int resolveIntSystemProperty(java.lang.String name, int defaultValue) {
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.BLCSystemProperty.__L6220, org.broadleafcommerce.common.util.BLCSystemProperty.getSystemPropertiesService().resolveIntSystemProperty(name, perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.BLCSystemProperty.__L6219, defaultValue)));
     }
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        BLCSystemProperty.applicationContext = applicationContext;
+    public static boolean resolveBooleanSystemProperty(java.lang.String name) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCSystemProperty.__L6221, org.broadleafcommerce.common.util.BLCSystemProperty.getSystemPropertiesService().resolveBooleanSystemProperty(name));
     }
 
+    public static boolean resolveBooleanSystemProperty(java.lang.String name, boolean defaultValue) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCSystemProperty.__L6223, org.broadleafcommerce.common.util.BLCSystemProperty.getSystemPropertiesService().resolveBooleanSystemProperty(name, perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCSystemProperty.__L6222, defaultValue)));
+    }
+
+    public static long resolveLongSystemProperty(java.lang.String name) {
+        return perturbation.PerturbationEngine.plong(org.broadleafcommerce.common.util.BLCSystemProperty.__L6224, org.broadleafcommerce.common.util.BLCSystemProperty.getSystemPropertiesService().resolveLongSystemProperty(name));
+    }
+
+    public static long resolveLongSystemProperty(java.lang.String name, long defaultValue) {
+        return perturbation.PerturbationEngine.plong(org.broadleafcommerce.common.util.BLCSystemProperty.__L6226, org.broadleafcommerce.common.util.BLCSystemProperty.getSystemPropertiesService().resolveLongSystemProperty(name, perturbation.PerturbationEngine.plong(org.broadleafcommerce.common.util.BLCSystemProperty.__L6225, defaultValue)));
+    }
+
+    protected static org.broadleafcommerce.common.config.service.SystemPropertiesService getSystemPropertiesService() {
+        return ((org.broadleafcommerce.common.config.service.SystemPropertiesService) (org.broadleafcommerce.common.util.BLCSystemProperty.applicationContext.getBean("blSystemPropertiesService")));
+    }
+
+    @java.lang.Override
+    public void setApplicationContext(org.springframework.context.ApplicationContext applicationContext) throws org.springframework.beans.BeansException {
+        org.broadleafcommerce.common.util.BLCSystemProperty.applicationContext = applicationContext;
+    }
+
+    public static perturbation.location.PerturbationLocation __L6218;
+
+    public static perturbation.location.PerturbationLocation __L6219;
+
+    public static perturbation.location.PerturbationLocation __L6220;
+
+    public static perturbation.location.PerturbationLocation __L6221;
+
+    public static perturbation.location.PerturbationLocation __L6222;
+
+    public static perturbation.location.PerturbationLocation __L6223;
+
+    public static perturbation.location.PerturbationLocation __L6224;
+
+    public static perturbation.location.PerturbationLocation __L6225;
+
+    public static perturbation.location.PerturbationLocation __L6226;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.BLCSystemProperty.__L6218 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCSystemProperty.java:61)", 6218, "Numerical");
+        org.broadleafcommerce.common.util.BLCSystemProperty.__L6219 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCSystemProperty.java:65)", 6219, "Numerical");
+        org.broadleafcommerce.common.util.BLCSystemProperty.__L6220 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCSystemProperty.java:65)", 6220, "Numerical");
+        org.broadleafcommerce.common.util.BLCSystemProperty.__L6221 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCSystemProperty.java:72)", 6221, "Boolean");
+        org.broadleafcommerce.common.util.BLCSystemProperty.__L6222 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCSystemProperty.java:76)", 6222, "Boolean");
+        org.broadleafcommerce.common.util.BLCSystemProperty.__L6223 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCSystemProperty.java:76)", 6223, "Boolean");
+        org.broadleafcommerce.common.util.BLCSystemProperty.__L6224 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCSystemProperty.java:83)", 6224, "Numerical");
+        org.broadleafcommerce.common.util.BLCSystemProperty.__L6225 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCSystemProperty.java:87)", 6225, "Numerical");
+        org.broadleafcommerce.common.util.BLCSystemProperty.__L6226 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCSystemProperty.java:87)", 6226, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.BLCSystemProperty.initPerturbationLocation0();
+    }
 }
+

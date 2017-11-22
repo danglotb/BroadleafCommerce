@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,27 +17,26 @@
  */
 package org.broadleafcommerce.common.filter;
 
-/**
- * @author Jeff Fischer
- */
+
 public class FilterParameter {
+    protected java.lang.String name;
 
-    protected String name;
-    protected String type;
+    protected java.lang.String type;
 
-    public String getName() {
+    public java.lang.String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(java.lang.String name) {
         this.name = name;
     }
 
-    public String getType() {
+    public java.lang.String getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(java.lang.String type) {
         this.type = type;
     }
 }
+

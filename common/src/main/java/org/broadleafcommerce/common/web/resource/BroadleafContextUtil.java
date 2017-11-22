@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,145 +17,168 @@
  */
 package org.broadleafcommerce.common.web.resource;
 
-import org.broadleafcommerce.common.classloader.release.ThreadLocalManager;
-import org.broadleafcommerce.common.util.DeployBehaviorUtil;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.BroadleafSandBoxResolver;
-import org.broadleafcommerce.common.web.BroadleafSiteResolver;
-import org.broadleafcommerce.common.web.BroadleafThemeResolver;
-import org.broadleafcommerce.common.web.DeployBehavior;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.context.request.WebRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-/**
- * <p>
- * Some resource handlers need a valid site, theme, or sandbox to be available when serving request.
- * 
- * <p>
- * This component provides the {@link #establishThinRequestContext()} method for that purpose.  
- *
- * @author bpolster
- *
- */
-@Service("blBroadleafContextUtil")
+@org.springframework.stereotype.Service("blBroadleafContextUtil")
 public class BroadleafContextUtil {
-    
     @javax.annotation.Resource(name = "blSiteResolver")
-    protected BroadleafSiteResolver siteResolver;
-    
+    protected org.broadleafcommerce.common.web.BroadleafSiteResolver siteResolver;
+
     @javax.annotation.Resource(name = "blSandBoxResolver")
-    protected BroadleafSandBoxResolver sbResolver;
-    
+    protected org.broadleafcommerce.common.web.BroadleafSandBoxResolver sbResolver;
+
     @javax.annotation.Resource(name = "blThemeResolver")
-    protected BroadleafThemeResolver themeResolver;
+    protected org.broadleafcommerce.common.web.BroadleafThemeResolver themeResolver;
 
     @javax.annotation.Resource(name = "blDeployBehaviorUtil")
-    protected DeployBehaviorUtil deployBehaviorUtil;
+    protected org.broadleafcommerce.common.util.DeployBehaviorUtil deployBehaviorUtil;
 
     protected boolean versioningEnabled = false;
 
-    /**
-     * Creates a BroadleafRequestContext with supported values populated
-     * @see #establishThinRequestContextInternal(boolean, boolean)
-     */
     public void establishThinRequestContext() {
-        establishThinRequestContextInternal(true, true);
+        establishThinRequestContextInternal(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7561, true), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7562, true));
     }
 
-    /**
-     * Creates a BroadleafRequestContext without a Sandbox
-     * @see #establishThinRequestContextInternal(boolean, boolean)
-     */
     public void establishThinRequestContextWithoutSandBox() {
-        establishThinRequestContextInternal(true, false);
+        establishThinRequestContextInternal(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7563, true), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7564, false));
     }
 
-    /**
-     * Creates a BroadleafRequestContext without a Theme or Sandbox
-     * @see #establishThinRequestContextInternal(boolean, boolean)
-     */
     public void establishThinRequestContextWithoutThemeOrSandbox() {
-        establishThinRequestContextInternal(false, false);
+        establishThinRequestContextInternal(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7565, false), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7566, false));
     }
 
-    /**
-     * Adds request and site to the BroadleafRequestContext
-     * 
-     * If includeTheme is true then also adds the Theme.
-     * If includeSandBox is true then also adds the SandBox.
-     * 
-     * @param includeTheme
-     * @param includeSandBox
-     */
     protected void establishThinRequestContextInternal(boolean includeTheme, boolean includeSandBox) {
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
-
-        if (brc.getRequest() == null) {
-            HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            HttpSession session = req.getSession(false);
-            SecurityContext ctx = readSecurityContextFromSession(session);
-            if (ctx != null) {
-                SecurityContextHolder.setContext(ctx);
+        org.broadleafcommerce.common.web.BroadleafRequestContext brc = org.broadleafcommerce.common.web.BroadleafRequestContext.getBroadleafRequestContext();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7567, ((brc.getRequest()) == null))) {
+            javax.servlet.http.HttpServletRequest req = ((org.springframework.web.context.request.ServletRequestAttributes) (org.springframework.web.context.request.RequestContextHolder.getRequestAttributes())).getRequest();
+            javax.servlet.http.HttpSession session = req.getSession(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7568, false));
+            org.springframework.security.core.context.SecurityContext ctx = readSecurityContextFromSession(session);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7569, (ctx != null))) {
+                org.springframework.security.core.context.SecurityContextHolder.setContext(ctx);
             }
             brc.setRequest(req);
         }
-
-        WebRequest wr = brc.getWebRequest();
-
-        if (brc.getNonPersistentSite() == null) {
-            brc.setNonPersistentSite(siteResolver.resolveSite(wr, true));
-            if (includeSandBox) {
+        org.springframework.web.context.request.WebRequest wr = brc.getWebRequest();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7570, ((brc.getNonPersistentSite()) == null))) {
+            brc.setNonPersistentSite(siteResolver.resolveSite(wr, perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7571, true)));
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7572, includeSandBox)) {
                 brc.setSandBox(sbResolver.resolveSandBox(wr, brc.getNonPersistentSite()));
             }
-            brc.setDeployBehavior(deployBehaviorUtil.isProductionSandBoxMode() ? DeployBehavior.CLONE_PARENT : DeployBehavior.OVERWRITE_PARENT);
+            brc.setDeployBehavior((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7573, deployBehaviorUtil.isProductionSandBoxMode()) ? org.broadleafcommerce.common.web.DeployBehavior.CLONE_PARENT : org.broadleafcommerce.common.web.DeployBehavior.OVERWRITE_PARENT));
         }
-
-        if (includeTheme) {
-            if (brc.getTheme() == null) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7574, includeTheme)) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7575, ((brc.getTheme()) == null))) {
                 brc.setTheme(themeResolver.resolveTheme(wr));
             }
         }
     }
 
     public void clearThinRequestContext() {
-        ThreadLocalManager.remove();
+        org.broadleafcommerce.common.classloader.release.ThreadLocalManager.remove();
     }
 
-    protected String getContextName(HttpServletRequest request) {
-        String contextName = request.getServerName();
-        int pos = contextName.indexOf('.');
-        if (pos >= 0) {
-            contextName = contextName.substring(0, contextName.indexOf('.'));
+    protected java.lang.String getContextName(javax.servlet.http.HttpServletRequest request) {
+        java.lang.String contextName = request.getServerName();
+        int pos = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7576, contextName.indexOf('.'));
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7579, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7577, pos)) >= (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7578, 0))))) {
+            contextName = contextName.substring(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7580, 0), perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7581, contextName.indexOf('.')));
         }
         return contextName;
     }
 
-    // **NOTE** This method is lifted from HttpSessionSecurityContextRepository
-    protected SecurityContext readSecurityContextFromSession(HttpSession httpSession) {
-        if (httpSession == null) {
+    protected org.springframework.security.core.context.SecurityContext readSecurityContextFromSession(javax.servlet.http.HttpSession httpSession) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7582, (httpSession == null))) {
             return null;
         }
-
-        Object ctxFromSession = httpSession.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
-        if (ctxFromSession == null) {
+        java.lang.Object ctxFromSession = httpSession.getAttribute(org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7583, (ctxFromSession == null))) {
             return null;
         }
-
-        if (!(ctxFromSession instanceof SecurityContext)) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7585, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7584, (ctxFromSession instanceof org.springframework.security.core.context.SecurityContext)))))) {
             return null;
         }
-
-        return (SecurityContext) ctxFromSession;
+        return ((org.springframework.security.core.context.SecurityContext) (ctxFromSession));
     }
-    
-    
 
+    public static perturbation.location.PerturbationLocation __L7561;
+
+    public static perturbation.location.PerturbationLocation __L7562;
+
+    public static perturbation.location.PerturbationLocation __L7563;
+
+    public static perturbation.location.PerturbationLocation __L7564;
+
+    public static perturbation.location.PerturbationLocation __L7565;
+
+    public static perturbation.location.PerturbationLocation __L7566;
+
+    public static perturbation.location.PerturbationLocation __L7567;
+
+    public static perturbation.location.PerturbationLocation __L7568;
+
+    public static perturbation.location.PerturbationLocation __L7569;
+
+    public static perturbation.location.PerturbationLocation __L7570;
+
+    public static perturbation.location.PerturbationLocation __L7571;
+
+    public static perturbation.location.PerturbationLocation __L7572;
+
+    public static perturbation.location.PerturbationLocation __L7573;
+
+    public static perturbation.location.PerturbationLocation __L7574;
+
+    public static perturbation.location.PerturbationLocation __L7575;
+
+    public static perturbation.location.PerturbationLocation __L7576;
+
+    public static perturbation.location.PerturbationLocation __L7577;
+
+    public static perturbation.location.PerturbationLocation __L7578;
+
+    public static perturbation.location.PerturbationLocation __L7579;
+
+    public static perturbation.location.PerturbationLocation __L7580;
+
+    public static perturbation.location.PerturbationLocation __L7581;
+
+    public static perturbation.location.PerturbationLocation __L7582;
+
+    public static perturbation.location.PerturbationLocation __L7583;
+
+    public static perturbation.location.PerturbationLocation __L7584;
+
+    public static perturbation.location.PerturbationLocation __L7585;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7561 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:70)", 7561, "Boolean");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7562 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:70)", 7562, "Boolean");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7563 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:78)", 7563, "Boolean");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7564 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:78)", 7564, "Boolean");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7565 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:86)", 7565, "Boolean");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7566 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:86)", 7566, "Boolean");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7567 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:101)", 7567, "Boolean");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7568 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:103)", 7568, "Boolean");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7569 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:105)", 7569, "Boolean");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7570 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:113)", 7570, "Boolean");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7571 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:114)", 7571, "Boolean");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7572 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:115)", 7572, "Boolean");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7573 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:118)", 7573, "Boolean");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7574 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:121)", 7574, "Boolean");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7575 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:122)", 7575, "Boolean");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7576 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:134)", 7576, "Numerical");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7577 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:135)", 7577, "Numerical");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7578 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:135)", 7578, "Numerical");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7579 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:135)", 7579, "Boolean");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7580 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:136)", 7580, "Numerical");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7581 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:136)", 7581, "Numerical");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7582 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:143)", 7582, "Boolean");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7583 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:148)", 7583, "Boolean");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7584 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:152)", 7584, "Boolean");
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.__L7585 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/BroadleafContextUtil.java:152)", 7585, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.resource.BroadleafContextUtil.initPerturbationLocation0();
+    }
 }
+

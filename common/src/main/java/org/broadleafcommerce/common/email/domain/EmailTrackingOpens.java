@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,53 +17,22 @@
  */
 package org.broadleafcommerce.common.email.domain;
 
-import java.io.Serializable;
-import java.util.Date;
 
-/**
- * @author jfischer
- *
- */
-public interface EmailTrackingOpens extends Serializable {
+public interface EmailTrackingOpens extends java.io.Serializable {
+    public abstract java.lang.Long getId();
 
-    /**
-     * @return the id
-     */
-    public abstract Long getId();
+    public abstract void setId(java.lang.Long id);
 
-    /**
-     * @param id the id to set
-     */
-    public abstract void setId(Long id);
+    public abstract java.util.Date getDateOpened();
 
-    /**
-     * @return the dateOpened
-     */
-    public abstract Date getDateOpened();
+    public abstract void setDateOpened(java.util.Date dateOpened);
 
-    /**
-     * @param dateOpened the dateOpened to set
-     */
-    public abstract void setDateOpened(Date dateOpened);
+    public abstract java.lang.String getUserAgent();
 
-    /**
-     * @return the userAgent
-     */
-    public abstract String getUserAgent();
+    public abstract void setUserAgent(java.lang.String userAgent);
 
-    /**
-     * @param userAgent the userAgent to set
-     */
-    public abstract void setUserAgent(String userAgent);
+    public abstract org.broadleafcommerce.common.email.domain.EmailTracking getEmailTracking();
 
-    /**
-     * @return the emailTracking
-     */
-    public abstract EmailTracking getEmailTracking();
-
-    /**
-     * @param emailTracking the emailTracking to set
-     */
-    public abstract void setEmailTracking(EmailTracking emailTracking);
-
+    public abstract void setEmailTracking(org.broadleafcommerce.common.email.domain.EmailTracking emailTracking);
 }
+

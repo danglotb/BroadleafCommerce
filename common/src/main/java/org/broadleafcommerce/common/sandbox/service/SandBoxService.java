@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,80 +17,42 @@
  */
 package org.broadleafcommerce.common.sandbox.service;
 
-import org.broadleafcommerce.common.sandbox.domain.SandBox;
-import org.broadleafcommerce.common.sandbox.domain.SandBoxType;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public interface SandBoxService {
+    public org.broadleafcommerce.common.sandbox.domain.SandBox retrieveSandBoxById(java.lang.Long id);
 
-    public SandBox retrieveSandBoxById(Long id);
-    
-    public List<SandBox> retrieveAllSandBoxes();
+    public java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> retrieveAllSandBoxes();
 
-    /**
-     * Returns the sandbox currently associated with the passed in userId.
-     * If one is not associated, it uses (or creates) a default user sandbox with the
-     * name:   user:username.
-     *
-     * @param adminUser
-     * @return
-     */
-    public SandBox retrieveUserSandBox(Long authorId, Long overrideSandBoxId, String sandBoxName);
-    
-    public SandBox retrieveUserSandBoxForParent(Long authorId, Long parentSandBoxId);
-    
-    /**
-     * Returns the SandBox by id but only if the SandBox is associated with the current site.
-     * @param sandBoxId
-     * @return
-     */
-    public SandBox retrieveSandBoxManagementById(Long sandBoxId);
+    public org.broadleafcommerce.common.sandbox.domain.SandBox retrieveUserSandBox(java.lang.Long authorId, java.lang.Long overrideSandBoxId, java.lang.String sandBoxName);
 
-    public List<SandBox> retrievePreviewSandBoxes(Long authorId);
-    
-    public List<SandBox> retrieveSandBoxesByType(SandBoxType type);
-    
-    public Map<Long, String> retrieveAuthorNamesForSandBoxes(Set<Long> sandBoxIds);
+    public org.broadleafcommerce.common.sandbox.domain.SandBox retrieveUserSandBoxForParent(java.lang.Long authorId, java.lang.Long parentSandBoxId);
 
-    /**
-     * Returns a map of SanboxId and Sandbox name
-     *
-     * @param sandBoxIds
-     * @return
-     */
-    public Map<Long, String> retrieveSandboxNamesForSandBoxes(Set<Long> sandBoxIds);
+    public org.broadleafcommerce.common.sandbox.domain.SandBox retrieveSandBoxManagementById(java.lang.Long sandBoxId);
 
-    public SandBox createSandBox(String sandBoxName, SandBoxType sandBoxType) throws Exception;
+    public java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> retrievePreviewSandBoxes(java.lang.Long authorId);
 
-    public SandBox createUserSandBox(Long authorId, SandBox approvalSandBox);
-    
-    public SandBox retrieveSandBox(String sandBoxName, SandBoxType sandBoxType);
+    public java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> retrieveSandBoxesByType(org.broadleafcommerce.common.sandbox.domain.SandBoxType type);
 
-    public SandBox createDefaultSandBox();
+    public java.util.Map<java.lang.Long, java.lang.String> retrieveAuthorNamesForSandBoxes(java.util.Set<java.lang.Long> sandBoxIds);
 
-    /**
-     * Returns true if an existing sandboxName exists with the passed in name.  
-     * @param sandboxName
-     * @return
-     */
-    boolean checkForExistingApprovalSandboxWithName(String sandboxName);
+    public java.util.Map<java.lang.Long, java.lang.String> retrieveSandboxNamesForSandBoxes(java.util.Set<java.lang.Long> sandBoxIds);
 
-    /**
-     * @deprecated Not used in BLC.   May return incorrect results in MT installations.
-     * Reads all SandBoxes that are of type {@link SandBoxType.USER} and belong to the given
-     * user.
-     * 
-     * @param authorId
-     * @return a list of SandBox belonging to the user
-     */
-    public List<SandBox> retrieveAllUserSandBoxes(Long authorId);
+    public org.broadleafcommerce.common.sandbox.domain.SandBox createSandBox(java.lang.String sandBoxName, org.broadleafcommerce.common.sandbox.domain.SandBoxType sandBoxType) throws java.lang.Exception;
 
-    public void archiveChildSandboxes(Long parentSandBoxId);
+    public org.broadleafcommerce.common.sandbox.domain.SandBox createUserSandBox(java.lang.Long authorId, org.broadleafcommerce.common.sandbox.domain.SandBox approvalSandBox);
 
-    public List<SandBox> retrieveChildSandBoxesByParentId(Long parentSandBoxId);
+    public org.broadleafcommerce.common.sandbox.domain.SandBox retrieveSandBox(java.lang.String sandBoxName, org.broadleafcommerce.common.sandbox.domain.SandBoxType sandBoxType);
 
-    public boolean checkForExistingSandbox(SandBoxType sandBoxType, String sandboxName, Long authorId);
+    public org.broadleafcommerce.common.sandbox.domain.SandBox createDefaultSandBox();
+
+    boolean checkForExistingApprovalSandboxWithName(java.lang.String sandboxName);
+
+    public java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> retrieveAllUserSandBoxes(java.lang.Long authorId);
+
+    public void archiveChildSandboxes(java.lang.Long parentSandBoxId);
+
+    public java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> retrieveChildSandBoxesByParentId(java.lang.Long parentSandBoxId);
+
+    public boolean checkForExistingSandbox(org.broadleafcommerce.common.sandbox.domain.SandBoxType sandBoxType, java.lang.String sandboxName, java.lang.Long authorId);
 }
+

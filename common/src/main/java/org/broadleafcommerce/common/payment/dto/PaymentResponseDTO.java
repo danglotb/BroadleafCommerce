@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,280 +15,220 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.payment.dto;
 
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.payment.PaymentGatewayType;
-import org.broadleafcommerce.common.payment.PaymentTransactionType;
-import org.broadleafcommerce.common.payment.PaymentType;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-/**
- * <p>The DTO object that represents the response coming back from any call to the Gateway.
- * This can either wrap an API result call or a translated HTTP Web response.
- * This can not only be the results of a transaction, but also a request for a Secure Token etc...</p>
- *
- * <p>Note: the success and validity flags are set to true by default, unless otherwise overridden by specific
- * gateway implementations</p>
- *
- * @author Elbert Bautista (elbertbautista)
- */
 public class PaymentResponseDTO {
+    protected org.broadleafcommerce.common.payment.dto.GatewayCustomerDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO> customer;
 
-    /**
-     * Any customer information that relates to this transaction
-     */
-    protected GatewayCustomerDTO<PaymentResponseDTO> customer;
+    protected org.broadleafcommerce.common.payment.dto.AddressDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO> shipTo;
 
-    /**
-     * If shipping information is captured on the gateway, the values sent back will be put here
-     */
-    protected AddressDTO<PaymentResponseDTO> shipTo;
+    protected org.broadleafcommerce.common.payment.dto.AddressDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO> billTo;
 
-    /**
-     * The billing address associated with this transaction
-     */
-    protected AddressDTO<PaymentResponseDTO> billTo;
+    protected org.broadleafcommerce.common.payment.dto.CreditCardDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO> creditCard;
 
-    /**
-     * for sale/authorize transactions, this will be the Credit Card object that was charged. This data is useful for showing
-     * on an order confirmation screen.
-     */
-    protected CreditCardDTO<PaymentResponseDTO> creditCard;
+    protected java.util.List<org.broadleafcommerce.common.payment.dto.GiftCardDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO>> giftCards;
 
-    /**
-     * Any gift cards that have been processed. This data is useful for showing
-     * on an order confirmation screen
-     */
-    protected List<GiftCardDTO<PaymentResponseDTO>> giftCards;
+    protected java.util.List<org.broadleafcommerce.common.payment.dto.CustomerCreditDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO>> customerCredits;
 
-    /**
-     * Any customer credit accounts that have been processed. This data is useful for showing
-     * on an order confirmation screen
-     */
-    protected List<CustomerCreditDTO<PaymentResponseDTO>> customerCredits;
+    protected org.broadleafcommerce.common.payment.PaymentGatewayType paymentGatewayType;
 
-    /**
-     * The Payment Gateway Type that this transaction response represents
-     */
-    protected PaymentGatewayType paymentGatewayType;
+    protected org.broadleafcommerce.common.payment.PaymentType paymentType;
 
-    /**
-     * The Type of Payment that this transaction response represents
-     */
-    protected PaymentType paymentType;
+    protected org.broadleafcommerce.common.payment.PaymentTransactionType paymentTransactionType;
 
-    /**
-     * The Transaction Type of the Payment that this response represents
-     */
-    protected PaymentTransactionType paymentTransactionType;
+    protected java.lang.String orderId;
 
-    /**
-     * The Order ID that this transaction is associated with
-     */
-    protected String orderId;
-    
-    /**
-     * If this was a Transaction request, it will be the amount that was sent back from the gateway
-     */
-    protected Money amount;
+    protected org.broadleafcommerce.common.money.Money amount;
 
-    /**
-     * If this is a Tokenization request, this will hold the token sent back from the gateway
-     */
-    protected String paymentToken;
-    
-    /**
-     * Whether or not the transaction on the gateway was successful. This should be provided by the gateway alone.
-     */
+    protected java.lang.String paymentToken;
+
     protected boolean successful = true;
-    
-    /**
-     * Whether or not this response was tampered with. This used to verify that the response that was received on the
-     * endpoint (which is intended to only be invoked from the payment gateway) actually came from the gateway and was not
-     * otherwise maliciously invoked by a 3rd-party. 
-     */
+
     protected boolean valid = true;
 
-    /**
-     * <p>Sets whether or not this module should complete checkout on callback.
-     * In most Credit Card gateway implementation, this should be set to 'TRUE' and
-     * should not be configurable as the gateway expects it to tbe the final step
-     * in the checkout process.</p>
-     *
-     * <p>In gateways where it does not expect to be the last step in the checkout process,
-     * for example BLC Gift Card Module, PayPal Express Checkout, etc... The callback from
-     * the gateway can be configured whether or not to complete checkout.</p>
-     */
     protected boolean completeCheckoutOnCallback = true;
 
-    /**
-     * A string representation of the response that came from the gateway. This should be a string serialization of
-     * {@link #responseMap}.
-     */
-    protected String rawResponse;
-    
-    /**
-     * A more convenient representation of {@link #rawResponse} to hold the response from the gateway.
-     */
-    protected Map<String, String> responseMap;
+    protected java.lang.String rawResponse;
 
-    public PaymentResponseDTO(PaymentType paymentType, PaymentGatewayType gatewayType) {
+    protected java.util.Map<java.lang.String, java.lang.String> responseMap;
+
+    public PaymentResponseDTO(org.broadleafcommerce.common.payment.PaymentType paymentType, org.broadleafcommerce.common.payment.PaymentGatewayType gatewayType) {
         this.paymentType = paymentType;
         this.paymentGatewayType = gatewayType;
-        this.giftCards = new ArrayList<GiftCardDTO<PaymentResponseDTO>>();
-        this.customerCredits = new ArrayList<CustomerCreditDTO<PaymentResponseDTO>>();
-        this.responseMap = new HashMap<String, String>();
+        this.giftCards = new java.util.ArrayList<org.broadleafcommerce.common.payment.dto.GiftCardDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO>>();
+        this.customerCredits = new java.util.ArrayList<org.broadleafcommerce.common.payment.dto.CustomerCreditDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO>>();
+        this.responseMap = new java.util.HashMap<java.lang.String, java.lang.String>();
     }
 
-    public GatewayCustomerDTO<PaymentResponseDTO> customer() {
-        customer = new GatewayCustomerDTO<PaymentResponseDTO>(this);
+    public org.broadleafcommerce.common.payment.dto.GatewayCustomerDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO> customer() {
+        customer = new org.broadleafcommerce.common.payment.dto.GatewayCustomerDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO>(this);
         return customer;
     }
 
-    public CreditCardDTO<PaymentResponseDTO> creditCard() {
-        creditCard = new CreditCardDTO<PaymentResponseDTO>(this);
+    public org.broadleafcommerce.common.payment.dto.CreditCardDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO> creditCard() {
+        creditCard = new org.broadleafcommerce.common.payment.dto.CreditCardDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO>(this);
         return creditCard;
     }
 
-    public AddressDTO<PaymentResponseDTO> shipTo() {
-        shipTo = new AddressDTO<PaymentResponseDTO>(this);
+    public org.broadleafcommerce.common.payment.dto.AddressDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO> shipTo() {
+        shipTo = new org.broadleafcommerce.common.payment.dto.AddressDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO>(this);
         return shipTo;
     }
 
-    public AddressDTO<PaymentResponseDTO> billTo() {
-        billTo = new AddressDTO<PaymentResponseDTO>(this);
+    public org.broadleafcommerce.common.payment.dto.AddressDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO> billTo() {
+        billTo = new org.broadleafcommerce.common.payment.dto.AddressDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO>(this);
         return billTo;
     }
 
-    public GiftCardDTO<PaymentResponseDTO> giftCard() {
-        GiftCardDTO<PaymentResponseDTO> giftCardDTO = new GiftCardDTO<PaymentResponseDTO>(this);
+    public org.broadleafcommerce.common.payment.dto.GiftCardDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO> giftCard() {
+        org.broadleafcommerce.common.payment.dto.GiftCardDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO> giftCardDTO = new org.broadleafcommerce.common.payment.dto.GiftCardDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO>(this);
         giftCards.add(giftCardDTO);
         return giftCardDTO;
     }
 
-    public CustomerCreditDTO<PaymentResponseDTO> customerCredit() {
-        CustomerCreditDTO<PaymentResponseDTO> customerCreditDTO = new CustomerCreditDTO<PaymentResponseDTO>(this);
+    public org.broadleafcommerce.common.payment.dto.CustomerCreditDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO> customerCredit() {
+        org.broadleafcommerce.common.payment.dto.CustomerCreditDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO> customerCreditDTO = new org.broadleafcommerce.common.payment.dto.CustomerCreditDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO>(this);
         customerCredits.add(customerCreditDTO);
         return customerCreditDTO;
     }
 
-    public PaymentResponseDTO responseMap(String key, String value) {
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO responseMap(java.lang.String key, java.lang.String value) {
         responseMap.put(key, value);
         return this;
     }
 
-    public PaymentResponseDTO orderId(String orderId) {
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO orderId(java.lang.String orderId) {
         this.orderId = orderId;
         return this;
     }
 
-    public PaymentResponseDTO amount(Money amount) {
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO amount(org.broadleafcommerce.common.money.Money amount) {
         this.amount = amount;
         return this;
     }
 
-    public PaymentResponseDTO paymentToken(String paymentToken) {
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO paymentToken(java.lang.String paymentToken) {
         this.paymentToken = paymentToken;
         return this;
     }
 
-    public PaymentResponseDTO paymentTransactionType(PaymentTransactionType paymentTransactionType) {
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO paymentTransactionType(org.broadleafcommerce.common.payment.PaymentTransactionType paymentTransactionType) {
         this.paymentTransactionType = paymentTransactionType;
         return this;
     }
 
-    public PaymentResponseDTO successful(boolean successful) {
-        this.successful = successful;
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO successful(boolean successful) {
+        this.successful = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.PaymentResponseDTO.__L3812, successful);
         return this;
     }
 
-    public PaymentResponseDTO completeCheckoutOnCallback(boolean completeCheckoutOnCallback) {
-        this.completeCheckoutOnCallback = completeCheckoutOnCallback;
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO completeCheckoutOnCallback(boolean completeCheckoutOnCallback) {
+        this.completeCheckoutOnCallback = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.PaymentResponseDTO.__L3813, completeCheckoutOnCallback);
         return this;
     }
 
-    public PaymentResponseDTO valid(boolean valid) {
-        this.valid = valid;
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO valid(boolean valid) {
+        this.valid = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.PaymentResponseDTO.__L3814, valid);
         return this;
     }
 
-    public PaymentResponseDTO rawResponse(String rawResponse) {
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO rawResponse(java.lang.String rawResponse) {
         this.rawResponse = rawResponse;
         return this;
     }
 
-    public GatewayCustomerDTO<PaymentResponseDTO> getCustomer() {
+    public org.broadleafcommerce.common.payment.dto.GatewayCustomerDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO> getCustomer() {
         return customer;
     }
 
-    public AddressDTO<PaymentResponseDTO> getShipTo() {
+    public org.broadleafcommerce.common.payment.dto.AddressDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO> getShipTo() {
         return shipTo;
     }
 
-    public AddressDTO<PaymentResponseDTO> getBillTo() {
+    public org.broadleafcommerce.common.payment.dto.AddressDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO> getBillTo() {
         return billTo;
     }
 
-    public List<GiftCardDTO<PaymentResponseDTO>> getGiftCards() {
+    public java.util.List<org.broadleafcommerce.common.payment.dto.GiftCardDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO>> getGiftCards() {
         return giftCards;
     }
 
-    public List<CustomerCreditDTO<PaymentResponseDTO>> getCustomerCredits() {
+    public java.util.List<org.broadleafcommerce.common.payment.dto.CustomerCreditDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO>> getCustomerCredits() {
         return customerCredits;
     }
 
-    public PaymentType getPaymentType() {
+    public org.broadleafcommerce.common.payment.PaymentType getPaymentType() {
         return paymentType;
     }
 
-    public PaymentGatewayType getPaymentGatewayType() {
+    public org.broadleafcommerce.common.payment.PaymentGatewayType getPaymentGatewayType() {
         return paymentGatewayType;
     }
 
-    public String getOrderId() {
+    public java.lang.String getOrderId() {
         return orderId;
     }
 
-    public Money getAmount() {
+    public org.broadleafcommerce.common.money.Money getAmount() {
         return amount;
     }
 
-    public String getPaymentToken() {
+    public java.lang.String getPaymentToken() {
         return paymentToken;
     }
 
-    public PaymentTransactionType getPaymentTransactionType() {
+    public org.broadleafcommerce.common.payment.PaymentTransactionType getPaymentTransactionType() {
         return paymentTransactionType;
     }
 
     public boolean isSuccessful() {
-        return successful;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.PaymentResponseDTO.__L3815, successful);
     }
 
     public boolean isValid() {
-        return valid;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.PaymentResponseDTO.__L3816, valid);
     }
 
     public boolean isCompleteCheckoutOnCallback() {
-        return completeCheckoutOnCallback;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.PaymentResponseDTO.__L3817, completeCheckoutOnCallback);
     }
 
-    public CreditCardDTO<PaymentResponseDTO> getCreditCard() {
+    public org.broadleafcommerce.common.payment.dto.CreditCardDTO<org.broadleafcommerce.common.payment.dto.PaymentResponseDTO> getCreditCard() {
         return creditCard;
     }
 
-    public String getRawResponse() {
+    public java.lang.String getRawResponse() {
         return rawResponse;
     }
 
-    public Map<String, String> getResponseMap() {
+    public java.util.Map<java.lang.String, java.lang.String> getResponseMap() {
         return responseMap;
     }
+
+    public static perturbation.location.PerturbationLocation __L3812;
+
+    public static perturbation.location.PerturbationLocation __L3813;
+
+    public static perturbation.location.PerturbationLocation __L3814;
+
+    public static perturbation.location.PerturbationLocation __L3815;
+
+    public static perturbation.location.PerturbationLocation __L3816;
+
+    public static perturbation.location.PerturbationLocation __L3817;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.payment.dto.PaymentResponseDTO.__L3812 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/PaymentResponseDTO.java:208)", 3812, "Boolean");
+        org.broadleafcommerce.common.payment.dto.PaymentResponseDTO.__L3813 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/PaymentResponseDTO.java:213)", 3813, "Boolean");
+        org.broadleafcommerce.common.payment.dto.PaymentResponseDTO.__L3814 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/PaymentResponseDTO.java:218)", 3814, "Boolean");
+        org.broadleafcommerce.common.payment.dto.PaymentResponseDTO.__L3815 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/PaymentResponseDTO.java:272)", 3815, "Boolean");
+        org.broadleafcommerce.common.payment.dto.PaymentResponseDTO.__L3816 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/PaymentResponseDTO.java:276)", 3816, "Boolean");
+        org.broadleafcommerce.common.payment.dto.PaymentResponseDTO.__L3817 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/PaymentResponseDTO.java:280)", 3817, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.payment.dto.PaymentResponseDTO.initPerturbationLocation0();
+    }
 }
+

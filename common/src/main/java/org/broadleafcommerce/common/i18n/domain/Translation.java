@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,43 +15,32 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.i18n.domain;
 
-import org.broadleafcommerce.common.copy.MultiTenantCloneable;
 
-import java.io.Serializable;
+public interface Translation extends java.io.Serializable , org.broadleafcommerce.common.copy.MultiTenantCloneable<org.broadleafcommerce.common.i18n.domain.Translation> {
+    public java.lang.Long getId();
 
-/**
- * This domain object represents a translated value for a given property on an entity for a specific locale.
- * 
- * @author Andre Azzolini (apazzolini)
- * @see TranslatedEntity
- */
-public interface Translation extends MultiTenantCloneable<Translation>, Serializable {
+    public void setId(java.lang.Long id);
 
-    public Long getId();
+    public org.broadleafcommerce.common.i18n.domain.TranslatedEntity getEntityType();
 
-    public void setId(Long id);
+    public void setEntityType(org.broadleafcommerce.common.i18n.domain.TranslatedEntity entityType);
 
-    public TranslatedEntity getEntityType();
+    public java.lang.String getEntityId();
 
-    public void setEntityType(TranslatedEntity entityType);
+    public void setEntityId(java.lang.String entityId);
 
-    public String getEntityId();
+    public java.lang.String getFieldName();
 
-    public void setEntityId(String entityId);
+    public void setFieldName(java.lang.String fieldName);
 
-    public String getFieldName();
+    public java.lang.String getLocaleCode();
 
-    public void setFieldName(String fieldName);
+    public void setLocaleCode(java.lang.String localeCode);
 
-    public String getLocaleCode();
+    public java.lang.String getTranslatedValue();
 
-    public void setLocaleCode(String localeCode);
-
-    public String getTranslatedValue();
-
-    public void setTranslatedValue(String translatedValue);
-
+    public void setTranslatedValue(java.lang.String translatedValue);
 }
+

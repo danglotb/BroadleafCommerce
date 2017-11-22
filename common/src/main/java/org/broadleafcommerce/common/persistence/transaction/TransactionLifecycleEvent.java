@@ -17,37 +17,31 @@
  */
 package org.broadleafcommerce.common.persistence.transaction;
 
-import org.springframework.context.ApplicationEvent;
 
-/**
- * Spring event published at key transaction lifecycle points.
- *
- * @see LifecycleAwareJpaTransactionManager
- * @see TransactionLifecycleMonitor
- * @author Jeff Fischer
- */
-public class TransactionLifecycleEvent extends ApplicationEvent {
+public class TransactionLifecycleEvent extends org.springframework.context.ApplicationEvent {
+    protected org.broadleafcommerce.common.persistence.transaction.TransactionLifecycle lifecycle;
 
-    protected TransactionLifecycle lifecycle;
-    protected Object[] params;
-    protected Throwable e;
+    protected java.lang.Object[] params;
 
-    public TransactionLifecycleEvent(Object source, TransactionLifecycle lifecycle, Throwable e, Object... params) {
+    protected java.lang.Throwable e;
+
+    public TransactionLifecycleEvent(java.lang.Object source, org.broadleafcommerce.common.persistence.transaction.TransactionLifecycle lifecycle, java.lang.Throwable e, java.lang.Object... params) {
         super(source);
         this.lifecycle = lifecycle;
         this.e = e;
         this.params = params;
     }
 
-    public Object[] getParams() {
+    public java.lang.Object[] getParams() {
         return params;
     }
 
-    public TransactionLifecycle getLifecycle() {
+    public org.broadleafcommerce.common.persistence.transaction.TransactionLifecycle getLifecycle() {
         return lifecycle;
     }
 
-    public Throwable getException() {
+    public java.lang.Throwable getException() {
         return e;
     }
 }
+

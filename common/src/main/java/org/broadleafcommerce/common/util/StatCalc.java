@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,58 +17,72 @@
  */
 package org.broadleafcommerce.common.util;
 
-public class StatCalc {
 
-    private int count;   // Number of numbers that have been entered.
-    private double sum;  // The sum of all the items that have been entered.
-    private double squareSum;  // The sum of the squares of all the items.
-    private double max = Double.NEGATIVE_INFINITY;  // Largest item seen.
-    private double min = Double.POSITIVE_INFINITY;  // Smallest item seen.
+public class StatCalc {
+    private int count;
+
+    private double sum;
+
+    private double squareSum;
+
+    private double max = java.lang.Double.NEGATIVE_INFINITY;
+
+    private double min = java.lang.Double.POSITIVE_INFINITY;
 
     public void enter(double num) {
-        // Add the number to the dataset.
-        count++;
+        perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.StatCalc.__L6507, ((count)++));
         sum += num;
-        squareSum += num*num;
-        if (num > max)
+        squareSum += num * num;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.StatCalc.__L6508, (num > (max))))
             max = num;
-        if (num < min)
+
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.StatCalc.__L6509, (num < (min))))
             min = num;
+
     }
 
     public int getCount() {
-        // Return number of items that have been entered.
-        return count;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.StatCalc.__L6510, count);
     }
 
     public double getSum() {
-        // Return the sum of all the items that have been entered.
         return sum;
     }
 
     public double getMean() {
-        // Return average of all the items that have been entered.
-        // Value is Double.NaN if count == 0.
-        return sum / count;
+        return (sum) / (count);
     }
 
     public double getStandardDeviation() {
-        // Return standard deviation of all the items that have been entered.
-        // Value will be Double.NaN if count == 0.
         double mean = getMean();
-        return Math.sqrt( squareSum/count - mean*mean );
+        return java.lang.Math.sqrt((((squareSum) / (count)) - (mean * mean)));
     }
 
     public double getMin() {
-        // Return the smallest item that has been entered.
-        // Value will be infinity if no items have been entered.
         return min;
     }
 
     public double getMax() {
-        // Return the largest item that has been entered.
-        // Value will be -infinity if no items have been entered.
         return max;
     }
 
+    public static perturbation.location.PerturbationLocation __L6507;
+
+    public static perturbation.location.PerturbationLocation __L6508;
+
+    public static perturbation.location.PerturbationLocation __L6509;
+
+    public static perturbation.location.PerturbationLocation __L6510;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.StatCalc.__L6507 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/StatCalc.java:30)", 6507, "Numerical");
+        org.broadleafcommerce.common.util.StatCalc.__L6508 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/StatCalc.java:33)", 6508, "Boolean");
+        org.broadleafcommerce.common.util.StatCalc.__L6509 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/StatCalc.java:35)", 6509, "Boolean");
+        org.broadleafcommerce.common.util.StatCalc.__L6510 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/StatCalc.java:41)", 6510, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.StatCalc.initPerturbationLocation0();
+    }
 }
+

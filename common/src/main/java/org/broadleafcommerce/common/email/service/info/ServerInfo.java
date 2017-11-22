@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,94 +17,111 @@
  */
 package org.broadleafcommerce.common.email.service.info;
 
-import java.io.Serializable;
 
-/**
- * @author jfischer
- *
- */
-public class ServerInfo implements Serializable {
-
+public class ServerInfo implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String serverName;
-    private Integer serverPort;
-    private Integer securePort;
-    private String appName;
+    private java.lang.String serverName;
 
-    public String getSecureHost() {
-        StringBuffer sb = new StringBuffer();
+    private java.lang.Integer serverPort;
+
+    private java.lang.Integer securePort;
+
+    private java.lang.String appName;
+
+    public java.lang.String getSecureHost() {
+        java.lang.StringBuffer sb = new java.lang.StringBuffer();
         sb.append(serverName);
-        if (!securePort.equals(443)) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.email.service.info.ServerInfo.__L1126, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.email.service.info.ServerInfo.__L1125, securePort.equals(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.email.service.info.ServerInfo.__L1124, 443))))))) {
             sb.append(":");
-            sb.append(securePort);
+            sb.append(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.email.service.info.ServerInfo.__L1127, securePort));
         }
         return sb.toString();
     }
 
-    public String getHost() {
-        StringBuffer sb = new StringBuffer();
+    public java.lang.String getHost() {
+        java.lang.StringBuffer sb = new java.lang.StringBuffer();
         sb.append(serverName);
-        if (!serverPort.equals(80)) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.email.service.info.ServerInfo.__L1130, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.email.service.info.ServerInfo.__L1129, serverPort.equals(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.email.service.info.ServerInfo.__L1128, 80))))))) {
             sb.append(":");
-            sb.append(serverPort);
+            sb.append(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.email.service.info.ServerInfo.__L1131, serverPort));
         }
         return sb.toString();
     }
 
-    /**
-     * @return the serverName
-     */
-    public String getServerName() {
+    public java.lang.String getServerName() {
         return serverName;
     }
 
-    /**
-     * @param serverName the serverName to set
-     */
-    public void setServerName(String serverName) {
+    public void setServerName(java.lang.String serverName) {
         this.serverName = serverName;
     }
 
-    /**
-     * @return the serverPort
-     */
-    public Integer getServerPort() {
-        return serverPort;
+    public java.lang.Integer getServerPort() {
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.email.service.info.ServerInfo.__L1132, serverPort);
     }
 
-    /**
-     * @param serverPort the serverPort to set
-     */
-    public void setServerPort(Integer serverPort) {
-        this.serverPort = serverPort;
+    public void setServerPort(java.lang.Integer serverPort) {
+        this.serverPort = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.email.service.info.ServerInfo.__L1133, serverPort);
     }
 
-    /**
-     * @return the securePort
-     */
-    public Integer getSecurePort() {
-        return securePort;
+    public java.lang.Integer getSecurePort() {
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.email.service.info.ServerInfo.__L1134, securePort);
     }
 
-    /**
-     * @param securePort the securePort to set
-     */
-    public void setSecurePort(Integer securePort) {
-        this.securePort = securePort;
+    public void setSecurePort(java.lang.Integer securePort) {
+        this.securePort = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.email.service.info.ServerInfo.__L1135, securePort);
     }
 
-    /**
-     * @return the appName
-     */
-    public String getAppName() {
+    public java.lang.String getAppName() {
         return appName;
     }
 
-    /**
-     * @param appName the appName to set
-     */
-    public void setAppName(String appName) {
+    public void setAppName(java.lang.String appName) {
         this.appName = appName;
     }
+
+    public static perturbation.location.PerturbationLocation __L1124;
+
+    public static perturbation.location.PerturbationLocation __L1125;
+
+    public static perturbation.location.PerturbationLocation __L1126;
+
+    public static perturbation.location.PerturbationLocation __L1127;
+
+    public static perturbation.location.PerturbationLocation __L1128;
+
+    public static perturbation.location.PerturbationLocation __L1129;
+
+    public static perturbation.location.PerturbationLocation __L1130;
+
+    public static perturbation.location.PerturbationLocation __L1131;
+
+    public static perturbation.location.PerturbationLocation __L1132;
+
+    public static perturbation.location.PerturbationLocation __L1133;
+
+    public static perturbation.location.PerturbationLocation __L1134;
+
+    public static perturbation.location.PerturbationLocation __L1135;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.email.service.info.ServerInfo.__L1124 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/info/ServerInfo.java:38)", 1124, "Numerical");
+        org.broadleafcommerce.common.email.service.info.ServerInfo.__L1125 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/info/ServerInfo.java:38)", 1125, "Boolean");
+        org.broadleafcommerce.common.email.service.info.ServerInfo.__L1126 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/info/ServerInfo.java:38)", 1126, "Boolean");
+        org.broadleafcommerce.common.email.service.info.ServerInfo.__L1127 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/info/ServerInfo.java:40)", 1127, "Numerical");
+        org.broadleafcommerce.common.email.service.info.ServerInfo.__L1128 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/info/ServerInfo.java:48)", 1128, "Numerical");
+        org.broadleafcommerce.common.email.service.info.ServerInfo.__L1129 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/info/ServerInfo.java:48)", 1129, "Boolean");
+        org.broadleafcommerce.common.email.service.info.ServerInfo.__L1130 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/info/ServerInfo.java:48)", 1130, "Boolean");
+        org.broadleafcommerce.common.email.service.info.ServerInfo.__L1131 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/info/ServerInfo.java:50)", 1131, "Numerical");
+        org.broadleafcommerce.common.email.service.info.ServerInfo.__L1132 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/info/ServerInfo.java:73)", 1132, "Numerical");
+        org.broadleafcommerce.common.email.service.info.ServerInfo.__L1133 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/info/ServerInfo.java:80)", 1133, "Numerical");
+        org.broadleafcommerce.common.email.service.info.ServerInfo.__L1134 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/info/ServerInfo.java:87)", 1134, "Numerical");
+        org.broadleafcommerce.common.email.service.info.ServerInfo.__L1135 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/info/ServerInfo.java:94)", 1135, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.email.service.info.ServerInfo.initPerturbationLocation0();
+    }
 }
+

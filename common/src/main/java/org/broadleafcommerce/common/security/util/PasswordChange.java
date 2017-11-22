@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -18,67 +18,61 @@
 package org.broadleafcommerce.common.security.util;
 
 
-/**
- * 
- * @author jfischer
- *
- */
-public class PasswordChange extends PasswordReset {
-
+public class PasswordChange extends org.broadleafcommerce.common.security.util.PasswordReset {
     private static final long serialVersionUID = 1L;
 
-    private String currentPassword;
+    private java.lang.String currentPassword;
 
-    private String newPassword;
+    private java.lang.String newPassword;
 
-    private String newPasswordConfirm;
+    private java.lang.String newPasswordConfirm;
 
-    private String challengeQuestion;
+    private java.lang.String challengeQuestion;
 
-    private String challengeAnswer;
+    private java.lang.String challengeAnswer;
 
-    public PasswordChange(String username) {
+    public PasswordChange(java.lang.String username) {
         super(username);
     }
 
-    public String getChallengeQuestion() {
+    public java.lang.String getChallengeQuestion() {
         return challengeQuestion;
     }
 
-    public void setChallengeQuestion(String challengeQuestion) {
+    public void setChallengeQuestion(java.lang.String challengeQuestion) {
         this.challengeQuestion = challengeQuestion;
     }
 
-    public String getChallengeAnswer() {
+    public java.lang.String getChallengeAnswer() {
         return challengeAnswer;
     }
 
-    public void setChallengeAnswer(String challengeAnswer) {
+    public void setChallengeAnswer(java.lang.String challengeAnswer) {
         this.challengeAnswer = challengeAnswer;
     }
 
-    public String getCurrentPassword() {
+    public java.lang.String getCurrentPassword() {
         return currentPassword;
     }
 
-    public void setCurrentPassword(String currentPassword) {
+    public void setCurrentPassword(java.lang.String currentPassword) {
         this.currentPassword = currentPassword;
     }
 
-    public String getNewPassword() {
+    public java.lang.String getNewPassword() {
         return newPassword;
     }
 
-    public void setNewPassword(String newPassword) {
+    public void setNewPassword(java.lang.String newPassword) {
         this.newPassword = newPassword;
     }
 
-    public String getNewPasswordConfirm() {
+    public java.lang.String getNewPasswordConfirm() {
         return newPasswordConfirm;
     }
 
-    public void setNewPasswordConfirm(String newPasswordConfirm) {
+    public void setNewPasswordConfirm(java.lang.String newPasswordConfirm) {
         this.newPasswordConfirm = newPasswordConfirm;
     }
-
 }
+

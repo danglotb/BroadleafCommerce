@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,25 +17,21 @@
  */
 package org.broadleafcommerce.common.payment.service;
 
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
-import org.broadleafcommerce.common.vendor.service.exception.PaymentException;
 
-public class AbstractPaymentGatewayCustomerService implements PaymentGatewayCustomerService{
-
-    @Override
-    public PaymentResponseDTO createGatewayCustomer(PaymentRequestDTO requestDTO) throws PaymentException {
-        throw new UnsupportedOperationException("Not Implemented");
+public class AbstractPaymentGatewayCustomerService implements org.broadleafcommerce.common.payment.service.PaymentGatewayCustomerService {
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO createGatewayCustomer(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
-    public PaymentResponseDTO updateGatewayCustomer(PaymentRequestDTO requestDTO) throws PaymentException {
-        throw new UnsupportedOperationException("Not Implemented");
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO updateGatewayCustomer(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
-    public PaymentResponseDTO deleteGatewayCustomer(PaymentRequestDTO requestDTO) throws PaymentException {
-        throw new UnsupportedOperationException("Not Implemented");
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO deleteGatewayCustomer(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
-
 }
+

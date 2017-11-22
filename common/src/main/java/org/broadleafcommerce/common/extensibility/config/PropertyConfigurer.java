@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,19 +17,16 @@
  */
 package org.broadleafcommerce.common.extensibility.config;
 
-import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
-import org.springframework.core.io.Resource;
 
-public class PropertyConfigurer extends PropertyPlaceholderConfigurer {
-
-    @Override
-    public void setLocation(Resource location) {
+public class PropertyConfigurer extends org.springframework.beans.factory.config.PropertyPlaceholderConfigurer {
+    @java.lang.Override
+    public void setLocation(org.springframework.core.io.Resource location) {
         super.setLocation(location);
     }
 
-    @Override
-    public void setLocations(Resource[] locations) {
+    @java.lang.Override
+    public void setLocations(org.springframework.core.io.Resource[] locations) {
         super.setLocations(locations);
     }
-
 }
+

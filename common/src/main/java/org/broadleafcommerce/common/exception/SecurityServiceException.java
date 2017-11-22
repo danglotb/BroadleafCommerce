@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,31 +17,23 @@
  */
 package org.broadleafcommerce.common.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-/**
- * Form of ServiceException thrown when their is a security
- * failure while attempting to execute the operation.
- *
- * @author Jeff Fischer
- */
-@ResponseStatus(value= HttpStatus.FORBIDDEN, reason="Access is denied")
-public class SecurityServiceException extends ServiceException {
-
+@org.springframework.web.bind.annotation.ResponseStatus(value = org.springframework.http.HttpStatus.FORBIDDEN, reason = "Access is denied")
+public class SecurityServiceException extends org.broadleafcommerce.common.exception.ServiceException {
     public SecurityServiceException() {
         super();
     }
 
-    public SecurityServiceException(Throwable cause) {
+    public SecurityServiceException(java.lang.Throwable cause) {
         super(cause);
     }
 
-    public SecurityServiceException(String message) {
+    public SecurityServiceException(java.lang.String message) {
         super(message);
     }
 
-    public SecurityServiceException(String message, Throwable cause) {
+    public SecurityServiceException(java.lang.String message, java.lang.Throwable cause) {
         super(message, cause);
     }
 }
+

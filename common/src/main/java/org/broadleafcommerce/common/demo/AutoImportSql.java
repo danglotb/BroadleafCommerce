@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,57 +17,58 @@
  */
 package org.broadleafcommerce.common.demo;
 
-import org.springframework.core.Ordered;
 
-/**
- * Allows a module to specify a sql file and some ordering information to use during Hibernate auto import. This information
- * is traditionally set via the 'hibernate.hbm2ddl.auto' property. However, that method is flat and does not allow
- * easy individual module contribution and special ordering. By using this bean, a module can identify a sql file to
- * import and specify the order it should appear in the cumulative list of all module contributions.
- *
- * @author Jeff Fischer
- */
-public class AutoImportSql implements Ordered {
+public class AutoImportSql implements org.springframework.core.Ordered {
+    protected java.lang.String sqlFilePath;
 
-    protected String sqlFilePath;
-    protected int order = AutoImportStage.PRIMARY_LATE;
-    protected String persistenceUnit;
+    protected int order = org.broadleafcommerce.common.demo.AutoImportStage.PRIMARY_LATE;
+
+    protected java.lang.String persistenceUnit;
 
     public AutoImportSql() {
     }
 
-    public AutoImportSql(String persistenceUnit, String sqlFilePath, int order) {
+    public AutoImportSql(java.lang.String persistenceUnit, java.lang.String sqlFilePath, int order) {
         this.persistenceUnit = persistenceUnit;
         this.sqlFilePath = sqlFilePath;
         this.order = order;
     }
 
-    public String getSqlFilePath() {
+    public java.lang.String getSqlFilePath() {
         return sqlFilePath;
     }
 
-    /**
-     * Set one or more path locations to sql files. Multiple files are separated with a comma.
-     *
-     * @param sqlFilePath
-     */
-    public void setSqlFilePath(String sqlFilePath) {
+    public void setSqlFilePath(java.lang.String sqlFilePath) {
         this.sqlFilePath = sqlFilePath;
     }
 
     public int getOrder() {
-        return order;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.demo.AutoImportSql.__L770, order);
     }
 
     public void setOrder(int order) {
-        this.order = order;
+        this.order = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.demo.AutoImportSql.__L771, order);
     }
 
-    public String getPersistenceUnit() {
+    public java.lang.String getPersistenceUnit() {
         return persistenceUnit;
     }
 
-    public void setPersistenceUnit(String persistenceUnit) {
+    public void setPersistenceUnit(java.lang.String persistenceUnit) {
         this.persistenceUnit = persistenceUnit;
     }
+
+    public static perturbation.location.PerturbationLocation __L770;
+
+    public static perturbation.location.PerturbationLocation __L771;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.demo.AutoImportSql.__L770 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/demo/AutoImportSql.java:59)", 770, "Numerical");
+        org.broadleafcommerce.common.demo.AutoImportSql.__L771 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/demo/AutoImportSql.java:63)", 771, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.demo.AutoImportSql.initPerturbationLocation0();
+    }
 }
+

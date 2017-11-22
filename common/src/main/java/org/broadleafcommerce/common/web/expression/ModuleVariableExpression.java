@@ -17,27 +17,27 @@
  */
 package org.broadleafcommerce.common.web.expression;
 
-import org.broadleafcommerce.common.module.ModulePresentUtil;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
-import org.springframework.stereotype.Component;
 
-/**
- * A Thymeleaf Variable Expression intended to provide various information about the modules enabled for this application.
- *
- * @author Elbert Bautista (elbertbautista)
- * @see org.broadleafcommerce.common.module.ModulePresentUtil
- */
-@Component("blModuleVariableExpression")
-@ConditionalOnTemplating
-public class ModuleVariableExpression implements BroadleafVariableExpression {
-
-    @Override
-    public String getName() {
+@org.springframework.stereotype.Component("blModuleVariableExpression")
+@org.broadleafcommerce.presentation.condition.ConditionalOnTemplating
+public class ModuleVariableExpression implements org.broadleafcommerce.common.web.expression.BroadleafVariableExpression {
+    @java.lang.Override
+    public java.lang.String getName() {
         return "module";
     }
 
-    public boolean isPresent (String moduleInQuestion) {
-        return ModulePresentUtil.isPresent(moduleInQuestion);
+    public boolean isPresent(java.lang.String moduleInQuestion) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.expression.ModuleVariableExpression.__L7210, org.broadleafcommerce.common.module.ModulePresentUtil.isPresent(moduleInQuestion));
     }
 
+    public static perturbation.location.PerturbationLocation __L7210;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.expression.ModuleVariableExpression.__L7210 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/expression/ModuleVariableExpression.java:40)", 7210, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.expression.ModuleVariableExpression.initPerturbationLocation0();
+    }
 }
+

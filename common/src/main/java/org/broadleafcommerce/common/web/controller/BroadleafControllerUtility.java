@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,65 +17,61 @@
  */
 package org.broadleafcommerce.common.web.controller;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.web.context.request.ServletWebRequest;
-import org.springframework.web.context.request.WebRequest;
 
-import javax.servlet.http.HttpServletRequest;
-
-
-/**
- * Commonly used Broadleaf Controller operations.
- * - ajaxRedirects
- * - isAjaxRequest
- * - ajaxRender   
- * 
- * BroadleafAbstractController provides convenience methods for this functionality.
- * Implementors who are not able (or willing) to have their Controllers extend
- * BroadleafAbstractController can utilize this utility class to achieve some of
- * the same benefits.
- * 
- * 
- * @author bpolster
- */
 public class BroadleafControllerUtility {
-    protected static final Log LOG = LogFactory.getLog(BroadleafControllerUtility.class);
-    
-    public static final String BLC_REDIRECT_ATTRIBUTE = "blc_redirect";
-    public static final String BLC_AJAX_PARAMETER = "blcAjax";
-    
-    /**
-     * A helper method that returns whether or not the given request was invoked via an AJAX call
-     * 
-     * Returns true if the request contains the XMLHttpRequest header or a blcAjax=true parameter.
-     * 
-     * @param request
-     * @return - whether or not it was an AJAX request
-     */
-    public static boolean isAjaxRequest(HttpServletRequest request) {
-        return isAjaxRequest(new ServletWebRequest(request));
+    protected static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.class);
+
+    public static final java.lang.String BLC_REDIRECT_ATTRIBUTE = "blc_redirect";
+
+    public static final java.lang.String BLC_AJAX_PARAMETER = "blcAjax";
+
+    public static boolean isAjaxRequest(javax.servlet.http.HttpServletRequest request) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.__L7069, org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.isAjaxRequest(new org.springframework.web.context.request.ServletWebRequest(request)));
     }
-    
-    public static boolean isAjaxRequest(WebRequest request) {
-        String ajaxParameter = request.getParameter(BLC_AJAX_PARAMETER);
-        String requestedWithHeader = request.getHeader("X-Requested-With");
-        boolean result = (ajaxParameter != null && "true".equals(ajaxParameter))
-                || "XMLHttpRequest".equals(requestedWithHeader);
-        
-        if (LOG.isTraceEnabled()) {
-            StringBuilder sb = new StringBuilder()
-                .append("Request URL: [").append(request.getContextPath()).append("]")
-                .append(" - ")
-                .append("ajaxParam: [").append(String.valueOf(ajaxParameter)).append("]")
-                .append(" - ")
-                .append("X-Requested-With: [").append(requestedWithHeader).append("]")
-                .append(" - ")
-                .append("Returning: [").append(result).append("]");
-            LOG.trace(sb.toString());
+
+    public static boolean isAjaxRequest(org.springframework.web.context.request.WebRequest request) {
+        java.lang.String ajaxParameter = request.getParameter(org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.BLC_AJAX_PARAMETER);
+        java.lang.String requestedWithHeader = request.getHeader("X-Requested-With");
+        boolean result = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.__L7074, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.__L7072, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.__L7070, (ajaxParameter != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.__L7071, "true".equals(ajaxParameter)))))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.__L7073, "XMLHttpRequest".equals(requestedWithHeader)))));
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.__L7075, org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.LOG.isTraceEnabled())) {
+            java.lang.StringBuilder sb = new java.lang.StringBuilder().append("Request URL: [").append(request.getContextPath()).append("]").append(" - ").append("ajaxParam: [").append(java.lang.String.valueOf(ajaxParameter)).append("]").append(" - ").append("X-Requested-With: [").append(requestedWithHeader).append("]").append(" - ").append("Returning: [").append(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.__L7076, result)).append("]");
+            org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.LOG.trace(sb.toString());
         }
-        
-        return result;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.__L7077, result);
     }
-    
+
+    public static perturbation.location.PerturbationLocation __L7069;
+
+    public static perturbation.location.PerturbationLocation __L7070;
+
+    public static perturbation.location.PerturbationLocation __L7071;
+
+    public static perturbation.location.PerturbationLocation __L7072;
+
+    public static perturbation.location.PerturbationLocation __L7073;
+
+    public static perturbation.location.PerturbationLocation __L7074;
+
+    public static perturbation.location.PerturbationLocation __L7075;
+
+    public static perturbation.location.PerturbationLocation __L7076;
+
+    public static perturbation.location.PerturbationLocation __L7077;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.__L7069 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafControllerUtility.java:57)", 7069, "Boolean");
+        org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.__L7070 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafControllerUtility.java:63)", 7070, "Boolean");
+        org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.__L7071 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafControllerUtility.java:63)", 7071, "Boolean");
+        org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.__L7072 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafControllerUtility.java:63)", 7072, "Boolean");
+        org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.__L7073 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafControllerUtility.java:64)", 7073, "Boolean");
+        org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.__L7074 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafControllerUtility.java:63)", 7074, "Boolean");
+        org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.__L7075 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafControllerUtility.java:66)", 7075, "Boolean");
+        org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.__L7076 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafControllerUtility.java:74)", 7076, "Boolean");
+        org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.__L7077 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafControllerUtility.java:78)", 7077, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.initPerturbationLocation0();
+    }
 }
+

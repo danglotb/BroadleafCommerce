@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,58 +17,44 @@
  */
 package org.broadleafcommerce.common.logging;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
-import org.springframework.jmx.export.annotation.ManagedOperation;
-import org.springframework.jmx.export.annotation.ManagedOperationParameter;
-import org.springframework.jmx.export.annotation.ManagedOperationParameters;
-import org.springframework.jmx.export.annotation.ManagedResource;
 
-/**
- * This is not hooked up by default so that Log4j is not required. If you are using Log4j, you can add this class to your
- * Spring applicationContext to enable it.
- *
- * @author Phillip Verheyden (phillipuniverse)
- * @deprecated in favor of {@link Log4j2ManagementBean} (following Apache's EOL declaration for log4j 1.x)
- */
-@Deprecated
-@ManagedResource(objectName="org.broadleafcommerce:name=Log4JManangement", description="Logging Management", currencyTimeLimit=15)
+@java.lang.Deprecated
+@org.springframework.jmx.export.annotation.ManagedResource(objectName = "org.broadleafcommerce:name=Log4JManangement", description = "Logging Management", currencyTimeLimit = 15)
 public class Log4jManagementBean {
-
-    @ManagedOperation(description="Activate info level")
-    @ManagedOperationParameters({@ManagedOperationParameter(name = "category", description = "the log4j category to set")})
-    public void activateInfo(String category) {
-        LogManager.getLogger(category).setLevel(Level.INFO);
+    @org.springframework.jmx.export.annotation.ManagedOperation(description = "Activate info level")
+    @org.springframework.jmx.export.annotation.ManagedOperationParameters({ @org.springframework.jmx.export.annotation.ManagedOperationParameter(name = "category", description = "the log4j category to set") })
+    public void activateInfo(java.lang.String category) {
+        org.apache.log4j.LogManager.getLogger(category).setLevel(org.apache.log4j.Level.INFO);
     }
 
-    @ManagedOperation(description="Activate debug level")
-    @ManagedOperationParameters({@ManagedOperationParameter(name = "category", description = "the log4j category to set")})
-    public void activateDebug(String category) {
-        LogManager.getLogger(category).setLevel(Level.DEBUG);
+    @org.springframework.jmx.export.annotation.ManagedOperation(description = "Activate debug level")
+    @org.springframework.jmx.export.annotation.ManagedOperationParameters({ @org.springframework.jmx.export.annotation.ManagedOperationParameter(name = "category", description = "the log4j category to set") })
+    public void activateDebug(java.lang.String category) {
+        org.apache.log4j.LogManager.getLogger(category).setLevel(org.apache.log4j.Level.DEBUG);
     }
 
-    @ManagedOperation(description="Activate warn level")
-    @ManagedOperationParameters({@ManagedOperationParameter(name = "category", description = "the log4j category to set")})
-    public void activateWarn(String category) {
-        LogManager.getLogger(category).setLevel(Level.WARN);
+    @org.springframework.jmx.export.annotation.ManagedOperation(description = "Activate warn level")
+    @org.springframework.jmx.export.annotation.ManagedOperationParameters({ @org.springframework.jmx.export.annotation.ManagedOperationParameter(name = "category", description = "the log4j category to set") })
+    public void activateWarn(java.lang.String category) {
+        org.apache.log4j.LogManager.getLogger(category).setLevel(org.apache.log4j.Level.WARN);
     }
 
-    @ManagedOperation(description="Activate error level")
-    @ManagedOperationParameters({@ManagedOperationParameter(name = "category", description = "the log4j category to set")})
-    public void activateError(String category) {
-        LogManager.getLogger(category).setLevel(Level.ERROR);
+    @org.springframework.jmx.export.annotation.ManagedOperation(description = "Activate error level")
+    @org.springframework.jmx.export.annotation.ManagedOperationParameters({ @org.springframework.jmx.export.annotation.ManagedOperationParameter(name = "category", description = "the log4j category to set") })
+    public void activateError(java.lang.String category) {
+        org.apache.log4j.LogManager.getLogger(category).setLevel(org.apache.log4j.Level.ERROR);
     }
 
-    @ManagedOperation(description="Activate fatal level")
-    @ManagedOperationParameters({@ManagedOperationParameter(name = "category", description = "the log4j category to set")})
-    public void activateFatal(String category) {
-        LogManager.getLogger(category).setLevel(Level.FATAL);
+    @org.springframework.jmx.export.annotation.ManagedOperation(description = "Activate fatal level")
+    @org.springframework.jmx.export.annotation.ManagedOperationParameters({ @org.springframework.jmx.export.annotation.ManagedOperationParameter(name = "category", description = "the log4j category to set") })
+    public void activateFatal(java.lang.String category) {
+        org.apache.log4j.LogManager.getLogger(category).setLevel(org.apache.log4j.Level.FATAL);
     }
 
-    @ManagedOperation(description="Retrieve the category log level")
-    @ManagedOperationParameters({@ManagedOperationParameter(name = "category", description = "the log4j category")})
-    public String getLevel(String category) {
-        return LogManager.getLogger(category).getLevel().toString();
+    @org.springframework.jmx.export.annotation.ManagedOperation(description = "Retrieve the category log level")
+    @org.springframework.jmx.export.annotation.ManagedOperationParameters({ @org.springframework.jmx.export.annotation.ManagedOperationParameter(name = "category", description = "the log4j category") })
+    public java.lang.String getLevel(java.lang.String category) {
+        return org.apache.log4j.LogManager.getLogger(category).getLevel().toString();
     }
-
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,43 +17,43 @@
  */
 package org.broadleafcommerce.common.util.sql.importsql;
 
-import org.broadleafcommerce.common.logging.SupportLogManager;
-import org.broadleafcommerce.common.logging.SupportLogger;
-import org.hibernate.tool.hbm2ddl.SingleLineSqlCommandExtractor;
 
-import java.io.Reader;
+public class DemoHsqlSingleLineSqlCommandExtractor extends org.hibernate.tool.hbm2ddl.SingleLineSqlCommandExtractor {
+    private static final org.broadleafcommerce.common.logging.SupportLogger LOGGER = org.broadleafcommerce.common.logging.SupportLogManager.getLogger("UserOverride", org.broadleafcommerce.common.util.sql.importsql.DemoHsqlSingleLineSqlCommandExtractor.class);
 
-/**
- * This is a utility class that is only meant to be used for testing the BLC demo on HSQLDB. This replaces any of the demo
- * insert SQL statements with HSQLDB-compatible syntax.
- *
- * @author Phillip Verheyden (phillipuniverse)
- */
-public class DemoHsqlSingleLineSqlCommandExtractor extends SingleLineSqlCommandExtractor {
-
-    private static final SupportLogger LOGGER = SupportLogManager.getLogger("UserOverride", DemoHsqlSingleLineSqlCommandExtractor.class);
-
-    @Override
-    public String[] extractCommands(Reader reader) {
-        String[] commands = super.extractCommands(reader);
-        String[] newCommands = new String[commands.length];
-        int i = 0;
-        for (String command : commands) {
-            String newCommand = command;
-            
-            // Any MySQL-specific newlines replace with special character newlines
-            newCommand = newCommand.replaceAll(DemoPostgresSingleLineSqlCommandExtractor.NEWLINE_REPLACEMENT_REGEX, "' || CHAR(13) || CHAR(10) || '");
-
-            //remove the double backslashes - hsql does not honor backslash as an escape character
-            newCommand = newCommand.replaceAll(DemoSqlServerSingleLineSqlCommandExtractor.DOUBLEBACKSLASHMATCH, "\\\\");
-
-            //replace escaped double quotes (\") with encoded double quote
+    @java.lang.Override
+    public java.lang.String[] extractCommands(java.io.Reader reader) {
+        java.lang.String[] commands = super.extractCommands(reader);
+        java.lang.String[] newCommands = new java.lang.String[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.sql.importsql.DemoHsqlSingleLineSqlCommandExtractor.__L5947, commands.length)];
+        int i = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.sql.importsql.DemoHsqlSingleLineSqlCommandExtractor.__L5948, 0);
+        for (java.lang.String command : commands) {
+            java.lang.String newCommand = command;
+            newCommand = newCommand.replaceAll(org.broadleafcommerce.common.util.sql.importsql.DemoPostgresSingleLineSqlCommandExtractor.NEWLINE_REPLACEMENT_REGEX, "' || CHAR(13) || CHAR(10) || '");
+            newCommand = newCommand.replaceAll(org.broadleafcommerce.common.util.sql.importsql.DemoSqlServerSingleLineSqlCommandExtractor.DOUBLEBACKSLASHMATCH, "\\\\");
             newCommand = newCommand.replaceAll("\\\\\"", "' || CHAR(34) || '");
-
-            newCommands[i] = newCommand;
-            i++;
+            newCommands[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.sql.importsql.DemoHsqlSingleLineSqlCommandExtractor.__L5949, i)] = newCommand;
+            perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.sql.importsql.DemoHsqlSingleLineSqlCommandExtractor.__L5950, (i++));
         }
         return newCommands;
     }
 
+    public static perturbation.location.PerturbationLocation __L5947;
+
+    public static perturbation.location.PerturbationLocation __L5948;
+
+    public static perturbation.location.PerturbationLocation __L5949;
+
+    public static perturbation.location.PerturbationLocation __L5950;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.sql.importsql.DemoHsqlSingleLineSqlCommandExtractor.__L5947 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/sql/importsql/DemoHsqlSingleLineSqlCommandExtractor.java:39)", 5947, "Numerical");
+        org.broadleafcommerce.common.util.sql.importsql.DemoHsqlSingleLineSqlCommandExtractor.__L5948 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/sql/importsql/DemoHsqlSingleLineSqlCommandExtractor.java:40)", 5948, "Numerical");
+        org.broadleafcommerce.common.util.sql.importsql.DemoHsqlSingleLineSqlCommandExtractor.__L5949 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/sql/importsql/DemoHsqlSingleLineSqlCommandExtractor.java:53)", 5949, "Numerical");
+        org.broadleafcommerce.common.util.sql.importsql.DemoHsqlSingleLineSqlCommandExtractor.__L5950 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/sql/importsql/DemoHsqlSingleLineSqlCommandExtractor.java:54)", 5950, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.sql.importsql.DemoHsqlSingleLineSqlCommandExtractor.initPerturbationLocation0();
+    }
 }
+

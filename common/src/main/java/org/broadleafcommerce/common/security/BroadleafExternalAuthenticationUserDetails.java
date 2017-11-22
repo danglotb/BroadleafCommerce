@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,78 +17,56 @@
  */
 package org.broadleafcommerce.common.security;
 
-import org.broadleafcommerce.common.site.domain.Site;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 
-import java.util.Collection;
-
-/**
- * This is an extension of Spring's User class to provide additional data to the UserDetails interface.  This should be used by derivitave
- * authentication providers to return an instance of UserDetails when authenticating against a system other than the Broadleaf tables (e.g. LDAP)
- * <p/>
- * User: Kelly Tisdell
- * Date: 6/19/12
- */
-public class BroadleafExternalAuthenticationUserDetails extends User {
-    
+public class BroadleafExternalAuthenticationUserDetails extends org.springframework.security.core.userdetails.User {
     private static final long serialVersionUID = 1L;
 
-    private String firstName;
-    
-    private String lastName;
-    
-    private String email;
-    
-    private Site site;
+    private java.lang.String firstName;
 
-    /**
-     * This sets the username, password, and authorities.  
-     * It also set the enabled, accountNonExpired, credentialsNonExpired, and accountNonLocked properties to true.
-     * @param username
-     * @param password
-     * @param authorities
-     */
-    public BroadleafExternalAuthenticationUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    private java.lang.String lastName;
+
+    private java.lang.String email;
+
+    private org.broadleafcommerce.common.site.domain.Site site;
+
+    public BroadleafExternalAuthenticationUserDetails(java.lang.String username, java.lang.String password, java.util.Collection<? extends org.springframework.security.core.GrantedAuthority> authorities) {
         super(username, password, true, true, true, true, authorities);
     }
 
-    public BroadleafExternalAuthenticationUserDetails(String username, String password,
-            boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired,
-            boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
+    public BroadleafExternalAuthenticationUserDetails(java.lang.String username, java.lang.String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, java.util.Collection<? extends org.springframework.security.core.GrantedAuthority> authorities) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
     }
 
-    public String getFirstName() {
+    public java.lang.String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(java.lang.String firstName) {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
+    public java.lang.String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(java.lang.String lastName) {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
+    public java.lang.String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(java.lang.String email) {
         this.email = email;
     }
 
-    public Site getSite() {
+    public org.broadleafcommerce.common.site.domain.Site getSite() {
         return site;
     }
 
-    public void setSite(Site site) {
+    public void setSite(org.broadleafcommerce.common.site.domain.Site site) {
         this.site = site;
     }
-
 }
+

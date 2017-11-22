@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,47 +17,42 @@
  */
 package org.broadleafcommerce.common.dialect;
 
-import org.hibernate.dialect.HSQLDialect;
 
-/**
- * A HSQL DB dialect specifically for the demo. In the demo use case, the database is empty on startup and does not
- * require table drops. Removing the table drop phase stops a number of HHH000389 level Hibernate errors from being
- * emitted to the console. While these exceptions are harmless, their occurrence should be avoided.
- *
- * @author Jeff Fischer
- */
-public class DemoHSQLDialect extends HSQLDialect {
-
-    /**
-     * To avoid seeing all of the hibernate errors on first startup, disable dropping constraints.
-     */
-    @Override
+public class DemoHSQLDialect extends org.hibernate.dialect.HSQLDialect {
+    @java.lang.Override
     public boolean dropConstraints() {
-        return false;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.dialect.DemoHSQLDialect.__L860, false);
     }
 
-    /**
-     * Since we aren't dropping constraints anymore, we must cascade when dropping tables to avoid violating FKs.
-     */
-    @Override
-    public String getCascadeConstraintsString() {
+    @java.lang.Override
+    public java.lang.String getCascadeConstraintsString() {
         return " cascade ";
     }
 
-    /**
-     * Due to HSQL syntax and the way {@link org.hibernate.dialect.Dialect#getDropTableString(String)} arranges the
-     * statements, we must put the {@code if exists} before the table name.
-     */
-    @Override
+    @java.lang.Override
     public boolean supportsIfExistsBeforeTableName() {
-        return true;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.dialect.DemoHSQLDialect.__L861, true);
     }
 
-    /**
-     * @see #supportsIfExistsBeforeTableName()
-     */
-    @Override
+    @java.lang.Override
     public boolean supportsIfExistsAfterTableName() {
-        return false;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.dialect.DemoHSQLDialect.__L862, false);
+    }
+
+    public static perturbation.location.PerturbationLocation __L860;
+
+    public static perturbation.location.PerturbationLocation __L861;
+
+    public static perturbation.location.PerturbationLocation __L862;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.dialect.DemoHSQLDialect.__L860 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/dialect/DemoHSQLDialect.java:36)", 860, "Boolean");
+        org.broadleafcommerce.common.dialect.DemoHSQLDialect.__L861 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/dialect/DemoHSQLDialect.java:53)", 861, "Boolean");
+        org.broadleafcommerce.common.dialect.DemoHSQLDialect.__L862 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/dialect/DemoHSQLDialect.java:61)", 862, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.dialect.DemoHSQLDialect.initPerturbationLocation0();
     }
 }
+

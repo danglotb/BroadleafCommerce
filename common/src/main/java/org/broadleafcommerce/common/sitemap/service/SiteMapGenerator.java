@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,37 +15,12 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.sitemap.service;
 
-import org.broadleafcommerce.common.sitemap.domain.SiteMapGeneratorConfiguration;
 
-
-/**
- * Responsible for generating site map entries.   
- * 
- * Each SiteMapGenerator can generate 
- * 
- * @author bpolster
- *
- */
 public interface SiteMapGenerator {
-    
-    /**
-     * Returns true if this SiteMapGenerator is able to process the passed in siteMapGeneratorConfiguration.   
-     * 
-     * @param siteMapGeneratorConfiguration
-     * @return
-     */
-    public boolean canHandleSiteMapConfiguration(SiteMapGeneratorConfiguration siteMapGeneratorConfiguration);
-    
-    /**
-     * Typically, the generator will loop through and build a list of URLs to add to the sitemap by calling 
-     * methods on the SiteMapBuilder.
-     * 
-     * @param siteMapGeneratorConfiguration
-     * @param siteMapBuilder
-     */
-    public void addSiteMapEntries(SiteMapGeneratorConfiguration siteMapGeneratorConfiguration, SiteMapBuilder siteMapBuilder);
+    public boolean canHandleSiteMapConfiguration(org.broadleafcommerce.common.sitemap.domain.SiteMapGeneratorConfiguration siteMapGeneratorConfiguration);
 
+    public void addSiteMapEntries(org.broadleafcommerce.common.sitemap.domain.SiteMapGeneratorConfiguration siteMapGeneratorConfiguration, org.broadleafcommerce.common.sitemap.service.SiteMapBuilder siteMapBuilder);
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,122 +17,109 @@
  */
 package org.broadleafcommerce.common.security.ldap;
 
-import org.broadleafcommerce.common.security.BroadleafExternalAuthenticationUserDetails;
-import org.springframework.ldap.core.DirContextOperations;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.ldap.userdetails.LdapUserDetailsMapper;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-
-/**
- * This class allows Spring to do it's thing with respect to mapping user details from
- * LDAP to the Spring's security framework. However, this class allows us to specify whether
- * to use the user's user name from LDAP, or to use their email address to map them to a Broadleaf
- * user.  It also allows us to override the role names (GrantedAuthorities) that come from LDAP with
- * names that may be more suitable for Broadleaf.
- *
- * @deprecated NO LONGER REQUIRED AND SHOULD NOT BE USED. SEE BroadleafAdminLdapUserDetailsMapper.
- *
- * @author Kelly Tisdell
- *
- */
-@Deprecated
-public class BroadleafActiveDirectoryUserDetailsMapper extends LdapUserDetailsMapper {
-
+@java.lang.Deprecated
+public class BroadleafActiveDirectoryUserDetailsMapper extends org.springframework.security.ldap.userdetails.LdapUserDetailsMapper {
     protected boolean useEmailAddressAsUsername = true;
 
     protected boolean additiveRoleNameSubstitutions = false;
 
-    protected Map<String, String[]> roleNameSubstitutions;
+    protected java.util.Map<java.lang.String, java.lang.String[]> roleNameSubstitutions;
 
-    @Override
-    public UserDetails mapUserFromContext(DirContextOperations ctx, String username, Collection<? extends GrantedAuthority> authorities) {
-        Collection<GrantedAuthority> newAuthorities = new HashSet<GrantedAuthority>();
-
-        if (roleNameSubstitutions != null && ! roleNameSubstitutions.isEmpty()) {
-            for (GrantedAuthority authority : authorities) {
-                if (roleNameSubstitutions.containsKey(authority.getAuthority())) {
-                    String[] roles = roleNameSubstitutions.get(authority.getAuthority());
-                    for (String role : roles) {
-                        newAuthorities.add(new SimpleGrantedAuthority(role.trim()));
+    @java.lang.Override
+    public org.springframework.security.core.userdetails.UserDetails mapUserFromContext(org.springframework.ldap.core.DirContextOperations ctx, java.lang.String username, java.util.Collection<? extends org.springframework.security.core.GrantedAuthority> authorities) {
+        java.util.Collection<org.springframework.security.core.GrantedAuthority> newAuthorities = new java.util.HashSet<org.springframework.security.core.GrantedAuthority>();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4833, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4830, ((roleNameSubstitutions) != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4832, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4831, roleNameSubstitutions.isEmpty())))))))) {
+            for (org.springframework.security.core.GrantedAuthority authority : authorities) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4834, roleNameSubstitutions.containsKey(authority.getAuthority()))) {
+                    java.lang.String[] roles = roleNameSubstitutions.get(authority.getAuthority());
+                    for (java.lang.String role : roles) {
+                        newAuthorities.add(new org.springframework.security.core.authority.SimpleGrantedAuthority(role.trim()));
                     }
-                    if (additiveRoleNameSubstitutions) {
+                    if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4835, additiveRoleNameSubstitutions)) {
                         newAuthorities.add(authority);
                     }
-                } else {
+                }else {
                     newAuthorities.add(authority);
                 }
             }
-        } else {
+        }else {
             newAuthorities.addAll(authorities);
         }
-
-        String email = (String)ctx.getObjectAttribute("mail");
-        UserDetails userDetails = null;
-        if (useEmailAddressAsUsername) {
-            if (email != null) {
+        java.lang.String email = ((java.lang.String) (ctx.getObjectAttribute("mail")));
+        org.springframework.security.core.userdetails.UserDetails userDetails = null;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4836, useEmailAddressAsUsername)) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4837, (email != null))) {
                 userDetails = super.mapUserFromContext(ctx, email, newAuthorities);
             }
         }
-
-        if (userDetails == null) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4838, (userDetails == null))) {
             userDetails = super.mapUserFromContext(ctx, username, newAuthorities);
         }
-        
-        String password = userDetails.getPassword();
-        if (password == null) {
+        java.lang.String password = userDetails.getPassword();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4839, (password == null))) {
             password = userDetails.getUsername();
         }
-
-        BroadleafExternalAuthenticationUserDetails broadleafUser = new BroadleafExternalAuthenticationUserDetails(userDetails.getUsername(), password, userDetails.getAuthorities());
-        broadleafUser.setFirstName((String)ctx.getObjectAttribute("givenName"));
-        broadleafUser.setLastName((String)ctx.getObjectAttribute("sn"));
+        org.broadleafcommerce.common.security.BroadleafExternalAuthenticationUserDetails broadleafUser = new org.broadleafcommerce.common.security.BroadleafExternalAuthenticationUserDetails(userDetails.getUsername(), password, userDetails.getAuthorities());
+        broadleafUser.setFirstName(((java.lang.String) (ctx.getObjectAttribute("givenName"))));
+        broadleafUser.setLastName(((java.lang.String) (ctx.getObjectAttribute("sn"))));
         broadleafUser.setEmail(email);
-
         return broadleafUser;
     }
 
-    /**
-     * The LDAP server may contain a user name other than an email address.  If the email address should be used to map to a Broadleaf user, then
-     * set this to true.  The principal will be set to the user's email address returned from the LDAP server.
-     * @param value
-     */
     public void setUseEmailAddressAsUsername(boolean value) {
-        this.useEmailAddressAsUsername = value;
+        this.useEmailAddressAsUsername = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4840, value);
     }
 
-    /**
-     * This allows you to declaratively set a map containing values that will substitute role names from LDAP to Broadleaf roles names in cases that they might be different.
-     * For example, if you have a role specified in LDAP under "memberOf" with a DN of "Marketing Administrator", you might want to
-     * map that to the role "ADMIN".  By default the prefix "ROLE_" will be pre-pended to this name. So to configure this, you would specify:
-     *
-     * <bean class="org.broadleaf.loadtest.web.security.ActiveDirectoryUserDetailsContextMapper">
-     *     <property name="roleMappings">
-     *         <map>
-     *             <entry key="Marketing_Administrator" value="CATALOG_ADMIN"/>
-     *         </map>
-     *     </property>
-     * </bean>
-     *
-     * With this configuration, all roles returned by LDAP that have a DN of "Marketing Administrator" will be converted to "ADMIN"
-     * @param roleNameSubstitutions
-     */
-    public void setRoleNameSubstitutions(Map<String, String[]> roleNameSubstitutions) {
+    public void setRoleNameSubstitutions(java.util.Map<java.lang.String, java.lang.String[]> roleNameSubstitutions) {
         this.roleNameSubstitutions = roleNameSubstitutions;
     }
 
-    /**
-     * This should be used in conjunction with the roleNameSubstitutions property.
-     * If this is set to true, this will add the mapped roles to the list of original granted authorities.  If set to false, this will replace the original granted
-     * authorities with the mapped ones. Defaults to false.
-     *
-     * @param additiveRoleNameSubstitutions
-     */
     public void setAdditiveRoleNameSubstitutions(boolean additiveRoleNameSubstitutions) {
-        this.additiveRoleNameSubstitutions = additiveRoleNameSubstitutions;
+        this.additiveRoleNameSubstitutions = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4841, additiveRoleNameSubstitutions);
+    }
+
+    public static perturbation.location.PerturbationLocation __L4830;
+
+    public static perturbation.location.PerturbationLocation __L4831;
+
+    public static perturbation.location.PerturbationLocation __L4832;
+
+    public static perturbation.location.PerturbationLocation __L4833;
+
+    public static perturbation.location.PerturbationLocation __L4834;
+
+    public static perturbation.location.PerturbationLocation __L4835;
+
+    public static perturbation.location.PerturbationLocation __L4836;
+
+    public static perturbation.location.PerturbationLocation __L4837;
+
+    public static perturbation.location.PerturbationLocation __L4838;
+
+    public static perturbation.location.PerturbationLocation __L4839;
+
+    public static perturbation.location.PerturbationLocation __L4840;
+
+    public static perturbation.location.PerturbationLocation __L4841;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4830 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/ldap/BroadleafActiveDirectoryUserDetailsMapper.java:56)", 4830, "Boolean");
+        org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4831 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/ldap/BroadleafActiveDirectoryUserDetailsMapper.java:56)", 4831, "Boolean");
+        org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4832 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/ldap/BroadleafActiveDirectoryUserDetailsMapper.java:56)", 4832, "Boolean");
+        org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4833 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/ldap/BroadleafActiveDirectoryUserDetailsMapper.java:56)", 4833, "Boolean");
+        org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4834 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/ldap/BroadleafActiveDirectoryUserDetailsMapper.java:58)", 4834, "Boolean");
+        org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4835 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/ldap/BroadleafActiveDirectoryUserDetailsMapper.java:63)", 4835, "Boolean");
+        org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4836 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/ldap/BroadleafActiveDirectoryUserDetailsMapper.java:76)", 4836, "Boolean");
+        org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4837 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/ldap/BroadleafActiveDirectoryUserDetailsMapper.java:77)", 4837, "Boolean");
+        org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4838 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/ldap/BroadleafActiveDirectoryUserDetailsMapper.java:82)", 4838, "Boolean");
+        org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4839 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/ldap/BroadleafActiveDirectoryUserDetailsMapper.java:87)", 4839, "Boolean");
+        org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4840 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/ldap/BroadleafActiveDirectoryUserDetailsMapper.java:105)", 4840, "Boolean");
+        org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.__L4841 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/ldap/BroadleafActiveDirectoryUserDetailsMapper.java:136)", 4841, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.security.ldap.BroadleafActiveDirectoryUserDetailsMapper.initPerturbationLocation0();
     }
 }
+

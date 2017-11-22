@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,33 +17,21 @@
  */
 package org.broadleafcommerce.common.web;
 
-import org.broadleafcommerce.common.extension.AbstractExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
 
-
-/**
- * @author bpolster
- */
-public abstract class AbstractBroadleafTemplateResolverExtensionHandler extends AbstractExtensionHandler 
-        implements BroadleafTemplateViewResolverExtensionHandler {
-
-    @Override
-    public ExtensionResultStatusType overrideView(ExtensionResultHolder<String> erh, String originalViewName,
-            boolean isAjaxRequest) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+public abstract class AbstractBroadleafTemplateResolverExtensionHandler extends org.broadleafcommerce.common.extension.AbstractExtensionHandler implements org.broadleafcommerce.common.web.BroadleafTemplateViewResolverExtensionHandler {
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType overrideView(org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.String> erh, java.lang.String originalViewName, boolean isAjaxRequest) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 
-    @Override
-    public ExtensionResultStatusType appendCacheKey(ExtensionResultHolder<String> erh, String originalViewName,
-            boolean isAjaxRequest) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType appendCacheKey(org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.String> erh, java.lang.String originalViewName, boolean isAjaxRequest) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 
-    @Override
-    public ExtensionResultStatusType provideTemplateWrapper(ExtensionResultHolder<String> erh, String originalViewName,
-            boolean isAjaxRequest) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType provideTemplateWrapper(org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.String> erh, java.lang.String originalViewName, boolean isAjaxRequest) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
-
 }
+

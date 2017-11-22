@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,42 +17,52 @@
  */
 package org.broadleafcommerce.common.service;
 
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Service;
 
-/**
- * @author Jeff Fischer
- */
-@Service("blParentCategoryLegacyModeService")
-public class ParentCategoryLegacyModeServiceImpl implements ApplicationContextAware, ParentCategoryLegacyModeService {
+@org.springframework.stereotype.Service("blParentCategoryLegacyModeService")
+public class ParentCategoryLegacyModeServiceImpl implements org.broadleafcommerce.common.service.ParentCategoryLegacyModeService , org.springframework.context.ApplicationContextAware {
+    public static final java.lang.String USE_LEGACY_DEFAULT_CATEGORY_MODE = "use.legacy.default.category.mode";
 
-    public static final String USE_LEGACY_DEFAULT_CATEGORY_MODE = "use.legacy.default.category.mode";
-    private static ApplicationContext applicationContext;
-    private static ParentCategoryLegacyModeService service;
+    private static org.springframework.context.ApplicationContext applicationContext;
 
-    @Value("${" + USE_LEGACY_DEFAULT_CATEGORY_MODE + ":false}")
+    private static org.broadleafcommerce.common.service.ParentCategoryLegacyModeService service;
+
+    @org.springframework.beans.factory.annotation.Value(("${" + (org.broadleafcommerce.common.service.ParentCategoryLegacyModeServiceImpl.USE_LEGACY_DEFAULT_CATEGORY_MODE)) + ":false}")
     protected boolean useLegacyDefaultCategoryMode = false;
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    @java.lang.Override
+    public void setApplicationContext(org.springframework.context.ApplicationContext applicationContext) throws org.springframework.beans.BeansException {
         this.applicationContext = applicationContext;
     }
 
-    @Override
+    @java.lang.Override
     public boolean isLegacyMode() {
-        return useLegacyDefaultCategoryMode;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.service.ParentCategoryLegacyModeServiceImpl.__L5179, useLegacyDefaultCategoryMode);
     }
 
-    public static ParentCategoryLegacyModeService getLegacyModeService() {
-        if (applicationContext == null) {
+    public static org.broadleafcommerce.common.service.ParentCategoryLegacyModeService getLegacyModeService() {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.service.ParentCategoryLegacyModeServiceImpl.__L5180, ((org.broadleafcommerce.common.service.ParentCategoryLegacyModeServiceImpl.applicationContext) == null))) {
             return null;
         }
-        if (service == null) {
-            service = (ParentCategoryLegacyModeService) applicationContext.getBean("blParentCategoryLegacyModeService");
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.service.ParentCategoryLegacyModeServiceImpl.__L5181, ((org.broadleafcommerce.common.service.ParentCategoryLegacyModeServiceImpl.service) == null))) {
+            org.broadleafcommerce.common.service.ParentCategoryLegacyModeServiceImpl.service = ((org.broadleafcommerce.common.service.ParentCategoryLegacyModeService) (org.broadleafcommerce.common.service.ParentCategoryLegacyModeServiceImpl.applicationContext.getBean("blParentCategoryLegacyModeService")));
         }
-        return service;
+        return org.broadleafcommerce.common.service.ParentCategoryLegacyModeServiceImpl.service;
+    }
+
+    public static perturbation.location.PerturbationLocation __L5179;
+
+    public static perturbation.location.PerturbationLocation __L5180;
+
+    public static perturbation.location.PerturbationLocation __L5181;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.service.ParentCategoryLegacyModeServiceImpl.__L5179 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/ParentCategoryLegacyModeServiceImpl.java:46)", 5179, "Boolean");
+        org.broadleafcommerce.common.service.ParentCategoryLegacyModeServiceImpl.__L5180 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/ParentCategoryLegacyModeServiceImpl.java:50)", 5180, "Boolean");
+        org.broadleafcommerce.common.service.ParentCategoryLegacyModeServiceImpl.__L5181 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/ParentCategoryLegacyModeServiceImpl.java:53)", 5181, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.service.ParentCategoryLegacyModeServiceImpl.initPerturbationLocation0();
     }
 }
+

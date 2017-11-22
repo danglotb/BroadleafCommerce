@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,29 +17,24 @@
  */
 package org.broadleafcommerce.common.extensibility.jpa;
 
-/**
- * 
- * @author jfischer
- *
- */
-public class EntityClassNotFoundException extends RuntimeException {
 
+public class EntityClassNotFoundException extends java.lang.RuntimeException {
     private static final long serialVersionUID = 1L;
 
     public EntityClassNotFoundException() {
         super();
     }
 
-    public EntityClassNotFoundException(String arg0, Throwable arg1) {
+    public EntityClassNotFoundException(java.lang.String arg0, java.lang.Throwable arg1) {
         super(arg0, arg1);
     }
 
-    public EntityClassNotFoundException(String arg0) {
+    public EntityClassNotFoundException(java.lang.String arg0) {
         super(arg0);
     }
 
-    public EntityClassNotFoundException(Throwable arg0) {
+    public EntityClassNotFoundException(java.lang.Throwable arg0) {
         super(arg0);
     }
-
 }
+

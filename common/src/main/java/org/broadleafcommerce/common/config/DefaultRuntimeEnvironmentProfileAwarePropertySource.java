@@ -15,26 +15,14 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-/**
- * 
- */
 package org.broadleafcommerce.common.config;
 
-import org.springframework.core.annotation.Order;
 
-/**
- * Adds a default property source to look for a {@code runtime-environment} folder and apply the -shared overriding
- * mechanics to it.
- * 
- * @author Phillip Verheyden (phillipuniverse)
- * @since 5.2
- */
-@Order(BroadleafSharedOverrideProfileAwarePropertySource.DEFAULT_ORDER)
-public class DefaultRuntimeEnvironmentProfileAwarePropertySource implements BroadleafSharedOverrideProfileAwarePropertySource {
-
-    @Override
-    public String getClasspathFolder() {
+@org.springframework.core.annotation.Order(org.broadleafcommerce.common.config.BroadleafSharedOverrideProfileAwarePropertySource.DEFAULT_ORDER)
+public class DefaultRuntimeEnvironmentProfileAwarePropertySource implements org.broadleafcommerce.common.config.BroadleafSharedOverrideProfileAwarePropertySource {
+    @java.lang.Override
+    public java.lang.String getClasspathFolder() {
         return "runtime-properties";
     }
-
 }
+

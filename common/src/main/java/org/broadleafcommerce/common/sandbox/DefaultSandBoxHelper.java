@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,108 +17,115 @@
  */
 package org.broadleafcommerce.common.sandbox;
 
-import org.hibernate.Session;
-import org.springframework.stereotype.Component;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
-
-import java.util.Arrays;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-
-/**
- * @see org.broadleafcommerce.common.sandbox.SandBoxHelper
- * @author Jeff Fischer
- */
-@Component("blSandBoxHelper")
-public class DefaultSandBoxHelper implements SandBoxHelper {
-
-    @Override
-    public Long getSandBoxVersionId(Class<?> linkedObjectType, Long requestedParent) {
+@org.springframework.stereotype.Component("blSandBoxHelper")
+public class DefaultSandBoxHelper implements org.broadleafcommerce.common.sandbox.SandBoxHelper {
+    @java.lang.Override
+    public java.lang.Long getSandBoxVersionId(java.lang.Class<?> linkedObjectType, java.lang.Long requestedParent) {
         return requestedParent;
     }
 
-    @Override
-    public Long getCascadedProductionStateId(Class<?> linkedObjectType, Long requestedParent) {
+    @java.lang.Override
+    public java.lang.Long getCascadedProductionStateId(java.lang.Class<?> linkedObjectType, java.lang.Long requestedParent) {
         return requestedParent;
     }
 
-    @Override
-    public Long retrieveCascadedState(Class<?> ceilingImpl, Long requestedParent, EntityManager em) {
+    @java.lang.Override
+    public java.lang.Long retrieveCascadedState(java.lang.Class<?> ceilingImpl, java.lang.Long requestedParent, javax.persistence.EntityManager em) {
         return requestedParent;
     }
 
-    @Override
-    public boolean isRelatedToParentCatalogIds(Object entity, Long... candidateRelatedIds) {
-        return false;
+    @java.lang.Override
+    public boolean isRelatedToParentCatalogIds(java.lang.Object entity, java.lang.Long... candidateRelatedIds) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.DefaultSandBoxHelper.__L4773, false);
     }
 
-    @Override
-    public List<Long> mergeCloneIds(Class<?> type, Long... originalIds) {
-        return Arrays.asList(originalIds);
+    @java.lang.Override
+    public java.util.List<java.lang.Long> mergeCloneIds(java.lang.Class<?> type, java.lang.Long... originalIds) {
+        return java.util.Arrays.asList(originalIds);
     }
 
-    @Override
-    public BiMap<Long, Long> getSandBoxToOriginalMap(Class<?> type, Long... originalIds) {
-        return HashBiMap.create();
+    @java.lang.Override
+    public com.google.common.collect.BiMap<java.lang.Long, java.lang.Long> getSandBoxToOriginalMap(java.lang.Class<?> type, java.lang.Long... originalIds) {
+        return com.google.common.collect.HashBiMap.create();
     }
 
-    @Override
-    public OriginalIdResponse getOriginalId(Class<?> type, Long id) {
-        OriginalIdResponse response = new OriginalIdResponse();
+    @java.lang.Override
+    public org.broadleafcommerce.common.sandbox.SandBoxHelper.OriginalIdResponse getOriginalId(java.lang.Class<?> type, java.lang.Long id) {
+        org.broadleafcommerce.common.sandbox.SandBoxHelper.OriginalIdResponse response = new org.broadleafcommerce.common.sandbox.SandBoxHelper.OriginalIdResponse();
         response.setOriginalId(id);
         return response;
     }
 
-    @Override
-    public Long getOriginalId(Object test) {
+    @java.lang.Override
+    public java.lang.Long getOriginalId(java.lang.Object test) {
         return null;
     }
 
-    @Override
-    public OriginalIdResponse getProductionOriginalId(Class<?> type, Long id) {
+    @java.lang.Override
+    public org.broadleafcommerce.common.sandbox.SandBoxHelper.OriginalIdResponse getProductionOriginalId(java.lang.Class<?> type, java.lang.Long id) {
         return null;
     }
 
-    @Override
-    public boolean isSandBoxable(String className) {
-        return false;
+    @java.lang.Override
+    public boolean isSandBoxable(java.lang.String className) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.DefaultSandBoxHelper.__L4774, false);
     }
 
-    @Override
+    @java.lang.Override
     public boolean isPromote() {
-        return false;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.DefaultSandBoxHelper.__L4775, false);
     }
 
-    @Override
+    @java.lang.Override
     public boolean isReject() {
-        return false;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.DefaultSandBoxHelper.__L4776, false);
     }
 
-    @Override
+    @java.lang.Override
     public boolean isReplayOperation() {
-        return false;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.DefaultSandBoxHelper.__L4777, false);
     }
 
-    @Override
-    public void optionallyIncludeDeletedItemsInQueriesAndCollections(Runnable runnable, boolean includeDeleted) {
+    @java.lang.Override
+    public void optionallyIncludeDeletedItemsInQueriesAndCollections(java.lang.Runnable runnable, boolean includeDeleted) {
         runnable.run();
     }
 
-    @Override
-    public Long getProductionRecordIdIfApplicable(EntityManager em, Object startFieldValue) {
-        return (Long) em.unwrap(Session.class).getIdentifier(startFieldValue);
+    @java.lang.Override
+    public java.lang.Long getProductionRecordIdIfApplicable(javax.persistence.EntityManager em, java.lang.Object startFieldValue) {
+        return ((java.lang.Long) (em.unwrap(org.hibernate.Session.class).getIdentifier(startFieldValue)));
     }
 
-    @Override
+    @java.lang.Override
     public <T> T getTopMostOriginalRecord(T record) {
         return record;
     }
 
-    @Override
+    @java.lang.Override
     public void ignoreCloneCache(boolean ignoreCache) {
-        //do nothing
+    }
+
+    public static perturbation.location.PerturbationLocation __L4773;
+
+    public static perturbation.location.PerturbationLocation __L4774;
+
+    public static perturbation.location.PerturbationLocation __L4775;
+
+    public static perturbation.location.PerturbationLocation __L4776;
+
+    public static perturbation.location.PerturbationLocation __L4777;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.sandbox.DefaultSandBoxHelper.__L4773 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/DefaultSandBoxHelper.java:55)", 4773, "Boolean");
+        org.broadleafcommerce.common.sandbox.DefaultSandBoxHelper.__L4774 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/DefaultSandBoxHelper.java:87)", 4774, "Boolean");
+        org.broadleafcommerce.common.sandbox.DefaultSandBoxHelper.__L4775 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/DefaultSandBoxHelper.java:92)", 4775, "Boolean");
+        org.broadleafcommerce.common.sandbox.DefaultSandBoxHelper.__L4776 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/DefaultSandBoxHelper.java:97)", 4776, "Boolean");
+        org.broadleafcommerce.common.sandbox.DefaultSandBoxHelper.__L4777 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/DefaultSandBoxHelper.java:102)", 4777, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.sandbox.DefaultSandBoxHelper.initPerturbationLocation0();
     }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,134 +17,144 @@
  */
 package org.broadleafcommerce.common.structure.dto;
 
-import org.apache.commons.beanutils.BeanUtils;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-/**
- * Scoped as a prototype bean via bl-cms-applicationContext-entity. This bean is used to wrap an {@link StructuredContentImpl}
- * so that modifications and additional properties can be used without worrying about Hibernate's persistence.
- * 
- * @author bpolster.
- * @see {@link StructuredContentServiceImpl#buildStructuredContentDTO};
- * @see {@link StructuredContentServiceImpl#buildFieldValues};
- */
-public class StructuredContentDTO implements Serializable {
-
+public class StructuredContentDTO implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
 
-    protected Long id;
-    protected String contentName;
-    protected String contentType;
-    protected String localeCode;
-    protected Integer priority;
-    protected Map<String, Object> values = new HashMap<String,Object>();
-    protected String ruleExpression;
-    protected List<ItemCriteriaDTO> itemCriteriaDTOList;
+    protected java.lang.Long id;
 
-    /**
-     * Attempts to obtain the given property value from the dynamic property map first, and then an actual bean property
-     * via a getter
-     * 
-     * @param propertyName
-     * @return
-     */
-    public Object getPropertyValue(String propertyName) {
+    protected java.lang.String contentName;
+
+    protected java.lang.String contentType;
+
+    protected java.lang.String localeCode;
+
+    protected java.lang.Integer priority;
+
+    protected java.util.Map<java.lang.String, java.lang.Object> values = new java.util.HashMap<java.lang.String, java.lang.Object>();
+
+    protected java.lang.String ruleExpression;
+
+    protected java.util.List<org.broadleafcommerce.common.structure.dto.ItemCriteriaDTO> itemCriteriaDTOList;
+
+    public java.lang.Object getPropertyValue(java.lang.String propertyName) {
         try {
-            return getValues().containsKey(propertyName) ? getValues().get(propertyName) : BeanUtils.getProperty(this, propertyName);
-        } catch (Exception e) {
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.structure.dto.StructuredContentDTO.__L5571, getValues().containsKey(propertyName)) ? getValues().get(propertyName) : org.apache.commons.beanutils.BeanUtils.getProperty(this, propertyName);
+        } catch (java.lang.Exception e) {
             return null;
         }
     }
-    
-    public Long getId() {
+
+    public java.lang.Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(java.lang.Long id) {
         this.id = id;
     }
 
-    public String getContentName() {
+    public java.lang.String getContentName() {
         return contentName;
     }
 
-    public void setContentName(String contentName) {
+    public void setContentName(java.lang.String contentName) {
         values.put("contentName", contentName);
         this.contentName = contentName;
     }
 
-    public String getContentType() {
+    public java.lang.String getContentType() {
         return contentType;
     }
 
-    public void setContentType(String contentType) {
+    public void setContentType(java.lang.String contentType) {
         values.put("contentType", contentType);
         this.contentType = contentType;
     }
 
-    public String getLocaleCode() {
+    public java.lang.String getLocaleCode() {
         return localeCode;
     }
 
-    public void setLocaleCode(String localeCode) {
+    public void setLocaleCode(java.lang.String localeCode) {
         values.put("localeCode", localeCode);
         this.localeCode = localeCode;
     }
 
-    public Integer getPriority() {
-        return priority;
+    public java.lang.Integer getPriority() {
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.structure.dto.StructuredContentDTO.__L5572, priority);
     }
 
-    public void setPriority(Integer priority) {
-        values.put("priority", priority);
-        this.priority = priority;
+    public void setPriority(java.lang.Integer priority) {
+        values.put("priority", perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.structure.dto.StructuredContentDTO.__L5573, priority));
+        this.priority = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.structure.dto.StructuredContentDTO.__L5574, priority);
     }
 
-    public Map<String, Object> getValues() {
+    public java.util.Map<java.lang.String, java.lang.Object> getValues() {
         return values;
     }
 
-    public void setValues(Map<String, Object> values) {
+    public void setValues(java.util.Map<java.lang.String, java.lang.Object> values) {
         this.values = values;
     }
 
-    public String getRuleExpression() {
+    public java.lang.String getRuleExpression() {
         return ruleExpression;
     }
 
-    public void setRuleExpression(String ruleExpression) {
+    public void setRuleExpression(java.lang.String ruleExpression) {
         this.ruleExpression = ruleExpression;
     }
 
-    public List<ItemCriteriaDTO> getItemCriteriaDTOList() {
+    public java.util.List<org.broadleafcommerce.common.structure.dto.ItemCriteriaDTO> getItemCriteriaDTOList() {
         return itemCriteriaDTOList;
     }
 
-    public void setItemCriteriaDTOList(List<ItemCriteriaDTO> itemCriteriaDTOList) {
+    public void setItemCriteriaDTOList(java.util.List<org.broadleafcommerce.common.structure.dto.ItemCriteriaDTO> itemCriteriaDTOList) {
         this.itemCriteriaDTOList = itemCriteriaDTOList;
     }
 
-    public StructuredContentDTO getClone() {
-        StructuredContentDTO clonedDto = new StructuredContentDTO();
+    public org.broadleafcommerce.common.structure.dto.StructuredContentDTO getClone() {
+        org.broadleafcommerce.common.structure.dto.StructuredContentDTO clonedDto = new org.broadleafcommerce.common.structure.dto.StructuredContentDTO();
         clonedDto.setId(id);
         clonedDto.setContentName(contentName);
         clonedDto.setContentType(contentType);
         clonedDto.setLocaleCode(localeCode);
-        clonedDto.setPriority(priority);
-        clonedDto.setValues(new HashMap<String, Object>(values));
+        clonedDto.setPriority(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.structure.dto.StructuredContentDTO.__L5575, priority));
+        clonedDto.setValues(new java.util.HashMap<java.lang.String, java.lang.Object>(values));
         clonedDto.setRuleExpression(ruleExpression);
-        if (itemCriteriaDTOList != null) {
-            List<ItemCriteriaDTO> itemCriteriaDTOs = new ArrayList<ItemCriteriaDTO>();
-            for (ItemCriteriaDTO itemCriteriaDto : itemCriteriaDTOList) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.structure.dto.StructuredContentDTO.__L5576, ((itemCriteriaDTOList) != null))) {
+            java.util.List<org.broadleafcommerce.common.structure.dto.ItemCriteriaDTO> itemCriteriaDTOs = new java.util.ArrayList<org.broadleafcommerce.common.structure.dto.ItemCriteriaDTO>();
+            for (org.broadleafcommerce.common.structure.dto.ItemCriteriaDTO itemCriteriaDto : itemCriteriaDTOList) {
                 itemCriteriaDTOs.add(itemCriteriaDto.getClone());
             }
             clonedDto.setItemCriteriaDTOList(itemCriteriaDTOs);
         }
         return clonedDto;
     }
+
+    public static perturbation.location.PerturbationLocation __L5571;
+
+    public static perturbation.location.PerturbationLocation __L5572;
+
+    public static perturbation.location.PerturbationLocation __L5573;
+
+    public static perturbation.location.PerturbationLocation __L5574;
+
+    public static perturbation.location.PerturbationLocation __L5575;
+
+    public static perturbation.location.PerturbationLocation __L5576;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.structure.dto.StructuredContentDTO.__L5571 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/structure/dto/StructuredContentDTO.java:58)", 5571, "Boolean");
+        org.broadleafcommerce.common.structure.dto.StructuredContentDTO.__L5572 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/structure/dto/StructuredContentDTO.java:100)", 5572, "Numerical");
+        org.broadleafcommerce.common.structure.dto.StructuredContentDTO.__L5573 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/structure/dto/StructuredContentDTO.java:104)", 5573, "Numerical");
+        org.broadleafcommerce.common.structure.dto.StructuredContentDTO.__L5574 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/structure/dto/StructuredContentDTO.java:105)", 5574, "Numerical");
+        org.broadleafcommerce.common.structure.dto.StructuredContentDTO.__L5575 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/structure/dto/StructuredContentDTO.java:138)", 5575, "Numerical");
+        org.broadleafcommerce.common.structure.dto.StructuredContentDTO.__L5576 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/structure/dto/StructuredContentDTO.java:141)", 5576, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.structure.dto.StructuredContentDTO.initPerturbationLocation0();
+    }
 }
+

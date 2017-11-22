@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,35 +17,34 @@
  */
 package org.broadleafcommerce.common.vendor.service.exception;
 
-import org.broadleafcommerce.common.vendor.service.message.FulfillmentPriceExceptionResponse;
 
-public class FulfillmentPriceException extends Exception {
-
+public class FulfillmentPriceException extends java.lang.Exception {
     private static final long serialVersionUID = 1L;
 
-    protected FulfillmentPriceExceptionResponse fulfillmentPriceExceptionResponse;
+    protected org.broadleafcommerce.common.vendor.service.message.FulfillmentPriceExceptionResponse fulfillmentPriceExceptionResponse;
 
     public FulfillmentPriceException() {
         super();
     }
 
-    public FulfillmentPriceException(String message, Throwable cause) {
+    public FulfillmentPriceException(java.lang.String message, java.lang.Throwable cause) {
         super(message, cause);
     }
 
-    public FulfillmentPriceException(String message) {
+    public FulfillmentPriceException(java.lang.String message) {
         super(message);
     }
 
-    public FulfillmentPriceException(Throwable cause) {
+    public FulfillmentPriceException(java.lang.Throwable cause) {
         super(cause);
     }
 
-    public FulfillmentPriceExceptionResponse getFulfillmentPriceExceptionResponse() {
+    public org.broadleafcommerce.common.vendor.service.message.FulfillmentPriceExceptionResponse getFulfillmentPriceExceptionResponse() {
         return fulfillmentPriceExceptionResponse;
     }
 
-    public void setFulfillmentPriceExceptionResponse(FulfillmentPriceExceptionResponse fulfillmentPriceExceptionResponse) {
+    public void setFulfillmentPriceExceptionResponse(org.broadleafcommerce.common.vendor.service.message.FulfillmentPriceExceptionResponse fulfillmentPriceExceptionResponse) {
         this.fulfillmentPriceExceptionResponse = fulfillmentPriceExceptionResponse;
     }
 }
+

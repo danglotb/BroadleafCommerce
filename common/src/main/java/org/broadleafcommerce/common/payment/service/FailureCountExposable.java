@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Integration
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,25 +15,16 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.payment.service;
 
-import org.broadleafcommerce.common.vendor.service.type.ServiceStatusType;
 
-/**
- * This interface is a lightweight replacement of gateway-specific classes extending AbstractExternalPaymentGatewayCall, and it helps expose some f the QoS inner methods, for testing purposes.
- * Notice that getServiceStatus() is overlaps a definition in ServiceStatusDetectable
- * @author gdiaz
- *
- */
 public interface FailureCountExposable {
-
     public void clearStatus();
 
     public void incrementFailure();
 
-    ServiceStatusType getServiceStatus();
-    
-    Integer getFailureReportingThreshold();
+    org.broadleafcommerce.common.vendor.service.type.ServiceStatusType getServiceStatus();
 
+    java.lang.Integer getFailureReportingThreshold();
 }
+

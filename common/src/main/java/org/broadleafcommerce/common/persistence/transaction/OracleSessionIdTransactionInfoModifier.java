@@ -17,60 +17,88 @@
  */
 package org.broadleafcommerce.common.persistence.transaction;
 
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.jdbc.ReturningWork;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import javax.persistence.EntityManager;
-
-/**
- * @author Jeff Fischer
- */
-public class OracleSessionIdTransactionInfoModifier implements TransactionInfoCustomModifier {
-
-    @Override
-    public void modify(TransactionInfo info) {
-        EntityManager em = info.getEntityManager();
-        if (em != null) {
-            Integer sid = em.unwrap(Session.class).doReturningWork(new ReturningWork<Integer>() {
-                @Override
-                public Integer execute(Connection connection) throws SQLException {
-                    Statement statement = null;
-                    ResultSet resultSet = null;
+public class OracleSessionIdTransactionInfoModifier implements org.broadleafcommerce.common.persistence.transaction.TransactionInfoCustomModifier {
+    @java.lang.Override
+    public void modify(org.broadleafcommerce.common.persistence.transaction.TransactionInfo info) {
+        javax.persistence.EntityManager em = info.getEntityManager();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4136, (em != null))) {
+            java.lang.Integer sid = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4143, em.unwrap(org.hibernate.Session.class).doReturningWork(new org.hibernate.jdbc.ReturningWork<java.lang.Integer>() {
+                @java.lang.Override
+                public java.lang.Integer execute(java.sql.Connection connection) throws java.sql.SQLException {
+                    java.sql.Statement statement = null;
+                    java.sql.ResultSet resultSet = null;
                     try {
                         statement = connection.createStatement();
                         resultSet = statement.executeQuery("SELECT sys_context('userenv','sid') FROM dual");
-                        Integer response = null;
-                        if (resultSet.next()) {
-                            response = resultSet.getInt(1);
+                        java.lang.Integer response = null;
+                        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4137, resultSet.next())) {
+                            response = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4139, resultSet.getInt(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4138, 1)));
                         }
-                        return response;
+                        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4140, response);
                     } finally {
-                        if (resultSet != null) {
-                            try{
+                        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4141, (resultSet != null))) {
+                            try {
                                 resultSet.close();
-                            } catch (Throwable e) {}
+                            } catch (java.lang.Throwable e) {
+                            }
                         }
-                        if (statement != null) {
+                        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4142, (statement != null))) {
                             try {
                                 statement.close();
-                            } catch (Throwable e) {}
+                            } catch (java.lang.Throwable e) {
+                            }
                         }
                     }
                 }
-            });
-            info.getAdditionalParams().put("sessionid", sid==null?"UNKNOWN":String.valueOf(sid));
+            }));
+            info.getAdditionalParams().put("sessionid", (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4144, (sid == null)) ? "UNKNOWN" : java.lang.String.valueOf(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4145, sid))));
         }
     }
 
-    @Override
+    @java.lang.Override
     public int getOrder() {
-        return 0;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4146, 0);
     }
 
+    public static perturbation.location.PerturbationLocation __L4136;
+
+    public static perturbation.location.PerturbationLocation __L4137;
+
+    public static perturbation.location.PerturbationLocation __L4138;
+
+    public static perturbation.location.PerturbationLocation __L4139;
+
+    public static perturbation.location.PerturbationLocation __L4140;
+
+    public static perturbation.location.PerturbationLocation __L4141;
+
+    public static perturbation.location.PerturbationLocation __L4142;
+
+    public static perturbation.location.PerturbationLocation __L4143;
+
+    public static perturbation.location.PerturbationLocation __L4144;
+
+    public static perturbation.location.PerturbationLocation __L4145;
+
+    public static perturbation.location.PerturbationLocation __L4146;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4136 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/OracleSessionIdTransactionInfoModifier.java:39)", 4136, "Boolean");
+        org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4137 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/OracleSessionIdTransactionInfoModifier.java:49)", 4137, "Boolean");
+        org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4138 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/OracleSessionIdTransactionInfoModifier.java:50)", 4138, "Numerical");
+        org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4139 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/OracleSessionIdTransactionInfoModifier.java:50)", 4139, "Numerical");
+        org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4140 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/OracleSessionIdTransactionInfoModifier.java:52)", 4140, "Numerical");
+        org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4141 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/OracleSessionIdTransactionInfoModifier.java:54)", 4141, "Boolean");
+        org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4142 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/OracleSessionIdTransactionInfoModifier.java:59)", 4142, "Boolean");
+        org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4143 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/OracleSessionIdTransactionInfoModifier.java:40)", 4143, "Numerical");
+        org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4144 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/OracleSessionIdTransactionInfoModifier.java:67)", 4144, "Boolean");
+        org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4145 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/OracleSessionIdTransactionInfoModifier.java:67)", 4145, "Numerical");
+        org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.__L4146 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/OracleSessionIdTransactionInfoModifier.java:73)", 4146, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.persistence.transaction.OracleSessionIdTransactionInfoModifier.initPerturbationLocation0();
+    }
 }
+

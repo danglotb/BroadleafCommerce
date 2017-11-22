@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,50 +17,46 @@
  */
 package org.broadleafcommerce.common.payment.service;
 
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
-import org.broadleafcommerce.common.vendor.service.exception.PaymentException;
 
-public class AbstractPaymentGatewayTransparentRedirectService implements PaymentGatewayTransparentRedirectService {
-
-    @Override
-    public PaymentResponseDTO createAuthorizeForm(PaymentRequestDTO requestDTO) throws PaymentException {
-        throw new UnsupportedOperationException("Not Implemented");
+public class AbstractPaymentGatewayTransparentRedirectService implements org.broadleafcommerce.common.payment.service.PaymentGatewayTransparentRedirectService {
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO createAuthorizeForm(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
-    public PaymentResponseDTO createAuthorizeAndCaptureForm(PaymentRequestDTO requestDTO) throws PaymentException {
-        throw new UnsupportedOperationException("Not Implemented");
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO createAuthorizeAndCaptureForm(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
-    public PaymentResponseDTO createCustomerPaymentTokenForm(PaymentRequestDTO requestDTO) throws PaymentException {
-        throw new UnsupportedOperationException("Not Implemented");
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO createCustomerPaymentTokenForm(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
-    public PaymentResponseDTO updateCustomerPaymentTokenForm(PaymentRequestDTO requestDTO) throws PaymentException {
-        throw new UnsupportedOperationException("Not Implemented");
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO updateCustomerPaymentTokenForm(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
-    public String getCreateCustomerPaymentTokenReturnURLFieldKey(PaymentResponseDTO responseDTO) {
-        throw new UnsupportedOperationException("Not Implemented");
+    @java.lang.Override
+    public java.lang.String getCreateCustomerPaymentTokenReturnURLFieldKey(org.broadleafcommerce.common.payment.dto.PaymentResponseDTO responseDTO) {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
-    public String getCreateCustomerPaymentTokenCancelURLFieldKey(PaymentResponseDTO responseDTO) {
-        throw new UnsupportedOperationException("Not Implemented");
+    @java.lang.Override
+    public java.lang.String getCreateCustomerPaymentTokenCancelURLFieldKey(org.broadleafcommerce.common.payment.dto.PaymentResponseDTO responseDTO) {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
-    public String getUpdateCustomerPaymentTokenReturnURLFieldKey(PaymentResponseDTO responseDTO) {
-        throw new UnsupportedOperationException("Not Implemented");
+    @java.lang.Override
+    public java.lang.String getUpdateCustomerPaymentTokenReturnURLFieldKey(org.broadleafcommerce.common.payment.dto.PaymentResponseDTO responseDTO) {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
-    public String getUpdateCustomerPaymentTokenCancelURLFieldKey(PaymentResponseDTO responseDTO) {
-        throw new UnsupportedOperationException("Not Implemented");
+    @java.lang.Override
+    public java.lang.String getUpdateCustomerPaymentTokenCancelURLFieldKey(org.broadleafcommerce.common.payment.dto.PaymentResponseDTO responseDTO) {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
-
 }
+

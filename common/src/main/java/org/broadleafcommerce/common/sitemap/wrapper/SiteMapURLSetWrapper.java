@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,32 +17,20 @@
  */
 package org.broadleafcommerce.common.sitemap.wrapper;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
-/**
- * Representation the urlset element defined in the schema definition at
- * http://www.sitemaps.org/schemas/sitemap/0.9.
- * 
- * @author bpolster
- */
-@XmlRootElement(name = "urlset")
-public class SiteMapURLSetWrapper implements Serializable {
-
+@javax.xml.bind.annotation.XmlRootElement(name = "urlset")
+public class SiteMapURLSetWrapper implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
 
-    private List<SiteMapURLWrapper> siteMapUrlWrappers = new ArrayList<SiteMapURLWrapper>();
-    
-    public List<SiteMapURLWrapper> getSiteMapUrlWrappers() {
+    private java.util.List<org.broadleafcommerce.common.sitemap.wrapper.SiteMapURLWrapper> siteMapUrlWrappers = new java.util.ArrayList<org.broadleafcommerce.common.sitemap.wrapper.SiteMapURLWrapper>();
+
+    public java.util.List<org.broadleafcommerce.common.sitemap.wrapper.SiteMapURLWrapper> getSiteMapUrlWrappers() {
         return siteMapUrlWrappers;
     }
-    
-    @XmlElement(name = "url")
-    public void setSiteMapUrlWrappers(List<SiteMapURLWrapper> siteMapUrlWrappers) {
+
+    @javax.xml.bind.annotation.XmlElement(name = "url")
+    public void setSiteMapUrlWrappers(java.util.List<org.broadleafcommerce.common.sitemap.wrapper.SiteMapURLWrapper> siteMapUrlWrappers) {
         this.siteMapUrlWrappers = siteMapUrlWrappers;
     }
 }
+

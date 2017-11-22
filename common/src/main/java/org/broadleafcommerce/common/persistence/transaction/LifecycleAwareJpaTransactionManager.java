@@ -17,116 +17,139 @@
  */
 package org.broadleafcommerce.common.persistence.transaction;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.support.DefaultTransactionStatus;
 
-/**
- * A customized {@link JpaTransactionManager} that will send Spring events at key lifecycle points during a transaction.
- * Listeners can perform additional work at the time of these events, such as logging (any persistence related activity
- * should be avoided). Event publishing attempts to be safe and will log exceptions without bubbling them. Event publishing
- * is disabled by default, but may be enabled by using the 'transaction.lifecycle.events.enabled=true' property, or by setting
- * the {@link #logEvents} property on a case-by-case basis.
- *
- * @author Jeff Fischer
- */
-public class LifecycleAwareJpaTransactionManager extends JpaTransactionManager {
+public class LifecycleAwareJpaTransactionManager extends org.springframework.orm.jpa.JpaTransactionManager {
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.class);
 
-    private static final Log LOG = LogFactory.getLog(LifecycleAwareJpaTransactionManager.class);
-
-    @Value("${transaction.lifecycle.events.enabled:false}")
+    @org.springframework.beans.factory.annotation.Value("${transaction.lifecycle.events.enabled:false}")
     protected boolean defaultLogEvents = false;
 
-    protected Boolean logEvents = null;
+    protected java.lang.Boolean logEvents = null;
 
-    @Autowired
-    protected ApplicationEventPublisher publisher;
+    @org.springframework.beans.factory.annotation.Autowired
+    protected org.springframework.context.ApplicationEventPublisher publisher;
 
-    @Override
-    protected Object doGetTransaction() {
-        Object transaction = super.doGetTransaction();
-        if (isEnabled()) {
+    @java.lang.Override
+    protected java.lang.Object doGetTransaction() {
+        java.lang.Object transaction = super.doGetTransaction();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4125, isEnabled())) {
             try {
-                publisher.publishEvent(new TransactionLifecycleEvent(this, TransactionLifecycle.GET_TRANSACTION, null, transaction));
-            } catch (Throwable e) {
-                LOG.error("Problem while publishing GET_TRANSACTION lifecycle event. Exception is logged but not bubbled.", e);
+                publisher.publishEvent(new org.broadleafcommerce.common.persistence.transaction.TransactionLifecycleEvent(this, org.broadleafcommerce.common.persistence.transaction.TransactionLifecycle.GET_TRANSACTION, null, transaction));
+            } catch (java.lang.Throwable e) {
+                org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.LOG.error("Problem while publishing GET_TRANSACTION lifecycle event. Exception is logged but not bubbled.", e);
             }
         }
         return transaction;
     }
 
-    @Override
-    protected void doBegin(Object transaction, TransactionDefinition definition) {
+    @java.lang.Override
+    protected void doBegin(java.lang.Object transaction, org.springframework.transaction.TransactionDefinition definition) {
         super.doBegin(transaction, definition);
-        if (isEnabled()) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4126, isEnabled())) {
             try {
-                publisher.publishEvent(new TransactionLifecycleEvent(this, TransactionLifecycle.BEGIN, null, transaction, definition));
-            } catch (Throwable e) {
-                LOG.error("Problem while publishing BEGIN lifecycle event. Exception is logged but not bubbled.", e);
+                publisher.publishEvent(new org.broadleafcommerce.common.persistence.transaction.TransactionLifecycleEvent(this, org.broadleafcommerce.common.persistence.transaction.TransactionLifecycle.BEGIN, null, transaction, definition));
+            } catch (java.lang.Throwable e) {
+                org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.LOG.error("Problem while publishing BEGIN lifecycle event. Exception is logged but not bubbled.", e);
             }
         }
     }
 
-    @Override
-    protected void doCommit(DefaultTransactionStatus status) {
+    @java.lang.Override
+    protected void doCommit(org.springframework.transaction.support.DefaultTransactionStatus status) {
         try {
             super.doCommit(status);
-            if (isEnabled()) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4127, isEnabled())) {
                 try {
-                    publisher.publishEvent(new TransactionLifecycleEvent(this, TransactionLifecycle.COMMIT, null, status));
-                } catch (Throwable e) {
-                    LOG.error("Problem while publishing COMMIT lifecycle event. Exception is logged but not bubbled.", e);
+                    publisher.publishEvent(new org.broadleafcommerce.common.persistence.transaction.TransactionLifecycleEvent(this, org.broadleafcommerce.common.persistence.transaction.TransactionLifecycle.COMMIT, null, status));
+                } catch (java.lang.Throwable e) {
+                    org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.LOG.error("Problem while publishing COMMIT lifecycle event. Exception is logged but not bubbled.", e);
                 }
             }
-        } catch (RuntimeException e) {
-            if (isEnabled()) {
+        } catch (java.lang.RuntimeException e) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4128, isEnabled())) {
                 try {
-                    publisher.publishEvent(new TransactionLifecycleEvent(this, TransactionLifecycle.COMMIT, e, status));
-                } catch (Throwable ex) {
-                    LOG.error("Problem while publishing COMMIT lifecycle event. Exception is logged but not bubbled.", ex);
+                    publisher.publishEvent(new org.broadleafcommerce.common.persistence.transaction.TransactionLifecycleEvent(this, org.broadleafcommerce.common.persistence.transaction.TransactionLifecycle.COMMIT, e, status));
+                } catch (java.lang.Throwable ex) {
+                    org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.LOG.error("Problem while publishing COMMIT lifecycle event. Exception is logged but not bubbled.", ex);
                 }
             }
             throw e;
         }
     }
 
-    @Override
-    protected void doRollback(DefaultTransactionStatus status) {
+    @java.lang.Override
+    protected void doRollback(org.springframework.transaction.support.DefaultTransactionStatus status) {
         try {
             super.doRollback(status);
-            if (isEnabled()) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4129, isEnabled())) {
                 try {
-                    publisher.publishEvent(new TransactionLifecycleEvent(this, TransactionLifecycle.ROLLBACK, null, status));
-                } catch (Throwable e) {
-                    LOG.error("Problem while publishing ROLLBACK lifecycle event. Exception is logged but not bubbled.", e);
+                    publisher.publishEvent(new org.broadleafcommerce.common.persistence.transaction.TransactionLifecycleEvent(this, org.broadleafcommerce.common.persistence.transaction.TransactionLifecycle.ROLLBACK, null, status));
+                } catch (java.lang.Throwable e) {
+                    org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.LOG.error("Problem while publishing ROLLBACK lifecycle event. Exception is logged but not bubbled.", e);
                 }
             }
-        } catch (RuntimeException e) {
-            if (isEnabled()) {
+        } catch (java.lang.RuntimeException e) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4130, isEnabled())) {
                 try {
-                    publisher.publishEvent(new TransactionLifecycleEvent(this, TransactionLifecycle.ROLLBACK, e, status));
-                } catch (Throwable ex) {
-                    LOG.error("Problem while publishing ROLLBACK lifecycle event. Exception is logged but not bubbled.", ex);
+                    publisher.publishEvent(new org.broadleafcommerce.common.persistence.transaction.TransactionLifecycleEvent(this, org.broadleafcommerce.common.persistence.transaction.TransactionLifecycle.ROLLBACK, e, status));
+                } catch (java.lang.Throwable ex) {
+                    org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.LOG.error("Problem while publishing ROLLBACK lifecycle event. Exception is logged but not bubbled.", ex);
                 }
             }
             throw e;
         }
     }
 
-    public Boolean getLogEvents() {
+    public java.lang.Boolean getLogEvents() {
         return logEvents;
     }
 
-    public void setLogEvents(Boolean logEvents) {
+    public void setLogEvents(java.lang.Boolean logEvents) {
         this.logEvents = logEvents;
     }
 
     public boolean isEnabled() {
-        return (logEvents != null && logEvents) || (logEvents == null && defaultLogEvents);
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4135, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4131, (((logEvents) != null) && (logEvents)))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4134, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4132, ((logEvents) == null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4133, defaultLogEvents)))))));
+    }
+
+    public static perturbation.location.PerturbationLocation __L4125;
+
+    public static perturbation.location.PerturbationLocation __L4126;
+
+    public static perturbation.location.PerturbationLocation __L4127;
+
+    public static perturbation.location.PerturbationLocation __L4128;
+
+    public static perturbation.location.PerturbationLocation __L4129;
+
+    public static perturbation.location.PerturbationLocation __L4130;
+
+    public static perturbation.location.PerturbationLocation __L4131;
+
+    public static perturbation.location.PerturbationLocation __L4132;
+
+    public static perturbation.location.PerturbationLocation __L4133;
+
+    public static perturbation.location.PerturbationLocation __L4134;
+
+    public static perturbation.location.PerturbationLocation __L4135;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4125 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/LifecycleAwareJpaTransactionManager.java:53)", 4125, "Boolean");
+        org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4126 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/LifecycleAwareJpaTransactionManager.java:66)", 4126, "Boolean");
+        org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4127 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/LifecycleAwareJpaTransactionManager.java:79)", 4127, "Boolean");
+        org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4128 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/LifecycleAwareJpaTransactionManager.java:87)", 4128, "Boolean");
+        org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4129 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/LifecycleAwareJpaTransactionManager.java:102)", 4129, "Boolean");
+        org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4130 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/LifecycleAwareJpaTransactionManager.java:110)", 4130, "Boolean");
+        org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4131 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/LifecycleAwareJpaTransactionManager.java:130)", 4131, "Boolean");
+        org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4132 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/LifecycleAwareJpaTransactionManager.java:130)", 4132, "Boolean");
+        org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4133 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/LifecycleAwareJpaTransactionManager.java:130)", 4133, "Boolean");
+        org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4134 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/LifecycleAwareJpaTransactionManager.java:130)", 4134, "Boolean");
+        org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.__L4135 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/LifecycleAwareJpaTransactionManager.java:130)", 4135, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJpaTransactionManager.initPerturbationLocation0();
     }
 }
+

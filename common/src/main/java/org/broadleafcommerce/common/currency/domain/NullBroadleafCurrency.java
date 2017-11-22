@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,44 +17,50 @@
  */
 package org.broadleafcommerce.common.currency.domain;
 
-import java.util.Currency;
 
-public class NullBroadleafCurrency implements BroadleafCurrency {
+public class NullBroadleafCurrency implements org.broadleafcommerce.common.currency.domain.BroadleafCurrency {
     private static final long serialVersionUID = 7926395625817119455L;
 
-    @Override
-    public String getCurrencyCode() {
+    @java.lang.Override
+    public java.lang.String getCurrencyCode() {
         return null;
     }
 
-    @Override
-    public void setCurrencyCode(String code) {
-        // Do nothing
+    @java.lang.Override
+    public void setCurrencyCode(java.lang.String code) {
     }
 
-    @Override
-    public String getFriendlyName() {
+    @java.lang.Override
+    public java.lang.String getFriendlyName() {
         return null;
     }
 
-    @Override
-    public void setFriendlyName(String friendlyName) {
-        // Do nothing
+    @java.lang.Override
+    public void setFriendlyName(java.lang.String friendlyName) {
     }
 
-    @Override
+    @java.lang.Override
     public boolean getDefaultFlag() {
-        return false;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.currency.domain.NullBroadleafCurrency.__L704, false);
     }
 
-    @Override
+    @java.lang.Override
     public void setDefaultFlag(boolean defaultFlag) {
-        // Do nothing
     }
 
-    @Override
-    public Currency getJavaCurrency() {
+    @java.lang.Override
+    public java.util.Currency getJavaCurrency() {
         return null;
     }
 
+    public static perturbation.location.PerturbationLocation __L704;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.currency.domain.NullBroadleafCurrency.__L704 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/currency/domain/NullBroadleafCurrency.java:47)", 704, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.currency.domain.NullBroadleafCurrency.initPerturbationLocation0();
+    }
 }
+

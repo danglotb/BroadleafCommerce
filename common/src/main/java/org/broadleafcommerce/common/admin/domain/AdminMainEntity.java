@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,19 +17,10 @@
  */
 package org.broadleafcommerce.common.admin.domain;
 
-/**
- * When viewing entities that implement this interface in the admin, the {@link #getMainEntityName()} method will be
- * invoked to determine the title of the entity to be rendered.
- * 
- * @author Andre Azzolini (apazzolini)
- */
+
 public interface AdminMainEntity {
+    public static final java.lang.String MAIN_ENTITY_NAME_PROPERTY = "__adminMainEntity";
 
-    public static final String MAIN_ENTITY_NAME_PROPERTY = "__adminMainEntity";
-
-    /**
-     * @return the display name of this entity for the admin screen
-     */
-    public String getMainEntityName();
-
+    public java.lang.String getMainEntityName();
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,53 +17,59 @@
  */
 package org.broadleafcommerce.common.filter;
 
-import org.apache.commons.collections.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Configuration bean that represents a Hibernate FilterDefinition
- *
- * @author Jeff Fischer
- */
 public class FilterDefinition {
+    protected java.lang.String name;
 
-    protected String name;
-    protected List<FilterParameter> params = new ArrayList<FilterParameter>();
-    protected String entityImplementationClassName;
+    protected java.util.List<org.broadleafcommerce.common.filter.FilterParameter> params = new java.util.ArrayList<org.broadleafcommerce.common.filter.FilterParameter>();
 
-    public String getName() {
+    protected java.lang.String entityImplementationClassName;
+
+    public java.lang.String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(java.lang.String name) {
         this.name = name;
     }
 
-    public List<FilterParameter> getParams() {
+    public java.util.List<org.broadleafcommerce.common.filter.FilterParameter> getParams() {
         return params;
     }
 
-    public void setParams(List<FilterParameter> params) {
+    public void setParams(java.util.List<org.broadleafcommerce.common.filter.FilterParameter> params) {
         this.params = params;
     }
 
-    public String getEntityImplementationClassName() {
+    public java.lang.String getEntityImplementationClassName() {
         return entityImplementationClassName;
     }
 
-    public void setEntityImplementationClassName(String entityImplementationClassName) {
+    public void setEntityImplementationClassName(java.lang.String entityImplementationClassName) {
         this.entityImplementationClassName = entityImplementationClassName;
     }
 
-    public FilterDefinition copy() {
-        FilterDefinition copy = new FilterDefinition();
+    public org.broadleafcommerce.common.filter.FilterDefinition copy() {
+        org.broadleafcommerce.common.filter.FilterDefinition copy = new org.broadleafcommerce.common.filter.FilterDefinition();
         copy.setName(name);
-        if (!CollectionUtils.isEmpty(params)) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.filter.FilterDefinition.__L2736, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.filter.FilterDefinition.__L2735, org.apache.commons.collections.CollectionUtils.isEmpty(params)))))) {
             copy.getParams().addAll(params);
         }
         copy.setEntityImplementationClassName(entityImplementationClassName);
         return copy;
     }
+
+    public static perturbation.location.PerturbationLocation __L2735;
+
+    public static perturbation.location.PerturbationLocation __L2736;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.filter.FilterDefinition.__L2735 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/filter/FilterDefinition.java:63)", 2735, "Boolean");
+        org.broadleafcommerce.common.filter.FilterDefinition.__L2736 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/filter/FilterDefinition.java:63)", 2736, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.filter.FilterDefinition.initPerturbationLocation0();
+    }
 }
+

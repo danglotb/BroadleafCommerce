@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,57 +17,43 @@
  */
 package org.broadleafcommerce.common.logging;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.core.config.Configurator;
-import org.springframework.jmx.export.annotation.ManagedOperation;
-import org.springframework.jmx.export.annotation.ManagedOperationParameter;
-import org.springframework.jmx.export.annotation.ManagedOperationParameters;
-import org.springframework.jmx.export.annotation.ManagedResource;
 
-/**
- * This is not hooked up by default so that Log4j2 is not required. If you are using Log4j2, you can add this class to your
- * Spring applicationContext to enable it.
- *
- * @author Nathan Moore (nathanmoore).
- */
-@ManagedResource(objectName="org.broadleafcommerce:name=Log4J2Manangement", description="Logging Management", currencyTimeLimit=15)
+@org.springframework.jmx.export.annotation.ManagedResource(objectName = "org.broadleafcommerce:name=Log4J2Manangement", description = "Logging Management", currencyTimeLimit = 15)
 public class Log4j2ManagementBean {
-
-    @ManagedOperation(description="Activate info level")
-    @ManagedOperationParameters({@ManagedOperationParameter(name = "category", description = "the log4j2 category to set")})
-    public void activateInfo(String category) {
-        Configurator.setLevel(category, Level.INFO);
+    @org.springframework.jmx.export.annotation.ManagedOperation(description = "Activate info level")
+    @org.springframework.jmx.export.annotation.ManagedOperationParameters({ @org.springframework.jmx.export.annotation.ManagedOperationParameter(name = "category", description = "the log4j2 category to set") })
+    public void activateInfo(java.lang.String category) {
+        org.apache.logging.log4j.core.config.Configurator.setLevel(category, org.apache.logging.log4j.Level.INFO);
     }
 
-    @ManagedOperation(description="Activate debug level")
-    @ManagedOperationParameters({@ManagedOperationParameter(name = "category", description = "the log4j2 category to set")})
-    public void activateDebug(String category) {
-        Configurator.setLevel(category, Level.DEBUG);
+    @org.springframework.jmx.export.annotation.ManagedOperation(description = "Activate debug level")
+    @org.springframework.jmx.export.annotation.ManagedOperationParameters({ @org.springframework.jmx.export.annotation.ManagedOperationParameter(name = "category", description = "the log4j2 category to set") })
+    public void activateDebug(java.lang.String category) {
+        org.apache.logging.log4j.core.config.Configurator.setLevel(category, org.apache.logging.log4j.Level.DEBUG);
     }
 
-    @ManagedOperation(description="Activate warn level")
-    @ManagedOperationParameters({@ManagedOperationParameter(name = "category", description = "the log4j2 category to set")})
-    public void activateWarn(String category) {
-        Configurator.setLevel(category, Level.WARN);
+    @org.springframework.jmx.export.annotation.ManagedOperation(description = "Activate warn level")
+    @org.springframework.jmx.export.annotation.ManagedOperationParameters({ @org.springframework.jmx.export.annotation.ManagedOperationParameter(name = "category", description = "the log4j2 category to set") })
+    public void activateWarn(java.lang.String category) {
+        org.apache.logging.log4j.core.config.Configurator.setLevel(category, org.apache.logging.log4j.Level.WARN);
     }
 
-    @ManagedOperation(description="Activate error level")
-    @ManagedOperationParameters({@ManagedOperationParameter(name = "category", description = "the log4j2 category to set")})
-    public void activateError(String category) {
-        Configurator.setLevel(category, Level.ERROR);
+    @org.springframework.jmx.export.annotation.ManagedOperation(description = "Activate error level")
+    @org.springframework.jmx.export.annotation.ManagedOperationParameters({ @org.springframework.jmx.export.annotation.ManagedOperationParameter(name = "category", description = "the log4j2 category to set") })
+    public void activateError(java.lang.String category) {
+        org.apache.logging.log4j.core.config.Configurator.setLevel(category, org.apache.logging.log4j.Level.ERROR);
     }
 
-    @ManagedOperation(description="Activate fatal level")
-    @ManagedOperationParameters({@ManagedOperationParameter(name = "category", description = "the log4j2 category to set")})
-    public void activateFatal(String category) {
-        Configurator.setLevel(category, Level.FATAL);
+    @org.springframework.jmx.export.annotation.ManagedOperation(description = "Activate fatal level")
+    @org.springframework.jmx.export.annotation.ManagedOperationParameters({ @org.springframework.jmx.export.annotation.ManagedOperationParameter(name = "category", description = "the log4j2 category to set") })
+    public void activateFatal(java.lang.String category) {
+        org.apache.logging.log4j.core.config.Configurator.setLevel(category, org.apache.logging.log4j.Level.FATAL);
     }
 
-    @ManagedOperation(description="Retrieve the category log level")
-    @ManagedOperationParameters({@ManagedOperationParameter(name = "category", description = "the log4j2 category")})
-    public String getLevel(String category) {
-        return LogManager.getLogger(category).getLevel().toString();
+    @org.springframework.jmx.export.annotation.ManagedOperation(description = "Retrieve the category log level")
+    @org.springframework.jmx.export.annotation.ManagedOperationParameters({ @org.springframework.jmx.export.annotation.ManagedOperationParameter(name = "category", description = "the log4j2 category") })
+    public java.lang.String getLevel(java.lang.String category) {
+        return org.apache.logging.log4j.LogManager.getLogger(category).getLevel().toString();
     }
-
 }
+

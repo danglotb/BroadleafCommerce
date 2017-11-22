@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,18 +17,15 @@
  */
 package org.broadleafcommerce.common.util;
 
-/**
- * @author Jeff Fischer
- */
-public class UnknownUnwrapTypeException extends RuntimeException {
 
-    public UnknownUnwrapTypeException(Class unwrapType) {
-        super( "Cannot unwrap to requested type [" + unwrapType.getName() + "]" );
+public class UnknownUnwrapTypeException extends java.lang.RuntimeException {
+    public UnknownUnwrapTypeException(java.lang.Class unwrapType) {
+        super((("Cannot unwrap to requested type [" + (unwrapType.getName())) + "]"));
     }
 
-    public UnknownUnwrapTypeException(Class unwrapType, Throwable root) {
-        this( unwrapType );
-        super.initCause( root );
+    public UnknownUnwrapTypeException(java.lang.Class unwrapType, java.lang.Throwable root) {
+        this(unwrapType);
+        super.initCause(root);
     }
-
 }
+

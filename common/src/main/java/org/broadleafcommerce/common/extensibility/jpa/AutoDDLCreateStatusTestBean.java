@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,16 +17,10 @@
  */
 package org.broadleafcommerce.common.extensibility.jpa;
 
-/**
- * MBean registered in JMX to keep track of which persistence units are marked with auto.ddl 'create'. The scope of this MBean
- * covers the current JVM, which may span more than a single application in the same container.
- *
- * @author Jeff Fischer
- */
+
 public interface AutoDDLCreateStatusTestBean {
+    java.lang.Boolean getStartedWithCreate(java.lang.String pu);
 
-    Boolean getStartedWithCreate(String pu);
-
-    void setStartedWithCreate(String pu, Boolean val);
-
+    void setStartedWithCreate(java.lang.String pu, java.lang.Boolean val);
 }
+

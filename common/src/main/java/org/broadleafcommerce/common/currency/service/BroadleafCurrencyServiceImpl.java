@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,61 +17,36 @@
  */
 package org.broadleafcommerce.common.currency.service;
 
-import org.broadleafcommerce.common.currency.dao.BroadleafCurrencyDao;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.util.TransactionUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
+@org.springframework.stereotype.Service("blCurrencyService")
+public class BroadleafCurrencyServiceImpl implements org.broadleafcommerce.common.currency.service.BroadleafCurrencyService {
+    @javax.annotation.Resource(name = "blCurrencyDao")
+    protected org.broadleafcommerce.common.currency.dao.BroadleafCurrencyDao currencyDao;
 
-import java.util.List;
-
-/**
- * Author: jerryocanas
- * Date: 9/6/12
- */
-
-@Service("blCurrencyService")
-public class BroadleafCurrencyServiceImpl implements BroadleafCurrencyService {
-
-    @Resource(name="blCurrencyDao")
-    protected BroadleafCurrencyDao currencyDao;
-
-    /**
-     * Returns the default Broadleaf currency
-     * @return The default currency
-     */
-    @Override
-    public BroadleafCurrency findDefaultBroadleafCurrency() {
+    @java.lang.Override
+    public org.broadleafcommerce.common.currency.domain.BroadleafCurrency findDefaultBroadleafCurrency() {
         return currencyDao.findDefaultBroadleafCurrency();
     }
 
-    /**
-     * @return The currency for the passed in code
-     */
-    @Override
-    public BroadleafCurrency findCurrencyByCode(String currencyCode) {
+    @java.lang.Override
+    public org.broadleafcommerce.common.currency.domain.BroadleafCurrency findCurrencyByCode(java.lang.String currencyCode) {
         return currencyDao.findCurrencyByCode(currencyCode);
     }
 
-    /**
-     * Returns a list of all the Broadleaf Currencies
-     *@return List of currencies
-     */
-    @Override
-    public List<BroadleafCurrency> getAllCurrencies() {
+    @java.lang.Override
+    public java.util.List<org.broadleafcommerce.common.currency.domain.BroadleafCurrency> getAllCurrencies() {
         return currencyDao.getAllCurrencies();
     }
 
-    @Override
-    @Transactional(TransactionUtils.DEFAULT_TRANSACTION_MANAGER)
-    public BroadleafCurrency save(BroadleafCurrency currency) {
+    @java.lang.Override
+    @org.springframework.transaction.annotation.Transactional(org.broadleafcommerce.common.util.TransactionUtils.DEFAULT_TRANSACTION_MANAGER)
+    public org.broadleafcommerce.common.currency.domain.BroadleafCurrency save(org.broadleafcommerce.common.currency.domain.BroadleafCurrency currency) {
         return currencyDao.save(currency);
     }
-    
-    @Override
-    public BroadleafCurrency create() {
+
+    @java.lang.Override
+    public org.broadleafcommerce.common.currency.domain.BroadleafCurrency create() {
         return currencyDao.create();
-    }    
+    }
 }
+

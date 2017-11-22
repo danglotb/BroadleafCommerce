@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,24 +17,11 @@
  */
 package org.broadleafcommerce.common.web;
 
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.springframework.web.context.request.WebRequest;
 
-import javax.servlet.http.HttpServletRequest;
+public interface BroadleafLocaleResolver {
+    @java.lang.Deprecated
+    public org.broadleafcommerce.common.locale.domain.Locale resolveLocale(javax.servlet.http.HttpServletRequest request);
 
-/**
- * Responsible for returning the Locale to use for the current request.
- *
- * @author bpolster
- */
-public interface BroadleafLocaleResolver  {
-
-    /**
-     * @deprecated Use {@link #resolveLocale(WebRequest)} instead
-     */
-    @Deprecated
-    public Locale resolveLocale(HttpServletRequest request);
-
-    public Locale resolveLocale(WebRequest request);
-
+    public org.broadleafcommerce.common.locale.domain.Locale resolveLocale(org.springframework.web.context.request.WebRequest request);
 }
+

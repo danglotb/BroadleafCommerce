@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,58 +17,45 @@
  */
 package org.broadleafcommerce.common.config.domain;
 
-/**
- * Created by Jon on 11/18/15.
- */
 
-import org.broadleafcommerce.common.presentation.AdminGroupPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
-import org.broadleafcommerce.common.presentation.AdminTabPresentation;
-
-@AdminPresentationClass(excludeFromPolymorphism = true, friendlyName = "AbstractModuleConfiguration",
-        tabs = {
-                @AdminTabPresentation(name = AbstractModuleConfigurationAdminPresentation.TabName.General,
-                        order = AbstractModuleConfigurationAdminPresentation.TabOrder.General,
-                        groups = {
-                                @AdminGroupPresentation(name = AbstractModuleConfigurationAdminPresentation.GroupName.General,
-                                        order = AbstractModuleConfigurationAdminPresentation.GroupOrder.General,
-                                        untitled = true),
-                                @AdminGroupPresentation(name = AbstractModuleConfigurationAdminPresentation.GroupName.ActiveDates,
-                                        order = AbstractModuleConfigurationAdminPresentation.GroupOrder.ActiveDates,
-                                        column = 1),
-                                @AdminGroupPresentation(name = AbstractModuleConfigurationAdminPresentation.GroupName.Options,
-                                        order = AbstractModuleConfigurationAdminPresentation.GroupOrder.Options,
-                                        column = 1)
-                        }
-                )
-        }
-)
+@org.broadleafcommerce.common.presentation.AdminPresentationClass(excludeFromPolymorphism = true, friendlyName = "AbstractModuleConfiguration", tabs = { @org.broadleafcommerce.common.presentation.AdminTabPresentation(name = org.broadleafcommerce.common.config.domain.AbstractModuleConfigurationAdminPresentation.TabName.General, order = org.broadleafcommerce.common.config.domain.AbstractModuleConfigurationAdminPresentation.TabOrder.General, groups = { @org.broadleafcommerce.common.presentation.AdminGroupPresentation(name = org.broadleafcommerce.common.config.domain.AbstractModuleConfigurationAdminPresentation.GroupName.General, order = org.broadleafcommerce.common.config.domain.AbstractModuleConfigurationAdminPresentation.GroupOrder.General, untitled = true), @org.broadleafcommerce.common.presentation.AdminGroupPresentation(name = org.broadleafcommerce.common.config.domain.AbstractModuleConfigurationAdminPresentation.GroupName.ActiveDates, order = org.broadleafcommerce.common.config.domain.AbstractModuleConfigurationAdminPresentation.GroupOrder.ActiveDates, column = 1), @org.broadleafcommerce.common.presentation.AdminGroupPresentation(name = org.broadleafcommerce.common.config.domain.AbstractModuleConfigurationAdminPresentation.GroupName.Options, order = org.broadleafcommerce.common.config.domain.AbstractModuleConfigurationAdminPresentation.GroupOrder.Options, column = 1) }) })
 public interface AbstractModuleConfigurationAdminPresentation {
-
     public static class TabName {
-        public static final String General = "General";
+        public static final java.lang.String General = "General";
     }
 
     public static class TabOrder {
         public static final int General = 1000;
+
         public static final int History = 2000;
     }
 
     public static class GroupName {
-        public static final String General = "General";
-        public static final String ActiveDates = "AbstractModuleConfiguration_Active_Dates";
-        public static final String Options = "AbstractModuleConfiguration_Options";
+        public static final java.lang.String General = "General";
+
+        public static final java.lang.String ActiveDates = "AbstractModuleConfiguration_Active_Dates";
+
+        public static final java.lang.String Options = "AbstractModuleConfiguration_Options";
     }
 
     public static class GroupOrder {
         public static final int General = 1000;
+
         public static final int ActiveDates = 2000;
+
         public static final int Options = 3000;
+
         public static final int RuleConfiguration = 4000;
+
         public static final int Advanced = 1000;
+
         public static final int CombineStack = 2000;
+
         public static final int QualifierRuleRestriction = 3000;
+
         public static final int TargetRuleRestriction = 4000;
+
         public static final int Codes = 1000;
     }
 }
+

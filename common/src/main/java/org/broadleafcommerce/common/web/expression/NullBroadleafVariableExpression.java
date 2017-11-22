@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,21 +17,13 @@
  */
 package org.broadleafcommerce.common.web.expression;
 
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
-import org.springframework.stereotype.Component;
 
-/**
- * A null implementation of {@link BroadleafVariableExpression} 
- * 
- * @author Andre Azzolini (apazzolini)
- */
-@Component("blNullBroadleafVariableExpression")
-@ConditionalOnTemplating
-public class NullBroadleafVariableExpression implements BroadleafVariableExpression {
-
-    @Override
-    public String getName() {
+@org.springframework.stereotype.Component("blNullBroadleafVariableExpression")
+@org.broadleafcommerce.presentation.condition.ConditionalOnTemplating
+public class NullBroadleafVariableExpression implements org.broadleafcommerce.common.web.expression.BroadleafVariableExpression {
+    @java.lang.Override
+    public java.lang.String getName() {
         return null;
     }
-    
 }
+

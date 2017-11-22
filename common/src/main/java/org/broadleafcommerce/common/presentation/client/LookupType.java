@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,13 +17,7 @@
  */
 package org.broadleafcommerce.common.presentation.client;
 
-/**
- * Defines whether or not a to-one lookup should be rendered in a modal to be selected or 
- * through a pre-populated dropdown.
- * 
- * @author Andre Azzolini (apazzolini)
- */
+
 public enum LookupType {
-    STANDARD,
-    DROPDOWN
-}
+    STANDARD, DROPDOWN;}
+

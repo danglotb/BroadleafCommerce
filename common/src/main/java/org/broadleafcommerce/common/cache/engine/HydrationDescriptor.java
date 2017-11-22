@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,42 +17,36 @@
  */
 package org.broadleafcommerce.common.cache.engine;
 
-import java.lang.reflect.Method;
-import java.util.Map;
 
-/**
- * 
- * @author jfischer
- *
- */
 public class HydrationDescriptor {
+    private java.util.Map<java.lang.String, org.broadleafcommerce.common.cache.engine.HydrationItemDescriptor> hydratedMutators;
 
-    private Map<String, HydrationItemDescriptor> hydratedMutators;
-    private Method[] idMutators;
-    private String cacheRegion;
-    
-    public Map<String, HydrationItemDescriptor> getHydratedMutators() {
+    private java.lang.reflect.Method[] idMutators;
+
+    private java.lang.String cacheRegion;
+
+    public java.util.Map<java.lang.String, org.broadleafcommerce.common.cache.engine.HydrationItemDescriptor> getHydratedMutators() {
         return hydratedMutators;
     }
-    
-    public Method[] getIdMutators() {
+
+    public java.lang.reflect.Method[] getIdMutators() {
         return idMutators;
     }
-    
-    public String getCacheRegion() {
+
+    public java.lang.String getCacheRegion() {
         return cacheRegion;
     }
 
-    public void setHydratedMutators(Map<String, HydrationItemDescriptor> hydratedMutators) {
+    public void setHydratedMutators(java.util.Map<java.lang.String, org.broadleafcommerce.common.cache.engine.HydrationItemDescriptor> hydratedMutators) {
         this.hydratedMutators = hydratedMutators;
     }
 
-    public void setIdMutators(Method[] idMutators) {
+    public void setIdMutators(java.lang.reflect.Method[] idMutators) {
         this.idMutators = idMutators;
     }
 
-    public void setCacheRegion(String cacheRegion) {
+    public void setCacheRegion(java.lang.String cacheRegion) {
         this.cacheRegion = cacheRegion;
     }
-    
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,24 +17,16 @@
  */
 package org.broadleafcommerce.common.cache;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.core.config.Configurator;
 
-/**
- * Specific implementation used with a Log4j2 dependency
- * 
- * @author Nathan Moore (nathanmoore).
- */
-public class Log4j2StatisticsServiceLogAdapter implements StatisticsServiceLogAdapter {
-
-    @Override
-    public void activateLogging(Class clazz) {
-        Configurator.setLevel(clazz.getName(), Level.INFO);
+public class Log4j2StatisticsServiceLogAdapter implements org.broadleafcommerce.common.cache.StatisticsServiceLogAdapter {
+    @java.lang.Override
+    public void activateLogging(java.lang.Class clazz) {
+        org.apache.logging.log4j.core.config.Configurator.setLevel(clazz.getName(), org.apache.logging.log4j.Level.INFO);
     }
 
-    @Override
-    public void disableLogging(Class clazz) {
-        Configurator.setLevel(StatisticsServiceImpl.class.getName(), Level.DEBUG);
+    @java.lang.Override
+    public void disableLogging(java.lang.Class clazz) {
+        org.apache.logging.log4j.core.config.Configurator.setLevel(org.broadleafcommerce.common.cache.StatisticsServiceImpl.class.getName(), org.apache.logging.log4j.Level.DEBUG);
     }
-
 }
+

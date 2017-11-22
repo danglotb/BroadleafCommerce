@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,70 +17,30 @@
  */
 package org.broadleafcommerce.common.email.domain;
 
-import java.io.Serializable;
-import java.util.Date;
 
-/**
- * @author jfischer
- *
- */
-public interface EmailTrackingClicks extends Serializable {
+public interface EmailTrackingClicks extends java.io.Serializable {
+    public abstract java.lang.Long getId();
 
-    /**
-     * @return the emailId
-     */
-    public abstract Long getId();
+    public abstract void setId(java.lang.Long id);
 
-    /**
-     * @param id the i to set
-     */
-    public abstract void setId(Long id);
+    public abstract java.util.Date getDateClicked();
 
-    /**
-     * @return the dateClicked
-     */
-    public abstract Date getDateClicked();
+    public abstract void setDateClicked(java.util.Date dateClicked);
 
-    /**
-     * @param dateClicked the dateClicked to set
-     */
-    public abstract void setDateClicked(Date dateClicked);
+    public abstract java.lang.String getDestinationUri();
 
-    /**
-     * @return the destinationUri
-     */
-    public abstract String getDestinationUri();
+    public abstract void setDestinationUri(java.lang.String destinationUri);
 
-    /**
-     * @param destinationUri the destinationUri to set
-     */
-    public abstract void setDestinationUri(String destinationUri);
+    public abstract java.lang.String getQueryString();
 
-    /**
-     * @return the queryString
-     */
-    public abstract String getQueryString();
+    public abstract void setQueryString(java.lang.String queryString);
 
-    /**
-     * @param queryString the queryString to set
-     */
-    public abstract void setQueryString(String queryString);
+    public abstract org.broadleafcommerce.common.email.domain.EmailTracking getEmailTracking();
 
-    /**
-     * @return the emailTracking
-     */
-    public abstract EmailTracking getEmailTracking();
+    public abstract void setEmailTracking(org.broadleafcommerce.common.email.domain.EmailTracking emailTracking);
 
-    /**
-     * @param emailTracking the emailTracking to set
-     */
-    public abstract void setEmailTracking(EmailTracking emailTracking);
+    public abstract java.lang.String getCustomerId();
 
-    public abstract String getCustomerId();
-
-    /**
-     * @param customerId the customer to set
-     */
-    public abstract void setCustomerId(String customerId);
-
+    public abstract void setCustomerId(java.lang.String customerId);
 }
+

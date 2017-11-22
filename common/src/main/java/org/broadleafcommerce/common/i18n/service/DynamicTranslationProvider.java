@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,43 +17,34 @@
  */
 package org.broadleafcommerce.common.i18n.service;
 
-import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
 
-import java.util.Locale;
-
-/**
- * Convenience class to provide dynamic field translations.
- * 
- * @author Andre Azzolini (apazzolini)
- */
 public class DynamicTranslationProvider {
-    
-    /**
-     * If translations are enabled, this method will look for a translation for the specified field. If translations are
-     * disabled or if this particular field did not have a translation, it will return back the defaultValue.
-     * 
-     * @param obj
-     * @param field
-     * @param defaultValue
-     * @return the translated value
-     */
-    public static String getValue(Object obj, String field, final String defaultValue) {
-        String valueToReturn = defaultValue;
-        
-        if (TranslationConsiderationContext.hasTranslation()) {
-            TranslationService translationService = TranslationConsiderationContext.getTranslationService();
-            Locale locale = BroadleafRequestContext.getBroadleafRequestContext().getJavaLocale();
-            String translatedValue = translationService.getTranslatedValue(obj, field, locale);
-            
-            if (StringUtils.isNotBlank(translatedValue)) {
+    public static java.lang.String getValue(java.lang.Object obj, java.lang.String field, final java.lang.String defaultValue) {
+        java.lang.String valueToReturn = defaultValue;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.DynamicTranslationProvider.__L2929, org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.hasTranslation())) {
+            org.broadleafcommerce.common.i18n.service.TranslationService translationService = org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.getTranslationService();
+            java.util.Locale locale = org.broadleafcommerce.common.web.BroadleafRequestContext.getBroadleafRequestContext().getJavaLocale();
+            java.lang.String translatedValue = translationService.getTranslatedValue(obj, field, locale);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.DynamicTranslationProvider.__L2930, org.apache.commons.lang3.StringUtils.isNotBlank(translatedValue))) {
                 valueToReturn = translatedValue;
-            } else {
+            }else {
                 valueToReturn = translationService.getDefaultTranslationValue(obj, field, locale, defaultValue);
             }
         }
-            
         return valueToReturn;
     }
 
+    public static perturbation.location.PerturbationLocation __L2929;
+
+    public static perturbation.location.PerturbationLocation __L2930;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.i18n.service.DynamicTranslationProvider.__L2929 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/DynamicTranslationProvider.java:44)", 2929, "Boolean");
+        org.broadleafcommerce.common.i18n.service.DynamicTranslationProvider.__L2930 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/DynamicTranslationProvider.java:49)", 2930, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.i18n.service.DynamicTranslationProvider.initPerturbationLocation0();
+    }
 }
+

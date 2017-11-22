@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,24 +17,13 @@
  */
 package org.broadleafcommerce.common.extension;
 
-import java.util.HashMap;
-import java.util.Map;
 
-/**
- * If a service extension using the {@link ExtensionManager} pattern expects a result from the extension, it should
- * pass in an instance of this class into the method call.   
- * 
- * The extension points can examine or update this class with response information and set a single return value with
- * {@link #setResult(Object)} or add values via the contextMap provided with {@link #getContextMap()}
- * 
- * @author bpolster
- *
- */
 public class ExtensionResultHolder<T> {
-
     protected T result;
-    protected Throwable throwable;
-    protected Map<String, Object> contextMap = new HashMap<String, Object>();
+
+    protected java.lang.Throwable throwable;
+
+    protected java.util.Map<java.lang.String, java.lang.Object> contextMap = new java.util.HashMap<java.lang.String, java.lang.Object>();
 
     public T getResult() {
         return result;
@@ -44,15 +33,16 @@ public class ExtensionResultHolder<T> {
         this.result = result;
     }
 
-    public Throwable getThrowable() {
+    public java.lang.Throwable getThrowable() {
         return throwable;
     }
 
-    public void setThrowable(Throwable throwable) {
+    public void setThrowable(java.lang.Throwable throwable) {
         this.throwable = throwable;
     }
 
-    public Map<String, Object> getContextMap() {
+    public java.util.Map<java.lang.String, java.lang.Object> getContextMap() {
         return contextMap;
     }
 }
+

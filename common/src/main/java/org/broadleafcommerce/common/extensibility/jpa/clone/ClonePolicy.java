@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,22 +17,10 @@
  */
 package org.broadleafcommerce.common.extensibility.jpa.clone;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 
-/**
- *
- * @ClonePolicy will allow a *ToOne field to have sandboxable behavior. This is only required when the field in question is not already
- * annotated with an @AdminPresentation annotation. Generally this happens when a CPH is trying to work with a field on an entity that
- * is not exposed in the UI and that field needs to be sandbox aware.
- * @author Jeff Fischer
- */
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD})
+@java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
+@java.lang.annotation.Target({ java.lang.annotation.ElementType.FIELD })
 public @interface ClonePolicy {
-
-    String toOneProperty() default "";
-
+    java.lang.String toOneProperty() default "";
 }
+

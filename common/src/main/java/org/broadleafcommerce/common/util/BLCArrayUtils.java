@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,81 +17,70 @@
  */
 package org.broadleafcommerce.common.util;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 
-
-
-/**
- * Convenience methods for interacting with arrays
- * 
- * @author Andre Azzolini (apazzolini)
- */
 public class BLCArrayUtils {
-    
-    /**
-     * Given an array and a typed predicate, determines if the array has an object that matches the condition of the
-     * predicate. The predicate should evaluate to true when a match occurs.
-     * 
-     * @param array
-     * @param predicate
-     * @return whether or not the array contains an element that matches the predicate
-     */
-    public static <T> boolean contains(T[] array, TypedPredicate<T> predicate) {
+    public static <T> boolean contains(T[] array, org.broadleafcommerce.common.util.TypedPredicate<T> predicate) {
         for (T o : array) {
-            if (predicate.evaluate(o)) {
-                return true;
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCArrayUtils.__L6078, predicate.evaluate(o))) {
+                return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCArrayUtils.__L6079, true);
             }
         }
-        return false;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCArrayUtils.__L6080, false);
     }
-    
-    /**
-     * Given an input array, will return an ArrayList representation of the array.
-     * 
-     * @param array
-     * @return the ArrayList corresponding to the input array. If the input is null, this also returns null. If it is empty
-     * then this will return an empty list
-     */
-    public static <T> ArrayList<T> asList(T[] array) {
-        if (array == null) {
+
+    public static <T> java.util.ArrayList<T> asList(T[] array) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCArrayUtils.__L6081, (array == null))) {
             return null;
         }
-        ArrayList<T> list = new ArrayList<T>(array.length);
+        java.util.ArrayList<T> list = new java.util.ArrayList<T>(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.BLCArrayUtils.__L6082, array.length));
         for (T e : array) {
             list.add(e);
         }
         return list;
     }
-    
-    /**
-     * Similar to the CollectionUtils collect except that it works on an array instead of a Java Collection
-     * 
-     * @param array
-     * @param transformer
-     * @return the transformed collection
-     */
-    public static <T, O> ArrayList<T> collect(Object[] array, TypedTransformer<T> transformer) {
-        ArrayList<T> list = new ArrayList<T>(array.length);
-        for (Object o : array) {
+
+    public static <T, O> java.util.ArrayList<T> collect(java.lang.Object[] array, org.broadleafcommerce.common.util.TypedTransformer<T> transformer) {
+        java.util.ArrayList<T> list = new java.util.ArrayList<T>(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.BLCArrayUtils.__L6083, array.length));
+        for (java.lang.Object o : array) {
             list.add(transformer.transform(o));
         }
         return list;
     }
 
-    /**
-     * The same as {@link #collect(Object[], TypedTransformer)} but returns a set.
-     * 
-     * @param array
-     * @param transformer
-     * @return the transformed set
-     */
-    public static <T, O> HashSet<T> collectSet(Object[] array, TypedTransformer<T> transformer) {
-        HashSet<T> set = new HashSet<T>(array.length);
-        for (Object o : array) {
+    public static <T, O> java.util.HashSet<T> collectSet(java.lang.Object[] array, org.broadleafcommerce.common.util.TypedTransformer<T> transformer) {
+        java.util.HashSet<T> set = new java.util.HashSet<T>(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.BLCArrayUtils.__L6084, array.length));
+        for (java.lang.Object o : array) {
             set.add(transformer.transform(o));
         }
         return set;
     }
 
+    public static perturbation.location.PerturbationLocation __L6078;
+
+    public static perturbation.location.PerturbationLocation __L6079;
+
+    public static perturbation.location.PerturbationLocation __L6080;
+
+    public static perturbation.location.PerturbationLocation __L6081;
+
+    public static perturbation.location.PerturbationLocation __L6082;
+
+    public static perturbation.location.PerturbationLocation __L6083;
+
+    public static perturbation.location.PerturbationLocation __L6084;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.BLCArrayUtils.__L6078 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCArrayUtils.java:42)", 6078, "Boolean");
+        org.broadleafcommerce.common.util.BLCArrayUtils.__L6079 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCArrayUtils.java:43)", 6079, "Boolean");
+        org.broadleafcommerce.common.util.BLCArrayUtils.__L6080 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCArrayUtils.java:46)", 6080, "Boolean");
+        org.broadleafcommerce.common.util.BLCArrayUtils.__L6081 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCArrayUtils.java:57)", 6081, "Boolean");
+        org.broadleafcommerce.common.util.BLCArrayUtils.__L6082 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCArrayUtils.java:60)", 6082, "Numerical");
+        org.broadleafcommerce.common.util.BLCArrayUtils.__L6083 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCArrayUtils.java:75)", 6083, "Numerical");
+        org.broadleafcommerce.common.util.BLCArrayUtils.__L6084 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCArrayUtils.java:90)", 6084, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.BLCArrayUtils.initPerturbationLocation0();
+    }
 }
+

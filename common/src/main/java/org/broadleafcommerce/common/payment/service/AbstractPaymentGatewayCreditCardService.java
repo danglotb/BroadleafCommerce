@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,25 +17,21 @@
  */
 package org.broadleafcommerce.common.payment.service;
 
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
-import org.broadleafcommerce.common.vendor.service.exception.PaymentException;
 
-public class AbstractPaymentGatewayCreditCardService implements PaymentGatewayCreditCardService {
-
-    @Override
-    public PaymentResponseDTO createGatewayCreditCard(PaymentRequestDTO requestDTO) throws PaymentException {
-        throw new UnsupportedOperationException("Not Implemented");
+public class AbstractPaymentGatewayCreditCardService implements org.broadleafcommerce.common.payment.service.PaymentGatewayCreditCardService {
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO createGatewayCreditCard(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
-    public PaymentResponseDTO updateGatewayCreditCard(PaymentRequestDTO requestDTO) throws PaymentException {
-        throw new UnsupportedOperationException("Not Implemented");
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO updateGatewayCreditCard(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
-    public PaymentResponseDTO deleteGatewayCreditCard(PaymentRequestDTO requestDTO) throws PaymentException {
-        throw new UnsupportedOperationException("Not Implemented");
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO deleteGatewayCreditCard(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
-
 }
+

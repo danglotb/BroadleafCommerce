@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -18,28 +18,22 @@
 package org.broadleafcommerce.common.event;
 
 
-/**
- * Concrete event that is raised when an order is submitted.
- * 
- * @author Kelly Tisdell
- *
- */
-public class OrderSubmittedEvent extends BroadleafApplicationEvent {
-
+public class OrderSubmittedEvent extends org.broadleafcommerce.common.event.BroadleafApplicationEvent {
     private static final long serialVersionUID = 1L;
 
-    protected final String orderNumber;
+    protected final java.lang.String orderNumber;
 
-    public OrderSubmittedEvent(Long orderId, String orderNumber) {
+    public OrderSubmittedEvent(java.lang.Long orderId, java.lang.String orderNumber) {
         super(orderId);
         this.orderNumber = orderNumber;
     }
 
-    public Long getOrderId() {
-        return (Long) super.getSource();
+    public java.lang.Long getOrderId() {
+        return ((java.lang.Long) (super.getSource()));
     }
 
-    public String getOrderNumber() {
-        return (String) orderNumber;
+    public java.lang.String getOrderNumber() {
+        return ((java.lang.String) (orderNumber));
     }
 }
+

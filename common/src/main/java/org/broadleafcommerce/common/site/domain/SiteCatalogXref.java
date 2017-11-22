@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,27 +17,18 @@
  */
 package org.broadleafcommerce.common.site.domain;
 
-import java.io.Serializable;
 
-/**
- * Defines the explicit join between a {@link Site} and {@link Catalog}
- * 
- * @author Phillip Verheyden (phillipuniverse)
- * @see {@link Site#getCatalogXrefs()}
- * @see {@link Catalog#getSiteXrefs()}
- */
-public interface SiteCatalogXref extends Serializable {
-    
-    public Site getSite();
-    
-    public void setSite(Site site);
-    
-    public Catalog getCatalog();
-    
-    public void setCatalog(Catalog catalog);
+public interface SiteCatalogXref extends java.io.Serializable {
+    public org.broadleafcommerce.common.site.domain.Site getSite();
 
-    Long getId();
+    public void setSite(org.broadleafcommerce.common.site.domain.Site site);
 
-    void setId(Long id);
+    public org.broadleafcommerce.common.site.domain.Catalog getCatalog();
 
+    public void setCatalog(org.broadleafcommerce.common.site.domain.Catalog catalog);
+
+    java.lang.Long getId();
+
+    void setId(java.lang.Long id);
 }
+

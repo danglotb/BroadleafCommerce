@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,35 +17,18 @@
  */
 package org.broadleafcommerce.common;
 
-import java.util.Map;
 
-/**
- * Created by bpolster.
- */
 public interface RequestDTO {
+    public java.lang.String getRequestURI();
 
-    /**
-     * @return  returns the request not including the protocol, domain, or query string
-     */
-    public String getRequestURI();
+    public java.lang.String getFullUrLWithQueryString();
 
-    /**
-     * @return Returns the URL and parameters.
-     */
-    public String getFullUrLWithQueryString();
+    public java.lang.Boolean isSecure();
 
-    /**
-     * @return true if this request came in through HTTPS
-     */
-    public Boolean isSecure();
+    java.util.Map<java.lang.String, java.lang.String> getRequestContextAttributes();
 
-    Map<String, String> getRequestContextAttributes();
+    void setRequestContextAttributes(java.util.Map<java.lang.String, java.lang.String> requestContextAttributes);
 
-    void setRequestContextAttributes(Map<String, String> requestContextAttributes);
-
-    /**
-     * By default, converts the properties on 
-     * @return
-     */
-    public Map<String, Object> getProperties();
+    public java.util.Map<java.lang.String, java.lang.Object> getProperties();
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,261 +17,244 @@
  */
 package org.broadleafcommerce.common.rule;
 
-import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.RequestDTO;
-import org.broadleafcommerce.common.TimeDTO;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.time.SystemTime;
-import org.broadleafcommerce.common.util.EfficientLRUMap;
-import org.broadleafcommerce.common.util.FormatUtil;
-import org.broadleafcommerce.common.util.StringUtil;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.mvel2.MVEL;
-import org.mvel2.ParserContext;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.text.ParseException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import javax.servlet.http.HttpServletRequest;
 
-/**
- * Helper class for some common rule functions that can be called from mvel as well as utility functions
- * to make calling MVEL rules within Broadleaf easier.  
- * 
- * An instance of this class is available to the mvel runtime under the variable name MvelHelper with the 
- * following functions:
- * 
- *    convertField(type, fieldValue)
- *    toUpperCase(value)
- *
- * @author Jeff Fischer
- */
 public class MvelHelper {
+    private static final java.util.Map<java.lang.String, java.io.Serializable> DEFAULT_EXPRESSION_CACHE = new org.broadleafcommerce.common.util.EfficientLRUMap<java.lang.String, java.io.Serializable>(5000);
 
-    private static final Map<String, Serializable> DEFAULT_EXPRESSION_CACHE = new EfficientLRUMap<String, Serializable>(5000);
-    private static final Log LOG = LogFactory.getLog(MvelHelper.class);
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.rule.MvelHelper.class);
 
     private static boolean TEST_MODE = false;
-    
-    public static final String BLC_RULE_MAP_PARAM = "blRuleMap";
 
-    // The following attribute is set in BroadleafProcessURLFilter
-    public static final String REQUEST_DTO = "blRequestDTO";
+    public static final java.lang.String BLC_RULE_MAP_PARAM = "blRuleMap";
 
-    static {
-        System.setProperty("mvel2.disable.jit", "true");
-    }
+    public static final java.lang.String REQUEST_DTO = "blRequestDTO";
 
-    /**
-     * Converts a field to the specified type.    Useful when 
-     * @param type
-     * @param fieldValue
-     * @return
-     */
-    public static Object convertField(String type, String fieldValue) {
-        if (fieldValue == null) {
+    public static java.lang.Object convertField(java.lang.String type, java.lang.String fieldValue) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4621, (fieldValue == null))) {
             return null;
         }
         try {
-            if (type.equals(SupportedFieldType.BOOLEAN.toString())) {
-                return Boolean.parseBoolean(fieldValue);
-            } else if (type.equals(SupportedFieldType.DATE.toString())) {
-                return FormatUtil.getTimeZoneFormat().parse(fieldValue);
-            } else if (type.equals(SupportedFieldType.INTEGER.toString())) {
-                return Integer.parseInt(fieldValue);
-            } else if (type.equals(SupportedFieldType.MONEY.toString()) || type.equals(SupportedFieldType.DECIMAL.toString())) {
-                return new BigDecimal(fieldValue);
-            }
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4622, type.equals(org.broadleafcommerce.common.presentation.client.SupportedFieldType.BOOLEAN.toString()))) {
+                return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4623, java.lang.Boolean.parseBoolean(fieldValue));
+            }else
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4624, type.equals(org.broadleafcommerce.common.presentation.client.SupportedFieldType.DATE.toString()))) {
+                    return org.broadleafcommerce.common.util.FormatUtil.getTimeZoneFormat().parse(fieldValue);
+                }else
+                    if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4625, type.equals(org.broadleafcommerce.common.presentation.client.SupportedFieldType.INTEGER.toString()))) {
+                        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.rule.MvelHelper.__L4626, java.lang.Integer.parseInt(fieldValue));
+                    }else
+                        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4629, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4627, type.equals(org.broadleafcommerce.common.presentation.client.SupportedFieldType.MONEY.toString()))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4628, type.equals(org.broadleafcommerce.common.presentation.client.SupportedFieldType.DECIMAL.toString())))))) {
+                            return new java.math.BigDecimal(fieldValue);
+                        }
+
+
+
+        } catch (java.text.ParseException e) {
+            throw new java.lang.RuntimeException(e);
         }
-        throw new IllegalArgumentException("Unrecognized type(" + type + ") for map field conversion.");
+        throw new java.lang.IllegalArgumentException((("Unrecognized type(" + type) + ") for map field conversion."));
     }
 
-    public static Object toUpperCase(String value) {
-        if (value == null) {
+    public static java.lang.Object toUpperCase(java.lang.String value) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4630, (value == null))) {
             return null;
         }
         return value.toUpperCase();
     }
-    
-    /**
-     * Returns true if the passed in rule passes based on the passed in ruleParameters.   
-     * 
-     * Also returns true if the rule is blank or null.
-     * 
-     * Calls the {@link #evaluateRule(String, Map, Map)} method passing in the DEFAULT_EXPRESSION_CACHE.
-     * For systems that need to cache a large number of rule expressions, an alternate cache can be passed in.   The
-     * default cache is able to cache up to 1,000 rule expressions which should suffice for most systems.
-     * 
-     * @param rule
-     * @param ruleParameters
-     * @return
-     */
-    public static boolean evaluateRule(String rule, Map<String, Object> ruleParameters) {
-        return evaluateRule(rule, ruleParameters, DEFAULT_EXPRESSION_CACHE);
+
+    public static boolean evaluateRule(java.lang.String rule, java.util.Map<java.lang.String, java.lang.Object> ruleParameters) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4631, org.broadleafcommerce.common.rule.MvelHelper.evaluateRule(rule, ruleParameters, org.broadleafcommerce.common.rule.MvelHelper.DEFAULT_EXPRESSION_CACHE));
     }
 
-    /**
-     * Evaluates the passed in rule given the passed in parameters.   
-     * 
-     * @param rule
-     * @param ruleParameters
-     * @return
-     */
-    public static boolean evaluateRule(String rule, Map<String, Object> ruleParameters,
-            Map<String, Serializable> expressionCache) {
-        return evaluateRule(rule, ruleParameters, expressionCache, null);
+    public static boolean evaluateRule(java.lang.String rule, java.util.Map<java.lang.String, java.lang.Object> ruleParameters, java.util.Map<java.lang.String, java.io.Serializable> expressionCache) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4632, org.broadleafcommerce.common.rule.MvelHelper.evaluateRule(rule, ruleParameters, expressionCache, null));
     }
-    
-    /**
-     * @param rule
-     * @param ruleParameters
-     * @param expressionCache
-     * @param additionalContextImports additional imports to give to the {@link ParserContext} besides "MVEL" ({@link MVEL} and
-     * "MvelHelper" ({@link MvelHelper}) since they are automatically added 
-     * @return
-     */
-    public static boolean evaluateRule(String rule, Map<String, Object> ruleParameters,
-        Map<String, Serializable> expressionCache, Map<String, Class<?>> additionalContextImports) {
-        
-        // Null or empty is a match
-        if (rule == null || "".equals(rule)) {
-            return true;
-        } else {
-            // MVEL expression compiling can be expensive so let's cache the expression
-            Serializable exp = null;
-            if (expressionCache != null) {
+
+    public static boolean evaluateRule(java.lang.String rule, java.util.Map<java.lang.String, java.lang.Object> ruleParameters, java.util.Map<java.lang.String, java.io.Serializable> expressionCache, java.util.Map<java.lang.String, java.lang.Class<?>> additionalContextImports) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4635, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4633, (rule == null))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4634, "".equals(rule)))))) {
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4636, true);
+        }else {
+            java.io.Serializable exp = null;
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4637, (expressionCache != null))) {
                 exp = expressionCache.get(rule);
             }
-            if (exp == null) {
-                ParserContext context = new ParserContext();
-                context.addImport("MVEL", MVEL.class);
-                context.addImport("MvelHelper", MvelHelper.class);
-                context.addImport("CollectionUtils", SelectizeCollectionUtils.class);
-                if (MapUtils.isNotEmpty(additionalContextImports)) {
-                    for (Entry<String, Class<?>> entry : additionalContextImports.entrySet()) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4638, (exp == null))) {
+                org.mvel2.ParserContext context = new org.mvel2.ParserContext();
+                context.addImport("MVEL", org.mvel2.MVEL.class);
+                context.addImport("MvelHelper", org.broadleafcommerce.common.rule.MvelHelper.class);
+                context.addImport("CollectionUtils", org.broadleafcommerce.common.rule.SelectizeCollectionUtils.class);
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4639, org.apache.commons.collections4.MapUtils.isNotEmpty(additionalContextImports))) {
+                    for (java.util.Map.Entry<java.lang.String, java.lang.Class<?>> entry : additionalContextImports.entrySet()) {
                         context.addImport(entry.getKey(), entry.getValue());
                     }
                 }
-                
-                String modifiedRule = modifyExpression(rule, ruleParameters, context);
-
-                synchronized (expressionCache) {
-                    exp = MVEL.compileExpression(modifiedRule, context);
+                java.lang.String modifiedRule = org.broadleafcommerce.common.rule.MvelHelper.modifyExpression(rule, ruleParameters, context);
+                synchronized(expressionCache) {
+                    exp = org.mvel2.MVEL.compileExpression(modifiedRule, context);
                     expressionCache.put(rule, exp);
                 }
             }
-
-            Map<String, Object> mvelParameters = new HashMap<String, Object>();
-
-            if (ruleParameters != null) {
-                for (String parameter : ruleParameters.keySet()) {
+            java.util.Map<java.lang.String, java.lang.Object> mvelParameters = new java.util.HashMap<java.lang.String, java.lang.Object>();
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4640, (ruleParameters != null))) {
+                for (java.lang.String parameter : ruleParameters.keySet()) {
                     mvelParameters.put(parameter, ruleParameters.get(parameter));
                 }
             }
-
             try {
-                Object test = MVEL.executeExpression(exp, mvelParameters);
-                if (test == null) {
-                    // This can occur if there is no actual rule
-                    return true;
+                java.lang.Object test = org.mvel2.MVEL.executeExpression(exp, mvelParameters);
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4641, (test == null))) {
+                    return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4642, true);
                 }
-                return (Boolean) test;
-            } catch (Exception e) {
-                //Unable to execute the MVEL expression for some reason
-                //Return false, but notify about the bad expression through logs
-                if (!TEST_MODE && LOG.isInfoEnabled()) {
-                    LOG.info("Unable to parse and/or execute the mvel expression (" + StringUtil.sanitize(rule)
-                            + "). Reporting to the logs and returning false for the match expression", e);
+                return ((java.lang.Boolean) (test));
+            } catch (java.lang.Exception e) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4646, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4644, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4643, org.broadleafcommerce.common.rule.MvelHelper.TEST_MODE))))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4645, org.broadleafcommerce.common.rule.MvelHelper.LOG.isInfoEnabled()))))) {
+                    org.broadleafcommerce.common.rule.MvelHelper.LOG.info((("Unable to parse and/or execute the mvel expression (" + (org.broadleafcommerce.common.util.StringUtil.sanitize(rule))) + "). Reporting to the logs and returning false for the match expression"), e);
                 }
-                return false;
+                return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4647, false);
             }
         }
     }
-    
-    /**
-     * <p>
-     * Provides a hook point to modify the final expression before it's built. By default, this looks for attribute
-     * maps and replaces them such that it does string comparison.
-     * 
-     * <p>
-     * For example, given an expression like getProductAttributes()['somekey'] == 'someval', getProductAttributes()['somekey']
-     * actually returns a ProductAttribute object, not a String, so the comparison is wrong. Instead, we actually want
-     * to do this: getProductAttributes().?get('somekey').?value == 'someval'. This function performs that replacement
-     *
-     * <p>
-     * The modification regex will support both simple and complex expressions like:
-     * "(MvelHelper.convertField("INTEGER",orderItem.?product.?getProductAttributes()["myinteger"])>0&&MvelHelper.convertField("INTEGER",orderItem.?product.?getProductAttributes()["myinteger"])<10)"
-     *
-     * @param rule the rule to replace
-     * @return a modified version of <b>rule</b>
-     * @see {@link #getRuleAttributeMaps()}
-     */
-    protected static String modifyExpression(String rule, Map<String, Object> ruleParameters, ParserContext context) {
-        String modifiedExpression = rule;
-        for (String attributeMap : getRuleAttributeMaps()) {
-            modifiedExpression = modifiedExpression.replaceAll(attributeMap + "\\(\\)\\[(.*?)\\](?!\\.\\?value)", attributeMap + "().?get($1).?value");
+
+    protected static java.lang.String modifyExpression(java.lang.String rule, java.util.Map<java.lang.String, java.lang.Object> ruleParameters, org.mvel2.ParserContext context) {
+        java.lang.String modifiedExpression = rule;
+        for (java.lang.String attributeMap : org.broadleafcommerce.common.rule.MvelHelper.getRuleAttributeMaps()) {
+            modifiedExpression = modifiedExpression.replaceAll((attributeMap + "\\(\\)\\[(.*?)\\](?!\\.\\?value)"), (attributeMap + "().?get($1).?value"));
         }
         return modifiedExpression;
     }
 
-    /**
-     * Returns an array of attribute map field names that we need to do replacements for in
-     * {@link #modifyExpression(String, Map, ParserContext)}
-     */
-    protected static String[] getRuleAttributeMaps() {
-        // intentionally left out pricing context getPricingContextAttributes because that's a Map<String, String>
-        return new String[]{ "getProductAttributes",
-            "getCategoryAttributesMap",
-            "getSkuAttributes",
-            "getOrderItemAttributes",
-            "getCustomerAttributes",
-            // Map<String, PageAttribute>
-            "getAdditionalAttributes",
-            // Map<String, AdminUserAttribute>
-            "getAdditionalFields"}; 
+    protected static java.lang.String[] getRuleAttributeMaps() {
+        return new java.lang.String[]{ "getProductAttributes", "getCategoryAttributesMap", "getSkuAttributes", "getOrderItemAttributes", "getCustomerAttributes", "getAdditionalAttributes", "getAdditionalFields" };
     }
 
-    /**
-     * When true, LOG.info statement will be suppressed.   Should only be set from within MvelHelperTest.
-     * Prevents an error from displaying during unit test runs.
-     * @param testMode
-     */
     public static void setTestMode(boolean testMode) {
-        TEST_MODE = testMode;
+        org.broadleafcommerce.common.rule.MvelHelper.TEST_MODE = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4648, testMode);
     }
-    
-    /**
-     * Builds parameters using time, request, customer, and cart.
-     * 
-     * Should be called from within a valid web request.
-     *
-     * @param request
-     * @return
-     */
-    public static Map<String, Object> buildMvelParameters() {
-        Map<String, Object> mvelParameters = new HashMap<String, Object>();
-       BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
-        if (brc != null && brc.getRequest() != null) {
-           TimeDTO timeDto = new TimeDTO(SystemTime.asCalendar());
-            HttpServletRequest request = brc.getRequest();
-            RequestDTO requestDto = brc.getRequestDTO();
+
+    public static java.util.Map<java.lang.String, java.lang.Object> buildMvelParameters() {
+        java.util.Map<java.lang.String, java.lang.Object> mvelParameters = new java.util.HashMap<java.lang.String, java.lang.Object>();
+        org.broadleafcommerce.common.web.BroadleafRequestContext brc = org.broadleafcommerce.common.web.BroadleafRequestContext.getBroadleafRequestContext();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4651, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4649, (brc != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4650, ((brc.getRequest()) != null)))))) {
+            org.broadleafcommerce.common.TimeDTO timeDto = new org.broadleafcommerce.common.TimeDTO(org.broadleafcommerce.common.time.SystemTime.asCalendar());
+            javax.servlet.http.HttpServletRequest request = brc.getRequest();
+            org.broadleafcommerce.common.RequestDTO requestDto = brc.getRequestDTO();
             mvelParameters.put("time", timeDto);
             mvelParameters.put("request", requestDto);
-
-            Map<String, Object> blcRuleMap = (Map<String, Object>) request.getAttribute(BLC_RULE_MAP_PARAM);
-            if (blcRuleMap != null) {
-                for (String mapKey : blcRuleMap.keySet()) {
+            java.util.Map<java.lang.String, java.lang.Object> blcRuleMap = ((java.util.Map<java.lang.String, java.lang.Object>) (request.getAttribute(org.broadleafcommerce.common.rule.MvelHelper.BLC_RULE_MAP_PARAM)));
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.MvelHelper.__L4652, (blcRuleMap != null))) {
+                for (java.lang.String mapKey : blcRuleMap.keySet()) {
                     mvelParameters.put(mapKey, blcRuleMap.get(mapKey));
                 }
-           }
-       }
+            }
+        }
+        return mvelParameters;
+    }
 
-       return mvelParameters;
-   }    
+    public static perturbation.location.PerturbationLocation __L4621;
+
+    public static perturbation.location.PerturbationLocation __L4622;
+
+    public static perturbation.location.PerturbationLocation __L4623;
+
+    public static perturbation.location.PerturbationLocation __L4624;
+
+    public static perturbation.location.PerturbationLocation __L4625;
+
+    public static perturbation.location.PerturbationLocation __L4626;
+
+    public static perturbation.location.PerturbationLocation __L4627;
+
+    public static perturbation.location.PerturbationLocation __L4628;
+
+    public static perturbation.location.PerturbationLocation __L4629;
+
+    public static perturbation.location.PerturbationLocation __L4630;
+
+    public static perturbation.location.PerturbationLocation __L4631;
+
+    public static perturbation.location.PerturbationLocation __L4632;
+
+    public static perturbation.location.PerturbationLocation __L4633;
+
+    public static perturbation.location.PerturbationLocation __L4634;
+
+    public static perturbation.location.PerturbationLocation __L4635;
+
+    public static perturbation.location.PerturbationLocation __L4636;
+
+    public static perturbation.location.PerturbationLocation __L4637;
+
+    public static perturbation.location.PerturbationLocation __L4638;
+
+    public static perturbation.location.PerturbationLocation __L4639;
+
+    public static perturbation.location.PerturbationLocation __L4640;
+
+    public static perturbation.location.PerturbationLocation __L4641;
+
+    public static perturbation.location.PerturbationLocation __L4642;
+
+    public static perturbation.location.PerturbationLocation __L4643;
+
+    public static perturbation.location.PerturbationLocation __L4644;
+
+    public static perturbation.location.PerturbationLocation __L4645;
+
+    public static perturbation.location.PerturbationLocation __L4646;
+
+    public static perturbation.location.PerturbationLocation __L4647;
+
+    public static perturbation.location.PerturbationLocation __L4648;
+
+    public static perturbation.location.PerturbationLocation __L4649;
+
+    public static perturbation.location.PerturbationLocation __L4650;
+
+    public static perturbation.location.PerturbationLocation __L4651;
+
+    public static perturbation.location.PerturbationLocation __L4652;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.rule.MvelHelper.__L4621 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:76)", 4621, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4622 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:80)", 4622, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4623 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:81)", 4623, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4624 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:82)", 4624, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4625 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:84)", 4625, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4626 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:85)", 4626, "Numerical");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4627 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:86)", 4627, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4628 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:86)", 4628, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4629 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:86)", 4629, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4630 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:96)", 4630, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4631 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:116)", 4631, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4632 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:128)", 4632, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4633 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:143)", 4633, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4634 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:143)", 4634, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4635 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:143)", 4635, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4636 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:144)", 4636, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4637 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:148)", 4637, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4638 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:151)", 4638, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4639 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:156)", 4639, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4640 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:172)", 4640, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4641 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:180)", 4641, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4642 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:182)", 4642, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4643 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:188)", 4643, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4644 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:188)", 4644, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4645 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:188)", 4645, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4646 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:188)", 4646, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4647 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:192)", 4647, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4648 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:246)", 4648, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4649 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:260)", 4649, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4650 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:260)", 4650, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4651 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:260)", 4651, "Boolean");
+        org.broadleafcommerce.common.rule.MvelHelper.__L4652 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/MvelHelper.java:268)", 4652, "Boolean");
+    }
+
+    static {
+        java.lang.System.setProperty("mvel2.disable.jit", "true");
+    }
+
+    static {
+        org.broadleafcommerce.common.rule.MvelHelper.initPerturbationLocation0();
+    }
 }
+

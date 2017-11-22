@@ -15,24 +15,23 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-/**
- * 
- */
 package org.broadleafcommerce.common.config;
 
-import org.springframework.core.Ordered;
 
-/**
- * Passthrough implementation for the {@link FrameworkCommonClasspathPropertySource} that sets the default order
- * 
- * @since 5.2
- * @author Phillip Verheyden (phillipuniverse)
- * @see {@link FrameworkCommonClasspathPropertySource}
- */
-public abstract class DefaultOrderFrameworkCommonClasspathPropertySource implements FrameworkCommonClasspathPropertySource, Ordered {
-    
-    @Override
+public abstract class DefaultOrderFrameworkCommonClasspathPropertySource implements org.broadleafcommerce.common.config.FrameworkCommonClasspathPropertySource , org.springframework.core.Ordered {
+    @java.lang.Override
     public int getOrder() {
-        return FrameworkCommonClasspathPropertySource.DEFAULT_ORDER;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.config.DefaultOrderFrameworkCommonClasspathPropertySource.__L491, org.broadleafcommerce.common.config.FrameworkCommonClasspathPropertySource.DEFAULT_ORDER);
+    }
+
+    public static perturbation.location.PerturbationLocation __L491;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.config.DefaultOrderFrameworkCommonClasspathPropertySource.__L491 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/DefaultOrderFrameworkCommonClasspathPropertySource.java:36)", 491, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.config.DefaultOrderFrameworkCommonClasspathPropertySource.initPerturbationLocation0();
     }
 }
+

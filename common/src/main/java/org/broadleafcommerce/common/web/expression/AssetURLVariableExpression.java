@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,51 +17,44 @@
  */
 package org.broadleafcommerce.common.web.expression;
 
-import org.broadleafcommerce.common.file.service.StaticAssetPathService;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+@org.springframework.stereotype.Component("blAssetURLVariableExpression")
+@org.broadleafcommerce.presentation.condition.ConditionalOnTemplating
+public class AssetURLVariableExpression implements org.broadleafcommerce.common.web.expression.BroadleafVariableExpression {
+    @javax.annotation.Resource(name = "blStaticAssetPathService")
+    protected org.broadleafcommerce.common.file.service.StaticAssetPathService staticAssetPathService;
 
-/**
- * For HTML fields maintained in the admin, redactor allows the user to select images. These images need to be able to be served from a CDN.
- * Goal is to be able to use this syntax in html pages.
- * Example of trying to  resolve images in longDescription:
- *
- * <div id="description" th:with="input=*{longDescription}">
- *     <span th:utext="${#cms.fixUrl(input)}"></span>
- * </div>
- *
- * @author by reginaldccole
- */
-@Component("blAssetURLVariableExpression")
-@ConditionalOnTemplating
-public class AssetURLVariableExpression implements BroadleafVariableExpression {
-
-    @Resource(name="blStaticAssetPathService")
-    protected StaticAssetPathService staticAssetPathService;
-
-
-    @Override
-    public String getName() {
+    @java.lang.Override
+    public java.lang.String getName() {
         return "cms";
     }
 
-
-    /**
-     * This method will resolve image urls located in HTML.
-     * @see StaticAssetPathService#convertAllAssetPathsInContent(String, boolean)
-     * @param content
-     * @return
-     */
-    public String fixUrl(String content){
-        boolean isSecure = false;
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
-        if (brc != null) {
-             isSecure  = brc.getRequest().isSecure();
+    public java.lang.String fixUrl(java.lang.String content) {
+        boolean isSecure = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.expression.AssetURLVariableExpression.__L7178, false);
+        org.broadleafcommerce.common.web.BroadleafRequestContext brc = org.broadleafcommerce.common.web.BroadleafRequestContext.getBroadleafRequestContext();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.expression.AssetURLVariableExpression.__L7179, (brc != null))) {
+            isSecure = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.expression.AssetURLVariableExpression.__L7180, brc.getRequest().isSecure());
         }
-        return staticAssetPathService.convertAllAssetPathsInContent(content,isSecure);
+        return staticAssetPathService.convertAllAssetPathsInContent(content, perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.expression.AssetURLVariableExpression.__L7181, isSecure));
     }
 
+    public static perturbation.location.PerturbationLocation __L7178;
+
+    public static perturbation.location.PerturbationLocation __L7179;
+
+    public static perturbation.location.PerturbationLocation __L7180;
+
+    public static perturbation.location.PerturbationLocation __L7181;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.expression.AssetURLVariableExpression.__L7178 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/expression/AssetURLVariableExpression.java:59)", 7178, "Boolean");
+        org.broadleafcommerce.common.web.expression.AssetURLVariableExpression.__L7179 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/expression/AssetURLVariableExpression.java:61)", 7179, "Boolean");
+        org.broadleafcommerce.common.web.expression.AssetURLVariableExpression.__L7180 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/expression/AssetURLVariableExpression.java:62)", 7180, "Boolean");
+        org.broadleafcommerce.common.web.expression.AssetURLVariableExpression.__L7181 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/expression/AssetURLVariableExpression.java:64)", 7181, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.expression.AssetURLVariableExpression.initPerturbationLocation0();
+    }
 }
+

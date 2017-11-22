@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,162 +17,184 @@
  */
 package org.broadleafcommerce.common.extensibility.jpa.convert;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.extensibility.jpa.MergePersistenceUnitManager;
-import org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyIgnorePattern;
 
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.lang.instrument.IllegalClassFormatException;
-import java.security.ProtectionDomain;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
+public class EntityMarkerClassTransformer extends org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer implements org.broadleafcommerce.common.extensibility.jpa.convert.BroadleafClassTransformer {
+    protected static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.class);
 
-import javassist.bytecode.AnnotationsAttribute;
-import javassist.bytecode.ClassFile;
-import javassist.bytecode.annotation.Annotation;
+    protected java.util.HashSet<java.lang.String> transformedEntityClassNames = new java.util.HashSet<java.lang.String>();
 
-import javax.annotation.Resource;
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.persistence.MappedSuperclass;
+    protected java.util.HashSet<java.lang.String> transformedNonEntityClassNames = new java.util.HashSet<java.lang.String>();
 
-/**
- * <p>
- * This class transformer will check to see if there is class that should have been loaded by the {@link MergePersistenceUnitManager}
- * (meaning, it has an @Entity, @MappedSuperclass or @Embeddable annotation on it and will be inside of a persistence.xml).
- * If it it should have, it will add the fully qualified classname of that class to the transformedClassNames list.
- * 
- * <p>
- * This is a validation check to ensure that the class transformers are actually working properly
- * 
- * @author Andre Azzolini (apazzolini)
- */
-public class EntityMarkerClassTransformer extends AbstractClassTransformer implements BroadleafClassTransformer {
-    protected static final Log LOG = LogFactory.getLog(EntityMarkerClassTransformer.class);
-    
-    protected HashSet<String> transformedEntityClassNames = new HashSet<String>();
-    
-    protected HashSet<String> transformedNonEntityClassNames = new HashSet<String>();
-    
-    @Resource(name = "blDirectCopyIgnorePatterns")
-    protected List<DirectCopyIgnorePattern> ignorePatterns = new ArrayList<DirectCopyIgnorePattern>();
+    @javax.annotation.Resource(name = "blDirectCopyIgnorePatterns")
+    protected java.util.List<org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyIgnorePattern> ignorePatterns = new java.util.ArrayList<org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyIgnorePattern>();
 
-    @Override
-    public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
-        // Lambdas and anonymous methods in Java 8 do not have a class name defined and so no transformation should be done
-        if (className == null) {
+    @java.lang.Override
+    public byte[] transform(java.lang.ClassLoader loader, java.lang.String className, java.lang.Class<?> classBeingRedefined, java.security.ProtectionDomain protectionDomain, byte[] classfileBuffer) throws java.lang.instrument.IllegalClassFormatException {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1902, (className == null))) {
             return null;
         }
-
-        String convertedClassName = className.replace('/', '.');
-        
-        if (isIgnored(convertedClassName)) {
+        java.lang.String convertedClassName = className.replace('/', '.');
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1903, isIgnored(convertedClassName))) {
             return null;
         }
-
         try {
-            ClassFile classFile = new ClassFile(new DataInputStream(new ByteArrayInputStream(classfileBuffer)));
-            List<?> attributes = classFile.getAttributes();
-            Iterator<?> itr = attributes.iterator();
-            while (itr.hasNext()) {
-                Object object = itr.next();
-                if (AnnotationsAttribute.class.isAssignableFrom(object.getClass())) {
-                    boolean containsTypeLevelAnnotation = containsTypeLevelPersistenceAnnotation(((AnnotationsAttribute) object).getAnnotations());
-                    if (containsTypeLevelAnnotation) {
-                        LOG.debug("Marking " + convertedClassName + " as transformed");
+            javassist.bytecode.ClassFile classFile = new javassist.bytecode.ClassFile(new java.io.DataInputStream(new java.io.ByteArrayInputStream(classfileBuffer)));
+            java.util.List<?> attributes = classFile.getAttributes();
+            java.util.Iterator<?> itr = attributes.iterator();
+            while (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1904, itr.hasNext())) {
+                java.lang.Object object = itr.next();
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1905, javassist.bytecode.AnnotationsAttribute.class.isAssignableFrom(object.getClass()))) {
+                    boolean containsTypeLevelAnnotation = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1906, containsTypeLevelPersistenceAnnotation(((javassist.bytecode.AnnotationsAttribute) (object)).getAnnotations()));
+                    if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1907, containsTypeLevelAnnotation)) {
+                        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.LOG.debug((("Marking " + convertedClassName) + " as transformed"));
                         transformedEntityClassNames.add(convertedClassName);
-                    } else {
-                        LOG.debug("Marking " + convertedClassName + " as picked up by the transformer but not detected as an entity");
+                    }else {
+                        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.LOG.debug((("Marking " + convertedClassName) + " as picked up by the transformer but not detected as an entity"));
                         transformedNonEntityClassNames.add(convertedClassName);
                     }
                 }
-            }
-        } catch (Exception e) {
-            LOG.error(e);
-            throw new IllegalClassFormatException("Unable to mark " + convertedClassName + " as transformed.");
+            } 
+        } catch (java.lang.Exception e) {
+            org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.LOG.error(e);
+            throw new java.lang.instrument.IllegalClassFormatException((("Unable to mark " + convertedClassName) + " as transformed."));
         }
-        
-        // We don't need to transform anything, so we'll return null
         return null;
     }
-    
-    /**
-     * Determines if a given annotation set contains annotations that correspond to ones that someone would expect to appear
-     * in a persistence.xml
-     * 
-     * @param annotations
-     * @return
-     */
-    protected boolean containsTypeLevelPersistenceAnnotation(Annotation[] annotations) {
-        for (Annotation annotation : annotations) {
-            if (annotation.getTypeName().equals(Entity.class.getName())
-                    || annotation.getTypeName().equals(Embeddable.class.getName())
-                    || annotation.getTypeName().equals(MappedSuperclass.class.getName())) {
-                return true;
+
+    protected boolean containsTypeLevelPersistenceAnnotation(javassist.bytecode.annotation.Annotation[] annotations) {
+        for (javassist.bytecode.annotation.Annotation annotation : annotations) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1912, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1910, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1908, annotation.getTypeName().equals(javax.persistence.Entity.class.getName()))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1909, annotation.getTypeName().equals(javax.persistence.Embeddable.class.getName())))))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1911, annotation.getTypeName().equals(javax.persistence.MappedSuperclass.class.getName())))))) {
+                return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1913, true);
             }
         }
-        return false;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1914, false);
     }
-    
-    protected boolean isIgnored(String convertedClassName) {
-        boolean isValidPattern = true;
-        List<DirectCopyIgnorePattern> matchedPatterns = new ArrayList<DirectCopyIgnorePattern>();
-        for (DirectCopyIgnorePattern pattern : ignorePatterns) {
-            boolean isPatternMatch = false;
-            for (String patternString : pattern.getPatterns()) {
-                isPatternMatch = convertedClassName.matches(patternString);
-                if (isPatternMatch) {
+
+    protected boolean isIgnored(java.lang.String convertedClassName) {
+        boolean isValidPattern = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1915, true);
+        java.util.List<org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyIgnorePattern> matchedPatterns = new java.util.ArrayList<org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyIgnorePattern>();
+        for (org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyIgnorePattern pattern : ignorePatterns) {
+            boolean isPatternMatch = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1916, false);
+            for (java.lang.String patternString : pattern.getPatterns()) {
+                isPatternMatch = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1917, convertedClassName.matches(patternString));
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1918, isPatternMatch)) {
                     break;
                 }
             }
-            if (isPatternMatch) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1919, isPatternMatch)) {
                 matchedPatterns.add(pattern);
             }
-            isValidPattern = !(isPatternMatch && pattern.getTemplateTokenPatterns() == null);
-            if (!isValidPattern) {
+            isValidPattern = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1923, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1922, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1920, isPatternMatch)) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1921, ((pattern.getTemplateTokenPatterns()) == null))))))));
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1925, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1924, isValidPattern))))) {
                 break;
             }
         }
-        
-        return !isValidPattern;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1927, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1926, isValidPattern))));
     }
 
-    @Override
-    public void compileJPAProperties(Properties props, Object key) throws Exception {
-        // When performing the check that this class transformer does, JPA properties do not need modificiation
+    @java.lang.Override
+    public void compileJPAProperties(java.util.Properties props, java.lang.Object key) throws java.lang.Exception {
     }
-    
-    /**
-     * @return a list of fully qualified classnames of class that have an @Entity, @MappedSuperclass or @Embeddable
-     * annotation and were picked
-     * up by this class transformer (meaning that other class transformers also would have had a chance to
-     * perform their necessary work on those classes)
-     */
-    public HashSet<String> getTransformedEntityClassNames() {
+
+    public java.util.HashSet<java.lang.String> getTransformedEntityClassNames() {
         return transformedEntityClassNames;
     }
-    
-    /**
-     * @return a list of fully qualified classnames of classes that <b>do not</b> have an @Entity, @MappedSuperclass or @Embeddable
-     * annotation but were picked up by this class transformer. This usually results in a benign misconfiguration as there are
-     * unnecessary classes within the {@link MergePersistenceUnitManager}
-     */
-    public HashSet<String> getTransformedNonEntityClassNames() {
+
+    public java.util.HashSet<java.lang.String> getTransformedNonEntityClassNames() {
         return transformedNonEntityClassNames;
     }
 
-    public List<DirectCopyIgnorePattern> getIgnorePatterns() {
+    public java.util.List<org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyIgnorePattern> getIgnorePatterns() {
         return ignorePatterns;
     }
 
-    public void setIgnorePatterns(List<DirectCopyIgnorePattern> ignorePatterns) {
+    public void setIgnorePatterns(java.util.List<org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyIgnorePattern> ignorePatterns) {
         this.ignorePatterns = ignorePatterns;
     }
 
+    public static perturbation.location.PerturbationLocation __L1902;
+
+    public static perturbation.location.PerturbationLocation __L1903;
+
+    public static perturbation.location.PerturbationLocation __L1904;
+
+    public static perturbation.location.PerturbationLocation __L1905;
+
+    public static perturbation.location.PerturbationLocation __L1906;
+
+    public static perturbation.location.PerturbationLocation __L1907;
+
+    public static perturbation.location.PerturbationLocation __L1908;
+
+    public static perturbation.location.PerturbationLocation __L1909;
+
+    public static perturbation.location.PerturbationLocation __L1910;
+
+    public static perturbation.location.PerturbationLocation __L1911;
+
+    public static perturbation.location.PerturbationLocation __L1912;
+
+    public static perturbation.location.PerturbationLocation __L1913;
+
+    public static perturbation.location.PerturbationLocation __L1914;
+
+    public static perturbation.location.PerturbationLocation __L1915;
+
+    public static perturbation.location.PerturbationLocation __L1916;
+
+    public static perturbation.location.PerturbationLocation __L1917;
+
+    public static perturbation.location.PerturbationLocation __L1918;
+
+    public static perturbation.location.PerturbationLocation __L1919;
+
+    public static perturbation.location.PerturbationLocation __L1920;
+
+    public static perturbation.location.PerturbationLocation __L1921;
+
+    public static perturbation.location.PerturbationLocation __L1922;
+
+    public static perturbation.location.PerturbationLocation __L1923;
+
+    public static perturbation.location.PerturbationLocation __L1924;
+
+    public static perturbation.location.PerturbationLocation __L1925;
+
+    public static perturbation.location.PerturbationLocation __L1926;
+
+    public static perturbation.location.PerturbationLocation __L1927;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1902 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:69)", 1902, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1903 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:75)", 1903, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1904 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:83)", 1904, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1905 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:85)", 1905, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1906 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:86)", 1906, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1907 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:87)", 1907, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1908 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:114)", 1908, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1909 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:115)", 1909, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1910 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:114)", 1910, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1911 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:116)", 1911, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1912 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:114)", 1912, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1913 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:117)", 1913, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1914 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:120)", 1914, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1915 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:124)", 1915, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1916 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:127)", 1916, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1917 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:129)", 1917, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1918 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:130)", 1918, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1919 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:134)", 1919, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1920 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:137)", 1920, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1921 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:137)", 1921, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1922 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:137)", 1922, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1923 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:137)", 1923, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1924 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:138)", 1924, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1925 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:138)", 1925, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1926 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:143)", 1926, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.__L1927 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/convert/EntityMarkerClassTransformer.java:143)", 1927, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.extensibility.jpa.convert.EntityMarkerClassTransformer.initPerturbationLocation0();
+    }
 }
+

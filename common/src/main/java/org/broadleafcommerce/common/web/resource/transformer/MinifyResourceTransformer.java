@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,52 +17,40 @@
  */
 package org.broadleafcommerce.common.web.resource.transformer;
 
-import org.broadleafcommerce.common.resource.service.ResourceMinificationService;
-import org.broadleafcommerce.common.web.resource.resolver.BroadleafResourceTransformerOrder;
-import org.springframework.core.Ordered;
-import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.resource.ResourceTransformer;
-import org.springframework.web.servlet.resource.ResourceTransformerChain;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-
-/**
- * A {@link org.springframework.web.servlet.resource.ResourceTransformer} that minifies
- * the resource.    Only works with allowed extensions (".css" and ".js" by default).
- * 
- * {@link org.broadleafcommerce.common.resource.service.ResourceMinificationService} is used to
- * perform the minification. 
- *
- * @author Brian Polster
- * @since 4.0
- */
-@Component("blMinifyResourceTransformer")
-public class MinifyResourceTransformer implements ResourceTransformer, Ordered {
-
+@org.springframework.stereotype.Component("blMinifyResourceTransformer")
+public class MinifyResourceTransformer implements org.springframework.core.Ordered , org.springframework.web.servlet.resource.ResourceTransformer {
     @javax.annotation.Resource(name = "blResourceMinificationService")
-    protected ResourceMinificationService minifyService;
+    protected org.broadleafcommerce.common.resource.service.ResourceMinificationService minifyService;
 
-    private int order = BroadleafResourceTransformerOrder.BLC_MINIFY_RESOURCE_TRANSFORMER;
+    private int order = org.broadleafcommerce.common.web.resource.resolver.BroadleafResourceTransformerOrder.BLC_MINIFY_RESOURCE_TRANSFORMER;
 
-    @Override
-    public Resource transform(HttpServletRequest request, Resource resource, ResourceTransformerChain transformerChain)
-            throws IOException {
-
-        Resource transformed = transformerChain.transform(request, resource);
-
+    @java.lang.Override
+    public org.springframework.core.io.Resource transform(javax.servlet.http.HttpServletRequest request, org.springframework.core.io.Resource resource, org.springframework.web.servlet.resource.ResourceTransformerChain transformerChain) throws java.io.IOException {
+        org.springframework.core.io.Resource transformed = transformerChain.transform(request, resource);
         return minifyService.minify(transformed);
     }
 
-    @Override
+    @java.lang.Override
     public int getOrder() {
-        return order;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.resource.transformer.MinifyResourceTransformer.__L7539, order);
     }
 
     public void setOrder(int order) {
-        this.order = order;
+        this.order = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.resource.transformer.MinifyResourceTransformer.__L7540, order);
     }
 
+    public static perturbation.location.PerturbationLocation __L7539;
+
+    public static perturbation.location.PerturbationLocation __L7540;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.resource.transformer.MinifyResourceTransformer.__L7539 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/transformer/MinifyResourceTransformer.java:61)", 7539, "Numerical");
+        org.broadleafcommerce.common.web.resource.transformer.MinifyResourceTransformer.__L7540 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/transformer/MinifyResourceTransformer.java:65)", 7540, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.resource.transformer.MinifyResourceTransformer.initPerturbationLocation0();
+    }
 }
+

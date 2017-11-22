@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,49 +17,30 @@
  */
 package org.broadleafcommerce.common.web.controller;
 
-import org.broadleafcommerce.common.util.BLCRequestUtils;
-import org.springframework.ui.Model;
-import org.springframework.web.context.request.ServletWebRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-/**
- * This controller works in conjunction with the broadleaf-ajax style redirect.
- * 
- * The logic is quite complex but solves a problem related to redirects and
- * an Ajax form.
- * 
- * It is intended to solve a problem with using an Ajax style login modal 
- * along with Spring Security.
- * 
- * Spring Security wants to redirect after a successful login.   Unfortunately,
- * we can reliably redirect from Spring Security to a page within the BLC 
- * system when the login modal is presented in Ajax.
- * 
- * To solve this problem, Spring Security can be configured to use 
- * the BroadleafWindowLocationRedirectStrategy.   That strategy will add an attribute to 
- * session for the page you want to redirect to if the request is coming in
- * from an Ajax call.    It will then cause a redirect that should be picked 
- * up by this controller.   This controller will then render a page with the
- * blc-redirect-div.    The client-side javaScript (BLC.js) will intercept
- * this code and force the browser to load the new page (e.g. via window.location)
- * 
- * @see BroadleafRedirectStrategy
- * 
- * @author bpolster
- */
 public class BroadleafRedirectController {
-    
-    public String redirect(HttpServletRequest request, HttpServletResponse response, Model model) {
-        String path = null;
-        if (BLCRequestUtils.isOKtoUseSession(new ServletWebRequest(request))) {
-            path = (String) request.getSession().getAttribute("BLC_REDIRECT_URL");
+    public java.lang.String redirect(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response, org.springframework.ui.Model model) {
+        java.lang.String path = null;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.BroadleafRedirectController.__L7078, org.broadleafcommerce.common.util.BLCRequestUtils.isOKtoUseSession(new org.springframework.web.context.request.ServletWebRequest(request)))) {
+            path = ((java.lang.String) (request.getSession().getAttribute("BLC_REDIRECT_URL")));
         }
-
-        if (path == null) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.BroadleafRedirectController.__L7079, (path == null))) {
             path = request.getContextPath();
         }
         return "ajaxredirect:" + path;
     }
+
+    public static perturbation.location.PerturbationLocation __L7078;
+
+    public static perturbation.location.PerturbationLocation __L7079;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.controller.BroadleafRedirectController.__L7078 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafRedirectController.java:56)", 7078, "Boolean");
+        org.broadleafcommerce.common.web.controller.BroadleafRedirectController.__L7079 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafRedirectController.java:60)", 7079, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.controller.BroadleafRedirectController.initPerturbationLocation0();
+    }
 }
+

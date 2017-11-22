@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,30 +17,24 @@
  */
 package org.broadleafcommerce.common.file;
 
-import org.broadleafcommerce.common.file.service.BroadleafFileService;
 
-/**
- * Marker exception that just extends RuntimeException to be used by the {@link BroadleafFileService}
- * @author bpolster
- *
- */
-public class FileServiceException extends RuntimeException {
-
+public class FileServiceException extends java.lang.RuntimeException {
     private static final long serialVersionUID = 1L;
 
     public FileServiceException() {
         super();
     }
 
-    public FileServiceException(String message, Throwable cause) {
+    public FileServiceException(java.lang.String message, java.lang.Throwable cause) {
         super(message, cause);
     }
 
-    public FileServiceException(String message) {
+    public FileServiceException(java.lang.String message) {
         super(message);
     }
 
-    public FileServiceException(Throwable cause) {
+    public FileServiceException(java.lang.Throwable cause) {
         super(cause);
     }
 }
+

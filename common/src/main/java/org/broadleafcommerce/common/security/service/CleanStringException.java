@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,25 +17,20 @@
  */
 package org.broadleafcommerce.common.security.service;
 
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.owasp.validator.html.CleanResults;
 
-/**
- * @author Jeff Fischer
- */
-public class CleanStringException extends ServiceException {
+public class CleanStringException extends org.broadleafcommerce.common.exception.ServiceException {
+    protected org.owasp.validator.html.CleanResults cleanResults;
 
-    public CleanStringException(CleanResults cleanResults) {
+    public CleanStringException(org.owasp.validator.html.CleanResults cleanResults) {
         this.cleanResults = cleanResults;
     }
 
-    protected CleanResults cleanResults;
-
-    public CleanResults getCleanResults() {
+    public org.owasp.validator.html.CleanResults getCleanResults() {
         return cleanResults;
     }
 
-    public void setCleanResults(CleanResults cleanResults) {
+    public void setCleanResults(org.owasp.validator.html.CleanResults cleanResults) {
         this.cleanResults = cleanResults;
     }
 }
+

@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Profile
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,10 +17,10 @@
  */
 package org.broadleafcommerce.common.id.service;
 
+
 public interface IdGenerationService {
+    public java.lang.Long findNextId(java.lang.String idType);
 
-    public Long findNextId(String idType);
-
-    public Long findNextId(String idType, Long batchSize);
-
+    public java.lang.Long findNextId(java.lang.String idType, java.lang.Long batchSize);
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,189 +17,253 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.cache.spi.UpdateTimestampsCache;
-import org.hibernate.engine.spi.SessionImplementor;
-import org.hibernate.metadata.ClassMetadata;
-import org.hibernate.persister.entity.AbstractEntityPersister;
-import org.hibernate.type.Type;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-
-/**
- * The purpose for this class is to provide an alternate approach to an HQL UPDATE query for batch updates on Hibernate filtered
- * entities (such as sandboxable and multi-tenant entities).
- * </p>
- * This class takes an interesting approach to the use of update queries. To explain, a bit of background is required.
- * First, Hibernate will create a temporary table and fill it will ids to use in a where clause when it executs an HQL UPDATE
- * query. However, it will only create this temporary table when the target entity has Hibernate filters applied
- * (i.e. sandboxable or multi-tenant entities). When creating this temporary table, a ‘insert into select’ is used to
- * populate the values. It is my understanding that this ends up creating some locks on the original table. Because of
- * these locks, we were seeing some instances of deadlocks during concurrent admin usage. The key was to avoid
- * the temporary table creation. We did this by first selecting for ids (so that the filters were still honored) and then
- * using a simple, native sql statement to execute the update on entities matching those ids. The native sql needs to be basic
- * enough that it’s portable across platforms.
- * </p>
- * This class is responsible for building the native sql based on a template String. It does it in a way using a standard
- * parameterized query (rather than string concatenation) to avoid the possibility of any sql injection exploit.
- * </p>
- * This implementation has the added benefit of breaking up large IN clauses into smaller chunks to avoid maximum
- * IN clause lengths enforced by some database platforms.
- *
- * @author Jeff Fischer
- */
 public class UpdateExecutor {
-
-    /**
-     * Perform an update query using a String template and params. Note, this is only intended for special
-     * usage with update queries that have an IN clause at the end. This implementation uses Hibernate Session
-     * directly to avoid a problem with assigning NULL values. The query should be written in native SQL.
-     * </p>
-     * An example looks like: 'UPDATE BLC_SNDBX_WRKFLW_ITEM SET SCHEDULED_DATE = ? WHERE WRKFLW_SNDBX_ITEM_ID IN (%s)'
-     *
-     * @deprecated Highly recommended not to use this method. This method results in global L2 cache region clearing. Use {@link #executeUpdateQuery(EntityManager, String, String, Object[], Type[], List)} instead.
-     * @param em The entity manager to use for the persistence operation
-     * @param template the overall update sql template. The IN clause parameter should be written using 'IN (%s)'.
-     * @param params any other params that are present in the sql template, other than the IN clause. Should be written using '?'. Should be in order. Can be null.
-     * @param types the {@link org.hibernate.type.Type} instances that identify the types for the params. Should be in order and match the length of params. Can be null.
-     * @param ids the ids to include in the IN clause.
-     * @return the total number of records updated in the database
-     */
-    @Deprecated
-    public static int executeUpdateQuery(EntityManager em, String template, Object[] params, Type[] types, List<Long> ids) {
-        int response = 0;
-        List<Long[]> runs = buildRuns(ids);
-        for (Long[] run : runs) {
-            String queryString = String.format(template, buildInClauseTemplate(run.length));
-            SQLQuery query = em.unwrap(Session.class).createSQLQuery(queryString);
-            int counter = 0;
-            if (!ArrayUtils.isEmpty(params)) {
-                for (Object param : params) {
-                    query.setParameter(counter, param, types[counter]);
-                    counter++;
+    @java.lang.Deprecated
+    public static int executeUpdateQuery(javax.persistence.EntityManager em, java.lang.String template, java.lang.Object[] params, org.hibernate.type.Type[] types, java.util.List<java.lang.Long> ids) {
+        int response = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6820, 0);
+        java.util.List<java.lang.Long[]> runs = org.broadleafcommerce.common.util.UpdateExecutor.buildRuns(ids);
+        for (java.lang.Long[] run : runs) {
+            java.lang.String queryString = java.lang.String.format(template, org.broadleafcommerce.common.util.UpdateExecutor.buildInClauseTemplate(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6821, run.length)));
+            org.hibernate.SQLQuery query = em.unwrap(org.hibernate.Session.class).createSQLQuery(queryString);
+            int counter = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6822, 0);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UpdateExecutor.__L6824, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UpdateExecutor.__L6823, org.apache.commons.lang.ArrayUtils.isEmpty(params)))))) {
+                for (java.lang.Object param : params) {
+                    query.setParameter(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6825, counter), param, types[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6826, counter)]);
+                    perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6827, (counter++));
                 }
             }
-            for (Long id : run) {
-                query.setLong(counter, id);
-                counter++;
+            for (java.lang.Long id : run) {
+                query.setLong(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6828, counter), id);
+                perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6829, (counter++));
             }
-            response += query.executeUpdate();
+            response += perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6830, query.executeUpdate());
         }
-        return response;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6831, response);
     }
 
-    /**
-     * Perform an update query using a String template and params. Note, this is only intended for special
-     * usage with update queries that have an IN clause at the end. This implementation uses Hibernate Session
-     * directly to avoid a problem with assigning NULL values. The query should be written in native SQL.
-     * </p>
-     * An example looks like: 'UPDATE BLC_SNDBX_WRKFLW_ITEM SET SCHEDULED_DATE = ? WHERE WRKFLW_SNDBX_ITEM_ID IN (%s)'
-     *
-     * @param em The entity manager to use for the persistence operation
-     * @param template the overall update sql template. The IN clause parameter should be written using 'IN (%s)'.
-     * @param tableSpace optionally provide the table being impacted by this query. This value allows Hibernate to limit the scope of cache region invalidation. Otherwise, if left null, Hibernate will invalidate every cache region, which is generally not desirable. An empty String can be used to signify that no region should be invalidated.
-     * @param params any other params that are present in the sql template, other than the IN clause. Should be written using '?'. Should be in order. Can be null.
-     * @param types the {@link org.hibernate.type.Type} instances that identify the types for the params. Should be in order and match the length of params. Can be null.
-     * @param ids the ids to include in the IN clause.
-     * @return the total number of records updated in the database
-     */
-    public static int executeUpdateQuery(EntityManager em, String template, String tableSpace, Object[] params, Type[] types, List<Long> ids) {
-        int response = 0;
-        List<Long[]> runs = buildRuns(ids);
-        for (Long[] run : runs) {
-            String queryString = String.format(template, buildInClauseTemplate(run.length));
-            SQLQuery query = em.unwrap(Session.class).createSQLQuery(queryString);
-            //only check for null - an empty string is a valid value for tableSpace
-            if (tableSpace != null) {
+    public static int executeUpdateQuery(javax.persistence.EntityManager em, java.lang.String template, java.lang.String tableSpace, java.lang.Object[] params, org.hibernate.type.Type[] types, java.util.List<java.lang.Long> ids) {
+        int response = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6832, 0);
+        java.util.List<java.lang.Long[]> runs = org.broadleafcommerce.common.util.UpdateExecutor.buildRuns(ids);
+        for (java.lang.Long[] run : runs) {
+            java.lang.String queryString = java.lang.String.format(template, org.broadleafcommerce.common.util.UpdateExecutor.buildInClauseTemplate(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6833, run.length)));
+            org.hibernate.SQLQuery query = em.unwrap(org.hibernate.Session.class).createSQLQuery(queryString);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UpdateExecutor.__L6834, (tableSpace != null))) {
                 query.addSynchronizedQuerySpace(tableSpace);
             }
-            int counter = 0;
-            if (!ArrayUtils.isEmpty(params)) {
-                for (Object param : params) {
-                    query.setParameter(counter, param, types[counter]);
-                    counter++;
+            int counter = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6835, 0);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UpdateExecutor.__L6837, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UpdateExecutor.__L6836, org.apache.commons.lang.ArrayUtils.isEmpty(params)))))) {
+                for (java.lang.Object param : params) {
+                    query.setParameter(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6838, counter), param, types[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6839, counter)]);
+                    perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6840, (counter++));
                 }
             }
-            for (Long id : run) {
-                query.setLong(counter, id);
-                counter++;
+            for (java.lang.Long id : run) {
+                query.setLong(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6841, counter), id);
+                perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6842, (counter++));
             }
-            response += query.executeUpdate();
+            response += perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6843, query.executeUpdate());
         }
-        return response;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6844, response);
     }
 
-    /**
-     *
-     * @param em
-     * @param entityType
-     * @param ids
-     */
-    public static void executeTargetedCacheInvalidation(EntityManager em, Class<?> entityType, List<Long> ids) {
-        Session session = em.unwrap(Session.class);
-        for (Long id : ids) {
+    public static void executeTargetedCacheInvalidation(javax.persistence.EntityManager em, java.lang.Class<?> entityType, java.util.List<java.lang.Long> ids) {
+        org.hibernate.Session session = em.unwrap(org.hibernate.Session.class);
+        for (java.lang.Long id : ids) {
             session.getSessionFactory().getCache().evictEntity(entityType, id);
         }
-        //update the timestamp cache for the table so that queries will be refreshed
-        ClassMetadata metadata = session.getSessionFactory().getClassMetadata(entityType);
-        String tableName = ((AbstractEntityPersister) metadata).getTableName();
-        UpdateTimestampsCache timestampsCache = em.unwrap(SessionImplementor.class).getFactory().getUpdateTimestampsCache();
-        if (timestampsCache != null) {
-            timestampsCache.invalidate(new Serializable[]{tableName});
+        org.hibernate.metadata.ClassMetadata metadata = session.getSessionFactory().getClassMetadata(entityType);
+        java.lang.String tableName = ((org.hibernate.persister.entity.AbstractEntityPersister) (metadata)).getTableName();
+        org.hibernate.cache.spi.UpdateTimestampsCache timestampsCache = em.unwrap(org.hibernate.engine.spi.SessionImplementor.class).getFactory().getUpdateTimestampsCache();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UpdateExecutor.__L6845, (timestampsCache != null))) {
+            timestampsCache.invalidate(new java.io.Serializable[]{ tableName });
         }
     }
 
-    /**
-     * Quickly build up the sql IN clause template
-     *
-     * @param length
-     * @return
-     */
-    private static String buildInClauseTemplate(int length) {
-        String[] temp = new String[length];
-        Arrays.fill(temp, "?");
-        return StringUtils.join(temp, ",");
+    private static java.lang.String buildInClauseTemplate(int length) {
+        java.lang.String[] temp = new java.lang.String[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6846, length)];
+        java.util.Arrays.fill(temp, "?");
+        return org.apache.commons.lang3.StringUtils.join(temp, ",");
     }
 
-    /**
-     * This breaks up our IN clause into multiple runs of 800 or less in order
-     * to guarantee compatibility across platforms (i.e. some db platforms will throw a error if there are more
-     * than a 1000 entries in an sql IN clause).
-     *
-     * @param ids
-     * @return
-     */
-    private static List<Long[]> buildRuns(List<Long> ids) {
-        List<Long[]> runs = new ArrayList<Long[]>();
-        Long[] all = ids.toArray(new Long[ids.size()]);
-        int test = all.length;
-        int pos = 0;
-        boolean eof = false;
-        while (!eof) {
+    private static java.util.List<java.lang.Long[]> buildRuns(java.util.List<java.lang.Long> ids) {
+        java.util.List<java.lang.Long[]> runs = new java.util.ArrayList<java.lang.Long[]>();
+        java.lang.Long[] all = ids.toArray(new java.lang.Long[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6847, ids.size())]);
+        int test = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6848, all.length);
+        int pos = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6849, 0);
+        boolean eof = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UpdateExecutor.__L6850, false);
+        while (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UpdateExecutor.__L6852, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UpdateExecutor.__L6851, eof))))) {
             int arraySize;
-            if (test < 800) {
-                arraySize = test;
-                eof = true;
-            } else {
-                arraySize = 800;
-                test -= arraySize;
-                if (test == 0) {
-                    eof = true;
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UpdateExecutor.__L6855, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6853, test)) < (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6854, 800))))) {
+                arraySize = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6856, test);
+                eof = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UpdateExecutor.__L6857, true);
+            }else {
+                arraySize = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6858, 800);
+                test -= perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6859, arraySize);
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UpdateExecutor.__L6862, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6860, test)) == (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6861, 0))))) {
+                    eof = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UpdateExecutor.__L6863, true);
                 }
             }
-            Long[] temp = new Long[arraySize];
-            System.arraycopy(all, pos, temp, 0, arraySize);
-            pos += arraySize;
+            java.lang.Long[] temp = new java.lang.Long[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6864, arraySize)];
+            java.lang.System.arraycopy(all, perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6865, pos), temp, perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6866, 0), perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6867, arraySize));
+            pos += perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UpdateExecutor.__L6868, arraySize);
             runs.add(temp);
-        }
+        } 
         return runs;
     }
+
+    public static perturbation.location.PerturbationLocation __L6820;
+
+    public static perturbation.location.PerturbationLocation __L6821;
+
+    public static perturbation.location.PerturbationLocation __L6822;
+
+    public static perturbation.location.PerturbationLocation __L6823;
+
+    public static perturbation.location.PerturbationLocation __L6824;
+
+    public static perturbation.location.PerturbationLocation __L6825;
+
+    public static perturbation.location.PerturbationLocation __L6826;
+
+    public static perturbation.location.PerturbationLocation __L6827;
+
+    public static perturbation.location.PerturbationLocation __L6828;
+
+    public static perturbation.location.PerturbationLocation __L6829;
+
+    public static perturbation.location.PerturbationLocation __L6830;
+
+    public static perturbation.location.PerturbationLocation __L6831;
+
+    public static perturbation.location.PerturbationLocation __L6832;
+
+    public static perturbation.location.PerturbationLocation __L6833;
+
+    public static perturbation.location.PerturbationLocation __L6834;
+
+    public static perturbation.location.PerturbationLocation __L6835;
+
+    public static perturbation.location.PerturbationLocation __L6836;
+
+    public static perturbation.location.PerturbationLocation __L6837;
+
+    public static perturbation.location.PerturbationLocation __L6838;
+
+    public static perturbation.location.PerturbationLocation __L6839;
+
+    public static perturbation.location.PerturbationLocation __L6840;
+
+    public static perturbation.location.PerturbationLocation __L6841;
+
+    public static perturbation.location.PerturbationLocation __L6842;
+
+    public static perturbation.location.PerturbationLocation __L6843;
+
+    public static perturbation.location.PerturbationLocation __L6844;
+
+    public static perturbation.location.PerturbationLocation __L6845;
+
+    public static perturbation.location.PerturbationLocation __L6846;
+
+    public static perturbation.location.PerturbationLocation __L6847;
+
+    public static perturbation.location.PerturbationLocation __L6848;
+
+    public static perturbation.location.PerturbationLocation __L6849;
+
+    public static perturbation.location.PerturbationLocation __L6850;
+
+    public static perturbation.location.PerturbationLocation __L6851;
+
+    public static perturbation.location.PerturbationLocation __L6852;
+
+    public static perturbation.location.PerturbationLocation __L6853;
+
+    public static perturbation.location.PerturbationLocation __L6854;
+
+    public static perturbation.location.PerturbationLocation __L6855;
+
+    public static perturbation.location.PerturbationLocation __L6856;
+
+    public static perturbation.location.PerturbationLocation __L6857;
+
+    public static perturbation.location.PerturbationLocation __L6858;
+
+    public static perturbation.location.PerturbationLocation __L6859;
+
+    public static perturbation.location.PerturbationLocation __L6860;
+
+    public static perturbation.location.PerturbationLocation __L6861;
+
+    public static perturbation.location.PerturbationLocation __L6862;
+
+    public static perturbation.location.PerturbationLocation __L6863;
+
+    public static perturbation.location.PerturbationLocation __L6864;
+
+    public static perturbation.location.PerturbationLocation __L6865;
+
+    public static perturbation.location.PerturbationLocation __L6866;
+
+    public static perturbation.location.PerturbationLocation __L6867;
+
+    public static perturbation.location.PerturbationLocation __L6868;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6820 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:78)", 6820, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6821 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:81)", 6821, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6822 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:83)", 6822, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6823 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:84)", 6823, "Boolean");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6824 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:84)", 6824, "Boolean");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6825 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:86)", 6825, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6826 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:86)", 6826, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6827 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:87)", 6827, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6828 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:91)", 6828, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6829 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:92)", 6829, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6830 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:94)", 6830, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6831 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:96)", 6831, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6832 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:115)", 6832, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6833 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:118)", 6833, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6834 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:121)", 6834, "Boolean");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6835 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:124)", 6835, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6836 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:125)", 6836, "Boolean");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6837 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:125)", 6837, "Boolean");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6838 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:127)", 6838, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6839 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:127)", 6839, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6840 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:128)", 6840, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6841 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:132)", 6841, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6842 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:133)", 6842, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6843 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:135)", 6843, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6844 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:137)", 6844, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6845 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:155)", 6845, "Boolean");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6846 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:167)", 6846, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6847 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:182)", 6847, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6848 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:183)", 6848, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6849 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:184)", 6849, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6850 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:185)", 6850, "Boolean");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6851 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:186)", 6851, "Boolean");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6852 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:186)", 6852, "Boolean");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6853 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:188)", 6853, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6854 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:188)", 6854, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6855 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:188)", 6855, "Boolean");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6856 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:189)", 6856, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6857 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:190)", 6857, "Boolean");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6858 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:192)", 6858, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6859 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:193)", 6859, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6860 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:194)", 6860, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6861 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:194)", 6861, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6862 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:194)", 6862, "Boolean");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6863 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:195)", 6863, "Boolean");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6864 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:198)", 6864, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6865 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:199)", 6865, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6866 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:199)", 6866, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6867 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:199)", 6867, "Numerical");
+        org.broadleafcommerce.common.util.UpdateExecutor.__L6868 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UpdateExecutor.java:200)", 6868, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.UpdateExecutor.initPerturbationLocation0();
+    }
 }
+

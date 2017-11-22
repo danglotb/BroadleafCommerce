@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,41 +17,23 @@
  */
 package org.broadleafcommerce.common.web;
 
-import org.springframework.ui.ModelMap;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.context.request.WebRequestInterceptor;
 
-import javax.annotation.Resource;
+public class BroadleafRequestInterceptor implements org.springframework.web.context.request.WebRequestInterceptor {
+    @javax.annotation.Resource(name = "blRequestProcessor")
+    protected org.broadleafcommerce.common.web.BroadleafRequestProcessor requestProcessor;
 
-
-/**
- * <p>Interceptor responsible for setting up the BroadleafRequestContext for the life of the request. This interceptor
- * should be the very first one in the list, as other interceptors might also use {@link BroadleafRequestContext}.</p>
- * 
- * <p>Note that in Servlet applications you should be using the {@link BroadleafRequestFilter}.</p>
- * 
- * @author Phillip Verheyden
- * @see {@link BroadleafRequestProcessor}
- * @see {@link BroadleafRequestContext}
- */
-public class BroadleafRequestInterceptor implements WebRequestInterceptor {
-
-    @Resource(name = "blRequestProcessor")
-    protected BroadleafRequestProcessor requestProcessor;
-
-    @Override
-    public void preHandle(WebRequest request) throws Exception {
+    @java.lang.Override
+    public void preHandle(org.springframework.web.context.request.WebRequest request) throws java.lang.Exception {
         requestProcessor.process(request);
     }
 
-    @Override
-    public void postHandle(WebRequest request, ModelMap model) throws Exception {
-        //unimplemented
+    @java.lang.Override
+    public void postHandle(org.springframework.web.context.request.WebRequest request, org.springframework.ui.ModelMap model) throws java.lang.Exception {
     }
 
-    @Override
-    public void afterCompletion(WebRequest request, Exception ex) throws Exception {
+    @java.lang.Override
+    public void afterCompletion(org.springframework.web.context.request.WebRequest request, java.lang.Exception ex) throws java.lang.Exception {
         requestProcessor.postProcess(request);
     }
-
 }
+

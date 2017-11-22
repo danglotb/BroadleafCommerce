@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,57 +17,43 @@
  */
 package org.broadleafcommerce.common.sandbox.dao;
 
-import org.broadleafcommerce.common.sandbox.domain.SandBox;
-import org.broadleafcommerce.common.sandbox.domain.SandBoxType;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public interface SandBoxDao {
+    public org.broadleafcommerce.common.sandbox.domain.SandBox retrieve(java.lang.Long id);
 
-    public SandBox retrieve(Long id);
-    
-    public List<SandBox> retrieveAllSandBoxes();
+    public java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> retrieveAllSandBoxes();
 
-    public List<SandBox> retrieveSandBoxesByType(SandBoxType sandboxType);
+    public java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> retrieveSandBoxesByType(org.broadleafcommerce.common.sandbox.domain.SandBoxType sandboxType);
 
-    public List<SandBox> retrieveSandBoxesForAuthor(Long authorId);
+    public java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> retrieveSandBoxesForAuthor(java.lang.Long authorId);
 
-    public SandBox retrieveUserSandBoxForParent(Long authorId, Long parentSandBoxId);
+    public org.broadleafcommerce.common.sandbox.domain.SandBox retrieveUserSandBoxForParent(java.lang.Long authorId, java.lang.Long parentSandBoxId);
 
-    public SandBox retrieveSandBoxManagementById(Long sandBoxId);
+    public org.broadleafcommerce.common.sandbox.domain.SandBox retrieveSandBoxManagementById(java.lang.Long sandBoxId);
 
-    public SandBox retrieveNamedSandBox(SandBoxType sandboxType, String sandboxName);
+    public org.broadleafcommerce.common.sandbox.domain.SandBox retrieveNamedSandBox(org.broadleafcommerce.common.sandbox.domain.SandBoxType sandboxType, java.lang.String sandboxName);
 
-    public Map<Long, String> retrieveAuthorNamesForSandBoxes(Set<Long> sandBoxIds);
+    public java.util.Map<java.lang.Long, java.lang.String> retrieveAuthorNamesForSandBoxes(java.util.Set<java.lang.Long> sandBoxIds);
 
-    public Map<Long, String> retrieveSandboxNamesForSandBoxes(Set<Long> sandBoxIds);
+    public java.util.Map<java.lang.Long, java.lang.String> retrieveSandboxNamesForSandBoxes(java.util.Set<java.lang.Long> sandBoxIds);
 
-    List<SandBox> retrieveSandBoxesForAuthor(Long authorId, SandBoxType sandBoxType);
+    java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> retrieveSandBoxesForAuthor(java.lang.Long authorId, org.broadleafcommerce.common.sandbox.domain.SandBoxType sandBoxType);
 
-    public SandBox persist(SandBox entity);
+    public org.broadleafcommerce.common.sandbox.domain.SandBox persist(org.broadleafcommerce.common.sandbox.domain.SandBox entity);
 
-    public SandBox createSandBox(String sandBoxName, SandBoxType sandBoxType);
+    public org.broadleafcommerce.common.sandbox.domain.SandBox createSandBox(java.lang.String sandBoxName, org.broadleafcommerce.common.sandbox.domain.SandBoxType sandBoxType);
 
-    public SandBox createUserSandBox(Long authorId, SandBox approvalSandBox);
+    public org.broadleafcommerce.common.sandbox.domain.SandBox createUserSandBox(java.lang.Long authorId, org.broadleafcommerce.common.sandbox.domain.SandBox approvalSandBox);
 
-    public SandBox createDefaultSandBox();
+    public org.broadleafcommerce.common.sandbox.domain.SandBox createDefaultSandBox();
 
-    /**
-     * @deprecated Not used in BLC.   In a Multi-site context, may return results outside of a given tenant.
-     * Reads all SandBoxes that are of type {@link SandBoxType.USER} and belong to the given
-     * user.
-     * 
-     * @param authorId
-     * @return a list of SandBox belonging to the user
-     */
-    @Deprecated
-    List<SandBox> retrieveAllUserSandBoxes(Long authorId);
+    @java.lang.Deprecated
+    java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> retrieveAllUserSandBoxes(java.lang.Long authorId);
 
-    SandBox merge(SandBox userSandBox);
+    org.broadleafcommerce.common.sandbox.domain.SandBox merge(org.broadleafcommerce.common.sandbox.domain.SandBox userSandBox);
 
-    List<SandBox> retrieveChildSandBoxesByParentId(Long parentSandBoxId);
+    java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> retrieveChildSandBoxesByParentId(java.lang.Long parentSandBoxId);
 
-    SandBox retrieveNamedSandBox(SandBoxType sandBoxType, String sandboxName, Long authorId);
+    org.broadleafcommerce.common.sandbox.domain.SandBox retrieveNamedSandBox(org.broadleafcommerce.common.sandbox.domain.SandBoxType sandBoxType, java.lang.String sandboxName, java.lang.Long authorId);
 }
+

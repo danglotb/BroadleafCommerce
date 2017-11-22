@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,23 +17,18 @@
  */
 package org.broadleafcommerce.common.config.service;
 
-import org.broadleafcommerce.common.config.domain.ModuleConfiguration;
-import org.broadleafcommerce.common.config.service.type.ModuleConfigurationType;
-
-import java.util.List;
 
 public interface ModuleConfigurationService {
+    public org.broadleafcommerce.common.config.domain.ModuleConfiguration findById(java.lang.Long id);
 
-    public ModuleConfiguration findById(Long id);
+    public org.broadleafcommerce.common.config.domain.ModuleConfiguration save(org.broadleafcommerce.common.config.domain.ModuleConfiguration config);
 
-    public ModuleConfiguration save(ModuleConfiguration config);
+    public void delete(org.broadleafcommerce.common.config.domain.ModuleConfiguration config);
 
-    public void delete(ModuleConfiguration config);
+    public java.util.List<org.broadleafcommerce.common.config.domain.ModuleConfiguration> findActiveConfigurationsByType(org.broadleafcommerce.common.config.service.type.ModuleConfigurationType type);
 
-    public List<ModuleConfiguration> findActiveConfigurationsByType(ModuleConfigurationType type);
+    public java.util.List<org.broadleafcommerce.common.config.domain.ModuleConfiguration> findAllConfigurationByType(org.broadleafcommerce.common.config.service.type.ModuleConfigurationType type);
 
-    public List<ModuleConfiguration> findAllConfigurationByType(ModuleConfigurationType type);
-
-    public List<ModuleConfiguration> findByType(Class<? extends ModuleConfiguration> type);
-
+    public java.util.List<org.broadleafcommerce.common.config.domain.ModuleConfiguration> findByType(java.lang.Class<? extends org.broadleafcommerce.common.config.domain.ModuleConfiguration> type);
 }
+

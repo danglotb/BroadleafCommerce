@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,39 +17,13 @@
  */
 package org.broadleafcommerce.common.web;
 
-import org.broadleafcommerce.common.sandbox.domain.SandBox;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.springframework.web.context.request.WebRequest;
 
-import javax.servlet.http.HttpServletRequest;
+public interface BroadleafSandBoxResolver {
+    public static java.lang.String SANDBOX_ID_VAR = "blSandboxId";
 
-/**
- * Responsible for determining the SandBox to use for the current request. 
- * SandBox's are used to store a user's changes to products, content-items, etc. 
- * until they are ready to be pushed to production.  
- * 
- * If a request is being served with a SandBox parameter, it indicates that the user
- * wants to see the site as if their changes were applied.
- *
- * @author bpolster
- */
-public interface BroadleafSandBoxResolver  {
+    @java.lang.Deprecated
+    public org.broadleafcommerce.common.sandbox.domain.SandBox resolveSandBox(javax.servlet.http.HttpServletRequest request, org.broadleafcommerce.common.site.domain.Site site);
 
-    public static String SANDBOX_ID_VAR = "blSandboxId";
-
-    /**
-     * @deprecated use {@link #resolveSandBox(WebRequest, Site)} instead
-     */
-    @Deprecated
-    public SandBox resolveSandBox(HttpServletRequest request, Site site);
-
-    /**
-     * Resolve the sandbox for the given site and request
-     * 
-     * @param request
-     * @param site
-     * @return the sandbox for the current request
-     */
-    public SandBox resolveSandBox(WebRequest request, Site site);
-
+    public org.broadleafcommerce.common.sandbox.domain.SandBox resolveSandBox(org.springframework.web.context.request.WebRequest request, org.broadleafcommerce.common.site.domain.Site site);
 }
+

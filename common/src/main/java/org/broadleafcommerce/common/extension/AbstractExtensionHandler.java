@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -18,39 +18,46 @@
 package org.broadleafcommerce.common.extension;
 
 
-
-/**
- * Base {@link ExtensionHandler} class that provide basic extension handler properties including
- * priority (which drives the execution order of handlers) and enabled (which if false informs the
- * manager to skip this handler).
- * 
- * @author bpolster
- */
-public abstract class AbstractExtensionHandler implements ExtensionHandler {
-
+public abstract class AbstractExtensionHandler implements org.broadleafcommerce.common.extension.ExtensionHandler {
     protected int priority;
+
     protected boolean enabled = true;
 
-    /**
-     * Determines the priority of this extension handler.
-     * @return
-     */
-    @Override
+    @java.lang.Override
     public int getPriority() {
-        return priority;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extension.AbstractExtensionHandler.__L2453, priority);
     }
 
     public void setPriority(int priority) {
-        this.priority = priority;
+        this.priority = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extension.AbstractExtensionHandler.__L2454, priority);
     }
 
-    @Override
+    @java.lang.Override
     public boolean isEnabled() {
-        return enabled;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extension.AbstractExtensionHandler.__L2455, enabled);
     }
 
     public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+        this.enabled = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extension.AbstractExtensionHandler.__L2456, enabled);
     }
-    
+
+    public static perturbation.location.PerturbationLocation __L2453;
+
+    public static perturbation.location.PerturbationLocation __L2454;
+
+    public static perturbation.location.PerturbationLocation __L2455;
+
+    public static perturbation.location.PerturbationLocation __L2456;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.extension.AbstractExtensionHandler.__L2453 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extension/AbstractExtensionHandler.java:40)", 2453, "Numerical");
+        org.broadleafcommerce.common.extension.AbstractExtensionHandler.__L2454 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extension/AbstractExtensionHandler.java:44)", 2454, "Numerical");
+        org.broadleafcommerce.common.extension.AbstractExtensionHandler.__L2455 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extension/AbstractExtensionHandler.java:49)", 2455, "Boolean");
+        org.broadleafcommerce.common.extension.AbstractExtensionHandler.__L2456 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extension/AbstractExtensionHandler.java:53)", 2456, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.extension.AbstractExtensionHandler.initPerturbationLocation0();
+    }
 }
+

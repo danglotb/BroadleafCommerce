@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,50 +17,41 @@
  */
 package org.broadleafcommerce.common.entity.service;
 
-import org.broadleafcommerce.common.entity.dto.EntityInformationDto;
-import org.broadleafcommerce.common.extension.AbstractExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.site.domain.Catalog;
-import org.broadleafcommerce.common.site.domain.Site;
 
-import java.util.List;
-import java.util.Set;
-
-public class AbstractEntityInformationServiceExtensionHandler extends AbstractExtensionHandler
-        implements EntityInformationServiceExtensionHandler {
-
-    @Override
-    public ExtensionResultStatusType updateEntityInformationDto(EntityInformationDto dto, Object entityInstance) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+public class AbstractEntityInformationServiceExtensionHandler extends org.broadleafcommerce.common.extension.AbstractExtensionHandler implements org.broadleafcommerce.common.entity.service.EntityInformationServiceExtensionHandler {
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType updateEntityInformationDto(org.broadleafcommerce.common.entity.dto.EntityInformationDto dto, java.lang.Object entityInstance) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 
-    @Override
-    public ExtensionResultStatusType getBaseProfileIdForSite(Site site, ExtensionResultHolder<Long> erh) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType getBaseProfileIdForSite(org.broadleafcommerce.common.site.domain.Site site, org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.Long> erh) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 
-    @Override
-    public ExtensionResultStatusType getChildSiteIdsForProfile(Site profile, ExtensionResultHolder<Set<Long>> erh) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType getChildSiteIdsForProfile(org.broadleafcommerce.common.site.domain.Site profile, org.broadleafcommerce.common.extension.ExtensionResultHolder<java.util.Set<java.lang.Long>> erh) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 
-    @Override
-    public ExtensionResultStatusType getParentSiteForProfile(Site profile, ExtensionResultHolder<Site> erh) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType getParentSiteForProfile(org.broadleafcommerce.common.site.domain.Site profile, org.broadleafcommerce.common.extension.ExtensionResultHolder<org.broadleafcommerce.common.site.domain.Site> erh) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 
-    @Override
-    public ExtensionResultStatusType getOkayToUseSiteDiscriminator(Object o, ExtensionResultHolder<Boolean> erh) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType getOkayToUseSiteDiscriminator(java.lang.Object o, org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.Boolean> erh) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 
-    @Override public ExtensionResultStatusType getDefaultCatalogIdForSite(Site site, ExtensionResultHolder<Long> erh) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType getDefaultCatalogIdForSite(org.broadleafcommerce.common.site.domain.Site site, org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.Long> erh) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 
-    @Override
-    public ExtensionResultStatusType findAllCatalogs(ExtensionResultHolder<List<Catalog>> erh) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType findAllCatalogs(org.broadleafcommerce.common.extension.ExtensionResultHolder<java.util.List<org.broadleafcommerce.common.site.domain.Catalog>> erh) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 }
+

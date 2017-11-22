@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,34 +17,28 @@
  */
 package org.broadleafcommerce.common.extensibility.jpa.copy;
 
-/**
- * Constants for tagging an entity class to receive byte code transformation upon
- * being loaded by the classloader
- *
- * @author Jeff Fischer
- */
-public class DirectCopyTransformTypes {
 
-    //Class should receive sandbox related fields
-    public static final String SANDBOX = "sandbox";
-    //Class should receive fields describing the site to which the entity belongs
-    public static final String MULTITENANT_SITE = "multiTenantSite";
-    //Class should receive fields describing the catalog to which the entity belongs
-    public static final String MULTITENANT_CATALOG = "multiTenantCatalog";
-    //Class should receive the Discriminatable marker interface alone
-    public static final String MULTITENANT_SITEMARKER = "multiTenantSiteMarker";
-    //Class should receive fields describing whether or not the entity was created during a site preview
-    public static final String PREVIEW = "preview";
-    //Class should receive fields describing site context information for the permission
-    public static final String MULTITENANT_ADMINPERMISSION = "multiTenantAdminPermission";
-    //Class should receive fields describing site context information for the role
-    public static final String MULTITENANT_ADMINROLE = "multiTenantAdminRole";
-    //Class should receive fields describing site context information for the user
-    public static final String MULTITENANT_ADMINUSER = "multiTenantAdminUser";
-    //Class should receive fields describing ARCHIVE STATUS
-    public static final String ARCHIVE_ONLY = "archiveOnly";
-    //Class should receive fields describing Admin Auditable
-    public static final String AUDITABLE_ONLY = "auditableOnly";
-    //Class should receive addition status related fields (these are included automatically with SANDBOX marked entities)
-    public static final String MULTI_PHASE_ADD = "multiPhaseAdd";
+public class DirectCopyTransformTypes {
+    public static final java.lang.String SANDBOX = "sandbox";
+
+    public static final java.lang.String MULTITENANT_SITE = "multiTenantSite";
+
+    public static final java.lang.String MULTITENANT_CATALOG = "multiTenantCatalog";
+
+    public static final java.lang.String MULTITENANT_SITEMARKER = "multiTenantSiteMarker";
+
+    public static final java.lang.String PREVIEW = "preview";
+
+    public static final java.lang.String MULTITENANT_ADMINPERMISSION = "multiTenantAdminPermission";
+
+    public static final java.lang.String MULTITENANT_ADMINROLE = "multiTenantAdminRole";
+
+    public static final java.lang.String MULTITENANT_ADMINUSER = "multiTenantAdminUser";
+
+    public static final java.lang.String ARCHIVE_ONLY = "archiveOnly";
+
+    public static final java.lang.String AUDITABLE_ONLY = "auditableOnly";
+
+    public static final java.lang.String MULTI_PHASE_ADD = "multiPhaseAdd";
 }
+

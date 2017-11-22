@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -18,74 +18,61 @@
 package org.broadleafcommerce.common.file.service;
 
 
-
-/**
- * 
- * @author bpolster
- * @author Phillip Verheyden (phillipuniverse)
- */
 public class BroadleafFileUtils {
+    @java.lang.Deprecated
+    public static java.lang.String buildFilePath(java.lang.String directory, java.lang.String fileName) {
+        return org.broadleafcommerce.common.file.service.BroadleafFileUtils.appendUnixPaths(directory, fileName);
+    }
 
-    /**
-     * @deprecated this is now just a pass-through to {@link #appendUnixPaths(String, String)}. The original method was a
-     * misnomer.
-     */
-    @Deprecated
-    public static String buildFilePath(String directory, String fileName) {
-        return appendUnixPaths(directory, fileName);
+    @java.lang.Deprecated
+    public static java.lang.String removeLeadingSlash(java.lang.String fileName) {
+        return org.broadleafcommerce.common.file.service.BroadleafFileUtils.removeLeadingUnixSlash(fileName);
     }
-    
-    /**
-     * @deprecated this is now just a pass-through to {@link #removeLeadingUnixSlash(String, String)}. The original method was a
-     * misnomer.
-     */
-    @Deprecated
-    public static String removeLeadingSlash(String fileName) {
-        return removeLeadingUnixSlash(fileName);
+
+    @java.lang.Deprecated
+    public static java.lang.String addLeadingSlash(java.lang.String fileName) {
+        return org.broadleafcommerce.common.file.service.BroadleafFileUtils.addLeadingUnixSlash(fileName);
     }
-    
-    /**
-     * @deprecated this is now just a pass-through to {@link #addLeadingUnixSlash(String, String)}. The original method was a
-     * misnomer.
-     */
-    @Deprecated
-    public static String addLeadingSlash(String fileName) {
-        return addLeadingUnixSlash(fileName);
-    }
-    
-    /**
-     * Builds a file path that ensures the directory and filename are separated by a single separator. This is only suitable
-     * for Unix and URL paths. File paths need special care for the differences between systems (/ on Unix and \ on Windows)
-     * @param directory
-     * @param fileName
-     */
-    public static String appendUnixPaths(String directory, String fileName) {
-        if (directory.endsWith("/")) {
-            return directory + removeLeadingUnixSlash(fileName);
-        } else {
-            return directory + addLeadingUnixSlash(fileName);
+
+    public static java.lang.String appendUnixPaths(java.lang.String directory, java.lang.String fileName) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.file.service.BroadleafFileUtils.__L2617, directory.endsWith("/"))) {
+            return directory + (org.broadleafcommerce.common.file.service.BroadleafFileUtils.removeLeadingUnixSlash(fileName));
+        }else {
+            return directory + (org.broadleafcommerce.common.file.service.BroadleafFileUtils.addLeadingUnixSlash(fileName));
         }
     }
 
-    /**
-     * Removes the leading slash if found on the passed in filename.
-     * @param fileName
-     */
-    public static String removeLeadingUnixSlash(String fileName) {
-        if (fileName.startsWith("/")) {
-            return fileName.substring(1);
+    public static java.lang.String removeLeadingUnixSlash(java.lang.String fileName) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.file.service.BroadleafFileUtils.__L2618, fileName.startsWith("/"))) {
+            return fileName.substring(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.file.service.BroadleafFileUtils.__L2619, 1));
         }
         return fileName;
     }
 
-    /**
-     * Adds the leading slash if needed on the beginning of a filename.
-     * @param fileName
-     */
-    public static String addLeadingUnixSlash(String fileName) {
-        if (fileName.startsWith("/")) {
+    public static java.lang.String addLeadingUnixSlash(java.lang.String fileName) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.file.service.BroadleafFileUtils.__L2620, fileName.startsWith("/"))) {
             return fileName;
         }
         return "/" + fileName;
     }
+
+    public static perturbation.location.PerturbationLocation __L2617;
+
+    public static perturbation.location.PerturbationLocation __L2618;
+
+    public static perturbation.location.PerturbationLocation __L2619;
+
+    public static perturbation.location.PerturbationLocation __L2620;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.file.service.BroadleafFileUtils.__L2617 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/file/service/BroadleafFileUtils.java:63)", 2617, "Boolean");
+        org.broadleafcommerce.common.file.service.BroadleafFileUtils.__L2618 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/file/service/BroadleafFileUtils.java:75)", 2618, "Boolean");
+        org.broadleafcommerce.common.file.service.BroadleafFileUtils.__L2619 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/file/service/BroadleafFileUtils.java:76)", 2619, "Numerical");
+        org.broadleafcommerce.common.file.service.BroadleafFileUtils.__L2620 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/file/service/BroadleafFileUtils.java:86)", 2620, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.file.service.BroadleafFileUtils.initPerturbationLocation0();
+    }
 }
+

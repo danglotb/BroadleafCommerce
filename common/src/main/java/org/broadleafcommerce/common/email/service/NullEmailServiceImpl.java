@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,32 +17,37 @@
  */
 package org.broadleafcommerce.common.email.service;
 
-import org.broadleafcommerce.common.email.domain.EmailTarget;
-import org.broadleafcommerce.common.email.service.info.EmailInfo;
 
-import java.util.Map;
-
-/**
- * This null implementation class can be used during development to work around
- * the need to have a working SMTP service to route emails through.
- * 
- * @author aazzolini
- */
-public class NullEmailServiceImpl implements EmailService {
-
-    @Override
-    public boolean sendTemplateEmail(String emailAddress, EmailInfo emailInfo, Map<String, Object> props) {
-        return true;
+public class NullEmailServiceImpl implements org.broadleafcommerce.common.email.service.EmailService {
+    @java.lang.Override
+    public boolean sendTemplateEmail(java.lang.String emailAddress, org.broadleafcommerce.common.email.service.info.EmailInfo emailInfo, java.util.Map<java.lang.String, java.lang.Object> props) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.email.service.NullEmailServiceImpl.__L1216, true);
     }
 
-    @Override
-    public boolean sendTemplateEmail(EmailTarget emailTarget, EmailInfo emailInfo, Map<String, Object> props) {
-        return true;
+    @java.lang.Override
+    public boolean sendTemplateEmail(org.broadleafcommerce.common.email.domain.EmailTarget emailTarget, org.broadleafcommerce.common.email.service.info.EmailInfo emailInfo, java.util.Map<java.lang.String, java.lang.Object> props) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.email.service.NullEmailServiceImpl.__L1217, true);
     }
 
-    @Override
-    public boolean sendBasicEmail(EmailInfo emailInfo, EmailTarget emailTarget, Map<String, Object> props) {
-        return true;
+    @java.lang.Override
+    public boolean sendBasicEmail(org.broadleafcommerce.common.email.service.info.EmailInfo emailInfo, org.broadleafcommerce.common.email.domain.EmailTarget emailTarget, java.util.Map<java.lang.String, java.lang.Object> props) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.email.service.NullEmailServiceImpl.__L1218, true);
     }
 
+    public static perturbation.location.PerturbationLocation __L1216;
+
+    public static perturbation.location.PerturbationLocation __L1217;
+
+    public static perturbation.location.PerturbationLocation __L1218;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.email.service.NullEmailServiceImpl.__L1216 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/NullEmailServiceImpl.java:35)", 1216, "Boolean");
+        org.broadleafcommerce.common.email.service.NullEmailServiceImpl.__L1217 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/NullEmailServiceImpl.java:40)", 1217, "Boolean");
+        org.broadleafcommerce.common.email.service.NullEmailServiceImpl.__L1218 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/NullEmailServiceImpl.java:45)", 1218, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.email.service.NullEmailServiceImpl.initPerturbationLocation0();
+    }
 }
+

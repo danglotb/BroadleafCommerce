@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,70 +17,88 @@
  */
 package org.broadleafcommerce.common.config;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.BeanFactoryAware;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 
-/**
- * @deprecated Instead of using anything around the -Druntime-environment values, you should be using Spring profiles
- * and properties activated with that via {@link BroadleafEnvironmentConfiguringApplicationListener}.
- */
-@Deprecated
-public class RuntimeEnvironmentPropertiesManager implements BeanFactoryAware {
+@java.lang.Deprecated
+public class RuntimeEnvironmentPropertiesManager implements org.springframework.beans.factory.BeanFactoryAware {
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.config.RuntimeEnvironmentPropertiesManager.class);
 
-    private static final Log LOG = LogFactory.getLog(RuntimeEnvironmentPropertiesManager.class);
+    protected org.springframework.beans.factory.config.ConfigurableBeanFactory beanFactory;
 
-    protected ConfigurableBeanFactory beanFactory;
+    protected java.lang.String prefix;
 
-    protected String prefix;
-
-    public String getPrefix() {
+    public java.lang.String getPrefix() {
         return prefix;
     }
 
-    public String setPrefix(String prefix) {
+    public java.lang.String setPrefix(java.lang.String prefix) {
         return this.prefix = prefix;
     }
 
-    public String getProperty(String key, String suffix) {
-        if(key==null) {
+    public java.lang.String getProperty(java.lang.String key, java.lang.String suffix) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.config.RuntimeEnvironmentPropertiesManager.__L549, (key == null))) {
             return null;
         }
-        String name = prefix + "." + key + "." + suffix;
-        if (prefix == null) {
-            name = key + "." + suffix;
+        java.lang.String name = ((((prefix) + ".") + key) + ".") + suffix;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.config.RuntimeEnvironmentPropertiesManager.__L550, ((prefix) == null))) {
+            name = (key + ".") + suffix;
         }
-        String rv = beanFactory.resolveEmbeddedValue("${" + name + "}");
-       
-        if (rv == null ||rv.equals("${" + name + "}")) {
-            LOG.warn("property ${" + name + "} not found, Reverting to property without suffix"+suffix);
+        java.lang.String rv = beanFactory.resolveEmbeddedValue((("${" + name) + "}"));
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.config.RuntimeEnvironmentPropertiesManager.__L553, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.config.RuntimeEnvironmentPropertiesManager.__L551, (rv == null))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.config.RuntimeEnvironmentPropertiesManager.__L552, rv.equals((("${" + name) + "}"))))))) {
+            org.broadleafcommerce.common.config.RuntimeEnvironmentPropertiesManager.LOG.warn(((("property ${" + name) + "} not found, Reverting to property without suffix") + suffix));
             rv = getProperty(key);
         }
         return rv;
-
     }
 
-    public String getProperty(String key) {
-        if(key==null) {
+    public java.lang.String getProperty(java.lang.String key) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.config.RuntimeEnvironmentPropertiesManager.__L554, (key == null))) {
             return null;
         }
-        String name = prefix + "." + key;
-        if (prefix == null) {
+        java.lang.String name = ((prefix) + ".") + key;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.config.RuntimeEnvironmentPropertiesManager.__L555, ((prefix) == null))) {
             name = key;
         }
-        String rv = beanFactory.resolveEmbeddedValue("${" + name + "}");
-        if(rv.equals("${" + name + "}")) {
+        java.lang.String rv = beanFactory.resolveEmbeddedValue((("${" + name) + "}"));
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.config.RuntimeEnvironmentPropertiesManager.__L556, rv.equals((("${" + name) + "}")))) {
             return null;
         }
         return rv;
     }
 
-    @Override
-    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-        this.beanFactory = (ConfigurableBeanFactory) beanFactory;
+    @java.lang.Override
+    public void setBeanFactory(org.springframework.beans.factory.BeanFactory beanFactory) throws org.springframework.beans.BeansException {
+        this.beanFactory = ((org.springframework.beans.factory.config.ConfigurableBeanFactory) (beanFactory));
     }
 
+    public static perturbation.location.PerturbationLocation __L549;
+
+    public static perturbation.location.PerturbationLocation __L550;
+
+    public static perturbation.location.PerturbationLocation __L551;
+
+    public static perturbation.location.PerturbationLocation __L552;
+
+    public static perturbation.location.PerturbationLocation __L553;
+
+    public static perturbation.location.PerturbationLocation __L554;
+
+    public static perturbation.location.PerturbationLocation __L555;
+
+    public static perturbation.location.PerturbationLocation __L556;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.config.RuntimeEnvironmentPropertiesManager.__L549 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/RuntimeEnvironmentPropertiesManager.java:49)", 549, "Boolean");
+        org.broadleafcommerce.common.config.RuntimeEnvironmentPropertiesManager.__L550 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/RuntimeEnvironmentPropertiesManager.java:53)", 550, "Boolean");
+        org.broadleafcommerce.common.config.RuntimeEnvironmentPropertiesManager.__L551 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/RuntimeEnvironmentPropertiesManager.java:58)", 551, "Boolean");
+        org.broadleafcommerce.common.config.RuntimeEnvironmentPropertiesManager.__L552 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/RuntimeEnvironmentPropertiesManager.java:58)", 552, "Boolean");
+        org.broadleafcommerce.common.config.RuntimeEnvironmentPropertiesManager.__L553 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/RuntimeEnvironmentPropertiesManager.java:58)", 553, "Boolean");
+        org.broadleafcommerce.common.config.RuntimeEnvironmentPropertiesManager.__L554 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/RuntimeEnvironmentPropertiesManager.java:67)", 554, "Boolean");
+        org.broadleafcommerce.common.config.RuntimeEnvironmentPropertiesManager.__L555 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/RuntimeEnvironmentPropertiesManager.java:71)", 555, "Boolean");
+        org.broadleafcommerce.common.config.RuntimeEnvironmentPropertiesManager.__L556 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/RuntimeEnvironmentPropertiesManager.java:75)", 556, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.config.RuntimeEnvironmentPropertiesManager.initPerturbationLocation0();
+    }
 }
+

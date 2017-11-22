@@ -17,55 +17,52 @@
  */
 package org.broadleafcommerce.common.web.filter;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.util.BLCRequestUtils;
-import org.springframework.core.Ordered;
-import org.springframework.web.context.request.ServletWebRequest;
-import org.springframework.web.filter.GenericFilterBean;
 
-import java.io.IOException;
+public abstract class AbstractIgnorableFilter extends org.springframework.web.filter.GenericFilterBean implements org.springframework.core.Ordered {
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.web.filter.AbstractIgnorableFilter.class);
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-/**
- * Provides common logic for {@link GenericFilterBean} implementations to allow for ignoring behavior based on the presence (or absence)
- * of a request param. Sublclasses should implement {@link #doFilterUnlessIgnored(ServletRequest, ServletResponse, FilterChain)}, knowing
- * that this method will faithfully be called unless the logic here determines the filter should pass the request through without
- * processing.
- *
- * @see SecurityBasedIgnoreFilter
- * @author Jeff Fischer
- */
-public abstract class AbstractIgnorableFilter extends GenericFilterBean implements Ordered {
-
-    private static final Log LOG = LogFactory.getLog(AbstractIgnorableFilter.class);
-
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        if (isIgnored((HttpServletRequest) request, (HttpServletResponse) response)) {
-            if (LOG.isTraceEnabled()) {
-                LOG.trace(String.format("%s filtering is disabled for %s", this.getClass().getName(), ((HttpServletRequest) request).getRequestURI()));
+    @java.lang.Override
+    public void doFilter(javax.servlet.ServletRequest request, javax.servlet.ServletResponse response, javax.servlet.FilterChain chain) throws java.io.IOException, javax.servlet.ServletException {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.filter.AbstractIgnorableFilter.__L7219, isIgnored(((javax.servlet.http.HttpServletRequest) (request)), ((javax.servlet.http.HttpServletResponse) (response))))) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.filter.AbstractIgnorableFilter.__L7220, org.broadleafcommerce.common.web.filter.AbstractIgnorableFilter.LOG.isTraceEnabled())) {
+                org.broadleafcommerce.common.web.filter.AbstractIgnorableFilter.LOG.trace(java.lang.String.format("%s filtering is disabled for %s", this.getClass().getName(), ((javax.servlet.http.HttpServletRequest) (request)).getRequestURI()));
             }
             chain.doFilter(request, response);
-        } else {
-            if (LOG.isTraceEnabled()) {
-                LOG.trace(String.format("%s filtering is enabled for %s", this.getClass().getName(), ((HttpServletRequest) request).getRequestURI()));
+        }else {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.filter.AbstractIgnorableFilter.__L7221, org.broadleafcommerce.common.web.filter.AbstractIgnorableFilter.LOG.isTraceEnabled())) {
+                org.broadleafcommerce.common.web.filter.AbstractIgnorableFilter.LOG.trace(java.lang.String.format("%s filtering is enabled for %s", this.getClass().getName(), ((javax.servlet.http.HttpServletRequest) (request)).getRequestURI()));
             }
             doFilterUnlessIgnored(request, response, chain);
         }
     }
 
-    protected boolean isIgnored(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        boolean isUriSecurityIgnored = BLCRequestUtils.isFilteringIgnoredForUri(new ServletWebRequest(httpServletRequest, httpServletResponse));
-        return isUriSecurityIgnored;
+    protected boolean isIgnored(javax.servlet.http.HttpServletRequest httpServletRequest, javax.servlet.http.HttpServletResponse httpServletResponse) {
+        boolean isUriSecurityIgnored = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.filter.AbstractIgnorableFilter.__L7222, org.broadleafcommerce.common.util.BLCRequestUtils.isFilteringIgnoredForUri(new org.springframework.web.context.request.ServletWebRequest(httpServletRequest, httpServletResponse)));
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.filter.AbstractIgnorableFilter.__L7223, isUriSecurityIgnored);
     }
 
-    public abstract void doFilterUnlessIgnored(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException;
+    public abstract void doFilterUnlessIgnored(javax.servlet.ServletRequest request, javax.servlet.ServletResponse response, javax.servlet.FilterChain chain) throws java.io.IOException, javax.servlet.ServletException;
 
+    public static perturbation.location.PerturbationLocation __L7219;
+
+    public static perturbation.location.PerturbationLocation __L7220;
+
+    public static perturbation.location.PerturbationLocation __L7221;
+
+    public static perturbation.location.PerturbationLocation __L7222;
+
+    public static perturbation.location.PerturbationLocation __L7223;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.filter.AbstractIgnorableFilter.__L7219 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/filter/AbstractIgnorableFilter.java:51)", 7219, "Boolean");
+        org.broadleafcommerce.common.web.filter.AbstractIgnorableFilter.__L7220 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/filter/AbstractIgnorableFilter.java:52)", 7220, "Boolean");
+        org.broadleafcommerce.common.web.filter.AbstractIgnorableFilter.__L7221 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/filter/AbstractIgnorableFilter.java:57)", 7221, "Boolean");
+        org.broadleafcommerce.common.web.filter.AbstractIgnorableFilter.__L7222 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/filter/AbstractIgnorableFilter.java:65)", 7222, "Boolean");
+        org.broadleafcommerce.common.web.filter.AbstractIgnorableFilter.__L7223 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/filter/AbstractIgnorableFilter.java:66)", 7223, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.filter.AbstractIgnorableFilter.initPerturbationLocation0();
+    }
 }
+

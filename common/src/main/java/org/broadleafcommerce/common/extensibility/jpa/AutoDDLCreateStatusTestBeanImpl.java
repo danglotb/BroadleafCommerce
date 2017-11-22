@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,23 +17,16 @@
  */
 package org.broadleafcommerce.common.extensibility.jpa;
 
-import java.util.HashMap;
-import java.util.Map;
 
-/**
- * @see org.broadleafcommerce.common.extensibility.jpa.AutoDDLCreateStatusTestBean
- * @author Jeff Fischer
- */
-public class AutoDDLCreateStatusTestBeanImpl implements AutoDDLCreateStatusTestBean {
+public class AutoDDLCreateStatusTestBeanImpl implements org.broadleafcommerce.common.extensibility.jpa.AutoDDLCreateStatusTestBean {
+    protected java.util.Map<java.lang.String, java.lang.Boolean> startedWithCreate = new java.util.HashMap<java.lang.String, java.lang.Boolean>();
 
-    protected Map<String, Boolean> startedWithCreate = new HashMap<String, Boolean>();
-
-    public Boolean getStartedWithCreate(String pu) {
+    public java.lang.Boolean getStartedWithCreate(java.lang.String pu) {
         return startedWithCreate.get(pu);
     }
 
-    public void setStartedWithCreate(String pu, Boolean val) {
+    public void setStartedWithCreate(java.lang.String pu, java.lang.Boolean val) {
         this.startedWithCreate.put(pu, val);
     }
-
 }
+

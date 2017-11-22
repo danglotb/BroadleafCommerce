@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,42 +17,15 @@
  */
 package org.broadleafcommerce.common.web;
 
-import org.broadleafcommerce.common.exception.SiteNotFoundException;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.springframework.web.context.request.WebRequest;
 
-import javax.servlet.http.HttpServletRequest;
+public interface BroadleafSiteResolver {
+    public static final java.lang.String SELECTED_SITE_URL_PARAM = "selectedSite";
 
-/**
- * Responsible for returning the site used by Broadleaf Commerce for the current request.
- * For a single site installation, this will typically return null.
- *
- * @author bpolster
- */
-public interface BroadleafSiteResolver  {
+    @java.lang.Deprecated
+    public org.broadleafcommerce.common.site.domain.Site resolveSite(javax.servlet.http.HttpServletRequest request) throws org.broadleafcommerce.common.exception.SiteNotFoundException;
 
-    public static final String SELECTED_SITE_URL_PARAM = "selectedSite";
+    public org.broadleafcommerce.common.site.domain.Site resolveSite(org.springframework.web.context.request.WebRequest request) throws org.broadleafcommerce.common.exception.SiteNotFoundException;
 
-    /**
-     * 
-     * @deprecated Use {@link #resolveSite(WebRequest)} instead
-     */
-    @Deprecated
-    public Site resolveSite(HttpServletRequest request) throws SiteNotFoundException;
-
-    /**
-     * @see #resolveSite(WebRequest, boolean)
-     */
-    public Site resolveSite(WebRequest request) throws SiteNotFoundException;
-
-    /**
-     * Resolves a site for the given WebRequest. Implementations should throw a {@link SiteNotFoundException}
-     * when a site could not be resolved unless the allowNullSite parameter is set to true.
-     * 
-     * @param request
-     * @param allowNullSite
-     * @return the resolved {@link Site}
-     * @throws SiteNotFoundException
-     */
-    public Site resolveSite(final WebRequest request, final boolean allowNullSite) throws SiteNotFoundException;
+    public org.broadleafcommerce.common.site.domain.Site resolveSite(final org.springframework.web.context.request.WebRequest request, final boolean allowNullSite) throws org.broadleafcommerce.common.exception.SiteNotFoundException;
 }
+

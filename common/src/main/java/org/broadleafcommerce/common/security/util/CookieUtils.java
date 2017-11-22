@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,42 +17,18 @@
  */
 package org.broadleafcommerce.common.security.util;
 
-import org.owasp.esapi.ESAPI;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public interface CookieUtils {
-    String CUSTOMER_COOKIE_NAME = "customerId";
+    java.lang.String CUSTOMER_COOKIE_NAME = "customerId";
 
-    /**
-     * Checks <code>cookies.use.secure</code> System Property, which determines whether to use HTTPS cookie over
-     * HTTPS connection or HTTP only.
-     * 
-     * @return value of <code>cookies.use.secure</code>
-     */
-    Boolean shouldUseSecureCookieIfApplicable();
-    
-    String getCookieValue(HttpServletRequest request, String cookieName);
+    java.lang.Boolean shouldUseSecureCookieIfApplicable();
 
-    /**
-     *  Uses a cookie value of "CookieInvalidationPlaceholderValue" because the later call to 
-     *  {@link ESAPI#httpUtilities()#addHeader(HttpServletResponse, String, String)} 
-     *  fails if the value is <code>null</code> or an empty String. If an empty cookie value is passed, 
-     *  this is considered a request to remove the cookie and <code>maxAge</code> is set to 0 to force the removal.
-     *  In addition, calls to {@link ESAPI#httpUtilities()#killCookie(HttpServletRequest, HttpServletResponse, String)} 
-     *  have shown to be ineffective while this approach for removing cookies works.
-     *  
-     *  @param response
-     *  @param cookieName 
-     *  @param cookieValue 
-     *  @param path 
-     *  @param maxAge 
-     *  @param isSecure
-     */
-    void setCookieValue(HttpServletResponse response, String cookieName, String cookieValue, String path, Integer maxAge, Boolean isSecure);
+    java.lang.String getCookieValue(javax.servlet.http.HttpServletRequest request, java.lang.String cookieName);
 
-    void setCookieValue(HttpServletResponse response, String cookieName, String cookieValue);
+    void setCookieValue(javax.servlet.http.HttpServletResponse response, java.lang.String cookieName, java.lang.String cookieValue, java.lang.String path, java.lang.Integer maxAge, java.lang.Boolean isSecure);
 
-    void invalidateCookie(HttpServletResponse response, String cookieName);
+    void setCookieValue(javax.servlet.http.HttpServletResponse response, java.lang.String cookieName, java.lang.String cookieValue);
+
+    void invalidateCookie(javax.servlet.http.HttpServletResponse response, java.lang.String cookieName);
 }
+

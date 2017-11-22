@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,22 +17,16 @@
  */
 package org.broadleafcommerce.common.web.resource;
 
-import org.broadleafcommerce.common.extension.AbstractExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
 
-
-public class AbstractResourceRequestExtensionHandler extends AbstractExtensionHandler 
-        implements ResourceRequestExtensionHandler {
-
-    @Override
-    public ExtensionResultStatusType getModifiedResource(String path, ExtensionResultHolder erh) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+public class AbstractResourceRequestExtensionHandler extends org.broadleafcommerce.common.extension.AbstractExtensionHandler implements org.broadleafcommerce.common.web.resource.ResourceRequestExtensionHandler {
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType getModifiedResource(java.lang.String path, org.broadleafcommerce.common.extension.ExtensionResultHolder erh) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 
-    @Override
-    public ExtensionResultStatusType getOverrideResource(String path, ExtensionResultHolder erh) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType getOverrideResource(java.lang.String path, org.broadleafcommerce.common.extension.ExtensionResultHolder erh) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
-
 }
+

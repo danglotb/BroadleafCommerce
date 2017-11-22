@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,44 +17,37 @@
  */
 package org.broadleafcommerce.common.vendor.service.monitor.handler;
 
-import org.broadleafcommerce.common.email.domain.EmailTarget;
-import org.broadleafcommerce.common.email.service.EmailService;
-import org.broadleafcommerce.common.email.service.info.EmailInfo;
-import org.broadleafcommerce.common.vendor.service.monitor.StatusHandler;
-import org.broadleafcommerce.common.vendor.service.type.ServiceStatusType;
 
-import javax.annotation.Resource;
+public class EmailStatusHandler implements org.broadleafcommerce.common.vendor.service.monitor.StatusHandler {
+    @javax.annotation.Resource(name = "blEmailService")
+    protected org.broadleafcommerce.common.email.service.EmailService emailService;
 
-public class EmailStatusHandler implements StatusHandler {
+    protected org.broadleafcommerce.common.email.service.info.EmailInfo emailInfo;
 
-    @Resource(name="blEmailService")
-    protected EmailService emailService;
+    protected org.broadleafcommerce.common.email.domain.EmailTarget emailTarget;
 
-    protected EmailInfo emailInfo;
-    protected EmailTarget emailTarget;
-
-    public void handleStatus(String serviceName, ServiceStatusType status) {
-        String message = serviceName + " is reporting a status of " + status.getType();
-        EmailInfo copy = emailInfo.clone();
+    public void handleStatus(java.lang.String serviceName, org.broadleafcommerce.common.vendor.service.type.ServiceStatusType status) {
+        java.lang.String message = (serviceName + " is reporting a status of ") + (status.getType());
+        org.broadleafcommerce.common.email.service.info.EmailInfo copy = emailInfo.clone();
         copy.setMessageBody(message);
         copy.setSubject(message);
         emailService.sendBasicEmail(copy, emailTarget, null);
     }
 
-    public EmailInfo getEmailInfo() {
+    public org.broadleafcommerce.common.email.service.info.EmailInfo getEmailInfo() {
         return emailInfo;
     }
 
-    public void setEmailInfo(EmailInfo emailInfo) {
+    public void setEmailInfo(org.broadleafcommerce.common.email.service.info.EmailInfo emailInfo) {
         this.emailInfo = emailInfo;
     }
 
-    public EmailTarget getEmailTarget() {
+    public org.broadleafcommerce.common.email.domain.EmailTarget getEmailTarget() {
         return emailTarget;
     }
 
-    public void setEmailTarget(EmailTarget emailTarget) {
+    public void setEmailTarget(org.broadleafcommerce.common.email.domain.EmailTarget emailTarget) {
         this.emailTarget = emailTarget;
     }
-
 }
+

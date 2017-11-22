@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,16 +17,12 @@
  */
 package org.broadleafcommerce.common.vendor.service.monitor;
 
-import org.broadleafcommerce.common.vendor.service.type.ServiceStatusType;
-
-import java.io.Serializable;
 
 public interface ServiceStatusDetectable<T> {
+    public org.broadleafcommerce.common.vendor.service.type.ServiceStatusType getServiceStatus();
 
-    public ServiceStatusType getServiceStatus();
+    public java.lang.String getServiceName();
 
-    public String getServiceName();
-    
-    public Object process(T arg) throws Exception;
-
+    public java.lang.Object process(T arg) throws java.lang.Exception;
 }
+

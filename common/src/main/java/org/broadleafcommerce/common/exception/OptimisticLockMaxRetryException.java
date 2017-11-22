@@ -17,30 +17,26 @@
  */
 package org.broadleafcommerce.common.exception;
 
-/**
- * To be thrown when an optimistic lock is being used to update an entity and the maximum retry count is reached,
- * causing the update to be aborted.
- *
- * @author Philip Baggett (pbaggett)
- */
-public class OptimisticLockMaxRetryException extends RuntimeException {
+
+public class OptimisticLockMaxRetryException extends java.lang.RuntimeException {
     public OptimisticLockMaxRetryException() {
         super();
     }
 
-    public OptimisticLockMaxRetryException(String message) {
+    public OptimisticLockMaxRetryException(java.lang.String message) {
         super(message);
     }
 
-    public OptimisticLockMaxRetryException(String message, Throwable cause) {
+    public OptimisticLockMaxRetryException(java.lang.String message, java.lang.Throwable cause) {
         super(message, cause);
     }
 
-    public OptimisticLockMaxRetryException(Throwable cause) {
+    public OptimisticLockMaxRetryException(java.lang.Throwable cause) {
         super(cause);
     }
 
-    public OptimisticLockMaxRetryException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public OptimisticLockMaxRetryException(java.lang.String message, java.lang.Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }
+

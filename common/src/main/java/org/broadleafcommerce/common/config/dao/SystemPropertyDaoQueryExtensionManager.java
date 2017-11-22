@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,18 +17,11 @@
  */
 package org.broadleafcommerce.common.config.dao;
 
-import org.broadleafcommerce.common.extension.ExtensionManager;
-import org.broadleafcommerce.common.extension.QueryExtensionHandler;
-import org.springframework.stereotype.Component;
 
-/**
- * @author Jerry Ocanas (jocanas)
- */
-@Component("blSystemPropertyDaoQueryExtensionManager")
-public class SystemPropertyDaoQueryExtensionManager extends ExtensionManager<QueryExtensionHandler> {
-
+@org.springframework.stereotype.Component("blSystemPropertyDaoQueryExtensionManager")
+public class SystemPropertyDaoQueryExtensionManager extends org.broadleafcommerce.common.extension.ExtensionManager<org.broadleafcommerce.common.extension.QueryExtensionHandler> {
     public SystemPropertyDaoQueryExtensionManager() {
-        super(QueryExtensionHandler.class);
+        super(org.broadleafcommerce.common.extension.QueryExtensionHandler.class);
     }
-
 }
+

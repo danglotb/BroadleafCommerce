@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,14 +17,11 @@
  */
 package org.broadleafcommerce.common.payment.service;
 
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
 
-public class AbstractPaymentGatewayClientTokenService implements PaymentGatewayClientTokenService {
-
-    @Override
-    public PaymentResponseDTO generateClientToken(PaymentRequestDTO requestDTO) {
-        throw new UnsupportedOperationException("Not Implemented");
+public class AbstractPaymentGatewayClientTokenService implements org.broadleafcommerce.common.payment.service.PaymentGatewayClientTokenService {
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO generateClientToken(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO) {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
-
 }
+

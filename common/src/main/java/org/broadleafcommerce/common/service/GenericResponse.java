@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,44 +17,62 @@
  */
 package org.broadleafcommerce.common.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class GenericResponse {
-    
-    private List<String> errorCodes = new ArrayList<String>();
-    private Map<String, List<String>> errorCodeMap = new HashMap<String, List<String>>();
+    private java.util.List<java.lang.String> errorCodes = new java.util.ArrayList<java.lang.String>();
 
-    /**
-     * Returns true if
-     * @return
-     */
+    private java.util.Map<java.lang.String, java.util.List<java.lang.String>> errorCodeMap = new java.util.HashMap<java.lang.String, java.util.List<java.lang.String>>();
+
     public boolean getHasErrors() {
-        return errorCodes.size() > 0;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.service.GenericResponse.__L5175, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.service.GenericResponse.__L5173, errorCodes.size())) > (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.service.GenericResponse.__L5174, 0))));
     }
 
-    public List<String> getErrorCodesList() {
+    public java.util.List<java.lang.String> getErrorCodesList() {
         return errorCodes;
     }
 
-    public void addErrorCode(String errorCode) {
+    public void addErrorCode(java.lang.String errorCode) {
         errorCodes.add(errorCode);
-        errorCodeMap.put(errorCode, new ArrayList<String>());
+        errorCodeMap.put(errorCode, new java.util.ArrayList<java.lang.String>());
     }
 
-    public void addErrorCode(String errorCode, List<String> arguments) {
+    public void addErrorCode(java.lang.String errorCode, java.util.List<java.lang.String> arguments) {
         errorCodes.add(errorCode);
         errorCodeMap.put(errorCode, arguments);
     }
 
-    public Object[] getErrorCodeArguments(String errorCode) {
-        List<String> errorCodes = errorCodeMap.get(errorCode);
-        if (errorCodes == null) {
-            return new Object[0];
-        } else {
-            return errorCodes.toArray(new String[0]);
+    public java.lang.Object[] getErrorCodeArguments(java.lang.String errorCode) {
+        java.util.List<java.lang.String> errorCodes = errorCodeMap.get(errorCode);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.service.GenericResponse.__L5176, (errorCodes == null))) {
+            return new java.lang.Object[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.service.GenericResponse.__L5177, 0)];
+        }else {
+            return errorCodes.toArray(new java.lang.String[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.service.GenericResponse.__L5178, 0)]);
         }
     }
+
+    public static perturbation.location.PerturbationLocation __L5173;
+
+    public static perturbation.location.PerturbationLocation __L5174;
+
+    public static perturbation.location.PerturbationLocation __L5175;
+
+    public static perturbation.location.PerturbationLocation __L5176;
+
+    public static perturbation.location.PerturbationLocation __L5177;
+
+    public static perturbation.location.PerturbationLocation __L5178;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.service.GenericResponse.__L5173 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/GenericResponse.java:35)", 5173, "Numerical");
+        org.broadleafcommerce.common.service.GenericResponse.__L5174 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/GenericResponse.java:35)", 5174, "Numerical");
+        org.broadleafcommerce.common.service.GenericResponse.__L5175 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/GenericResponse.java:35)", 5175, "Boolean");
+        org.broadleafcommerce.common.service.GenericResponse.__L5176 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/GenericResponse.java:54)", 5176, "Boolean");
+        org.broadleafcommerce.common.service.GenericResponse.__L5177 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/GenericResponse.java:55)", 5177, "Numerical");
+        org.broadleafcommerce.common.service.GenericResponse.__L5178 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/GenericResponse.java:57)", 5178, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.service.GenericResponse.initPerturbationLocation0();
+    }
 }
+

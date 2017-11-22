@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,30 +17,16 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
-/**
- * Provides a means for classes that do not normally have access to
- * a servlet context or application context to be able to obtain
- * the current Spring ApplicationContext instance. This should be a last
- * resort, as it is unlikely this class is ever needed unless an
- * instance of ApplicationContext is required in a custom class
- * instantiated by third-party code.
- * 
- * @author jfischer
- *
- */
-public class SpringAppContext implements ApplicationContextAware {
-    
-    private static ApplicationContext appContext;
+public class SpringAppContext implements org.springframework.context.ApplicationContextAware {
+    private static org.springframework.context.ApplicationContext appContext;
 
-    public void setApplicationContext(ApplicationContext appContext) throws BeansException {
+    public void setApplicationContext(org.springframework.context.ApplicationContext appContext) throws org.springframework.beans.BeansException {
         this.appContext = appContext;
     }
 
-    public static ApplicationContext getApplicationContext() {
-        return appContext;
+    public static org.springframework.context.ApplicationContext getApplicationContext() {
+        return org.broadleafcommerce.common.util.SpringAppContext.appContext;
     }
 }
+

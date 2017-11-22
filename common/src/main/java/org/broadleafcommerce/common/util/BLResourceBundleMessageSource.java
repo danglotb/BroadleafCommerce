@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,51 +17,46 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.support.ResourceBundleMessageSource;
 
-import java.util.ArrayList;
-import java.util.List;
+@java.lang.Deprecated
+public class BLResourceBundleMessageSource extends org.springframework.context.support.ResourceBundleMessageSource implements org.springframework.beans.factory.InitializingBean {
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.util.BLResourceBundleMessageSource.class);
 
-/**
- * @deprecated use {@link BroadleafMergeResourceBundleMessageSource} instead
- */
-@Deprecated
-public class BLResourceBundleMessageSource extends ResourceBundleMessageSource implements InitializingBean {
-
-    private static final Log LOG = LogFactory.getLog(BLResourceBundleMessageSource.class);
-
-    public BLResourceBundleMessageSource(String[] basenames, ResourceBundleExtensionPoint resourceBundleExtensionPoint) {
+    public BLResourceBundleMessageSource(java.lang.String[] basenames, org.broadleafcommerce.common.util.ResourceBundleExtensionPoint resourceBundleExtensionPoint) {
         super();
-
-        List<String> bundles = new ArrayList<String>();
+        java.util.List<java.lang.String> bundles = new java.util.ArrayList<java.lang.String>();
         if (resourceBundleExtensionPoint != null) {
-            String[] bundleNames = resourceBundleExtensionPoint.getBasenameExtensions();
+            java.lang.String[] bundleNames = resourceBundleExtensionPoint.getBasenameExtensions();
             if (bundleNames != null) {
-                for (int i = 0; i < bundleNames.length; i++) {
+                for (int i = 0; i < (bundleNames.length); perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.BLResourceBundleMessageSource.__L6227, (i++))) {
                     bundles.add(bundleNames[i]);
                 }
             }
             if (basenames != null) {
-                for (int i = 0; i < basenames.length; i++) {
+                for (int i = 0; i < (basenames.length); perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.BLResourceBundleMessageSource.__L6228, (i++))) {
                     bundles.add(basenames[i]);
                 }
             }
         }
-
-        setBasenames(bundles.toArray(new String[0]));
+        setBasenames(bundles.toArray(new java.lang.String[0]));
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        LOG.fatal("***INCORRECT CONFIGURATION***\n" +
-                "This class should no longer be used as it does not merge property files together. If this is being used\n" +
-                "in the admin application then this configuration is definitely an error as no properties will be resolved.\n" +
-                "It is possible that the frontend application is not seriously effected by using this class but you should\n" +
-                "modify your configuration to instead use org.broadleafcommerce.common.util.BroadleafMergeResourceBundleMessageSource\n" +
-                "instead as soon as possible.");
+    @java.lang.Override
+    public void afterPropertiesSet() throws java.lang.Exception {
+        org.broadleafcommerce.common.util.BLResourceBundleMessageSource.LOG.fatal(("***INCORRECT CONFIGURATION***\n" + (((("This class should no longer be used as it does not merge property files together. If this is being used\n" + "in the admin application then this configuration is definitely an error as no properties will be resolved.\n") + "It is possible that the frontend application is not seriously effected by using this class but you should\n") + "modify your configuration to instead use org.broadleafcommerce.common.util.BroadleafMergeResourceBundleMessageSource\n") + "instead as soon as possible.")));
     }
 
+    public static perturbation.location.PerturbationLocation __L6227;
+
+    public static perturbation.location.PerturbationLocation __L6228;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.BLResourceBundleMessageSource.__L6227 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLResourceBundleMessageSource.java:43)", 6227, "Numerical");
+        org.broadleafcommerce.common.util.BLResourceBundleMessageSource.__L6228 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLResourceBundleMessageSource.java:48)", 6228, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.BLResourceBundleMessageSource.initPerturbationLocation0();
+    }
 }
+

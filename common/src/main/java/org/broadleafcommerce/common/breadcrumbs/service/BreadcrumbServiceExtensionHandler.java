@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,16 +17,8 @@
  */
 package org.broadleafcommerce.common.breadcrumbs.service;
 
-import org.broadleafcommerce.common.breadcrumbs.dto.BreadcrumbDTO;
-import org.broadleafcommerce.common.extension.ExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
 
-import java.util.List;
-import java.util.Map;
-
-public interface BreadcrumbServiceExtensionHandler extends ExtensionHandler {
-
-    public ExtensionResultStatusType modifyBreadcrumbList(String url, Map<String, String[]> queryParams,
-            ExtensionResultHolder<List<BreadcrumbDTO>> holder);
+public interface BreadcrumbServiceExtensionHandler extends org.broadleafcommerce.common.extension.ExtensionHandler {
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType modifyBreadcrumbList(java.lang.String url, java.util.Map<java.lang.String, java.lang.String[]> queryParams, org.broadleafcommerce.common.extension.ExtensionResultHolder<java.util.List<org.broadleafcommerce.common.breadcrumbs.dto.BreadcrumbDTO>> holder);
 }
+

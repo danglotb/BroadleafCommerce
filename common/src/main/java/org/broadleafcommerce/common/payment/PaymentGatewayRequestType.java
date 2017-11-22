@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,106 +17,173 @@
  */
 package org.broadleafcommerce.common.payment;
 
-import org.broadleafcommerce.common.BroadleafEnumerationType;
-import java.io.Serializable;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
-/**
- * <p>Gateways/processors support a vast array of different features, and in some cases
- * a single API will perform several different functions based on the state of the request.
- * To fully support this and maintain a consistent API, this extensible enumeration of request types
- * are provided to aid the gateway's implementations determination of the correct request to construct
- * (in the case that the current implementation supports it).</p>
- *
- * For example:
- * 1. Certain gateways support the idea of a "Transparent Redirect" request.
- *    Within that set, only certain ones support the idea of a transparent redirect tokenization only request.
- *    In order to utilize the same {@link org.broadleafcommerce.common.payment.service.PaymentGatewayTransparentRedirectService},
- *    a particular request type, (e.g. {@link #CREATE_CUSTOMER_PAYMENT_TR} can be put on the
- *    {@link org.broadleafcommerce.common.payment.dto.PaymentRequestDTO} to distinguish which request to construct.
- * 2. Certain gateways support the idea of a "Detached Credit" also referred to as a "blind credit"
- *    In some cases, the gateways implementation utilizes the same "refund" api as a normal credit.
- *    {@link #DETACHED_CREDIT_REFUND} can be passed to an implementation's
- *    {@link org.broadleafcommerce.common.payment.service.PaymentGatewayTransactionService#refund(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO)}
- *    method to distinguish what type of refund to construct.
- * 3. Some gateway implementations allow you to pass a manual authorization code received from the bank.
- *    For example, a customer service representative can take orders over the phone and call the bank directly
- *    to get an authorization code for the customer's card. In this scenario, if your gateway supports
- *    this, {@link #MANUAL_AUTHORIZATION} can be passed into an implementation's
- *    {@link org.broadleafcommerce.common.payment.service.PaymentGatewayTransactionService#authorize(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO)}
- *    method to distinguish what type of authorization to construct.
- *
- * @author Elbert Bautista (elbertbautista)
- */
-public class PaymentGatewayRequestType implements Serializable, BroadleafEnumerationType {
-
+public class PaymentGatewayRequestType implements java.io.Serializable , org.broadleafcommerce.common.BroadleafEnumerationType {
     private static final long serialVersionUID = 1L;
 
-    private static final Map<String, PaymentGatewayRequestType> TYPES = new LinkedHashMap<String, PaymentGatewayRequestType>();
+    private static final java.util.Map<java.lang.String, org.broadleafcommerce.common.payment.PaymentGatewayRequestType> TYPES = new java.util.LinkedHashMap<java.lang.String, org.broadleafcommerce.common.payment.PaymentGatewayRequestType>();
 
-    public static final PaymentGatewayRequestType CREATE_CUSTOMER_PAYMENT_TR = new PaymentGatewayRequestType("CREATE_CUSTOMER_PAYMENT_TR", "Transparent Redirect Create Customer Payment Tokenization Request");
-    public static final PaymentGatewayRequestType UPDATE_CUSTOMER_PAYMENT_TR = new PaymentGatewayRequestType("UPDATE_CUSTOMER_PAYMENT_TR", "Transparent Redirect Update Customer Payment Tokenization Request");
-    public static final PaymentGatewayRequestType DETACHED_CREDIT_REFUND = new PaymentGatewayRequestType("DETACHED_CREDIT_REFUND", "Detached Credit Refund Request");
-    public static final PaymentGatewayRequestType MANUAL_AUTHORIZATION = new PaymentGatewayRequestType("MANUAL_AUTHORIZATION", "Manual Authorization Request");
+    public static final org.broadleafcommerce.common.payment.PaymentGatewayRequestType CREATE_CUSTOMER_PAYMENT_TR = new org.broadleafcommerce.common.payment.PaymentGatewayRequestType("CREATE_CUSTOMER_PAYMENT_TR", "Transparent Redirect Create Customer Payment Tokenization Request");
 
-    public static PaymentGatewayRequestType getInstance(final String type) {
-        return TYPES.get(type);
+    public static final org.broadleafcommerce.common.payment.PaymentGatewayRequestType UPDATE_CUSTOMER_PAYMENT_TR = new org.broadleafcommerce.common.payment.PaymentGatewayRequestType("UPDATE_CUSTOMER_PAYMENT_TR", "Transparent Redirect Update Customer Payment Tokenization Request");
+
+    public static final org.broadleafcommerce.common.payment.PaymentGatewayRequestType DETACHED_CREDIT_REFUND = new org.broadleafcommerce.common.payment.PaymentGatewayRequestType("DETACHED_CREDIT_REFUND", "Detached Credit Refund Request");
+
+    public static final org.broadleafcommerce.common.payment.PaymentGatewayRequestType MANUAL_AUTHORIZATION = new org.broadleafcommerce.common.payment.PaymentGatewayRequestType("MANUAL_AUTHORIZATION", "Manual Authorization Request");
+
+    private java.lang.String type;
+
+    private java.lang.String friendlyType;
+
+    public static org.broadleafcommerce.common.payment.PaymentGatewayRequestType getInstance(final java.lang.String type) {
+        return org.broadleafcommerce.common.payment.PaymentGatewayRequestType.TYPES.get(type);
     }
 
-    public static Map<String, PaymentGatewayRequestType> getTypes() {
-        return TYPES;
+    public static java.util.Map<java.lang.String, org.broadleafcommerce.common.payment.PaymentGatewayRequestType> getTypes() {
+        return org.broadleafcommerce.common.payment.PaymentGatewayRequestType.TYPES;
     }
-
-    private String type;
-    private String friendlyType;
 
     public PaymentGatewayRequestType() {
-        //do nothing
     }
 
-    public PaymentGatewayRequestType(final String type, final String friendlyType) {
+    public PaymentGatewayRequestType(final java.lang.String type, final java.lang.String friendlyType) {
         this.friendlyType = friendlyType;
         setType(type);
     }
 
-    public String getType() {
+    public java.lang.String getType() {
         return type;
     }
 
-    public String getFriendlyType() {
+    public java.lang.String getFriendlyType() {
         return friendlyType;
     }
 
-    private void setType(final String type) {
+    private void setType(final java.lang.String type) {
         this.type = type;
-        if (!TYPES.containsKey(type)) {
-            TYPES.put(type, this);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3971, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3970, org.broadleafcommerce.common.payment.PaymentGatewayRequestType.TYPES.containsKey(type)))))) {
+            org.broadleafcommerce.common.payment.PaymentGatewayRequestType.TYPES.put(type, this);
         }
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((type == null) ? 0 : type.hashCode());
-        return result;
+        final int prime = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3972, 31);
+        int result = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3973, 1);
+        result = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3981, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3976, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3974, prime)) * (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3975, result))))) + (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3980, (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3977, ((type) == null)) ? perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3978, 0) : perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3979, type.hashCode()))))));
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3982, result);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (!getClass().isAssignableFrom(obj.getClass()))
-            return false;
-        PaymentGatewayRequestType other = (PaymentGatewayRequestType) obj;
-        if (type == null) {
-            if (other.type != null)
-                return false;
-        } else if (!type.equals(other.type))
-            return false;
-        return true;
+    @java.lang.Override
+    public boolean equals(java.lang.Object obj) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3983, ((this) == obj)))
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3984, true);
+
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3985, (obj == null)))
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3986, false);
+
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3988, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3987, getClass().isAssignableFrom(obj.getClass()))))))
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3989, false);
+
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType other = ((org.broadleafcommerce.common.payment.PaymentGatewayRequestType) (obj));
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3990, ((type) == null))) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3991, ((other.type) != null)))
+                return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3992, false);
+
+        }else
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3994, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3993, type.equals(other.type))))))
+                return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3995, false);
+
+
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3996, true);
+    }
+
+    public static perturbation.location.PerturbationLocation __L3970;
+
+    public static perturbation.location.PerturbationLocation __L3971;
+
+    public static perturbation.location.PerturbationLocation __L3972;
+
+    public static perturbation.location.PerturbationLocation __L3973;
+
+    public static perturbation.location.PerturbationLocation __L3974;
+
+    public static perturbation.location.PerturbationLocation __L3975;
+
+    public static perturbation.location.PerturbationLocation __L3976;
+
+    public static perturbation.location.PerturbationLocation __L3977;
+
+    public static perturbation.location.PerturbationLocation __L3978;
+
+    public static perturbation.location.PerturbationLocation __L3979;
+
+    public static perturbation.location.PerturbationLocation __L3980;
+
+    public static perturbation.location.PerturbationLocation __L3981;
+
+    public static perturbation.location.PerturbationLocation __L3982;
+
+    public static perturbation.location.PerturbationLocation __L3983;
+
+    public static perturbation.location.PerturbationLocation __L3984;
+
+    public static perturbation.location.PerturbationLocation __L3985;
+
+    public static perturbation.location.PerturbationLocation __L3986;
+
+    public static perturbation.location.PerturbationLocation __L3987;
+
+    public static perturbation.location.PerturbationLocation __L3988;
+
+    public static perturbation.location.PerturbationLocation __L3989;
+
+    public static perturbation.location.PerturbationLocation __L3990;
+
+    public static perturbation.location.PerturbationLocation __L3991;
+
+    public static perturbation.location.PerturbationLocation __L3992;
+
+    public static perturbation.location.PerturbationLocation __L3993;
+
+    public static perturbation.location.PerturbationLocation __L3994;
+
+    public static perturbation.location.PerturbationLocation __L3995;
+
+    public static perturbation.location.PerturbationLocation __L3996;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3970 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:93)", 3970, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3971 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:93)", 3971, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3972 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:100)", 3972, "Numerical");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3973 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:101)", 3973, "Numerical");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3974 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:102)", 3974, "Numerical");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3975 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:102)", 3975, "Numerical");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3976 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:102)", 3976, "Numerical");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3977 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:102)", 3977, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3978 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:102)", 3978, "Numerical");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3979 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:102)", 3979, "Numerical");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3980 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:102)", 3980, "Numerical");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3981 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:102)", 3981, "Numerical");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3982 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:103)", 3982, "Numerical");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3983 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:108)", 3983, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3984 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:109)", 3984, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3985 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:110)", 3985, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3986 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:111)", 3986, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3987 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:112)", 3987, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3988 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:112)", 3988, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3989 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:113)", 3989, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3990 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:115)", 3990, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3991 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:116)", 3991, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3992 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:117)", 3992, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3993 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:118)", 3993, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3994 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:118)", 3994, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3995 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:119)", 3995, "Boolean");
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.__L3996 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/PaymentGatewayRequestType.java:120)", 3996, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.payment.PaymentGatewayRequestType.initPerturbationLocation0();
     }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,29 +17,18 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
 
-/**
- * Convenient class to hold the Spring application context. Note that this holds the <i>root</i> application context
- * as opposed to an individual servlet context.
- *
- * @author Phillip Verheyden (phillipuniverse)
- */
-@Component("blApplicationContextHolder")
-public class ApplicationContextHolder implements ApplicationContextAware {
-    
-    protected static ApplicationContext context;
-    
-    public static ApplicationContext getApplicationContext() {
-        return context;
+@org.springframework.stereotype.Component("blApplicationContextHolder")
+public class ApplicationContextHolder implements org.springframework.context.ApplicationContextAware {
+    protected static org.springframework.context.ApplicationContext context;
+
+    public static org.springframework.context.ApplicationContext getApplicationContext() {
+        return org.broadleafcommerce.common.util.ApplicationContextHolder.context;
     }
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        context = applicationContext;
+    @java.lang.Override
+    public void setApplicationContext(org.springframework.context.ApplicationContext applicationContext) throws org.springframework.beans.BeansException {
+        org.broadleafcommerce.common.util.ApplicationContextHolder.context = applicationContext;
     }
-
 }
+

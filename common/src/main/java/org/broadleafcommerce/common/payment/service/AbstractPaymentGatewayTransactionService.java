@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,40 +17,36 @@
  */
 package org.broadleafcommerce.common.payment.service;
 
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
-import org.broadleafcommerce.common.vendor.service.exception.PaymentException;
 
-public class AbstractPaymentGatewayTransactionService implements PaymentGatewayTransactionService {
-
-    @Override
-    public PaymentResponseDTO authorize(PaymentRequestDTO paymentRequestDTO) throws PaymentException {
-        throw new UnsupportedOperationException("Not Implemented");
+public class AbstractPaymentGatewayTransactionService implements org.broadleafcommerce.common.payment.service.PaymentGatewayTransactionService {
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO authorize(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO paymentRequestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
-    public PaymentResponseDTO capture(PaymentRequestDTO paymentRequestDTO) throws PaymentException {
-        throw new UnsupportedOperationException("Not Implemented");
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO capture(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO paymentRequestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
-    public PaymentResponseDTO authorizeAndCapture(PaymentRequestDTO paymentRequestDTO) throws PaymentException {
-        throw new UnsupportedOperationException("Not Implemented");
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO authorizeAndCapture(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO paymentRequestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
-    public PaymentResponseDTO reverseAuthorize(PaymentRequestDTO paymentRequestDTO) throws PaymentException {
-        throw new UnsupportedOperationException("Not Implemented");
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO reverseAuthorize(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO paymentRequestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
-    public PaymentResponseDTO refund(PaymentRequestDTO paymentRequestDTO) throws PaymentException {
-        throw new UnsupportedOperationException("Not Implemented");
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO refund(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO paymentRequestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
-    public PaymentResponseDTO voidPayment(PaymentRequestDTO paymentRequestDTO) throws PaymentException {
-        throw new UnsupportedOperationException("Not Implemented");
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO voidPayment(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO paymentRequestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
-
 }
+

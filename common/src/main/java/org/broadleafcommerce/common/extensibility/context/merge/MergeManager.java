@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,176 +17,86 @@
  */
 package org.broadleafcommerce.common.extensibility.context.merge;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.extensibility.context.merge.exceptions.MergeException;
-import org.broadleafcommerce.common.extensibility.context.merge.exceptions.MergeManagerSetupException;
-import org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandler;
-import org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandlerAdapter;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-/**
- * This class manages all xml merge interactions with callers. It is responsible for
- * not only loading the handler configurations, but also for cycling through the handlers
- * in a prioritized fashion and exporting the final merged document.
- *
- * @author jfischer
- *
- */
 public class MergeManager {
+    public static final java.lang.String MERGE_DEFINITION_SYSTEM_PROPERTY = "org.broadleafcommerce.extensibility.context.merge.handlers.merge.properties";
 
-    /**
-     * Additional merge points may be added by the caller. Also default merge points
-     * may be overriden to change their current behavior. This is accomplished by
-     * specifying the system property denoted by the key MergeManager.MERGE_DEFINITION_SYSTEM_PROPERTY
-     * with a value stating the fully qualified path of user-created property file. Please refer
-     * to the default properties file located at org/broadleafcommerce/profile/extensibility/context/merge/default.properties
-     * for more details.
-     *
-     */
-    public static final String MERGE_DEFINITION_SYSTEM_PROPERTY = "org.broadleafcommerce.extensibility.context.merge.handlers.merge.properties";
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.class);
 
-    private static final Log LOG = LogFactory.getLog(MergeManager.class);
+    private static javax.xml.parsers.DocumentBuilder builder;
 
-    private static DocumentBuilder builder;
+    private org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandler[] handlers;
 
-    static {
+    public MergeManager() throws org.broadleafcommerce.common.extensibility.context.merge.exceptions.MergeManagerSetupException {
         try {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            // Disable DTDs to prevent XXE attack
-            dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-            builder = dbf.newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
-            LOG.error("Unable to create document builder", e);
-            throw new RuntimeException(e);
-        }
-    }
-
-    private MergeHandler[] handlers;
-
-    public MergeManager() throws MergeManagerSetupException {
-        try {
-            Properties props = loadProperties();
+            java.util.Properties props = loadProperties();
             removeSkippedMergeComponents(props);
             setHandlers(props);
-        } catch (IOException e) {
-            throw new MergeManagerSetupException(e);
-        } catch (ClassNotFoundException e) {
-            throw new MergeManagerSetupException(e);
-        } catch (IllegalAccessException e) {
-            throw new MergeManagerSetupException(e);
-        } catch (InstantiationException e) {
-            throw new MergeManagerSetupException(e);
+        } catch (java.io.IOException e) {
+            throw new org.broadleafcommerce.common.extensibility.context.merge.exceptions.MergeManagerSetupException(e);
+        } catch (java.lang.ClassNotFoundException e) {
+            throw new org.broadleafcommerce.common.extensibility.context.merge.exceptions.MergeManagerSetupException(e);
+        } catch (java.lang.IllegalAccessException e) {
+            throw new org.broadleafcommerce.common.extensibility.context.merge.exceptions.MergeManagerSetupException(e);
+        } catch (java.lang.InstantiationException e) {
+            throw new org.broadleafcommerce.common.extensibility.context.merge.exceptions.MergeManagerSetupException(e);
         }
     }
 
-    private void removeSkippedMergeComponents(Properties props)
-            throws UnsupportedEncodingException {
-        InputStream inputStream = null;
-        InputStreamReader inputStreamReader = null;
-        BufferedReader bufferedReader = null;
+    private void removeSkippedMergeComponents(java.util.Properties props) throws java.io.UnsupportedEncodingException {
+        java.io.InputStream inputStream = null;
+        java.io.InputStreamReader inputStreamReader = null;
+        java.io.BufferedReader bufferedReader = null;
         try {
-            inputStream = this.getClass().getClassLoader()
-                    .getResourceAsStream("/broadleaf-commmerce/skipMergeComponents.txt");
-
-            if (inputStream == null) {
-                return;
+            inputStream = this.getClass().getClassLoader().getResourceAsStream("/broadleaf-commmerce/skipMergeComponents.txt");
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1666, (inputStream == null))) {
+                return ;
             }
-
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("mergeClassOverrides file found.");
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1667, org.broadleafcommerce.common.extensibility.context.merge.MergeManager.LOG.isDebugEnabled())) {
+                org.broadleafcommerce.common.extensibility.context.merge.MergeManager.LOG.debug("mergeClassOverrides file found.");
             }
-
-            inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-            bufferedReader = new BufferedReader(inputStreamReader);
-
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("mergeComponentOverrides - overridding "
-                            + line);
+            inputStreamReader = new java.io.InputStreamReader(inputStream, "UTF-8");
+            bufferedReader = new java.io.BufferedReader(inputStreamReader);
+            java.lang.String line;
+            while (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1668, ((line = bufferedReader.readLine()) != null))) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1669, org.broadleafcommerce.common.extensibility.context.merge.MergeManager.LOG.isDebugEnabled())) {
+                    org.broadleafcommerce.common.extensibility.context.merge.MergeManager.LOG.debug(("mergeComponentOverrides - overridding " + line));
                 }
                 removeSkipMergeComponents(props, line);
-            }
-        } catch (IOException e) {
-            LOG.error("Error reading resource - /broadleaf-commmerce/skipMergeComponents.txt", e);
+            } 
+        } catch (java.io.IOException e) {
+            org.broadleafcommerce.common.extensibility.context.merge.MergeManager.LOG.error("Error reading resource - /broadleaf-commmerce/skipMergeComponents.txt", e);
         } finally {
-            if (inputStream != null) {
-                IOUtils.closeQuietly(inputStream);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1670, (inputStream != null))) {
+                org.apache.commons.io.IOUtils.closeQuietly(inputStream);
             }
-            if (inputStreamReader != null) {
-                IOUtils.closeQuietly(inputStreamReader);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1671, (inputStreamReader != null))) {
+                org.apache.commons.io.IOUtils.closeQuietly(inputStreamReader);
             }
-            if (bufferedReader != null) {
-                IOUtils.closeQuietly(bufferedReader);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1672, (bufferedReader != null))) {
+                org.apache.commons.io.IOUtils.closeQuietly(bufferedReader);
             }
         }
     }
 
-    /**
-     * Examines the properties file for an entry with an id equal to the component that we want
-     * to ignore and then removes all keys that have the same number (e.g. if xpath.28 is the key
-     * then handler.28, xpath.28, and priority.28 will all be removed).
-     * 
-     * @param props
-     * @param componentName
-     */
-    private void removeSkipMergeComponents(Properties props, String componentName) {
-        String lookupName = "@id='" + componentName.trim() + "'";
-        String key = findComponentKey(lookupName, props);
-        while (key  != null) {
+    private void removeSkipMergeComponents(java.util.Properties props, java.lang.String componentName) {
+        java.lang.String lookupName = ("@id='" + (componentName.trim())) + "'";
+        java.lang.String key = findComponentKey(lookupName, props);
+        while (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1673, (key != null))) {
             removeItemsMatchingKey(key, props);
             key = findComponentKey(lookupName, props);
-        }
+        } 
     }
 
-    /**
-     * Examines the properties file for an entry that contains the passed in component id string and returns its key
-     * 
-     * to ignore. 
-     * 
-     * @param componentName
-     * @param props
-     * @return
-     */
-    private String findComponentKey(String componentIdStr, Properties props) {
-        for (Map.Entry<Object, Object> entry : props.entrySet()) {
-            Object value = entry.getValue();
-            if (value instanceof String) {
-                String valueStr = (String) value;
-                if (valueStr.contains(componentIdStr)) {
-                    Object key = entry.getKey();
-                    if (key instanceof String) {
-                        return (String) key;
+    private java.lang.String findComponentKey(java.lang.String componentIdStr, java.util.Properties props) {
+        for (java.util.Map.Entry<java.lang.Object, java.lang.Object> entry : props.entrySet()) {
+            java.lang.Object value = entry.getValue();
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1674, (value instanceof java.lang.String))) {
+                java.lang.String valueStr = ((java.lang.String) (value));
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1675, valueStr.contains(componentIdStr))) {
+                    java.lang.Object key = entry.getKey();
+                    if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1676, (key instanceof java.lang.String))) {
+                        return ((java.lang.String) (key));
                     }
                 }
             }
@@ -194,188 +104,364 @@ public class MergeManager {
         return null;
     }
 
-    /**
-     * Removes all keys that share the same number.   (e.g. if xpath.28 is the key
-     * then handler.28, xpath.28, and priority.28 will all be removed).
-     * 
-     * @param firstKey
-     * @param props
-     * @return
-     */
-    private void removeItemsMatchingKey(String firstKey, Properties props) {
-        int dotPos = firstKey.indexOf(".");
-        if (dotPos > 0) {
-            String keyNumberToMatch = firstKey.substring(dotPos);
-            
-            Iterator<Object> iter = props.keySet().iterator();
-            
-            while (iter.hasNext()) {
-                Object keyObj = iter.next();
-                if (keyObj instanceof String) {
-                    String keyStr = (String) keyObj;
-                    dotPos = keyStr.indexOf(".");
-                    String keyNumber = keyStr.substring(dotPos);
-                    if (keyNumber.equals(keyNumberToMatch)) {
+    private void removeItemsMatchingKey(java.lang.String firstKey, java.util.Properties props) {
+        int dotPos = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1677, firstKey.indexOf("."));
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1680, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1678, dotPos)) > (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1679, 0))))) {
+            java.lang.String keyNumberToMatch = firstKey.substring(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1681, dotPos));
+            java.util.Iterator<java.lang.Object> iter = props.keySet().iterator();
+            while (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1682, iter.hasNext())) {
+                java.lang.Object keyObj = iter.next();
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1683, (keyObj instanceof java.lang.String))) {
+                    java.lang.String keyStr = ((java.lang.String) (keyObj));
+                    dotPos = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1684, keyStr.indexOf("."));
+                    java.lang.String keyNumber = keyStr.substring(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1685, dotPos));
+                    if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1686, keyNumber.equals(keyNumberToMatch))) {
                         iter.remove();
                     }
                 }
-            }
+            } 
         }
     }
 
-    /**
-     * Merge 2 xml document streams together into a final resulting stream. During
-     * the merge, various merge business rules are followed based on configuration
-     * defined for various merge points.
-     *
-     * @param stream1
-     * @param stream2
-     * @return the stream representing the merged document
-     * @throws org.broadleafcommerce.common.extensibility.context.merge.exceptions.MergeException
-     */
-    public ResourceInputStream merge(ResourceInputStream stream1, ResourceInputStream stream2) throws MergeException {
+    public org.broadleafcommerce.common.extensibility.context.merge.ResourceInputStream merge(org.broadleafcommerce.common.extensibility.context.merge.ResourceInputStream stream1, org.broadleafcommerce.common.extensibility.context.merge.ResourceInputStream stream2) throws org.broadleafcommerce.common.extensibility.context.merge.exceptions.MergeException {
         try {
-            Document doc1 = builder.parse(stream1);
-            Document doc2 = builder.parse(stream2);
-
-            List<Node> exhaustedNodes = new ArrayList<>();
-
-            //process any defined handlers
-            for (MergeHandler handler : this.handlers) {
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("Processing handler: " + handler.getXPath());
+            org.w3c.dom.Document doc1 = org.broadleafcommerce.common.extensibility.context.merge.MergeManager.builder.parse(stream1);
+            org.w3c.dom.Document doc2 = org.broadleafcommerce.common.extensibility.context.merge.MergeManager.builder.parse(stream2);
+            java.util.List<org.w3c.dom.Node> exhaustedNodes = new java.util.ArrayList<>();
+            for (org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandler handler : this.handlers) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1687, org.broadleafcommerce.common.extensibility.context.merge.MergeManager.LOG.isDebugEnabled())) {
+                    org.broadleafcommerce.common.extensibility.context.merge.MergeManager.LOG.debug(("Processing handler: " + (handler.getXPath())));
                 }
-                MergePoint point = new MergePoint(handler, doc1, doc2);
-                Node[] list = point.merge(exhaustedNodes);
-                if (list != null) {
-                    Collections.addAll(exhaustedNodes, list);
+                org.broadleafcommerce.common.extensibility.context.merge.MergePoint point = new org.broadleafcommerce.common.extensibility.context.merge.MergePoint(handler, doc1, doc2);
+                org.w3c.dom.Node[] list = point.merge(exhaustedNodes);
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1688, (list != null))) {
+                    java.util.Collections.addAll(exhaustedNodes, list);
                 }
             }
-
-            TransformerFactory tFactory = TransformerFactory.newInstance();
-            Transformer xmlTransformer = tFactory.newTransformer();
-            xmlTransformer.setOutputProperty(OutputKeys.VERSION, "1.0");
-            xmlTransformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-            xmlTransformer.setOutputProperty(OutputKeys.METHOD, "xml");
-            xmlTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            BufferedWriter writer = null;
+            javax.xml.transform.TransformerFactory tFactory = javax.xml.transform.TransformerFactory.newInstance();
+            javax.xml.transform.Transformer xmlTransformer = tFactory.newTransformer();
+            xmlTransformer.setOutputProperty(javax.xml.transform.OutputKeys.VERSION, "1.0");
+            xmlTransformer.setOutputProperty(javax.xml.transform.OutputKeys.ENCODING, "UTF-8");
+            xmlTransformer.setOutputProperty(javax.xml.transform.OutputKeys.METHOD, "xml");
+            xmlTransformer.setOutputProperty(javax.xml.transform.OutputKeys.INDENT, "yes");
+            java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
+            java.io.BufferedWriter writer = null;
             try {
-                DOMSource source = new DOMSource(doc1);
-                writer = new BufferedWriter(new OutputStreamWriter(baos, "UTF-8"));
-                StreamResult result = new StreamResult(writer);
+                javax.xml.transform.dom.DOMSource source = new javax.xml.transform.dom.DOMSource(doc1);
+                writer = new java.io.BufferedWriter(new java.io.OutputStreamWriter(baos, "UTF-8"));
+                javax.xml.transform.stream.StreamResult result = new javax.xml.transform.stream.StreamResult(writer);
                 xmlTransformer.transform(source, result);
             } finally {
-                if (writer != null) {
-                    IOUtils.closeQuietly(writer);
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1689, (writer != null))) {
+                    org.apache.commons.io.IOUtils.closeQuietly(writer);
                 }
             }
-
             byte[] itemArray = baos.toByteArray();
-
-            return new ResourceInputStream(new ByteArrayInputStream(itemArray), stream2.getName(), stream1.getNames());
-        } catch (Exception e) {
-            throw new MergeException(e);
+            return new org.broadleafcommerce.common.extensibility.context.merge.ResourceInputStream(new java.io.ByteArrayInputStream(itemArray), stream2.getName(), stream1.getNames());
+        } catch (java.lang.Exception e) {
+            throw new org.broadleafcommerce.common.extensibility.context.merge.exceptions.MergeException(e);
         }
     }
 
-    private void setHandlers(Properties props) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        ArrayList<MergeHandler> handlers = new ArrayList<>();
-        for (String key : props.stringPropertyNames()) {
-            if (key.startsWith("handler.")) {
-                MergeHandler temp = (MergeHandler) Class.forName(props.getProperty(key)).newInstance();
-                String name = key.substring(8, key.length());
+    private void setHandlers(java.util.Properties props) throws java.lang.ClassNotFoundException, java.lang.IllegalAccessException, java.lang.InstantiationException {
+        java.util.ArrayList<org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandler> handlers = new java.util.ArrayList<>();
+        for (java.lang.String key : props.stringPropertyNames()) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1690, key.startsWith("handler."))) {
+                org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandler temp = ((org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandler) (java.lang.Class.forName(props.getProperty(key)).newInstance()));
+                java.lang.String name = key.substring(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1691, 8), perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1692, key.length()));
                 temp.setName(name);
-                String priority = props.getProperty("priority." + name);
-                if (priority != null) {
-                    temp.setPriority(Integer.parseInt(priority));
+                java.lang.String priority = props.getProperty(("priority." + name));
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1693, (priority != null))) {
+                    temp.setPriority(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1694, java.lang.Integer.parseInt(priority)));
                 }
-                String xpath = props.getProperty("xpath." + name);
-                if (priority != null) {
+                java.lang.String xpath = props.getProperty(("xpath." + name));
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1695, (priority != null))) {
                     temp.setXPath(xpath);
                 }
                 handlers.add(temp);
             }
         }
-        MergeHandler[] explodedView = {};
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandler[] explodedView = new org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandler[]{  };
         explodedView = handlers.toArray(explodedView);
-        Comparator<Object> nameCompare = new Comparator<Object>() {
-            @Override
-            public int compare(Object arg0, Object arg1) {
-                return ((MergeHandler) arg0).getName().compareTo(((MergeHandler) arg1).getName());
+        java.util.Comparator<java.lang.Object> nameCompare = new java.util.Comparator<java.lang.Object>() {
+            @java.lang.Override
+            public int compare(java.lang.Object arg0, java.lang.Object arg1) {
+                return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1696, ((org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandler) (arg0)).getName().compareTo(((org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandler) (arg1)).getName()));
             }
         };
-        Arrays.sort(explodedView, nameCompare);
-        ArrayList<MergeHandler> finalHandlers = new ArrayList<>();
-        for (MergeHandler temp : explodedView) {
-            if (temp.getName().contains(".")) {
-                final String parentName = temp.getName().substring(0, temp.getName().lastIndexOf("."));
-                int pos = Arrays.binarySearch(explodedView, new MergeHandlerAdapter() {
-                    @Override
-                    public String getName() {
+        java.util.Arrays.sort(explodedView, nameCompare);
+        java.util.ArrayList<org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandler> finalHandlers = new java.util.ArrayList<>();
+        for (org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandler temp : explodedView) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1697, temp.getName().contains("."))) {
+                final java.lang.String parentName = temp.getName().substring(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1698, 0), perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1699, temp.getName().lastIndexOf(".")));
+                int pos = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1700, java.util.Arrays.binarySearch(explodedView, new org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandlerAdapter() {
+                    @java.lang.Override
+                    public java.lang.String getName() {
                         return parentName;
                     }
-                }, nameCompare);
-                if (pos >= 0) {
-                    MergeHandler[] parentHandlers = explodedView[pos].getChildren();
-                    MergeHandler[] newHandlers = new MergeHandler[parentHandlers.length + 1];
-                    System.arraycopy(parentHandlers, 0, newHandlers, 0, parentHandlers.length);
-                    newHandlers[newHandlers.length - 1] = temp;
-                    Arrays.sort(newHandlers);
-                    explodedView[pos].setChildren(newHandlers);
+                }, nameCompare));
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1703, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1701, pos)) >= (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1702, 0))))) {
+                    org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandler[] parentHandlers = explodedView[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1704, pos)].getChildren();
+                    org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandler[] newHandlers = new org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandler[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1707, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1705, parentHandlers.length)) + (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1706, 1))))];
+                    java.lang.System.arraycopy(parentHandlers, perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1708, 0), newHandlers, perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1709, 0), perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1710, parentHandlers.length));
+                    newHandlers[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1713, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1711, newHandlers.length)) - (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1712, 1))))] = temp;
+                    java.util.Arrays.sort(newHandlers);
+                    explodedView[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1714, pos)].setChildren(newHandlers);
                 }
-            } else {
+            }else {
                 finalHandlers.add(temp);
             }
         }
-
-        this.handlers = new MergeHandler[0];
+        this.handlers = new org.broadleafcommerce.common.extensibility.context.merge.handlers.MergeHandler[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1715, 0)];
         this.handlers = finalHandlers.toArray(this.handlers);
-        Arrays.sort(this.handlers);
+        java.util.Arrays.sort(this.handlers);
     }
 
-    private Properties loadProperties() throws IOException {
-        Properties defaultProperties = new Properties();
-        defaultProperties.load(MergeManager.class.getResourceAsStream("default.properties"));
-        Properties props;
-        String overrideFileClassPath = System.getProperty(MERGE_DEFINITION_SYSTEM_PROPERTY);
-        if (overrideFileClassPath != null) {
-            props = new Properties(defaultProperties);
-            props.load(MergeManager.class.getClassLoader().getResourceAsStream(overrideFileClassPath));
-        } else {
+    private java.util.Properties loadProperties() throws java.io.IOException {
+        java.util.Properties defaultProperties = new java.util.Properties();
+        defaultProperties.load(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.class.getResourceAsStream("default.properties"));
+        java.util.Properties props;
+        java.lang.String overrideFileClassPath = java.lang.System.getProperty(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.MERGE_DEFINITION_SYSTEM_PROPERTY);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1716, (overrideFileClassPath != null))) {
+            props = new java.util.Properties(defaultProperties);
+            props.load(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.class.getClassLoader().getResourceAsStream(overrideFileClassPath));
+        }else {
             props = defaultProperties;
         }
-
         return props;
     }
 
-    public String serialize(InputStream in) {
-        InputStreamReader reader = null;
+    public java.lang.String serialize(java.io.InputStream in) {
+        java.io.InputStreamReader reader = null;
         int temp;
-        StringBuilder item = new StringBuilder();
-        boolean eof = false;
+        java.lang.StringBuilder item = new java.lang.StringBuilder();
+        boolean eof = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1717, false);
         try {
-            reader = new InputStreamReader(in);
-            while (!eof) {
-                temp = reader.read();
-                if (temp == -1) {
-                    eof = true;
-                } else {
-                    item.append((char) temp);
+            reader = new java.io.InputStreamReader(in);
+            while (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1719, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1718, eof))))) {
+                temp = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1720, reader.read());
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1724, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1721, temp)) == (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1723, (-(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1722, 1)))))))) {
+                    eof = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1725, true);
+                }else {
+                    item.append(perturbation.PerturbationEngine.pchar(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1726, ((char) (temp))));
                 }
-            }
-        } catch (IOException e) {
-            LOG.error("Unable to merge source and patch locations", e);
+            } 
+        } catch (java.io.IOException e) {
+            org.broadleafcommerce.common.extensibility.context.merge.MergeManager.LOG.error("Unable to merge source and patch locations", e);
         } finally {
-            if (reader != null) {
-                try{ reader.close(); } catch (Throwable e) {
-                    LOG.error("Unable to merge source and patch locations", e);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1727, (reader != null))) {
+                try {
+                    reader.close();
+                } catch (java.lang.Throwable e) {
+                    org.broadleafcommerce.common.extensibility.context.merge.MergeManager.LOG.error("Unable to merge source and patch locations", e);
                 }
             }
         }
-
         return item.toString();
     }
 
+    public static perturbation.location.PerturbationLocation __L1666;
+
+    public static perturbation.location.PerturbationLocation __L1667;
+
+    public static perturbation.location.PerturbationLocation __L1668;
+
+    public static perturbation.location.PerturbationLocation __L1669;
+
+    public static perturbation.location.PerturbationLocation __L1670;
+
+    public static perturbation.location.PerturbationLocation __L1671;
+
+    public static perturbation.location.PerturbationLocation __L1672;
+
+    public static perturbation.location.PerturbationLocation __L1673;
+
+    public static perturbation.location.PerturbationLocation __L1674;
+
+    public static perturbation.location.PerturbationLocation __L1675;
+
+    public static perturbation.location.PerturbationLocation __L1676;
+
+    public static perturbation.location.PerturbationLocation __L1677;
+
+    public static perturbation.location.PerturbationLocation __L1678;
+
+    public static perturbation.location.PerturbationLocation __L1679;
+
+    public static perturbation.location.PerturbationLocation __L1680;
+
+    public static perturbation.location.PerturbationLocation __L1681;
+
+    public static perturbation.location.PerturbationLocation __L1682;
+
+    public static perturbation.location.PerturbationLocation __L1683;
+
+    public static perturbation.location.PerturbationLocation __L1684;
+
+    public static perturbation.location.PerturbationLocation __L1685;
+
+    public static perturbation.location.PerturbationLocation __L1686;
+
+    public static perturbation.location.PerturbationLocation __L1687;
+
+    public static perturbation.location.PerturbationLocation __L1688;
+
+    public static perturbation.location.PerturbationLocation __L1689;
+
+    public static perturbation.location.PerturbationLocation __L1690;
+
+    public static perturbation.location.PerturbationLocation __L1691;
+
+    public static perturbation.location.PerturbationLocation __L1692;
+
+    public static perturbation.location.PerturbationLocation __L1693;
+
+    public static perturbation.location.PerturbationLocation __L1694;
+
+    public static perturbation.location.PerturbationLocation __L1695;
+
+    public static perturbation.location.PerturbationLocation __L1696;
+
+    public static perturbation.location.PerturbationLocation __L1697;
+
+    public static perturbation.location.PerturbationLocation __L1698;
+
+    public static perturbation.location.PerturbationLocation __L1699;
+
+    public static perturbation.location.PerturbationLocation __L1700;
+
+    public static perturbation.location.PerturbationLocation __L1701;
+
+    public static perturbation.location.PerturbationLocation __L1702;
+
+    public static perturbation.location.PerturbationLocation __L1703;
+
+    public static perturbation.location.PerturbationLocation __L1704;
+
+    public static perturbation.location.PerturbationLocation __L1705;
+
+    public static perturbation.location.PerturbationLocation __L1706;
+
+    public static perturbation.location.PerturbationLocation __L1707;
+
+    public static perturbation.location.PerturbationLocation __L1708;
+
+    public static perturbation.location.PerturbationLocation __L1709;
+
+    public static perturbation.location.PerturbationLocation __L1710;
+
+    public static perturbation.location.PerturbationLocation __L1711;
+
+    public static perturbation.location.PerturbationLocation __L1712;
+
+    public static perturbation.location.PerturbationLocation __L1713;
+
+    public static perturbation.location.PerturbationLocation __L1714;
+
+    public static perturbation.location.PerturbationLocation __L1715;
+
+    public static perturbation.location.PerturbationLocation __L1716;
+
+    public static perturbation.location.PerturbationLocation __L1717;
+
+    public static perturbation.location.PerturbationLocation __L1718;
+
+    public static perturbation.location.PerturbationLocation __L1719;
+
+    public static perturbation.location.PerturbationLocation __L1720;
+
+    public static perturbation.location.PerturbationLocation __L1721;
+
+    public static perturbation.location.PerturbationLocation __L1722;
+
+    public static perturbation.location.PerturbationLocation __L1723;
+
+    public static perturbation.location.PerturbationLocation __L1724;
+
+    public static perturbation.location.PerturbationLocation __L1725;
+
+    public static perturbation.location.PerturbationLocation __L1726;
+
+    public static perturbation.location.PerturbationLocation __L1727;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1666 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:121)", 1666, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1667 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:125)", 1667, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1668 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:133)", 1668, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1669 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:134)", 1669, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1670 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:143)", 1670, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1671 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:146)", 1671, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1672 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:149)", 1672, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1673 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:166)", 1673, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1674 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:184)", 1674, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1675 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:186)", 1675, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1676 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:188)", 1676, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1677 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:206)", 1677, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1678 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:207)", 1678, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1679 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:207)", 1679, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1680 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:207)", 1680, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1681 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:208)", 1681, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1682 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:212)", 1682, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1683 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:214)", 1683, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1684 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:216)", 1684, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1685 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:217)", 1685, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1686 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:218)", 1686, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1687 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:245)", 1687, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1688 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:250)", 1688, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1689 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:270)", 1689, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1690 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:286)", 1690, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1691 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:288)", 1691, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1692 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:288)", 1692, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1693 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:291)", 1693, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1694 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:292)", 1694, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1695 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:295)", 1695, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1696 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:306)", 1696, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1697 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:312)", 1697, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1698 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:313)", 1698, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1699 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:313)", 1699, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1700 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:314)", 1700, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1701 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:320)", 1701, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1702 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:320)", 1702, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1703 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:320)", 1703, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1704 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:321)", 1704, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1705 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:322)", 1705, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1706 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:322)", 1706, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1707 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:322)", 1707, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1708 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:323)", 1708, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1709 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:323)", 1709, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1710 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:323)", 1710, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1711 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:324)", 1711, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1712 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:324)", 1712, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1713 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:324)", 1713, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1714 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:326)", 1714, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1715 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:333)", 1715, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1716 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:343)", 1716, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1717 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:357)", 1717, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1718 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:360)", 1718, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1719 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:360)", 1719, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1720 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:361)", 1720, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1721 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:362)", 1721, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1722 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:362)", 1722, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1723 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:362)", 1723, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1724 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:362)", 1724, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1725 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:363)", 1725, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1726 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:365)", 1726, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.__L1727 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MergeManager.java:371)", 1727, "Boolean");
+    }
+
+    static {
+        try {
+            javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+            dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            org.broadleafcommerce.common.extensibility.context.merge.MergeManager.builder = dbf.newDocumentBuilder();
+        } catch (javax.xml.parsers.ParserConfigurationException e) {
+            org.broadleafcommerce.common.extensibility.context.merge.MergeManager.LOG.error("Unable to create document builder", e);
+            throw new java.lang.RuntimeException(e);
+        }
+    }
+
+    static {
+        org.broadleafcommerce.common.extensibility.context.merge.MergeManager.initPerturbationLocation0();
+    }
 }
+

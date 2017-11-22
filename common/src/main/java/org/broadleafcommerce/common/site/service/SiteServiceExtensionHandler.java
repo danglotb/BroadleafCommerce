@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,32 +17,8 @@
  */
 package org.broadleafcommerce.common.site.service;
 
-import org.broadleafcommerce.common.extension.ExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.site.domain.SiteImpl;
 
-/**
- * <p>
- * ExtensionHandler for methods within {@link SiteServiceImpl}
- * 
- * <p>
- * Rather than implementing this interface directly you should extend your implementation from
- * {@link AbstractSiteServiceExtensionHandler}.
- * 
- * @author Phillip Verheyden (phillipuniverse)
- * @see {@link AbstractSiteServiceExtensionHandler}
- */
-public interface SiteServiceExtensionHandler extends ExtensionHandler {
-
-    /**
-     * Invoked via {@link SiteServiceImpl#getNonPersistentSite(Site)} after the initial framework clone. If more properties
-     * are dynamically weaved into {@link SiteImpl} then they should be cloned here.
-     * 
-     * @param from the {@link Site} being copied from, usually just looked up from the database
-     * @param to the 
-     * @see {@link SiteServiceImpl#getNonPersistentSite(Site)}
-     */
-    public ExtensionResultStatusType contributeNonPersitentSiteProperties(Site from, Site to);
-
+public interface SiteServiceExtensionHandler extends org.broadleafcommerce.common.extension.ExtensionHandler {
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType contributeNonPersitentSiteProperties(org.broadleafcommerce.common.site.domain.Site from, org.broadleafcommerce.common.site.domain.Site to);
 }
+

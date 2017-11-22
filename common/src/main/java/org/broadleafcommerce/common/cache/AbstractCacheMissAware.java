@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,200 +17,224 @@
  */
 package org.broadleafcommerce.common.cache;
 
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.broadleafcommerce.common.sandbox.domain.SandBox;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.springframework.util.ClassUtils;
 
-import java.io.Serializable;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-
-import javax.annotation.Resource;
-
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Element;
-
-/**
- * Support for any class that wishes to utilize a query miss cache. This cache is capable of caching a query miss
- * (the query returns no results). This is beneficial since standard level 2 cache does not maintain misses.
- *
- * NOTE, special cache invalidation support must be added to address this cache if a change is made to one or more of
- * the cached missed items.
- *
- * @author Jeff Fischer
- */
 public abstract class AbstractCacheMissAware {
-    
-    @Resource(name="blStatisticsService")
-    protected StatisticsService statisticsService;
+    @javax.annotation.Resource(name = "blStatisticsService")
+    protected org.broadleafcommerce.common.cache.StatisticsService statisticsService;
 
-    protected Cache cache;
+    protected net.sf.ehcache.Cache cache;
 
-    private Object nullObject = null;
+    private java.lang.Object nullObject = null;
 
-    /**
-     * Build the key representing this missed cache item. Will include sandbox information
-     * if appropriate.
-     *
-     * @param params the appropriate params comprising a unique key for this cache item
-     * @return the completed key
-     */
-    protected String buildKey(String... params) {
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
-        SandBox sandBox = null;
-        if (context != null) {
+    protected java.lang.String buildKey(java.lang.String... params) {
+        org.broadleafcommerce.common.web.BroadleafRequestContext context = org.broadleafcommerce.common.web.BroadleafRequestContext.getBroadleafRequestContext();
+        org.broadleafcommerce.common.sandbox.domain.SandBox sandBox = null;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L196, (context != null))) {
             sandBox = context.getSandBox();
         }
-        String key = StringUtils.join(params, '_');
-        if (sandBox != null) {
-            key = sandBox.getId() + "_" + key;
+        java.lang.String key = org.apache.commons.lang.StringUtils.join(params, '_');
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L197, (sandBox != null))) {
+            key = ((sandBox.getId()) + "_") + key;
         }
         return key;
     }
 
-    /**
-     * Retrieve the missed cache item from the specified cache.
-     *
-     * @param key the unique key for the cache item
-     * @param cacheName the name of the cache - this is the cache region name from ehcache config
-     * @param <T> the type of the cache item
-     * @return the cache item instance
-     */
-    protected <T> T getObjectFromCache(String key, String cacheName) {
-        Element cacheElement = getCache(cacheName).get(key);
-        if (cacheElement != null) {
-            return (T) cacheElement.getValue();
+    protected <T> T getObjectFromCache(java.lang.String key, java.lang.String cacheName) {
+        net.sf.ehcache.Element cacheElement = getCache(cacheName).get(key);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L198, (cacheElement != null))) {
+            return ((T) (cacheElement.getValue()));
         }
         return null;
     }
 
-    /**
-     * Retrieve the underlying cache for this query miss cache. Presumably and Ehcache
-     * region has been configured for this cacheName.
-     *
-     * @param cacheName the name of the cache - the ehcache region name
-     * @return the underlying cache
-     */
-    protected Cache getCache(String cacheName) {
-        if (cache == null) {
-            cache = CacheManager.getInstance().getCache(cacheName);
+    protected net.sf.ehcache.Cache getCache(java.lang.String cacheName) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L199, ((cache) == null))) {
+            cache = net.sf.ehcache.CacheManager.getInstance().getCache(cacheName);
         }
         return cache;
     }
 
-    /**
-     * Remove a specific cache item from the underlying cache
-     *
-     * @param cacheName the name of the cache - the ehcache region name
-     * @param params the appropriate params comprising a unique key for this cache item
-     */
-    protected void removeItemFromCache(String cacheName, String... params) {
-        String key = buildKey(params);
-        if (getLogger().isTraceEnabled()) {
-            getLogger().trace("Evicting [" + key + "] from the [" + cacheName + "] cache.");
+    protected void removeItemFromCache(java.lang.String cacheName, java.lang.String... params) {
+        java.lang.String key = buildKey(params);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L200, getLogger().isTraceEnabled())) {
+            getLogger().trace((((("Evicting [" + key) + "] from the [") + cacheName) + "] cache."));
         }
         getCache(cacheName).remove(key);
     }
 
-    /**
-     * Remove all items from the underlying cache - a complete clear
-     *
-     * @param cacheName the name of the cache - the ehcache region name
-     */
-    protected void clearCache(String cacheName) {
-        if (getLogger().isTraceEnabled()) {
-            getLogger().trace("Evicting all keys from the [" + cacheName + "] cache.");
+    protected void clearCache(java.lang.String cacheName) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L201, getLogger().isTraceEnabled())) {
+            getLogger().trace((("Evicting all keys from the [" + cacheName) + "] cache."));
         }
         getCache(cacheName).removeAll();
     }
 
-    /**
-     * Retrieve a null representation of the cache item. This representation is the same for
-     * all cache misses and is used as the object representation to store in the cache for a
-     * cache miss.
-     *
-     * @param responseClass the class representing the type of the cache item
-     * @param <T> the type of the cache item
-     * @return the null representation for the cache item
-     */
-    protected synchronized <T> T getNullObject(final Class<T> responseClass) {
-        if (nullObject == null) {
-            Class<?>[] interfaces = (Class<?>[]) ArrayUtils.add(ClassUtils.getAllInterfacesForClass(responseClass), Serializable.class);
-            nullObject = Proxy.newProxyInstance(getClass().getClassLoader(), interfaces, new InvocationHandler() {
-                @Override
-                public Object invoke(Object o, Method method, Object[] objects) throws Throwable {
-                    if (method.getName().equals("equals")) {
-                        return !(objects[0] == null) && objects[0].hashCode() == 31;
-                    } else if (method.getName().equals("hashCode")) {
-                        return 31;
-                    } else if (method.getName().equals("toString")) {
-                        return "Null_" + responseClass.getSimpleName();
-                    }
-                    throw new IllegalAccessException("Not a real object");
+    protected synchronized <T> T getNullObject(final java.lang.Class<T> responseClass) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L202, ((nullObject) == null))) {
+            java.lang.Class<?>[] interfaces = ((java.lang.Class<?>[]) (org.apache.commons.lang.ArrayUtils.add(org.springframework.util.ClassUtils.getAllInterfacesForClass(responseClass), java.io.Serializable.class)));
+            nullObject = java.lang.reflect.Proxy.newProxyInstance(getClass().getClassLoader(), interfaces, new java.lang.reflect.InvocationHandler() {
+                @java.lang.Override
+                public java.lang.Object invoke(java.lang.Object o, java.lang.reflect.Method method, java.lang.Object[] objects) throws java.lang.Throwable {
+                    if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L203, method.getName().equals("equals"))) {
+                        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L211, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L206, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L205, ((objects[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L204, 0)]) == null)))))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L210, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L208, objects[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L207, 0)].hashCode())) == (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L209, 31)))))));
+                    }else
+                        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L212, method.getName().equals("hashCode"))) {
+                            return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L213, 31);
+                        }else
+                            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L214, method.getName().equals("toString"))) {
+                                return "Null_" + (responseClass.getSimpleName());
+                            }
+
+
+                    throw new java.lang.IllegalAccessException("Not a real object");
                 }
             });
         }
-        return (T) nullObject;
+        return ((T) (nullObject));
     }
 
-    /**
-     * This is the main entry point for retrieving an object from this cache.
-     *
-     * @see org.broadleafcommerce.common.cache.StatisticsService
-     * @param responseClass the class representing the type of the cache item
-     * @param cacheName the name of the cache - the ehcache region name
-     * @param statisticsName the name to use for cache hit statistics
-     * @param retrieval the block of code to execute if a cache miss is not found in this cache
-     * @param params the appropriate params comprising a unique key for this cache item
-     * @param <T> the type of the cache item
-     * @return The object retrieved from the executiom of the PersistentRetrieval, or null if a cache miss was found in this cache
-     */
-    protected <T> T getCachedObject(Class<T> responseClass, String cacheName, String statisticsName, PersistentRetrieval<T> retrieval, String... params) {
+    protected <T> T getCachedObject(java.lang.Class<T> responseClass, java.lang.String cacheName, java.lang.String statisticsName, org.broadleafcommerce.common.cache.PersistentRetrieval<T> retrieval, java.lang.String... params) {
         T nullResponse = getNullObject(responseClass);
-        BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
-        String key = buildKey(params);
+        org.broadleafcommerce.common.web.BroadleafRequestContext context = org.broadleafcommerce.common.web.BroadleafRequestContext.getBroadleafRequestContext();
+        java.lang.String key = buildKey(params);
         T response = null;
-        boolean allowL2Cache = false;
-        if (context != null) {
-            allowL2Cache = context.isProductionSandBox()
-                || (context.getAdditionalProperties().containsKey("allowLevel2Cache")
-                    && (Boolean) context.getAdditionalProperties().get("allowLevel2Cache"));
+        boolean allowL2Cache = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L215, false);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L216, (context != null))) {
+            allowL2Cache = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L219, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L217, context.isProductionSandBox())) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L218, ((context.getAdditionalProperties().containsKey("allowLevel2Cache")) && ((java.lang.Boolean) (context.getAdditionalProperties().get("allowLevel2Cache"))))))));
         }
-        if (allowL2Cache) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L220, allowL2Cache)) {
             response = getObjectFromCache(key, cacheName);
         }
-        if (response == null) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L221, (response == null))) {
             response = retrieval.retrievePersistentObject();
-            if (response == null) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L222, (response == null))) {
                 response = nullResponse;
             }
-            //only handle null, non-hits. Otherwise, let level 2 cache handle it
-            if (allowL2Cache && response.equals(nullResponse)) {
-                statisticsService.addCacheStat(statisticsName, false);
-                getCache(cacheName).put(new Element(key, response));
-                if (getLogger().isTraceEnabled()) {
-                    getLogger().trace("Caching [" + key + "] as null in the [" + cacheName + "] cache.");
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L225, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L223, allowL2Cache)) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L224, response.equals(nullResponse)))))) {
+                statisticsService.addCacheStat(statisticsName, perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L226, false));
+                getCache(cacheName).put(new net.sf.ehcache.Element(key, response));
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L227, getLogger().isTraceEnabled())) {
+                    getLogger().trace((((("Caching [" + key) + "] as null in the [") + cacheName) + "] cache."));
                 }
             }
-        } else {
-            statisticsService.addCacheStat(statisticsName, true);
+        }else {
+            statisticsService.addCacheStat(statisticsName, perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L228, true));
         }
-        if (response.equals(nullResponse)) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L229, response.equals(nullResponse))) {
             return null;
         }
         return response;
     }
-    
-    /**
-     * To provide more accurate logging, this abstract cache should utilize a logger from its child
-     * implementation.
-     * 
-     * @return a {@link Log} instance from the subclass of this abstract class
-     */
-    protected abstract Log getLogger();
+
+    protected abstract org.apache.commons.logging.Log getLogger();
+
+    public static perturbation.location.PerturbationLocation __L196;
+
+    public static perturbation.location.PerturbationLocation __L197;
+
+    public static perturbation.location.PerturbationLocation __L198;
+
+    public static perturbation.location.PerturbationLocation __L199;
+
+    public static perturbation.location.PerturbationLocation __L200;
+
+    public static perturbation.location.PerturbationLocation __L201;
+
+    public static perturbation.location.PerturbationLocation __L202;
+
+    public static perturbation.location.PerturbationLocation __L203;
+
+    public static perturbation.location.PerturbationLocation __L204;
+
+    public static perturbation.location.PerturbationLocation __L205;
+
+    public static perturbation.location.PerturbationLocation __L206;
+
+    public static perturbation.location.PerturbationLocation __L207;
+
+    public static perturbation.location.PerturbationLocation __L208;
+
+    public static perturbation.location.PerturbationLocation __L209;
+
+    public static perturbation.location.PerturbationLocation __L210;
+
+    public static perturbation.location.PerturbationLocation __L211;
+
+    public static perturbation.location.PerturbationLocation __L212;
+
+    public static perturbation.location.PerturbationLocation __L213;
+
+    public static perturbation.location.PerturbationLocation __L214;
+
+    public static perturbation.location.PerturbationLocation __L215;
+
+    public static perturbation.location.PerturbationLocation __L216;
+
+    public static perturbation.location.PerturbationLocation __L217;
+
+    public static perturbation.location.PerturbationLocation __L218;
+
+    public static perturbation.location.PerturbationLocation __L219;
+
+    public static perturbation.location.PerturbationLocation __L220;
+
+    public static perturbation.location.PerturbationLocation __L221;
+
+    public static perturbation.location.PerturbationLocation __L222;
+
+    public static perturbation.location.PerturbationLocation __L223;
+
+    public static perturbation.location.PerturbationLocation __L224;
+
+    public static perturbation.location.PerturbationLocation __L225;
+
+    public static perturbation.location.PerturbationLocation __L226;
+
+    public static perturbation.location.PerturbationLocation __L227;
+
+    public static perturbation.location.PerturbationLocation __L228;
+
+    public static perturbation.location.PerturbationLocation __L229;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L196 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:66)", 196, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L197 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:70)", 197, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L198 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:86)", 198, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L199 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:100)", 199, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L200 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:114)", 200, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L201 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:126)", 201, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L202 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:142)", 202, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L203 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:147)", 203, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L204 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:148)", 204, "Numerical");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L205 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:148)", 205, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L206 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:148)", 206, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L207 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:148)", 207, "Numerical");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L208 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:148)", 208, "Numerical");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L209 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:148)", 209, "Numerical");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L210 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:148)", 210, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L211 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:148)", 211, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L212 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:149)", 212, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L213 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:150)", 213, "Numerical");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L214 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:151)", 214, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L215 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:178)", 215, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L216 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:179)", 216, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L217 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:180)", 217, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L218 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:181)", 218, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L219 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:180)", 219, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L220 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:184)", 220, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L221 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:187)", 221, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L222 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:189)", 222, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L223 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:193)", 223, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L224 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:193)", 224, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L225 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:193)", 225, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L226 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:194)", 226, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L227 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:196)", 227, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L228 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:201)", 228, "Boolean");
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.__L229 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/AbstractCacheMissAware.java:203)", 229, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.cache.AbstractCacheMissAware.initPerturbationLocation0();
+    }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,28 +17,26 @@
  */
 package org.broadleafcommerce.common.extensibility.jpa.copy;
 
-/**
- * @author Jeff Fischer
- */
+
 public class DirectCopyIgnorePattern {
+    private java.lang.String[] patterns;
 
-    private String[] patterns;
-    private String[] templateTokenPatterns;
+    private java.lang.String[] templateTokenPatterns;
 
-    public String[] getPatterns() {
+    public java.lang.String[] getPatterns() {
         return patterns;
     }
 
-    public void setPatterns(String[] patterns) {
+    public void setPatterns(java.lang.String[] patterns) {
         this.patterns = patterns;
     }
 
-    public String[] getTemplateTokenPatterns() {
+    public java.lang.String[] getTemplateTokenPatterns() {
         return templateTokenPatterns;
     }
 
-    public void setTemplateTokenPatterns(String[] templateTokenPatterns) {
+    public void setTemplateTokenPatterns(java.lang.String[] templateTokenPatterns) {
         this.templateTokenPatterns = templateTokenPatterns;
     }
-
 }
+

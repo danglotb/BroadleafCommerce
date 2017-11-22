@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,29 +17,24 @@
  */
 package org.broadleafcommerce.common.cache.engine;
 
-/**
- * 
- * @author jfischer
- *
- */
-public class CacheFactoryException extends Exception {
 
+public class CacheFactoryException extends java.lang.Exception {
     private static final long serialVersionUID = 1L;
 
     public CacheFactoryException() {
         super();
     }
 
-    public CacheFactoryException(String message, Throwable cause) {
+    public CacheFactoryException(java.lang.String message, java.lang.Throwable cause) {
         super(message, cause);
     }
 
-    public CacheFactoryException(String message) {
+    public CacheFactoryException(java.lang.String message) {
         super(message);
     }
 
-    public CacheFactoryException(Throwable cause) {
+    public CacheFactoryException(java.lang.Throwable cause) {
         super(cause);
     }
-
 }
+

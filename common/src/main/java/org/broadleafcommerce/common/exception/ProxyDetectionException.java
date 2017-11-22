@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,32 +17,25 @@
  */
 package org.broadleafcommerce.common.exception;
 
-/**
- * Special exception thrown when a problem is encountered while trying to retrieve the original implementation
- * class for a proxy. This is generally in relation to getting the original entity implementation from
- * a Hibernate javassist proxy.
- *
- * @author Jeff Fischer
- */
-public class ProxyDetectionException extends RuntimeException {
 
+public class ProxyDetectionException extends java.lang.RuntimeException {
     public ProxyDetectionException() {
     }
 
-    public ProxyDetectionException(String message) {
+    public ProxyDetectionException(java.lang.String message) {
         super(message);
     }
 
-    public ProxyDetectionException(String message, Throwable cause) {
+    public ProxyDetectionException(java.lang.String message, java.lang.Throwable cause) {
         super(message, cause);
     }
 
-    public ProxyDetectionException(Throwable cause) {
+    public ProxyDetectionException(java.lang.Throwable cause) {
         super(cause);
     }
 
-    public ProxyDetectionException(String message, Throwable cause, boolean enableSuppression,
-                                   boolean writableStackTrace) {
+    public ProxyDetectionException(java.lang.String message, java.lang.Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }
+

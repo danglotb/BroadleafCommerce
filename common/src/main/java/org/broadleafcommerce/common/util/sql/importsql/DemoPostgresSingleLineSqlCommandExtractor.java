@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,66 +17,60 @@
  */
 package org.broadleafcommerce.common.util.sql.importsql;
 
-import org.broadleafcommerce.common.logging.SupportLogManager;
-import org.broadleafcommerce.common.logging.SupportLogger;
-import org.hibernate.tool.hbm2ddl.SingleLineSqlCommandExtractor;
 
-import java.io.Reader;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+public class DemoPostgresSingleLineSqlCommandExtractor extends org.hibernate.tool.hbm2ddl.SingleLineSqlCommandExtractor {
+    public static final java.lang.String NEWLINE_REPLACEMENT_REGEX = "\\\\r\\\\n";
 
-/**
- * 
- * Command extractor that does Postgres specific logic in order for the DemoSite load scripts to import correctly.<br/><br/>
- * 
- * Add:<br/>
- *  {@code blPU.hibernate.hbm2ddl.import_files_sql_extractor=org.broadleafcommerce.common.util.sql.importsql.DemoPostgresSingleLineSqlCommandExtractor
- *  blEventPU.hibernate.hbm2ddl.import_files_sql_extractor=org.broadleafcommerce.common.util.sql.importsql.DemoPostgresSingleLineSqlCommandExtractor}<br>
- *  
- *  in properties file to run load scripts through this extractor
- * 
- * @author Jay Aisenbrey (cja769)
- *
- */
-public class DemoPostgresSingleLineSqlCommandExtractor extends SingleLineSqlCommandExtractor {
-
-    public static final String NEWLINE_REPLACEMENT_REGEX = "\\\\r\\\\n";
-    
     private static final long serialVersionUID = 1L;
-    
-    private static final SupportLogger LOGGER = SupportLogManager.getLogger("UserOverride", DemoPostgresSingleLineSqlCommandExtractor.class);
-    
-    @Override
-    public String[] extractCommands(Reader reader) {
-        String[] commands = super.extractCommands(reader);
-        String[] newCommands = new String[commands.length];
-        int i = 0;
-        for (String command : commands) {
-            String newCommand = command;
-            
-            // Replacing all double single quotes with double double quotes to simplify regex. Original regex caused
-            // StackOverFlow exception by exploiting a known issue in java. See - http://bugs.java.com/view_bug.do?bug_id=5050507
+
+    private static final org.broadleafcommerce.common.logging.SupportLogger LOGGER = org.broadleafcommerce.common.logging.SupportLogManager.getLogger("UserOverride", org.broadleafcommerce.common.util.sql.importsql.DemoPostgresSingleLineSqlCommandExtractor.class);
+
+    @java.lang.Override
+    public java.lang.String[] extractCommands(java.io.Reader reader) {
+        java.lang.String[] commands = super.extractCommands(reader);
+        java.lang.String[] newCommands = new java.lang.String[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.sql.importsql.DemoPostgresSingleLineSqlCommandExtractor.__L6018, commands.length)];
+        int i = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.sql.importsql.DemoPostgresSingleLineSqlCommandExtractor.__L6019, 0);
+        for (java.lang.String command : commands) {
+            java.lang.String newCommand = command;
             newCommand = newCommand.replaceAll("''", "\"\"");
-            
-            // Find all string values being set and put an 'E' outside. This has to be done in Postgres so that escapes
-            // are evaluated correctly
             newCommand = newCommand.replaceAll("('.*?')", "E$1");
             newCommand = newCommand.replaceAll("\"\"", "''");
-            
-            // Any MySQL-specific newlines replace with special character newlines
-            newCommand = newCommand.replaceAll(NEWLINE_REPLACEMENT_REGEX, "' || CHR(13) || CHR(10) || '");
-            // Any MySQL CHAR functions with CHR
-            Pattern charPattern = Pattern.compile("CHAR\\((\\d+)\\)");
-            Matcher charMatcher = charPattern.matcher(newCommand);
-            if (charMatcher.find()) {
-                String charCode = charMatcher.group(1);
-                newCommand = charMatcher.replaceAll("CHR(" + charCode + ")");
+            newCommand = newCommand.replaceAll(org.broadleafcommerce.common.util.sql.importsql.DemoPostgresSingleLineSqlCommandExtractor.NEWLINE_REPLACEMENT_REGEX, "' || CHR(13) || CHR(10) || '");
+            java.util.regex.Pattern charPattern = java.util.regex.Pattern.compile("CHAR\\((\\d+)\\)");
+            java.util.regex.Matcher charMatcher = charPattern.matcher(newCommand);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.sql.importsql.DemoPostgresSingleLineSqlCommandExtractor.__L6020, charMatcher.find())) {
+                java.lang.String charCode = charMatcher.group(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.sql.importsql.DemoPostgresSingleLineSqlCommandExtractor.__L6021, 1));
+                newCommand = charMatcher.replaceAll((("CHR(" + charCode) + ")"));
             }
-
-            newCommands[i] = newCommand;
-            i++;
+            newCommands[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.sql.importsql.DemoPostgresSingleLineSqlCommandExtractor.__L6022, i)] = newCommand;
+            perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.sql.importsql.DemoPostgresSingleLineSqlCommandExtractor.__L6023, (i++));
         }
         return newCommands;
     }
 
+    public static perturbation.location.PerturbationLocation __L6018;
+
+    public static perturbation.location.PerturbationLocation __L6019;
+
+    public static perturbation.location.PerturbationLocation __L6020;
+
+    public static perturbation.location.PerturbationLocation __L6021;
+
+    public static perturbation.location.PerturbationLocation __L6022;
+
+    public static perturbation.location.PerturbationLocation __L6023;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.sql.importsql.DemoPostgresSingleLineSqlCommandExtractor.__L6018 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/sql/importsql/DemoPostgresSingleLineSqlCommandExtractor.java:52)", 6018, "Numerical");
+        org.broadleafcommerce.common.util.sql.importsql.DemoPostgresSingleLineSqlCommandExtractor.__L6019 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/sql/importsql/DemoPostgresSingleLineSqlCommandExtractor.java:53)", 6019, "Numerical");
+        org.broadleafcommerce.common.util.sql.importsql.DemoPostgresSingleLineSqlCommandExtractor.__L6020 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/sql/importsql/DemoPostgresSingleLineSqlCommandExtractor.java:71)", 6020, "Boolean");
+        org.broadleafcommerce.common.util.sql.importsql.DemoPostgresSingleLineSqlCommandExtractor.__L6021 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/sql/importsql/DemoPostgresSingleLineSqlCommandExtractor.java:72)", 6021, "Numerical");
+        org.broadleafcommerce.common.util.sql.importsql.DemoPostgresSingleLineSqlCommandExtractor.__L6022 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/sql/importsql/DemoPostgresSingleLineSqlCommandExtractor.java:76)", 6022, "Numerical");
+        org.broadleafcommerce.common.util.sql.importsql.DemoPostgresSingleLineSqlCommandExtractor.__L6023 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/sql/importsql/DemoPostgresSingleLineSqlCommandExtractor.java:77)", 6023, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.sql.importsql.DemoPostgresSingleLineSqlCommandExtractor.initPerturbationLocation0();
+    }
 }
+

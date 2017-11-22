@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,61 +17,83 @@
  */
 package org.broadleafcommerce.common.web.util;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
-import java.io.IOException;
 
-/**
- * Code is largely copied from StackOverflow post made by David Rabinowitz with contributions
- * by others in the same thread.   Overrides all status setting methods and retains the status.
- * <br><br>
- *
- * http://stackoverflow.com/questions/1302072/how-can-i-get-the-http-status-code-out-of-a-servletresponse-in-a-servletfilter<br><br>
- *
- * This won't be needed with Servlet 3.0.<br><br>
- *
- * Addeded by bpolster.
- */
-public class StatusExposingServletResponse extends HttpServletResponseWrapper {
+public class StatusExposingServletResponse extends javax.servlet.http.HttpServletResponseWrapper {
+    private int httpStatus = 200;
 
-    private int httpStatus=200;
-
-    public StatusExposingServletResponse(HttpServletResponse response) {
+    public StatusExposingServletResponse(javax.servlet.http.HttpServletResponse response) {
         super(response);
     }
 
-    @Override
-    public void sendError(int sc) throws IOException {
-        httpStatus = sc;
-        super.sendError(sc);
+    @java.lang.Override
+    public void sendError(int sc) throws java.io.IOException {
+        httpStatus = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.util.StatusExposingServletResponse.__L7686, sc);
+        super.sendError(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.util.StatusExposingServletResponse.__L7687, sc));
     }
 
-    @Override
-    public void sendError(int sc, String msg) throws IOException {
-        httpStatus = sc;
-        super.sendError(sc, msg);
+    @java.lang.Override
+    public void sendError(int sc, java.lang.String msg) throws java.io.IOException {
+        httpStatus = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.util.StatusExposingServletResponse.__L7688, sc);
+        super.sendError(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.util.StatusExposingServletResponse.__L7689, sc), msg);
     }
 
-    @Override
+    @java.lang.Override
     public void setStatus(int sc) {
-        httpStatus = sc;
-        super.setStatus(sc);
+        httpStatus = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.util.StatusExposingServletResponse.__L7690, sc);
+        super.setStatus(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.util.StatusExposingServletResponse.__L7691, sc));
     }
 
-    @Override
+    @java.lang.Override
     public void reset() {
         super.reset();
-        this.httpStatus = SC_OK;
+        this.httpStatus = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.util.StatusExposingServletResponse.__L7692, javax.servlet.http.HttpServletResponse.SC_OK);
     }
 
-    @Override
-    public void setStatus(int status, String string) {
-        super.setStatus(status, string);
-        this.httpStatus = status;
+    @java.lang.Override
+    public void setStatus(int status, java.lang.String string) {
+        super.setStatus(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.util.StatusExposingServletResponse.__L7693, status), string);
+        this.httpStatus = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.util.StatusExposingServletResponse.__L7694, status);
     }
 
     public int getStatus() {
-        return httpStatus;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.util.StatusExposingServletResponse.__L7695, httpStatus);
     }
 
+    public static perturbation.location.PerturbationLocation __L7686;
+
+    public static perturbation.location.PerturbationLocation __L7687;
+
+    public static perturbation.location.PerturbationLocation __L7688;
+
+    public static perturbation.location.PerturbationLocation __L7689;
+
+    public static perturbation.location.PerturbationLocation __L7690;
+
+    public static perturbation.location.PerturbationLocation __L7691;
+
+    public static perturbation.location.PerturbationLocation __L7692;
+
+    public static perturbation.location.PerturbationLocation __L7693;
+
+    public static perturbation.location.PerturbationLocation __L7694;
+
+    public static perturbation.location.PerturbationLocation __L7695;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.util.StatusExposingServletResponse.__L7686 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/util/StatusExposingServletResponse.java:45)", 7686, "Numerical");
+        org.broadleafcommerce.common.web.util.StatusExposingServletResponse.__L7687 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/util/StatusExposingServletResponse.java:46)", 7687, "Numerical");
+        org.broadleafcommerce.common.web.util.StatusExposingServletResponse.__L7688 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/util/StatusExposingServletResponse.java:51)", 7688, "Numerical");
+        org.broadleafcommerce.common.web.util.StatusExposingServletResponse.__L7689 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/util/StatusExposingServletResponse.java:52)", 7689, "Numerical");
+        org.broadleafcommerce.common.web.util.StatusExposingServletResponse.__L7690 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/util/StatusExposingServletResponse.java:57)", 7690, "Numerical");
+        org.broadleafcommerce.common.web.util.StatusExposingServletResponse.__L7691 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/util/StatusExposingServletResponse.java:58)", 7691, "Numerical");
+        org.broadleafcommerce.common.web.util.StatusExposingServletResponse.__L7692 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/util/StatusExposingServletResponse.java:64)", 7692, "Numerical");
+        org.broadleafcommerce.common.web.util.StatusExposingServletResponse.__L7693 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/util/StatusExposingServletResponse.java:69)", 7693, "Numerical");
+        org.broadleafcommerce.common.web.util.StatusExposingServletResponse.__L7694 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/util/StatusExposingServletResponse.java:70)", 7694, "Numerical");
+        org.broadleafcommerce.common.web.util.StatusExposingServletResponse.__L7695 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/util/StatusExposingServletResponse.java:74)", 7695, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.util.StatusExposingServletResponse.initPerturbationLocation0();
+    }
 }
+

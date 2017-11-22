@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Framework Web
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,18 +17,10 @@
  */
 package org.broadleafcommerce.common.web.cache;
 
-import org.broadleafcommerce.common.extension.ExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.presentation.cache.BroadleafTemplateCacheContext;
 
-/**
- * @author Chad Harchar (charchar)
- */
-public interface BLCICacheExtensionHandler extends ExtensionHandler {
+public interface BLCICacheExtensionHandler extends org.broadleafcommerce.common.extension.ExtensionHandler {
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType putCache(java.lang.Object key, java.lang.Object value, org.broadleafcommerce.presentation.cache.BroadleafTemplateCacheContext blciCache);
 
-    public ExtensionResultStatusType putCache(Object key, Object value, BroadleafTemplateCacheContext blciCache);
-
-    public ExtensionResultStatusType getCache(Object key, ExtensionResultHolder<Object> erh, BroadleafTemplateCacheContext blciCache);
-
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType getCache(java.lang.Object key, org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.Object> erh, org.broadleafcommerce.presentation.cache.BroadleafTemplateCacheContext blciCache);
 }
+

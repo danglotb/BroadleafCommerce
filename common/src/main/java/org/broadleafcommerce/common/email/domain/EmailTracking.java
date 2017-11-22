@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,47 +17,22 @@
  */
 package org.broadleafcommerce.common.email.domain;
 
-import java.io.Serializable;
-import java.util.Date;
 
-/**
- * @author jfischer
- *
- */
-public interface EmailTracking extends Serializable {
+public interface EmailTracking extends java.io.Serializable {
+    public abstract java.lang.Long getId();
 
-    public abstract Long getId();
+    public abstract void setId(java.lang.Long id);
 
-    public abstract void setId(Long id);
+    public abstract java.lang.String getEmailAddress();
 
-    /**
-     * @return the emailAddress
-     */
-    public abstract String getEmailAddress();
+    public abstract void setEmailAddress(java.lang.String emailAddress);
 
-    /**
-     * @param emailAddress the emailAddress to set
-     */
-    public abstract void setEmailAddress(String emailAddress);
+    public abstract java.util.Date getDateSent();
 
-    /**
-     * @return the dateSent
-     */
-    public abstract Date getDateSent();
+    public abstract void setDateSent(java.util.Date dateSent);
 
-    /**
-     * @param dateSent the dateSent to set
-     */
-    public abstract void setDateSent(Date dateSent);
+    public abstract java.lang.String getType();
 
-    /**
-     * @return the type
-     */
-    public abstract String getType();
-
-    /**
-     * @param type the type to set
-     */
-    public abstract void setType(String type);
-
+    public abstract void setType(java.lang.String type);
 }
+

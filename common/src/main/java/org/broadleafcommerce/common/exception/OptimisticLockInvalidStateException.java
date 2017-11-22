@@ -17,27 +17,26 @@
  */
 package org.broadleafcommerce.common.exception;
 
-/**
- * @author Philip Baggett (pbaggett)
- */
-public class OptimisticLockInvalidStateException extends RuntimeException {
+
+public class OptimisticLockInvalidStateException extends java.lang.RuntimeException {
     public OptimisticLockInvalidStateException() {
         super();
     }
 
-    public OptimisticLockInvalidStateException(String message) {
+    public OptimisticLockInvalidStateException(java.lang.String message) {
         super(message);
     }
 
-    public OptimisticLockInvalidStateException(String message, Throwable cause) {
+    public OptimisticLockInvalidStateException(java.lang.String message, java.lang.Throwable cause) {
         super(message, cause);
     }
 
-    public OptimisticLockInvalidStateException(Throwable cause) {
+    public OptimisticLockInvalidStateException(java.lang.Throwable cause) {
         super(cause);
     }
 
-    public OptimisticLockInvalidStateException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public OptimisticLockInvalidStateException(java.lang.String message, java.lang.Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }
+

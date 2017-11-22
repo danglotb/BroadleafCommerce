@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Workflow
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,90 +17,117 @@
  */
 package org.broadleafcommerce.common.exception;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.UndeclaredThrowableException;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-/**
- * @author Jeff Fischer
- */
 public class ExceptionHelper {
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.exception.ExceptionHelper.class);
 
-    private static final Log LOG = LogFactory.getLog(ExceptionHelper.class);
-
-    public static <G extends Throwable, J extends RuntimeException> RuntimeException refineException(Class<G> refineType, Class<J> wrapType, String message, Throwable e) {
-        if (refineType.isAssignableFrom(e.getClass())) {
-            return wrapException(e, wrapType, message);
+    public static <G extends java.lang.Throwable, J extends java.lang.RuntimeException> java.lang.RuntimeException refineException(java.lang.Class<G> refineType, java.lang.Class<J> wrapType, java.lang.String message, java.lang.Throwable e) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.ExceptionHelper.__L1245, refineType.isAssignableFrom(e.getClass()))) {
+            return org.broadleafcommerce.common.exception.ExceptionHelper.wrapException(e, wrapType, message);
         }
-        if (e.getCause() != null) {
-            return refineException(refineType, wrapType, message, e.getCause());
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.ExceptionHelper.__L1246, ((e.getCause()) != null))) {
+            return org.broadleafcommerce.common.exception.ExceptionHelper.refineException(refineType, wrapType, message, e.getCause());
         }
-        if (e instanceof UndeclaredThrowableException) {
-            return refineException(refineType, wrapType, message, ((UndeclaredThrowableException) e).getUndeclaredThrowable());
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.ExceptionHelper.__L1247, (e instanceof java.lang.reflect.UndeclaredThrowableException))) {
+            return org.broadleafcommerce.common.exception.ExceptionHelper.refineException(refineType, wrapType, message, ((java.lang.reflect.UndeclaredThrowableException) (e)).getUndeclaredThrowable());
         }
-        if (e instanceof InvocationTargetException) {
-            return refineException(refineType, wrapType, message, ((InvocationTargetException) e).getTargetException());
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.ExceptionHelper.__L1248, (e instanceof java.lang.reflect.InvocationTargetException))) {
+            return org.broadleafcommerce.common.exception.ExceptionHelper.refineException(refineType, wrapType, message, ((java.lang.reflect.InvocationTargetException) (e)).getTargetException());
         }
-        return wrapException(e, wrapType, message);
+        return org.broadleafcommerce.common.exception.ExceptionHelper.wrapException(e, wrapType, message);
     }
 
-    public static <G extends Throwable, J extends RuntimeException> RuntimeException refineException(Class<G> refineType, Class<J> wrapType, Throwable e) {
-        return refineException(refineType, wrapType, null, e);
+    public static <G extends java.lang.Throwable, J extends java.lang.RuntimeException> java.lang.RuntimeException refineException(java.lang.Class<G> refineType, java.lang.Class<J> wrapType, java.lang.Throwable e) {
+        return org.broadleafcommerce.common.exception.ExceptionHelper.refineException(refineType, wrapType, null, e);
     }
 
-    public static <G extends Throwable, J extends RuntimeException> RuntimeException refineException(Class<J> wrapType, Throwable e) {
-        return refineException(RuntimeException.class, wrapType, null, e);
+    public static <G extends java.lang.Throwable, J extends java.lang.RuntimeException> java.lang.RuntimeException refineException(java.lang.Class<J> wrapType, java.lang.Throwable e) {
+        return org.broadleafcommerce.common.exception.ExceptionHelper.refineException(java.lang.RuntimeException.class, wrapType, null, e);
     }
 
-    public static <G extends Throwable, J extends RuntimeException> RuntimeException refineException(Throwable e) {
-        return refineException(RuntimeException.class, RuntimeException.class, null, e);
+    public static <G extends java.lang.Throwable, J extends java.lang.RuntimeException> java.lang.RuntimeException refineException(java.lang.Throwable e) {
+        return org.broadleafcommerce.common.exception.ExceptionHelper.refineException(java.lang.RuntimeException.class, java.lang.RuntimeException.class, null, e);
     }
 
-    public static <G extends Throwable, J extends RuntimeException> void processException(Class<G> refineType, Class<J> wrapType, String message, Throwable e) throws G {
-        if (refineType.isAssignableFrom(e.getClass())) {
-            throw (G) e;
+    public static <G extends java.lang.Throwable, J extends java.lang.RuntimeException> void processException(java.lang.Class<G> refineType, java.lang.Class<J> wrapType, java.lang.String message, java.lang.Throwable e) throws G {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.ExceptionHelper.__L1249, refineType.isAssignableFrom(e.getClass()))) {
+            throw ((G) (e));
         }
-        if (e.getCause() != null) {
-            processException(refineType, wrapType, message, e.getCause());
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.ExceptionHelper.__L1250, ((e.getCause()) != null))) {
+            org.broadleafcommerce.common.exception.ExceptionHelper.processException(refineType, wrapType, message, e.getCause());
         }
-        if (e instanceof UndeclaredThrowableException) {
-            processException(refineType, wrapType, message, ((UndeclaredThrowableException) e).getUndeclaredThrowable());
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.ExceptionHelper.__L1251, (e instanceof java.lang.reflect.UndeclaredThrowableException))) {
+            org.broadleafcommerce.common.exception.ExceptionHelper.processException(refineType, wrapType, message, ((java.lang.reflect.UndeclaredThrowableException) (e)).getUndeclaredThrowable());
         }
-        if (e instanceof InvocationTargetException) {
-            processException(refineType, wrapType, message, ((InvocationTargetException) e).getTargetException());
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.ExceptionHelper.__L1252, (e instanceof java.lang.reflect.InvocationTargetException))) {
+            org.broadleafcommerce.common.exception.ExceptionHelper.processException(refineType, wrapType, message, ((java.lang.reflect.InvocationTargetException) (e)).getTargetException());
         }
-        throw wrapException(e, wrapType, message);
+        throw org.broadleafcommerce.common.exception.ExceptionHelper.wrapException(e, wrapType, message);
     }
 
-    public static <G extends Throwable, J extends RuntimeException> void processException(Class<G> refineType, Class<J> wrapType, Throwable e) throws G {
-        processException(refineType, wrapType, null, e);
+    public static <G extends java.lang.Throwable, J extends java.lang.RuntimeException> void processException(java.lang.Class<G> refineType, java.lang.Class<J> wrapType, java.lang.Throwable e) throws G {
+        org.broadleafcommerce.common.exception.ExceptionHelper.processException(refineType, wrapType, null, e);
     }
 
-    public static <G extends Throwable, J extends RuntimeException> void processException(Class<J> wrapType, Throwable e) throws G {
-        processException(RuntimeException.class, wrapType, null, e);
+    public static <G extends java.lang.Throwable, J extends java.lang.RuntimeException> void processException(java.lang.Class<J> wrapType, java.lang.Throwable e) throws G {
+        org.broadleafcommerce.common.exception.ExceptionHelper.processException(java.lang.RuntimeException.class, wrapType, null, e);
     }
 
-    public static <G extends Throwable, J extends RuntimeException> void processException(Throwable e) throws G {
-        processException(RuntimeException.class, RuntimeException.class, null, e);
+    public static <G extends java.lang.Throwable, J extends java.lang.RuntimeException> void processException(java.lang.Throwable e) throws G {
+        org.broadleafcommerce.common.exception.ExceptionHelper.processException(java.lang.RuntimeException.class, java.lang.RuntimeException.class, null, e);
     }
 
-    private static <J extends RuntimeException> RuntimeException wrapException(Throwable e, Class<J> wrapType, String message) {
-        if (e instanceof RuntimeException) {
-            return (RuntimeException) e;
+    private static <J extends java.lang.RuntimeException> java.lang.RuntimeException wrapException(java.lang.Throwable e, java.lang.Class<J> wrapType, java.lang.String message) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.ExceptionHelper.__L1253, (e instanceof java.lang.RuntimeException))) {
+            return ((java.lang.RuntimeException) (e));
         }
         try {
-            if (StringUtils.isEmpty(message)) {
-                return wrapType.getConstructor(Throwable.class).newInstance(e);
-            } else {
-                return wrapType.getConstructor(String.class, Throwable.class).newInstance(message, e);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.ExceptionHelper.__L1254, org.apache.commons.lang3.StringUtils.isEmpty(message))) {
+                return wrapType.getConstructor(java.lang.Throwable.class).newInstance(e);
+            }else {
+                return wrapType.getConstructor(java.lang.String.class, java.lang.Throwable.class).newInstance(message, e);
             }
-        } catch (Exception e1) {
-            LOG.error("Could not wrap exception", e1);
-            throw new RuntimeException(e);
+        } catch (java.lang.Exception e1) {
+            org.broadleafcommerce.common.exception.ExceptionHelper.LOG.error("Could not wrap exception", e1);
+            throw new java.lang.RuntimeException(e);
         }
     }
 
+    public static perturbation.location.PerturbationLocation __L1245;
+
+    public static perturbation.location.PerturbationLocation __L1246;
+
+    public static perturbation.location.PerturbationLocation __L1247;
+
+    public static perturbation.location.PerturbationLocation __L1248;
+
+    public static perturbation.location.PerturbationLocation __L1249;
+
+    public static perturbation.location.PerturbationLocation __L1250;
+
+    public static perturbation.location.PerturbationLocation __L1251;
+
+    public static perturbation.location.PerturbationLocation __L1252;
+
+    public static perturbation.location.PerturbationLocation __L1253;
+
+    public static perturbation.location.PerturbationLocation __L1254;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.exception.ExceptionHelper.__L1245 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/ExceptionHelper.java:35)", 1245, "Boolean");
+        org.broadleafcommerce.common.exception.ExceptionHelper.__L1246 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/ExceptionHelper.java:38)", 1246, "Boolean");
+        org.broadleafcommerce.common.exception.ExceptionHelper.__L1247 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/ExceptionHelper.java:41)", 1247, "Boolean");
+        org.broadleafcommerce.common.exception.ExceptionHelper.__L1248 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/ExceptionHelper.java:44)", 1248, "Boolean");
+        org.broadleafcommerce.common.exception.ExceptionHelper.__L1249 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/ExceptionHelper.java:63)", 1249, "Boolean");
+        org.broadleafcommerce.common.exception.ExceptionHelper.__L1250 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/ExceptionHelper.java:66)", 1250, "Boolean");
+        org.broadleafcommerce.common.exception.ExceptionHelper.__L1251 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/ExceptionHelper.java:69)", 1251, "Boolean");
+        org.broadleafcommerce.common.exception.ExceptionHelper.__L1252 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/ExceptionHelper.java:72)", 1252, "Boolean");
+        org.broadleafcommerce.common.exception.ExceptionHelper.__L1253 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/ExceptionHelper.java:91)", 1253, "Boolean");
+        org.broadleafcommerce.common.exception.ExceptionHelper.__L1254 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/ExceptionHelper.java:95)", 1254, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.exception.ExceptionHelper.initPerturbationLocation0();
+    }
 }
+

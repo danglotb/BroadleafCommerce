@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,16 +17,10 @@
  */
 package org.broadleafcommerce.common.exception;
 
-/**
- * Interface indicating that the exception knows how to return the root cause message.
- * 
- * @author bpolster
- */
-public interface RootCauseAccessor  {
 
+public interface RootCauseAccessor {
+    public java.lang.Throwable getRootCause();
 
-    public Throwable getRootCause();
-
-    public String getRootCauseMessage();
-    
+    public java.lang.String getRootCauseMessage();
 }
+

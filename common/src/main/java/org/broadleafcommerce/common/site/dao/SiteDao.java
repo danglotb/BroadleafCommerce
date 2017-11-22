@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,94 +17,32 @@
  */
 package org.broadleafcommerce.common.site.dao;
 
-import org.broadleafcommerce.common.site.domain.Catalog;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.site.domain.SiteCatalogXref;
-
-import java.util.List;
 
 public interface SiteDao {
+    public org.broadleafcommerce.common.site.domain.Site create();
 
-    /**
-     * Creates an instance of Site based on the class matching the bean id of 
-     * "org.broadleafcommerce.common.site.domain.Site"
-     * 
-     * @return
-     */
-    public Site create();
+    public org.broadleafcommerce.common.site.domain.Site retrieve(java.lang.Long id);
 
-    /**
-     * Finds a site by its id.
-     * @param id
-     * @return
-     */
-    public Site retrieve(Long id);
+    public org.broadleafcommerce.common.site.domain.Site retrieveSiteByDomainOrDomainPrefix(java.lang.String domain, java.lang.String prefix);
 
-    /**
-     * Finds a site by its domain or domain prefix.
-     * @param domain
-     * @param prefix
-     * @return
-     */
-    public Site retrieveSiteByDomainOrDomainPrefix(String domain, String prefix);
-    
-    /**
-     * Finds a site by its {@link Site#getSiteIdentifierValue()}.
-     * @param identifier
-     * @return
-     */
-    public Site retrieveSiteByIdentifier(String identifier);
+    public org.broadleafcommerce.common.site.domain.Site retrieveSiteByIdentifier(java.lang.String identifier);
 
-    /**
-     * Persists the site changes.
-     * @param site
-     * @return
-     */
-    public Site save(Site site);
+    public org.broadleafcommerce.common.site.domain.Site save(org.broadleafcommerce.common.site.domain.Site site);
 
-    /**
-     * Returns a default site.   This method returns null in the out of box implementation of Broadleaf.
-     * Extend for implementation specific behavior. 
-     * 
-     * @return
-     */
-    public Site retrieveDefaultSite();
+    public org.broadleafcommerce.common.site.domain.Site retrieveDefaultSite();
 
-    /**
-     * @return a List of all sites in the system
-     */
-    public List<Site> readAllActiveSites();
+    public java.util.List<org.broadleafcommerce.common.site.domain.Site> readAllActiveSites();
 
-    /**
-     * Finds a catalog by its id.
-     * 
-     * @param id
-     * @return the catalog
-     */
-    public Catalog retrieveCatalog(Long id);
-    
-    Catalog retrieveCatalogByName(String name);
+    public org.broadleafcommerce.common.site.domain.Catalog retrieveCatalog(java.lang.Long id);
 
-    /**
-     * Creates a catalog using {@link org.broadleafcommerce.common.persistence.EntityConfiguration}.
-     *
-     * @return the catalog
-     */
-    public Catalog createCatalog();
+    org.broadleafcommerce.common.site.domain.Catalog retrieveCatalogByName(java.lang.String name);
 
-    /**
-     * Creates a new instance of {@code SiteCatalogXref} using {@link org.broadleafcommerce.common.persistence.EntityConfiguration}.
-     *
-     * @return the site catalog
-     */
-    public SiteCatalogXref createSiteCatalog();
-    
-    public Catalog save(Catalog catalog);
+    public org.broadleafcommerce.common.site.domain.Catalog createCatalog();
 
-    /**
-     * Retrieves all catalogs
-     * 
-     * @return the list of catalogs
-     */
-    public List<Catalog> retrieveAllCatalogs();
+    public org.broadleafcommerce.common.site.domain.SiteCatalogXref createSiteCatalog();
+
+    public org.broadleafcommerce.common.site.domain.Catalog save(org.broadleafcommerce.common.site.domain.Catalog catalog);
+
+    public java.util.List<org.broadleafcommerce.common.site.domain.Catalog> retrieveAllCatalogs();
 }
+

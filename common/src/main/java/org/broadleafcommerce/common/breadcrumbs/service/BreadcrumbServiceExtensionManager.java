@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,41 +17,21 @@
  */
 package org.broadleafcommerce.common.breadcrumbs.service;
 
-import org.broadleafcommerce.common.extension.ExtensionManager;
-import org.springframework.stereotype.Component;
 
-import java.util.Collections;
+@org.springframework.stereotype.Component("blBreadcrumbServiceExtensionManager")
+public class BreadcrumbServiceExtensionManager extends org.broadleafcommerce.common.extension.ExtensionManager<org.broadleafcommerce.common.breadcrumbs.service.BreadcrumbServiceExtensionHandler> {
+    public static java.lang.String CONTEXT_PARAM_STRIPPED_URL = "STRIPPED_URL";
 
-@Component("blBreadcrumbServiceExtensionManager")
-/**
- * Provides an extension point for building breadcrumbs.   Handlers participate in reverse priority order.
- * @author bpolster
- *
- */
-public class BreadcrumbServiceExtensionManager extends ExtensionManager<BreadcrumbServiceExtensionHandler> {
-
-    /**
-     * As each handler runs, it can work with the ContextMap from the ExtensionResultHolder 
-     * to get the URL as other handlers have modified it.
-     * 
-     * Given that handlers run in reverse priority order
-     * 
-     * Handlers may use the fullUrl passed into the method or work with these URLs.
-     */
-    public static String CONTEXT_PARAM_STRIPPED_URL = "STRIPPED_URL";
-    public static String CONTEXT_PARAM_STRIPPED_PARAMS = "STRIPPED_PARAMS";
+    public static java.lang.String CONTEXT_PARAM_STRIPPED_PARAMS = "STRIPPED_PARAMS";
 
     public BreadcrumbServiceExtensionManager() {
-        super(BreadcrumbServiceExtensionHandler.class);
+        super(org.broadleafcommerce.common.breadcrumbs.service.BreadcrumbServiceExtensionHandler.class);
     }
 
-    /**
-     * This extension manager works the handlers in reverse priority order.   It starts with the
-     * last crumb and works its way back.
-     */
-    @Override
+    @java.lang.Override
     protected void sortHandlers() {
         super.sortHandlers();
-        Collections.reverse(getHandlers());
+        java.util.Collections.reverse(getHandlers());
     }
 }
+

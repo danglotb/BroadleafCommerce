@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,38 +17,19 @@
  */
 package org.broadleafcommerce.common.sandbox.domain;
 
-import org.broadleafcommerce.common.presentation.AdminGroupPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
-import org.broadleafcommerce.common.presentation.AdminTabPresentation;
 
-/**
- * @author Chris Kittrell (ckittrell)
- */
-@AdminPresentationClass(
-    tabs = {
-        @AdminTabPresentation(
-            groups = {
-                @AdminGroupPresentation(name = SandboxAdminPresentation.GroupName.Description,
-                    order = SandboxAdminPresentation.GroupOrder.Description,
-                    untitled = true)
-            }
-        )
-    }
-)
+@org.broadleafcommerce.common.presentation.AdminPresentationClass(tabs = { @org.broadleafcommerce.common.presentation.AdminTabPresentation(groups = { @org.broadleafcommerce.common.presentation.AdminGroupPresentation(name = org.broadleafcommerce.common.sandbox.domain.SandboxAdminPresentation.GroupName.Description, order = org.broadleafcommerce.common.sandbox.domain.SandboxAdminPresentation.GroupOrder.Description, untitled = true) }) })
 public interface SandboxAdminPresentation {
+    public static class TabName {}
 
-    public static class TabName {
-    }
-
-    public static class TabOrder {
-    }
+    public static class TabOrder {}
 
     public static class GroupName {
-        public static final String Description = "SandBoxImpl_Description";
+        public static final java.lang.String Description = "SandBoxImpl_Description";
     }
 
     public static class GroupOrder {
         public static final int Description = 1000;
     }
-
 }
+

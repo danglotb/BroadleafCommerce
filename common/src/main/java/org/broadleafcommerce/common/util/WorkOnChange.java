@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,22 +17,8 @@
  */
 package org.broadleafcommerce.common.util;
 
-import java.util.Collection;
 
-/**
- * Encapsulate some amount of work to perform whenever a change aware collection is modified.
- *
- * @see org.broadleafcommerce.common.util.BLCCollectionUtils#createChangeAwareCollection(WorkOnChange, java.util.Collection)
- * @author Jeff Fischer
- */
 public interface WorkOnChange {
-
-    /**
-     * An implementation of this method will be called whenever a change is detected on a change aware collection. The implementation
-     * should contain whatever code is necessary to respond to the collection change.
-     *
-     * @param changed the un-proxied collection that was modified
-     */
-    void doWork(Collection changed);
-
+    void doWork(java.util.Collection changed);
 }
+

@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Profile
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,30 +17,28 @@
  */
 package org.broadleafcommerce.common.id.domain;
 
-import java.io.Serializable;
 
-public interface IdGeneration extends Serializable {
+public interface IdGeneration extends java.io.Serializable {
+    public java.lang.String getType();
 
-    public String getType();
+    public void setType(java.lang.String type);
 
-    public void setType(String type);
+    public java.lang.Long getBegin();
 
-    public Long getBegin();
+    public void setBegin(java.lang.Long begin);
 
-    public void setBegin(Long begin);
+    public java.lang.Long getEnd();
 
-    public Long getEnd();
+    public void setEnd(java.lang.Long end);
 
-    public void setEnd(Long end);
+    public java.lang.Long getBatchStart();
 
-    public Long getBatchStart();
+    public void setBatchStart(java.lang.Long batchStart);
 
-    public void setBatchStart(Long batchStart);
+    public java.lang.Long getBatchSize();
 
-    public Long getBatchSize();
+    public void setBatchSize(java.lang.Long batchSize);
 
-    public void setBatchSize(Long batchSize);
-
-    public Integer getVersion();
-
+    public java.lang.Integer getVersion();
 }
+

@@ -15,46 +15,33 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-/**
- * 
- */
 package org.broadleafcommerce.common.config;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.DeferredImportSelector;
-import org.springframework.core.type.AnnotationMetadata;
-import org.springframework.util.MultiValueMap;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-/**
- * <p>
- * Deferred import loader that, when used in an {@link @Configuration} class, executes _after_ the set
- * of Spring {@link EnableAutoConfiguration} classes brought in by the {@Link AutoConfigurationImportSelector}.
- * 
- * <p>
- * Particularly useful when you want to do something in absence of autoconfiguration where Broadleaf is still
- * required to have a particular component. This allows you to confidently use annotations like {@code @ConditionalOnMissingBean}
- * to only create things if Spring autoconfiguration didn't already.
- * 
- * @author Phillip Verheyden (phillipuniverse)
- * @see {@link PostAutoConfigurationImport}
- * @see {@link org.springframework.context.annotation.ConfigurationClassParser}
- */
-public class PostAutoConfigurationDefferedImportSelector implements DeferredImportSelector {
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public String[] selectImports(AnnotationMetadata importingClassMetadata) {
-        MultiValueMap<String, Object> attributes = 
-            importingClassMetadata.getAllAnnotationAttributes(PostAutoConfigurationImport.class.getName(), true);
-        Object importAttributes = attributes.get("value");
-        List<String> imports = new ArrayList<>();
-        for (String[] classes : (List<String[]>) importAttributes) {
-            imports.addAll(Arrays.asList(classes));
+public class PostAutoConfigurationDefferedImportSelector implements org.springframework.context.annotation.DeferredImportSelector {
+    @java.lang.Override
+    @java.lang.SuppressWarnings("unchecked")
+    public java.lang.String[] selectImports(org.springframework.core.type.AnnotationMetadata importingClassMetadata) {
+        org.springframework.util.MultiValueMap<java.lang.String, java.lang.Object> attributes = importingClassMetadata.getAllAnnotationAttributes(org.broadleafcommerce.common.config.PostAutoConfigurationImport.class.getName(), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.config.PostAutoConfigurationDefferedImportSelector.__L492, true));
+        java.lang.Object importAttributes = attributes.get("value");
+        java.util.List<java.lang.String> imports = new java.util.ArrayList<>();
+        for (java.lang.String[] classes : ((java.util.List<java.lang.String[]>) (importAttributes))) {
+            imports.addAll(java.util.Arrays.asList(classes));
         }
-        return imports.toArray(new String[imports.size()]);
+        return imports.toArray(new java.lang.String[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.config.PostAutoConfigurationDefferedImportSelector.__L493, imports.size())]);
+    }
+
+    public static perturbation.location.PerturbationLocation __L492;
+
+    public static perturbation.location.PerturbationLocation __L493;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.config.PostAutoConfigurationDefferedImportSelector.__L492 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/PostAutoConfigurationDefferedImportSelector.java:52)", 492, "Boolean");
+        org.broadleafcommerce.common.config.PostAutoConfigurationDefferedImportSelector.__L493 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/PostAutoConfigurationDefferedImportSelector.java:58)", 493, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.config.PostAutoConfigurationDefferedImportSelector.initPerturbationLocation0();
     }
 }
+

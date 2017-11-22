@@ -1,8 +1,8 @@
 /*
  * #%L
- * broadleaf-enterprise
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,44 +17,57 @@
  */
 package org.broadleafcommerce.common.weave;
 
-import org.broadleafcommerce.common.persistence.ArchiveStatus;
-import org.broadleafcommerce.common.persistence.Status;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
 
-import javax.persistence.Embedded;
+public final class WeaveArchiveStatus implements org.broadleafcommerce.common.persistence.Status {
+    @javax.persistence.Embedded
+    protected org.broadleafcommerce.common.persistence.ArchiveStatus archiveStatus;
 
-/**
- * @author by reginaldccole
- */
-public final class WeaveArchiveStatus implements Status {
-
-    @Embedded
-    protected ArchiveStatus archiveStatus;
-
-
-    @Override
-    public void setArchived(Character archived) {
-            getEmbeddableArchiveStatus(true).setArchived(archived);
+    @java.lang.Override
+    public void setArchived(java.lang.Character archived) {
+        getEmbeddableArchiveStatus(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.weave.WeaveArchiveStatus.__L7043, true)).setArchived(archived);
     }
 
-    private ArchiveStatus getEmbeddableArchiveStatus(boolean assign) {
-        ArchiveStatus temp = archiveStatus;
-        if (temp == null) {
-            temp = new ArchiveStatus();
-            if (assign) {
+    private org.broadleafcommerce.common.persistence.ArchiveStatus getEmbeddableArchiveStatus(boolean assign) {
+        org.broadleafcommerce.common.persistence.ArchiveStatus temp = archiveStatus;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.weave.WeaveArchiveStatus.__L7044, (temp == null))) {
+            temp = new org.broadleafcommerce.common.persistence.ArchiveStatus();
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.weave.WeaveArchiveStatus.__L7045, assign)) {
                 archiveStatus = temp;
             }
         }
         return temp;
     }
 
-    @Override
-    public Character getArchived() {
-        return getEmbeddableArchiveStatus(false).getArchived();
+    @java.lang.Override
+    public java.lang.Character getArchived() {
+        return getEmbeddableArchiveStatus(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.weave.WeaveArchiveStatus.__L7046, false)).getArchived();
     }
 
-    @Override
+    @java.lang.Override
     public boolean isActive() {
-         return 'Y'!=getArchived();
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.weave.WeaveArchiveStatus.__L7047, ('Y' != (getArchived())));
+    }
+
+    public static perturbation.location.PerturbationLocation __L7043;
+
+    public static perturbation.location.PerturbationLocation __L7044;
+
+    public static perturbation.location.PerturbationLocation __L7045;
+
+    public static perturbation.location.PerturbationLocation __L7046;
+
+    public static perturbation.location.PerturbationLocation __L7047;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.weave.WeaveArchiveStatus.__L7043 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/weave/WeaveArchiveStatus.java:37)", 7043, "Boolean");
+        org.broadleafcommerce.common.weave.WeaveArchiveStatus.__L7044 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/weave/WeaveArchiveStatus.java:42)", 7044, "Boolean");
+        org.broadleafcommerce.common.weave.WeaveArchiveStatus.__L7045 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/weave/WeaveArchiveStatus.java:44)", 7045, "Boolean");
+        org.broadleafcommerce.common.weave.WeaveArchiveStatus.__L7046 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/weave/WeaveArchiveStatus.java:53)", 7046, "Boolean");
+        org.broadleafcommerce.common.weave.WeaveArchiveStatus.__L7047 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/weave/WeaveArchiveStatus.java:58)", 7047, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.weave.WeaveArchiveStatus.initPerturbationLocation0();
     }
 }
+

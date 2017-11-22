@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,70 +17,63 @@
  */
 package org.broadleafcommerce.common.persistence;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.service.PersistenceService;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-import javax.persistence.EntityManager;
+@org.springframework.stereotype.Component("blPostLoaderDao")
+public class DefaultPostLoaderDao implements org.broadleafcommerce.common.persistence.PostLoaderDao , org.springframework.context.ApplicationContextAware {
+    protected static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.persistence.DefaultPostLoaderDao.class);
 
-/**
- * @author Nathan Moore (nathanmoore).
- */
-@Component("blPostLoaderDao")
-public class DefaultPostLoaderDao implements PostLoaderDao, ApplicationContextAware {
+    private static org.springframework.context.ApplicationContext applicationContext;
 
-    protected static final Log LOG = LogFactory.getLog(DefaultPostLoaderDao.class);
+    private static org.broadleafcommerce.common.persistence.PostLoaderDao postLoaderDao;
 
-    private static ApplicationContext applicationContext;
-    private static PostLoaderDao postLoaderDao;
+    @javax.annotation.Resource(name = "blPersistenceService")
+    protected org.broadleafcommerce.common.service.PersistenceService persistenceService;
 
-    @Resource(name="blPersistenceService")
-    protected PersistenceService persistenceService;
-
-    public static PostLoaderDao getPostLoaderDao() {
-        if (applicationContext == null) {
+    public static org.broadleafcommerce.common.persistence.PostLoaderDao getPostLoaderDao() {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.DefaultPostLoaderDao.__L4337, ((org.broadleafcommerce.common.persistence.DefaultPostLoaderDao.applicationContext) == null))) {
             return null;
-        } else if (postLoaderDao == null) {
-            postLoaderDao = (PostLoaderDao) applicationContext.getBean("blPostLoaderDao");
-        }
+        }else
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.DefaultPostLoaderDao.__L4338, ((org.broadleafcommerce.common.persistence.DefaultPostLoaderDao.postLoaderDao) == null))) {
+                org.broadleafcommerce.common.persistence.DefaultPostLoaderDao.postLoaderDao = ((org.broadleafcommerce.common.persistence.PostLoaderDao) (org.broadleafcommerce.common.persistence.DefaultPostLoaderDao.applicationContext.getBean("blPostLoaderDao")));
+            }
 
-        return postLoaderDao;
+        return org.broadleafcommerce.common.persistence.DefaultPostLoaderDao.postLoaderDao;
     }
 
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        DefaultPostLoaderDao.applicationContext = applicationContext;
+    @java.lang.Override
+    public void setApplicationContext(org.springframework.context.ApplicationContext applicationContext) throws org.springframework.beans.BeansException {
+        org.broadleafcommerce.common.persistence.DefaultPostLoaderDao.applicationContext = applicationContext;
     }
 
-    /**
-     * Find and return the entity by primary key and class.
-     *
-     * Delegates find to {@link javax.persistence.EntityManager#find(Class, Object)}.
-     *
-     * @param clazz entity class
-     * @param id primary key
-     * @return managed entity or null if not found
-     */
-    @Override
-    public <T> T find(Class<T> clazz, Object id) {
-        EntityManager em = getEntityManager(clazz);
-
-        return (em == null) ? null : em.find(clazz, id);
+    @java.lang.Override
+    public <T> T find(java.lang.Class<T> clazz, java.lang.Object id) {
+        javax.persistence.EntityManager em = getEntityManager(clazz);
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.DefaultPostLoaderDao.__L4339, (em == null)) ? null : em.find(clazz, id);
     }
 
-    @Override
-    public <T> T findSandboxEntity(Class<T> clazz, Object id) {
+    @java.lang.Override
+    public <T> T findSandboxEntity(java.lang.Class<T> clazz, java.lang.Object id) {
         return find(clazz, id);
     }
 
-    protected EntityManager getEntityManager(Class clazz) {
+    protected javax.persistence.EntityManager getEntityManager(java.lang.Class clazz) {
         return persistenceService.identifyEntityManager(clazz);
     }
 
+    public static perturbation.location.PerturbationLocation __L4337;
+
+    public static perturbation.location.PerturbationLocation __L4338;
+
+    public static perturbation.location.PerturbationLocation __L4339;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.persistence.DefaultPostLoaderDao.__L4337 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/DefaultPostLoaderDao.java:46)", 4337, "Boolean");
+        org.broadleafcommerce.common.persistence.DefaultPostLoaderDao.__L4338 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/DefaultPostLoaderDao.java:48)", 4338, "Boolean");
+        org.broadleafcommerce.common.persistence.DefaultPostLoaderDao.__L4339 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/DefaultPostLoaderDao.java:74)", 4339, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.persistence.DefaultPostLoaderDao.initPerturbationLocation0();
+    }
 }
+

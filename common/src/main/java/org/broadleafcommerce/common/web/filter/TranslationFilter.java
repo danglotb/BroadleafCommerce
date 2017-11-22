@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,47 +17,37 @@
  */
 package org.broadleafcommerce.common.web.filter;
 
-import org.broadleafcommerce.common.admin.condition.ConditionalOnNotAdmin;
-import org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.ServletWebRequest;
 
-import java.io.IOException;
+@org.springframework.stereotype.Component("blTranslationFilter")
+@org.broadleafcommerce.common.admin.condition.ConditionalOnNotAdmin
+public class TranslationFilter extends org.broadleafcommerce.common.web.filter.AbstractIgnorableFilter {
+    @org.springframework.beans.factory.annotation.Autowired
+    @org.springframework.beans.factory.annotation.Qualifier("blTranslationRequestProcessor")
+    protected org.broadleafcommerce.common.web.filter.TranslationRequestProcessor translationRequestProcessor;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-/**
- * Responsible for setting the necessary attributes on the {@link TranslationConsiderationContext}.
- * 
- * @author Andre Azzolini (apazzolini), bpolster
- */
-@Component("blTranslationFilter")
-@ConditionalOnNotAdmin
-public class TranslationFilter extends AbstractIgnorableFilter {
-    
-    @Autowired
-    @Qualifier("blTranslationRequestProcessor")
-    protected TranslationRequestProcessor translationRequestProcessor;
-
-    @Override
-    public void doFilterUnlessIgnored(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+    @java.lang.Override
+    public void doFilterUnlessIgnored(javax.servlet.ServletRequest request, javax.servlet.ServletResponse response, javax.servlet.FilterChain filterChain) throws java.io.IOException, javax.servlet.ServletException {
         try {
-            translationRequestProcessor.process(new ServletWebRequest((HttpServletRequest) request, (HttpServletResponse) response));
+            translationRequestProcessor.process(new org.springframework.web.context.request.ServletWebRequest(((javax.servlet.http.HttpServletRequest) (request)), ((javax.servlet.http.HttpServletResponse) (response))));
             filterChain.doFilter(request, response);
         } finally {
-            translationRequestProcessor.postProcess(new ServletWebRequest((HttpServletRequest) request, (HttpServletResponse) response));
+            translationRequestProcessor.postProcess(new org.springframework.web.context.request.ServletWebRequest(((javax.servlet.http.HttpServletRequest) (request)), ((javax.servlet.http.HttpServletResponse) (response))));
         }
     }
 
-    @Override
+    @java.lang.Override
     public int getOrder() {
-        return FilterOrdered.POST_SECURITY_LOW;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.filter.TranslationFilter.__L7246, org.broadleafcommerce.common.web.filter.FilterOrdered.POST_SECURITY_LOW);
+    }
+
+    public static perturbation.location.PerturbationLocation __L7246;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.filter.TranslationFilter.__L7246 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/filter/TranslationFilter.java:61)", 7246, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.filter.TranslationFilter.initPerturbationLocation0();
     }
 }
+

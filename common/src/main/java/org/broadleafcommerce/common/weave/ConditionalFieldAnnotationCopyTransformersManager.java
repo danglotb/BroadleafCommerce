@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,27 +17,10 @@
  */
 package org.broadleafcommerce.common.weave;
 
-/**
- * 
- * @author Kelly Tisdell
- *
- */
+
 public interface ConditionalFieldAnnotationCopyTransformersManager {
+    java.lang.Boolean isEntityEnabled(java.lang.String entityName);
 
-    /**
-     * Based on the entity name, this method will determine if the associated conditionalProperty from the Spring configuration is true.
-     *
-     * @param entityName
-     * @return
-     */
-    Boolean isEntityEnabled(String entityName);
-
-    /**
-     * Retrieve the direct copy transform config info
-     *
-     * @param entityName
-     * @return
-     */
-    ConditionalFieldAnnotationCopyTransformMemberDTO getTransformMember(String entityName);
-
+    org.broadleafcommerce.common.weave.ConditionalFieldAnnotationCopyTransformMemberDTO getTransformMember(java.lang.String entityName);
 }
+

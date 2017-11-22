@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,18 +17,8 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.apache.commons.collections.Transformer;
 
-
-/**
- * A class that provides for a typed transformer.
- * 
- * @author Andre Azzolini (apazzolini)
- * @see Transformer
- * @param <K> the type of the value that will be returned by the transformer
- */
-public interface TypedTransformer<K> extends Transformer {
-    
-    public K transform(Object input);
-
+public interface TypedTransformer<K> extends org.apache.commons.collections.Transformer {
+    public K transform(java.lang.Object input);
 }
+

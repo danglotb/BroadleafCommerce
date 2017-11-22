@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,17 +17,8 @@
  */
 package org.broadleafcommerce.common.config.service;
 
-import org.broadleafcommerce.common.config.domain.ModuleConfiguration;
 
 public interface ModuleProvider {
-
-    /**
-     * Indicates if, given the configuration, this module can respond to the particular request.
-     * 
-     * @param config
-     * @return
-     */
-    public boolean canRespond(ModuleConfiguration config);
-
-
+    public boolean canRespond(org.broadleafcommerce.common.config.domain.ModuleConfiguration config);
 }
+

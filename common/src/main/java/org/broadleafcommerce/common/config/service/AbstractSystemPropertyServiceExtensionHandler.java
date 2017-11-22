@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,19 +17,11 @@
  */
 package org.broadleafcommerce.common.config.service;
 
-import org.broadleafcommerce.common.extension.AbstractExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
 
-
-/**
- * @author bpolster
- */
-public abstract class AbstractSystemPropertyServiceExtensionHandler extends AbstractExtensionHandler implements
-        SystemPropertyServiceExtensionHandler {
-
-    @Override
-    public ExtensionResultStatusType resolveProperty(String propertyName, ExtensionResultHolder resultHolder) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+public abstract class AbstractSystemPropertyServiceExtensionHandler extends org.broadleafcommerce.common.extension.AbstractExtensionHandler implements org.broadleafcommerce.common.config.service.SystemPropertyServiceExtensionHandler {
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType resolveProperty(java.lang.String propertyName, org.broadleafcommerce.common.extension.ExtensionResultHolder resultHolder) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 }
+

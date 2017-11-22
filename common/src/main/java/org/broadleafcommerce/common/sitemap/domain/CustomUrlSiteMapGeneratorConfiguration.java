@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,30 +15,12 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.sitemap.domain;
 
-import java.util.List;
 
-/**
- * CustomSiteMapGenerator is controlled by this configuration.
- * 
- * @author bpolster
- */
-public interface CustomUrlSiteMapGeneratorConfiguration extends SiteMapGeneratorConfiguration {
+public interface CustomUrlSiteMapGeneratorConfiguration extends org.broadleafcommerce.common.sitemap.domain.SiteMapGeneratorConfiguration {
+    public java.util.List<org.broadleafcommerce.common.sitemap.domain.SiteMapUrlEntry> getCustomURLEntries();
 
-    /**
-     * Returns a list of custom SiteMapURLEntrys.
-     * 
-     * @return
-     */
-    public List<SiteMapUrlEntry> getCustomURLEntries();
-
-    /**
-     * Sets a list of custom SiteMapURLEntrys.
-     * 
-     * @param customURLEntries
-     */
-    public void setCustomURLEntries(List<SiteMapUrlEntry> customURLEntries);
-
+    public void setCustomURLEntries(java.util.List<org.broadleafcommerce.common.sitemap.domain.SiteMapUrlEntry> customURLEntries);
 }
+

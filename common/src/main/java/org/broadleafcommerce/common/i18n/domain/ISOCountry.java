@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,42 +17,26 @@
  */
 package org.broadleafcommerce.common.i18n.domain;
 
-import org.broadleafcommerce.common.copy.MultiTenantCloneable;
-import org.broadleafcommerce.common.i18n.service.type.ISOCodeStatusType;
-import java.io.Serializable;
 
-/**
- * This domain object represents the ISO 3166 standard published by the International Organization for Standardization (ISO),
- * and defines codes for the names of countries, dependent territories, and special areas of geographical interest.
- *
- * The Primary Key and ID for this entity will be the alpha-2 code for the respective Country.
- *
- * {@link http://en.wikipedia.org/wiki/ISO_3166-1}
- * {@link http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2}
- * {@link http://www.iso.org/iso/iso-3166-1_decoding_table}
- *
- * @author Elbert Bautista (elbertbautista)
- */
-public interface ISOCountry extends Serializable {
+public interface ISOCountry extends java.io.Serializable {
+    public java.lang.String getAlpha2();
 
-    public String getAlpha2();
+    public void setAlpha2(java.lang.String alpha2);
 
-    public void setAlpha2(String alpha2);
+    public java.lang.String getName();
 
-    public String getName();
+    public void setName(java.lang.String name);
 
-    public void setName(String name);
+    public java.lang.String getAlpha3();
 
-    public String getAlpha3();
+    public void setAlpha3(java.lang.String alpha3);
 
-    public void setAlpha3(String alpha3);
+    public java.lang.Integer getNumericCode();
 
-    public Integer getNumericCode();
+    public void setNumericCode(java.lang.Integer numericCode);
 
-    public void setNumericCode(Integer numericCode);
+    public org.broadleafcommerce.common.i18n.service.type.ISOCodeStatusType getStatus();
 
-    public ISOCodeStatusType getStatus();
-
-    public void setStatus(ISOCodeStatusType status);
-
+    public void setStatus(org.broadleafcommerce.common.i18n.service.type.ISOCodeStatusType status);
 }
+

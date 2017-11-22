@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,34 +17,14 @@
  */
 package org.broadleafcommerce.common.admin.domain;
 
-import org.broadleafcommerce.common.BroadleafEnumerationType;
 
-/**
- * @author Jon Fleschler (jfleschler)
- */
 public interface TypedEntity {
+    public org.broadleafcommerce.common.BroadleafEnumerationType getType();
 
-    /**
-     * Returns the type of the Entity
-     * @return type
-     */
-    public BroadleafEnumerationType getType();
+    public void setType(org.broadleafcommerce.common.BroadleafEnumerationType type);
 
-    /**
-     * Sets the type of the Entity
-     * @param type
-     */
-    public void setType(BroadleafEnumerationType type);
+    public java.lang.String getTypeFieldName();
 
-    /**
-     * Returns the persisted type field name
-     * @return fieldName
-     */
-    public String getTypeFieldName();
-
-    /**
-     * Returns the default type to be used for this entity
-     * @return defaultType
-     */
-    public String getDefaultType();
+    public java.lang.String getDefaultType();
 }
+

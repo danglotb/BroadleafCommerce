@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,77 +15,41 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-/**
- * 
- */
 package org.broadleafcommerce.common.web.expression;
 
-import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumeration;
-import org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue;
-import org.broadleafcommerce.common.enumeration.service.DataDrivenEnumerationService;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
-import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+@org.springframework.stereotype.Component("blDataDrivenEnumVariableExpression")
+@org.broadleafcommerce.presentation.condition.ConditionalOnTemplating
+public class DataDrivenEnumVariableExpression implements org.broadleafcommerce.common.web.expression.BroadleafVariableExpression {
+    @javax.annotation.Resource(name = "blDataDrivenEnumerationService")
+    protected org.broadleafcommerce.common.enumeration.service.DataDrivenEnumerationService enumService;
 
-import javax.annotation.Resource;
-
-/**
- * Variable expression that looks up a list of {@link DataDrivenEnumerationValue}s based on its enum key
- * 
- * @author Phillip Verheyden (phillipuniverse)
- */
-@Component("blDataDrivenEnumVariableExpression")
-@ConditionalOnTemplating
-public class DataDrivenEnumVariableExpression implements BroadleafVariableExpression {
-
-    @Resource(name = "blDataDrivenEnumerationService")
-    protected DataDrivenEnumerationService enumService;
-    
-    @Override
-    public String getName() {
+    @java.lang.Override
+    public java.lang.String getName() {
         return "enumeration";
     }
-    
-    /**
-     * Looks up a list of {@link DataDrivenEnumerationValue} by the {@link DataDrivenEnumeration#getKey()} specified by <b>key</b>
-     * @param key lookup for the {@link DataDrivenEnumeration}
-     * @return the list of {@link DataDrivenEnumerationValue} for the given <b>key</b>
-     */
-    public List<DataDrivenEnumerationValue> getEnumValues(String key) {
+
+    public java.util.List<org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue> getEnumValues(java.lang.String key) {
         return getEnumValues(key, null);
     }
-    
-    /**
-     * Looks up a list of {@link DataDrivenEnumerationValue} by the {@link DataDrivenEnumeration#getKey()} specified by <b>key</b>
-     * @param key lookup for the {@link DataDrivenEnumeration}
-     * @param sort optional, either 'ASCENDING' or 'DESCENDING' depending on how you want the result list sorted
-     * @return the list of {@link DataDrivenEnumerationValue} for the given <b>key</b>
-     */
-    public List<DataDrivenEnumerationValue> getEnumValues(String key, final String sort) {
-        if (StringUtils.isEmpty(key)) {
-            throw new IllegalArgumentException("No 'key' parameter was passed to find enumeration values");
-        }
-        
-        DataDrivenEnumeration ddEnum = enumService.findEnumByKey(key);
-        if (ddEnum == null) {
-            throw new IllegalArgumentException("Could not find a data driven enumeration keyed by " + key);
-        }
-        List<DataDrivenEnumerationValue> enumValues = new ArrayList<>(ddEnum.getEnumValues());
-        
-        if (StringUtils.isNotEmpty(sort)) {
-            Collections.sort(enumValues, new Comparator<DataDrivenEnumerationValue>() {
 
-                @Override
-                public int compare(DataDrivenEnumerationValue arg0, DataDrivenEnumerationValue arg1) {
-                    if (sort.equals("ASCENDING")) {
-                        return arg0.getDisplay().compareTo(arg1.getDisplay());
-                    } else {
-                        return arg1.getDisplay().compareTo(arg0.getDisplay());
+    public java.util.List<org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue> getEnumValues(java.lang.String key, final java.lang.String sort) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.expression.DataDrivenEnumVariableExpression.__L7204, org.apache.commons.lang3.StringUtils.isEmpty(key))) {
+            throw new java.lang.IllegalArgumentException("No 'key' parameter was passed to find enumeration values");
+        }
+        org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumeration ddEnum = enumService.findEnumByKey(key);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.expression.DataDrivenEnumVariableExpression.__L7205, (ddEnum == null))) {
+            throw new java.lang.IllegalArgumentException(("Could not find a data driven enumeration keyed by " + key));
+        }
+        java.util.List<org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue> enumValues = new java.util.ArrayList<>(ddEnum.getEnumValues());
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.expression.DataDrivenEnumVariableExpression.__L7206, org.apache.commons.lang3.StringUtils.isNotEmpty(sort))) {
+            java.util.Collections.sort(enumValues, new java.util.Comparator<org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue>() {
+                @java.lang.Override
+                public int compare(org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue arg0, org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue arg1) {
+                    if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.expression.DataDrivenEnumVariableExpression.__L7207, sort.equals("ASCENDING"))) {
+                        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.expression.DataDrivenEnumVariableExpression.__L7208, arg0.getDisplay().compareTo(arg1.getDisplay()));
+                    }else {
+                        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.expression.DataDrivenEnumVariableExpression.__L7209, arg1.getDisplay().compareTo(arg0.getDisplay()));
                     }
                 }
             });
@@ -93,4 +57,29 @@ public class DataDrivenEnumVariableExpression implements BroadleafVariableExpres
         return enumValues;
     }
 
+    public static perturbation.location.PerturbationLocation __L7204;
+
+    public static perturbation.location.PerturbationLocation __L7205;
+
+    public static perturbation.location.PerturbationLocation __L7206;
+
+    public static perturbation.location.PerturbationLocation __L7207;
+
+    public static perturbation.location.PerturbationLocation __L7208;
+
+    public static perturbation.location.PerturbationLocation __L7209;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.expression.DataDrivenEnumVariableExpression.__L7204 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/expression/DataDrivenEnumVariableExpression.java:70)", 7204, "Boolean");
+        org.broadleafcommerce.common.web.expression.DataDrivenEnumVariableExpression.__L7205 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/expression/DataDrivenEnumVariableExpression.java:75)", 7205, "Boolean");
+        org.broadleafcommerce.common.web.expression.DataDrivenEnumVariableExpression.__L7206 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/expression/DataDrivenEnumVariableExpression.java:80)", 7206, "Boolean");
+        org.broadleafcommerce.common.web.expression.DataDrivenEnumVariableExpression.__L7207 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/expression/DataDrivenEnumVariableExpression.java:85)", 7207, "Boolean");
+        org.broadleafcommerce.common.web.expression.DataDrivenEnumVariableExpression.__L7208 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/expression/DataDrivenEnumVariableExpression.java:86)", 7208, "Numerical");
+        org.broadleafcommerce.common.web.expression.DataDrivenEnumVariableExpression.__L7209 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/expression/DataDrivenEnumVariableExpression.java:88)", 7209, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.expression.DataDrivenEnumVariableExpression.initPerturbationLocation0();
+    }
 }
+

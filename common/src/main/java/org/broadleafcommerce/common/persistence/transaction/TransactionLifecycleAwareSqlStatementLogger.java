@@ -17,16 +17,8 @@
  */
 package org.broadleafcommerce.common.persistence.transaction;
 
-import org.hibernate.engine.jdbc.internal.Formatter;
-import org.hibernate.engine.jdbc.spi.SqlStatementLogger;
 
-/**
- * Custom {@link SqlStatementLogger} that will log sql statements during a transaction with {@link TransactionLifecycleMonitor}.
- *
- * @author Jeff Fischer
- */
-public class TransactionLifecycleAwareSqlStatementLogger extends SqlStatementLogger {
-
+public class TransactionLifecycleAwareSqlStatementLogger extends org.hibernate.engine.jdbc.spi.SqlStatementLogger {
     public TransactionLifecycleAwareSqlStatementLogger() {
     }
 
@@ -34,12 +26,23 @@ public class TransactionLifecycleAwareSqlStatementLogger extends SqlStatementLog
         super(logToStdout, format);
     }
 
-    @Override
-    public void logStatement(String statement, Formatter formatter) {
+    @java.lang.Override
+    public void logStatement(java.lang.String statement, org.hibernate.engine.jdbc.internal.Formatter formatter) {
         super.logStatement(statement, formatter);
-        SqlStatementLoggable monitor = TransactionLifecycleMonitor.getInstance();
-        if (monitor != null) {
+        org.broadleafcommerce.common.persistence.transaction.SqlStatementLoggable monitor = org.broadleafcommerce.common.persistence.transaction.TransactionLifecycleMonitor.getInstance();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.transaction.TransactionLifecycleAwareSqlStatementLogger.__L4200, (monitor != null))) {
             monitor.log(statement);
         }
     }
+
+    public static perturbation.location.PerturbationLocation __L4200;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.persistence.transaction.TransactionLifecycleAwareSqlStatementLogger.__L4200 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/TransactionLifecycleAwareSqlStatementLogger.java:41)", 4200, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.persistence.transaction.TransactionLifecycleAwareSqlStatementLogger.initPerturbationLocation0();
+    }
 }
+

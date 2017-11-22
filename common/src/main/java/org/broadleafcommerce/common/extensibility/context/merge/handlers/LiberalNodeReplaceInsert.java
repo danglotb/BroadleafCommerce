@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,39 +17,57 @@
  */
 package org.broadleafcommerce.common.extensibility.context.merge.handlers;
 
-import org.w3c.dom.Node;
 
-import java.util.List;
-
-/**
- * This handler is responsible for replacing nodes in the source document
- * with the same nodes from the patch document. Note, additional nodes
- * from the patch document that are not present in the source document
- * are simply appended to the source document.
- * 
- * @author jfischer
- *
- */
-public class LiberalNodeReplaceInsert extends NodeReplaceInsert {
-
-    protected boolean checkNode(List<Node> usedNodes, Node[] primaryNodes, Node node) {
-        //find matching nodes based on id
-        if (replaceNode(primaryNodes, node, "id", usedNodes)) {
-            return true;
+public class LiberalNodeReplaceInsert extends org.broadleafcommerce.common.extensibility.context.merge.handlers.NodeReplaceInsert {
+    protected boolean checkNode(java.util.List<org.w3c.dom.Node> usedNodes, org.w3c.dom.Node[] primaryNodes, org.w3c.dom.Node node) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.handlers.LiberalNodeReplaceInsert.__L1353, replaceNode(primaryNodes, node, "id", usedNodes))) {
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.handlers.LiberalNodeReplaceInsert.__L1354, true);
         }
-        //find matching nodes based on name
-        if (replaceNode(primaryNodes, node, "name", usedNodes)) {
-            return true;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.handlers.LiberalNodeReplaceInsert.__L1355, replaceNode(primaryNodes, node, "name", usedNodes))) {
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.handlers.LiberalNodeReplaceInsert.__L1356, true);
         }
-        if (replaceNode(primaryNodes, node, "class", usedNodes)) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.handlers.LiberalNodeReplaceInsert.__L1357, replaceNode(primaryNodes, node, "class", usedNodes))) {
             usedNodes.add(node);
-            return true;
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.handlers.LiberalNodeReplaceInsert.__L1358, true);
         }
-        //check if this same node already exists
-        if (exactNodeExists(primaryNodes, node, usedNodes)) {
-            return true;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.handlers.LiberalNodeReplaceInsert.__L1359, exactNodeExists(primaryNodes, node, usedNodes))) {
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.handlers.LiberalNodeReplaceInsert.__L1360, true);
         }
-        return false;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.handlers.LiberalNodeReplaceInsert.__L1361, false);
     }
 
+    public static perturbation.location.PerturbationLocation __L1353;
+
+    public static perturbation.location.PerturbationLocation __L1354;
+
+    public static perturbation.location.PerturbationLocation __L1355;
+
+    public static perturbation.location.PerturbationLocation __L1356;
+
+    public static perturbation.location.PerturbationLocation __L1357;
+
+    public static perturbation.location.PerturbationLocation __L1358;
+
+    public static perturbation.location.PerturbationLocation __L1359;
+
+    public static perturbation.location.PerturbationLocation __L1360;
+
+    public static perturbation.location.PerturbationLocation __L1361;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.LiberalNodeReplaceInsert.__L1353 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/handlers/LiberalNodeReplaceInsert.java:37)", 1353, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.LiberalNodeReplaceInsert.__L1354 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/handlers/LiberalNodeReplaceInsert.java:38)", 1354, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.LiberalNodeReplaceInsert.__L1355 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/handlers/LiberalNodeReplaceInsert.java:41)", 1355, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.LiberalNodeReplaceInsert.__L1356 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/handlers/LiberalNodeReplaceInsert.java:42)", 1356, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.LiberalNodeReplaceInsert.__L1357 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/handlers/LiberalNodeReplaceInsert.java:44)", 1357, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.LiberalNodeReplaceInsert.__L1358 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/handlers/LiberalNodeReplaceInsert.java:46)", 1358, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.LiberalNodeReplaceInsert.__L1359 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/handlers/LiberalNodeReplaceInsert.java:49)", 1359, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.LiberalNodeReplaceInsert.__L1360 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/handlers/LiberalNodeReplaceInsert.java:50)", 1360, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.LiberalNodeReplaceInsert.__L1361 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/handlers/LiberalNodeReplaceInsert.java:52)", 1361, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.LiberalNodeReplaceInsert.initPerturbationLocation0();
+    }
 }
+

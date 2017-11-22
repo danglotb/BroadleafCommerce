@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,37 +15,27 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-/**
- * 
- */
 package org.broadleafcommerce.common.config;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.orm.jpa.JpaVendorAdapter;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
-/**
- * Main configuration class for the broadleaf-common module
- * 
- * @author Phillip Verheyden (phillipuniverse)
- */
-@Configuration
+@org.springframework.context.annotation.Configuration
 public class BroadleafCommonConfig {
-
-    /**
-     * Other enterprise/mulititenant modules override this adapter to provide one that supports dynamic filtration
-     */
-    @Bean
-    @ConditionalOnMissingBean(name = "blJpaVendorAdapter")
-    public JpaVendorAdapter blJpaVendorAdapter() {
-        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        //TODO see https://jira.spring.io/browse/SPR-13269. Since we're still on Hibernate 4.1, we want to revert to the previous
-        // Spring behavior, which was not to prepare the connection. This avoids some warnings and extra connection acquisitions
-        // for read only transactions. When we advance Hibernate, we should look at not blocking Spring's connection preparation.
-        vendorAdapter.setPrepareConnection(false);
+    @org.springframework.context.annotation.Bean
+    @org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean(name = "blJpaVendorAdapter")
+    public org.springframework.orm.jpa.JpaVendorAdapter blJpaVendorAdapter() {
+        org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter vendorAdapter = new org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter();
+        vendorAdapter.setPrepareConnection(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.config.BroadleafCommonConfig.__L472, false));
         return vendorAdapter;
     }
 
+    public static perturbation.location.PerturbationLocation __L472;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.config.BroadleafCommonConfig.__L472 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/BroadleafCommonConfig.java:47)", 472, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.config.BroadleafCommonConfig.initPerturbationLocation0();
+    }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,41 +17,18 @@
  */
 package org.broadleafcommerce.common.event;
 
-import org.springframework.context.ApplicationEvent;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+public abstract class BroadleafApplicationEvent extends org.springframework.context.ApplicationEvent {
+    private static final long serialVersionUID = 1L;
 
-/**
- * Base abstract ApplicationEvent that provides a marker for Broadleaf events and provides a default 
- * context map. 
- * 
- * @see <code>org.broadleafcommerce.common.event.BroadleafApplicationEventMultiCaster</code>
- * @see <code>org.broadleafcommerce.common.event.BroadleafApplicationListener</code>
- * 
- * @author Kelly Tisdell
- *
- */
-public abstract class BroadleafApplicationEvent extends ApplicationEvent {
+    protected transient final java.util.Map<java.lang.String, java.lang.Object> context = java.util.Collections.synchronizedMap(new java.util.HashMap<java.lang.String, java.lang.Object>());
 
-	private static final long serialVersionUID = 1L;
-	
-	protected transient final Map<String, Object> context = Collections.synchronizedMap(new HashMap<String, Object>());
-	
-	/**
-	 * Instantiates this with the required source. The asynchronous property is false and the errorHandler is null.
-	 * @param source
-	 */
-	public BroadleafApplicationEvent(Object source) {
-		super(source);
-	}
-	
-	/**
-	 * Context map that allows generic objects / properties to be passed around on events. This map is synchronized.
-	 * @return
-	 */
-	public Map<String, Object> getConext() {
-		return context;
-	}
+    public BroadleafApplicationEvent(java.lang.Object source) {
+        super(source);
+    }
+
+    public java.util.Map<java.lang.String, java.lang.Object> getConext() {
+        return context;
+    }
 }
+

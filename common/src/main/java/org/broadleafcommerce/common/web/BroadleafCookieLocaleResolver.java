@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,38 +17,36 @@
  */
 package org.broadleafcommerce.common.web;
 
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.locale.service.LocaleService;
-import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+public class BroadleafCookieLocaleResolver extends org.springframework.web.servlet.i18n.CookieLocaleResolver {
+    @javax.annotation.Resource(name = "blLocaleService")
+    private org.broadleafcommerce.common.locale.service.LocaleService localeService;
 
-/**
- * Specific Spring component to override the default behavior of {@link CookieLocaleResolver} so that the default Broadleaf
- * Locale looked up in the database is used. This should be hooked up in applicationContext-servlet.xml in place of Spring's
- * {@link CookieResolver}.
- * 
- * @author Phillip Verheyden (phillipuniverse)
- * @see {@link BroadleafLocaleResolverImpl}
- */
-public class BroadleafCookieLocaleResolver extends CookieLocaleResolver {
-
-    @Resource(name = "blLocaleService")
-    private LocaleService localeService;
-    
-    @Override
-    protected java.util.Locale determineDefaultLocale(HttpServletRequest request) {
+    @java.lang.Override
+    protected java.util.Locale determineDefaultLocale(javax.servlet.http.HttpServletRequest request) {
         java.util.Locale defaultLocale = getDefaultLocale();
-        if (defaultLocale == null) {
-            Locale defaultBroadleafLocale = localeService.findDefaultLocale();
-            if (defaultBroadleafLocale == null) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.BroadleafCookieLocaleResolver.__L7714, (defaultLocale == null))) {
+            org.broadleafcommerce.common.locale.domain.Locale defaultBroadleafLocale = localeService.findDefaultLocale();
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.BroadleafCookieLocaleResolver.__L7715, (defaultBroadleafLocale == null))) {
                 return super.determineDefaultLocale(request);
-            } else {
-                return BroadleafRequestContext.convertLocaleToJavaLocale(defaultBroadleafLocale);
+            }else {
+                return org.broadleafcommerce.common.web.BroadleafRequestContext.convertLocaleToJavaLocale(defaultBroadleafLocale);
             }
         }
         return defaultLocale;
     }
-    
+
+    public static perturbation.location.PerturbationLocation __L7714;
+
+    public static perturbation.location.PerturbationLocation __L7715;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.BroadleafCookieLocaleResolver.__L7714 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BroadleafCookieLocaleResolver.java:43)", 7714, "Boolean");
+        org.broadleafcommerce.common.web.BroadleafCookieLocaleResolver.__L7715 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BroadleafCookieLocaleResolver.java:45)", 7715, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.BroadleafCookieLocaleResolver.initPerturbationLocation0();
+    }
 }
+

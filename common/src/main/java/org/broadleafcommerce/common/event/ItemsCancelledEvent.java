@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,29 +17,25 @@
  */
 package org.broadleafcommerce.common.event;
 
-import org.springframework.util.Assert;
 
-import java.util.Collections;
-import java.util.Map;
-
-public class ItemsCancelledEvent extends BroadleafApplicationEvent {
-
+public class ItemsCancelledEvent extends org.broadleafcommerce.common.event.BroadleafApplicationEvent {
     private static final long serialVersionUID = 1L;
 
-    protected final Map<Long, Integer> itemsAndQuantitiesCancelled;
+    protected final java.util.Map<java.lang.Long, java.lang.Integer> itemsAndQuantitiesCancelled;
 
-    public ItemsCancelledEvent(Long fulfillmentGroupId, Map<Long, Integer> cancelledItems) {
+    public ItemsCancelledEvent(java.lang.Long fulfillmentGroupId, java.util.Map<java.lang.Long, java.lang.Integer> cancelledItems) {
         super(fulfillmentGroupId);
-        Assert.notNull(fulfillmentGroupId);
-        Assert.notEmpty(cancelledItems);
-        this.itemsAndQuantitiesCancelled = Collections.unmodifiableMap(cancelledItems);
+        org.springframework.util.Assert.notNull(fulfillmentGroupId);
+        org.springframework.util.Assert.notEmpty(cancelledItems);
+        this.itemsAndQuantitiesCancelled = java.util.Collections.unmodifiableMap(cancelledItems);
     }
 
-    public Long getFulfillmentGroupId() {
-        return (Long) super.getSource();
+    public java.lang.Long getFulfillmentGroupId() {
+        return ((java.lang.Long) (super.getSource()));
     }
 
-    public Map<Long, Integer> getItemsAndQuantitiesCancelled() {
+    public java.util.Map<java.lang.Long, java.lang.Integer> getItemsAndQuantitiesCancelled() {
         return itemsAndQuantitiesCancelled;
     }
 }
+

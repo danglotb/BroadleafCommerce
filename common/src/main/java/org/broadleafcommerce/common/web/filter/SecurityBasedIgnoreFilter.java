@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,59 +17,26 @@
  */
 package org.broadleafcommerce.common.web.filter;
 
-import org.broadleafcommerce.common.util.BLCRequestUtils;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.EventListener;
-import org.springframework.core.Ordered;
-import org.springframework.security.web.FilterChainProxy;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.ServletWebRequest;
-import org.springframework.web.filter.GenericFilterBean;
 
-import java.io.IOException;
-import java.util.List;
+@org.springframework.stereotype.Component("blSecurityBasedIgnoreFilter")
+public class SecurityBasedIgnoreFilter extends org.springframework.web.filter.GenericFilterBean implements org.springframework.core.Ordered {
+    org.springframework.security.web.FilterChainProxy springSecurity = null;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-/**
- * Sets a request attribute that informs all concerned Broadleaf filters that they should pass the request through and
- * ignore all normal operation. This implementation makes it's determination based on whether or not Spring Security
- * is configured to ignore the requested URI.
- *
- * @see AbstractIgnorableFilter
- * @see AbstractIgnorableOncePerRequestFilter
- * @author Jeff Fischer
- */
-@Component("blSecurityBasedIgnoreFilter")
-public class SecurityBasedIgnoreFilter extends GenericFilterBean implements Ordered {
-
-    FilterChainProxy springSecurity = null;
-
-    @EventListener(ContextRefreshedEvent.class)
-    public void init(ContextRefreshedEvent event) {
+    @org.springframework.context.event.EventListener(org.springframework.context.event.ContextRefreshedEvent.class)
+    public void init(org.springframework.context.event.ContextRefreshedEvent event) {
         try {
-            springSecurity = (FilterChainProxy) event.getApplicationContext().getBean("springSecurityFilterChain");
-        } catch (BeansException e) {
-            //do nothing
+            springSecurity = ((org.springframework.security.web.FilterChainProxy) (event.getApplicationContext().getBean("springSecurityFilterChain")));
+        } catch (org.springframework.beans.BeansException e) {
         }
     }
 
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        if (springSecurity != null) {
-            List<SecurityFilterChain> securityChains = springSecurity.getFilterChains();
-            for (SecurityFilterChain chain : securityChains) {
-                if (chain.matches((HttpServletRequest) request) && chain.getFilters().isEmpty()) {
-                    BLCRequestUtils.setIsFilteringIgnoredForUri(new ServletWebRequest((HttpServletRequest) request, (HttpServletResponse) response), Boolean.TRUE);
+    @java.lang.Override
+    public void doFilter(javax.servlet.ServletRequest request, javax.servlet.ServletResponse response, javax.servlet.FilterChain filterChain) throws java.io.IOException, javax.servlet.ServletException {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.filter.SecurityBasedIgnoreFilter.__L7237, ((springSecurity) != null))) {
+            java.util.List<org.springframework.security.web.SecurityFilterChain> securityChains = springSecurity.getFilterChains();
+            for (org.springframework.security.web.SecurityFilterChain chain : securityChains) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.filter.SecurityBasedIgnoreFilter.__L7240, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.filter.SecurityBasedIgnoreFilter.__L7238, chain.matches(((javax.servlet.http.HttpServletRequest) (request))))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.filter.SecurityBasedIgnoreFilter.__L7239, chain.getFilters().isEmpty()))))) {
+                    org.broadleafcommerce.common.util.BLCRequestUtils.setIsFilteringIgnoredForUri(new org.springframework.web.context.request.ServletWebRequest(((javax.servlet.http.HttpServletRequest) (request)), ((javax.servlet.http.HttpServletResponse) (response))), java.lang.Boolean.TRUE);
                     break;
                 }
             }
@@ -77,8 +44,37 @@ public class SecurityBasedIgnoreFilter extends GenericFilterBean implements Orde
         filterChain.doFilter(request, response);
     }
 
-    @Override
+    @java.lang.Override
     public int getOrder() {
-        return FilterOrdered.PRE_SECURITY_HIGH - 500;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.filter.SecurityBasedIgnoreFilter.__L7243, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.filter.SecurityBasedIgnoreFilter.__L7241, org.broadleafcommerce.common.web.filter.FilterOrdered.PRE_SECURITY_HIGH)) - (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.filter.SecurityBasedIgnoreFilter.__L7242, 500))));
+    }
+
+    public static perturbation.location.PerturbationLocation __L7237;
+
+    public static perturbation.location.PerturbationLocation __L7238;
+
+    public static perturbation.location.PerturbationLocation __L7239;
+
+    public static perturbation.location.PerturbationLocation __L7240;
+
+    public static perturbation.location.PerturbationLocation __L7241;
+
+    public static perturbation.location.PerturbationLocation __L7242;
+
+    public static perturbation.location.PerturbationLocation __L7243;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.filter.SecurityBasedIgnoreFilter.__L7237 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/filter/SecurityBasedIgnoreFilter.java:68)", 7237, "Boolean");
+        org.broadleafcommerce.common.web.filter.SecurityBasedIgnoreFilter.__L7238 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/filter/SecurityBasedIgnoreFilter.java:71)", 7238, "Boolean");
+        org.broadleafcommerce.common.web.filter.SecurityBasedIgnoreFilter.__L7239 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/filter/SecurityBasedIgnoreFilter.java:71)", 7239, "Boolean");
+        org.broadleafcommerce.common.web.filter.SecurityBasedIgnoreFilter.__L7240 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/filter/SecurityBasedIgnoreFilter.java:71)", 7240, "Boolean");
+        org.broadleafcommerce.common.web.filter.SecurityBasedIgnoreFilter.__L7241 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/filter/SecurityBasedIgnoreFilter.java:82)", 7241, "Numerical");
+        org.broadleafcommerce.common.web.filter.SecurityBasedIgnoreFilter.__L7242 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/filter/SecurityBasedIgnoreFilter.java:82)", 7242, "Numerical");
+        org.broadleafcommerce.common.web.filter.SecurityBasedIgnoreFilter.__L7243 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/filter/SecurityBasedIgnoreFilter.java:82)", 7243, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.filter.SecurityBasedIgnoreFilter.initPerturbationLocation0();
     }
 }
+

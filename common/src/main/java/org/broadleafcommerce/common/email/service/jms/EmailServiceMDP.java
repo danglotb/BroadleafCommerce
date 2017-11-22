@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,54 +17,27 @@
  */
 package org.broadleafcommerce.common.email.service.jms;
 
-import org.broadleafcommerce.common.email.service.exception.EmailException;
-import org.broadleafcommerce.common.email.service.message.MessageCreator;
-import org.springframework.mail.MailAuthenticationException;
-import org.springframework.mail.MailParseException;
-import org.springframework.mail.MailPreparationException;
-import org.springframework.mail.MailSendException;
 
-import javax.annotation.Resource;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageListener;
-import javax.jms.ObjectMessage;
-import java.util.HashMap;
+public class EmailServiceMDP implements javax.jms.MessageListener {
+    @javax.annotation.Resource(name = "blMessageCreator")
+    private org.broadleafcommerce.common.email.service.message.MessageCreator messageCreator;
 
-/**
- * @author jfischer
- */
-public class EmailServiceMDP implements MessageListener {
-
-    @Resource(name = "blMessageCreator")
-    private MessageCreator messageCreator;
-
-    /*
-     * (non-Javadoc)
-     * @see javax.jms.MessageListener#onMessage(javax.jms.Message)
-     */
-    @SuppressWarnings("unchecked")
-    public void onMessage(Message message) {
+    @java.lang.SuppressWarnings("unchecked")
+    public void onMessage(javax.jms.Message message) {
         try {
-            HashMap props = (HashMap) ((ObjectMessage) message).getObject();
+            java.util.HashMap props = ((java.util.HashMap) (((javax.jms.ObjectMessage) (message)).getObject()));
             messageCreator.sendMessage(props);
-        } catch (MailAuthenticationException e) {
-            throw new EmailException(e);
-        } catch (MailPreparationException e) {
-            throw new EmailException(e);
-        } catch (MailParseException e) {
-            throw new EmailException(e);
-        } catch (MailSendException e) {
-            /*
-             * TODO find the specific exception that results from the smtp
-             * server being down, and throw this as an EmailException.
-             * Otherwise, log and then swallow this exception, as it may have
-             * been possible that this email was actually sent.
-             */
-            throw new EmailException(e);
-        } catch (JMSException e) {
-            throw new EmailException(e);
+        } catch (org.springframework.mail.MailAuthenticationException e) {
+            throw new org.broadleafcommerce.common.email.service.exception.EmailException(e);
+        } catch (org.springframework.mail.MailPreparationException e) {
+            throw new org.broadleafcommerce.common.email.service.exception.EmailException(e);
+        } catch (org.springframework.mail.MailParseException e) {
+            throw new org.broadleafcommerce.common.email.service.exception.EmailException(e);
+        } catch (org.springframework.mail.MailSendException e) {
+            throw new org.broadleafcommerce.common.email.service.exception.EmailException(e);
+        } catch (javax.jms.JMSException e) {
+            throw new org.broadleafcommerce.common.email.service.exception.EmailException(e);
         }
     }
-
 }
+

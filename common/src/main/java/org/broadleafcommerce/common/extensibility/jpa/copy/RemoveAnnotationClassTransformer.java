@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,192 +17,182 @@
  */
 package org.broadleafcommerce.common.extensibility.jpa.copy;
 
-import javassist.ClassPool;
-import javassist.CtClass;
-import javassist.bytecode.AnnotationsAttribute;
-import javassist.bytecode.ClassFile;
-import javassist.bytecode.ConstPool;
-import javassist.bytecode.FieldInfo;
-import javassist.bytecode.annotation.Annotation;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.extensibility.jpa.convert.BroadleafClassTransformer;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.BeanFactoryAware;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+public class RemoveAnnotationClassTransformer extends org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer implements org.broadleafcommerce.common.extensibility.jpa.convert.BroadleafClassTransformer , org.springframework.beans.factory.BeanFactoryAware {
+    private static final org.apache.commons.logging.Log logger = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.class);
 
-import java.io.ByteArrayInputStream;
-import java.lang.instrument.IllegalClassFormatException;
-import java.security.ProtectionDomain;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
+    protected java.lang.String moduleName;
 
-/**
- * Strip a candidate annotation from candidate classes and their fields.
- *
- * @author Jeff Fischer
- */
-public class RemoveAnnotationClassTransformer extends AbstractClassTransformer implements BroadleafClassTransformer, BeanFactoryAware {
+    protected java.util.List<java.lang.String> classNames = new java.util.ArrayList<java.lang.String>();
 
-    private static final Log logger = LogFactory.getLog(RemoveAnnotationClassTransformer.class);
+    protected java.lang.String annotationClass;
 
-    protected String moduleName;
-    protected List<String> classNames = new ArrayList<String>();
-    protected String annotationClass;
-    protected String conditionalPropertyName;
-    protected ConfigurableBeanFactory beanFactory;
+    protected java.lang.String conditionalPropertyName;
 
-    public RemoveAnnotationClassTransformer(String moduleName) {
+    protected org.springframework.beans.factory.config.ConfigurableBeanFactory beanFactory;
+
+    public RemoveAnnotationClassTransformer(java.lang.String moduleName) {
         this.moduleName = moduleName;
     }
 
-    @Override
-    public void compileJPAProperties(Properties props, Object key) throws Exception {
-        // When simply copying properties over for Java class files, JPA properties do not need modification
+    @java.lang.Override
+    public void compileJPAProperties(java.util.Properties props, java.lang.Object key) throws java.lang.Exception {
     }
 
-    @Override
-    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-        this.beanFactory = (ConfigurableBeanFactory) beanFactory;
+    @java.lang.Override
+    public void setBeanFactory(org.springframework.beans.factory.BeanFactory beanFactory) throws org.springframework.beans.BeansException {
+        this.beanFactory = ((org.springframework.beans.factory.config.ConfigurableBeanFactory) (beanFactory));
     }
 
-    @Override
-    public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
-            ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
-
-        // Lambdas and anonymous methods in Java 8 do not have a class name defined and so no transformation should be done
-        if (className == null) {
+    @java.lang.Override
+    public byte[] transform(java.lang.ClassLoader loader, java.lang.String className, java.lang.Class<?> classBeingRedefined, java.security.ProtectionDomain protectionDomain, byte[] classfileBuffer) throws java.lang.instrument.IllegalClassFormatException {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2152, (className == null))) {
             return null;
         }
-
-        //Be careful with Apache library usage in this class (e.g. ArrayUtils). Usage will likely cause a ClassCircularityError
-        //under JRebel. Favor not including outside libraries and unnecessary classes.
-        CtClass clazz = null;
+        javassist.CtClass clazz = null;
         try {
-            String convertedClassName = className.replace('/', '.');
-            if (
-                    !classNames.isEmpty() &&
-                    classNames.contains(convertedClassName) &&
-                    (
-                        conditionalPropertyName == null ||
-                        isPropertyEnabled(conditionalPropertyName))
-                    )
-             {
-                ClassPool classPool = ClassPool.getDefault();
-                clazz = classPool.makeClass(new ByteArrayInputStream(classfileBuffer), false);
+            java.lang.String convertedClassName = className.replace('/', '.');
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2158, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2156, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2154, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2153, classNames.isEmpty()))))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2155, classNames.contains(convertedClassName)))))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2157, (((conditionalPropertyName) == null) || (isPropertyEnabled(conditionalPropertyName)))))))) {
+                javassist.ClassPool classPool = javassist.ClassPool.getDefault();
+                clazz = classPool.makeClass(new java.io.ByteArrayInputStream(classfileBuffer), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2159, false));
                 clazz.defrost();
-                ClassFile classFile = clazz.getClassFile();
-                ConstPool constantPool = classFile.getConstPool();
+                javassist.bytecode.ClassFile classFile = clazz.getClassFile();
+                javassist.bytecode.ConstPool constantPool = classFile.getConstPool();
                 {
-                    List<?> attributes = classFile.getAttributes();
-                    AnnotationsAttribute annotationsAttribute = stripAnnotation(constantPool, attributes);
+                    java.util.List<?> attributes = classFile.getAttributes();
+                    javassist.bytecode.AnnotationsAttribute annotationsAttribute = stripAnnotation(constantPool, attributes);
                     classFile.addAttribute(annotationsAttribute);
                 }
-
                 {
-                    List<FieldInfo> fieldInfos = classFile.getFields();
-                    for (FieldInfo myField : fieldInfos) {
-                        List<?> attributes = myField.getAttributes();
-                        AnnotationsAttribute annotationsAttribute = stripAnnotation(constantPool, attributes);
+                    java.util.List<javassist.bytecode.FieldInfo> fieldInfos = classFile.getFields();
+                    for (javassist.bytecode.FieldInfo myField : fieldInfos) {
+                        java.util.List<?> attributes = myField.getAttributes();
+                        javassist.bytecode.AnnotationsAttribute annotationsAttribute = stripAnnotation(constantPool, attributes);
                         myField.addAttribute(annotationsAttribute);
                     }
                 }
-
                 return clazz.toBytecode();
             }
-        } catch (ClassCircularityError error) {
+        } catch (java.lang.ClassCircularityError error) {
             error.printStackTrace();
             throw error;
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to transform class", e);
+        } catch (java.lang.Exception e) {
+            throw new java.lang.RuntimeException("Unable to transform class", e);
         } finally {
-            if (clazz != null) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2160, (clazz != null))) {
                 try {
                     clazz.detach();
-                } catch (Exception e) {
-                    //do nothing
+                } catch (java.lang.Exception e) {
                 }
             }
         }
-
         return null;
     }
 
-    protected AnnotationsAttribute stripAnnotation(ConstPool constantPool, List<?> attributes) {
-        Iterator<?> itr = attributes.iterator();
-        AnnotationsAttribute annotationsAttribute = new AnnotationsAttribute(constantPool, AnnotationsAttribute.visibleTag);
-
-        while (itr.hasNext()) {
-            Object object = itr.next();
-            if (AnnotationsAttribute.class.isAssignableFrom(object.getClass())) {
-                AnnotationsAttribute attr = (AnnotationsAttribute) object;
-                Annotation[] items = attr.getAnnotations();
-                for (Annotation annotation : items) {
-                    String typeName = annotation.getTypeName();
-                    if (typeName.equals(annotationClass)) {
-                        logger.debug(String.format("Stripping out %s annotation", annotationClass));
+    protected javassist.bytecode.AnnotationsAttribute stripAnnotation(javassist.bytecode.ConstPool constantPool, java.util.List<?> attributes) {
+        java.util.Iterator<?> itr = attributes.iterator();
+        javassist.bytecode.AnnotationsAttribute annotationsAttribute = new javassist.bytecode.AnnotationsAttribute(constantPool, javassist.bytecode.AnnotationsAttribute.visibleTag);
+        while (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2161, itr.hasNext())) {
+            java.lang.Object object = itr.next();
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2162, javassist.bytecode.AnnotationsAttribute.class.isAssignableFrom(object.getClass()))) {
+                javassist.bytecode.AnnotationsAttribute attr = ((javassist.bytecode.AnnotationsAttribute) (object));
+                javassist.bytecode.annotation.Annotation[] items = attr.getAnnotations();
+                for (javassist.bytecode.annotation.Annotation annotation : items) {
+                    java.lang.String typeName = annotation.getTypeName();
+                    if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2163, typeName.equals(annotationClass))) {
+                        org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.logger.debug(java.lang.String.format("Stripping out %s annotation", annotationClass));
                         continue;
                     }
                     annotationsAttribute.addAnnotation(annotation);
                 }
                 itr.remove();
             }
-        }
+        } 
         return annotationsAttribute;
     }
 
-    protected Boolean isPropertyEnabled(String propertyName) {
-        Boolean shouldProceed;
+    protected java.lang.Boolean isPropertyEnabled(java.lang.String propertyName) {
+        java.lang.Boolean shouldProceed;
         try {
-            String value = beanFactory.resolveEmbeddedValue("${" + propertyName + ":false}");
-            shouldProceed = Boolean.parseBoolean(value);
-        } catch (Exception e) {
-            shouldProceed = false;
+            java.lang.String value = beanFactory.resolveEmbeddedValue((("${" + propertyName) + ":false}"));
+            shouldProceed = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2164, java.lang.Boolean.parseBoolean(value));
+        } catch (java.lang.Exception e) {
+            shouldProceed = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2165, false);
         }
         return shouldProceed;
     }
 
-    /**
-     * The list of fully-qualified classes to be impacted by this transformer
-     *
-     * @return
-     */
-    public List<String> getClassNames() {
+    public java.util.List<java.lang.String> getClassNames() {
         return classNames;
     }
 
-    public void setClassNames(List<String> classNames) {
+    public void setClassNames(java.util.List<java.lang.String> classNames) {
         this.classNames = classNames;
     }
 
-    /**
-     * The fully-qualified classname of the annotation to remove at the class and field level
-     *
-     * @return
-     */
-    public String getAnnotationClass() {
+    public java.lang.String getAnnotationClass() {
         return annotationClass;
     }
 
-    public void setAnnotationClass(String annotationClass) {
+    public void setAnnotationClass(java.lang.String annotationClass) {
         this.annotationClass = annotationClass;
     }
 
-    /**
-     * Optional property to declare to gate the activity of this instance of the class tranformer. If a property is specified,
-     * and it does not exist or is set to "false", the class transformation will be skipped.
-     *
-     * @return
-     */
-    public String getConditionalPropertyName() {
+    public java.lang.String getConditionalPropertyName() {
         return conditionalPropertyName;
     }
 
-    public void setConditionalPropertyName(String conditionalPropertyName) {
+    public void setConditionalPropertyName(java.lang.String conditionalPropertyName) {
         this.conditionalPropertyName = conditionalPropertyName;
     }
+
+    public static perturbation.location.PerturbationLocation __L2152;
+
+    public static perturbation.location.PerturbationLocation __L2153;
+
+    public static perturbation.location.PerturbationLocation __L2154;
+
+    public static perturbation.location.PerturbationLocation __L2155;
+
+    public static perturbation.location.PerturbationLocation __L2156;
+
+    public static perturbation.location.PerturbationLocation __L2157;
+
+    public static perturbation.location.PerturbationLocation __L2158;
+
+    public static perturbation.location.PerturbationLocation __L2159;
+
+    public static perturbation.location.PerturbationLocation __L2160;
+
+    public static perturbation.location.PerturbationLocation __L2161;
+
+    public static perturbation.location.PerturbationLocation __L2162;
+
+    public static perturbation.location.PerturbationLocation __L2163;
+
+    public static perturbation.location.PerturbationLocation __L2164;
+
+    public static perturbation.location.PerturbationLocation __L2165;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2152 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/RemoveAnnotationClassTransformer.java:78)", 2152, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2153 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/RemoveAnnotationClassTransformer.java:88)", 2153, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2154 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/RemoveAnnotationClassTransformer.java:88)", 2154, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2155 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/RemoveAnnotationClassTransformer.java:89)", 2155, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2156 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/RemoveAnnotationClassTransformer.java:88)", 2156, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2157 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/RemoveAnnotationClassTransformer.java:90)", 2157, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2158 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/RemoveAnnotationClassTransformer.java:88)", 2158, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2159 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/RemoveAnnotationClassTransformer.java:96)", 2159, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2160 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/RemoveAnnotationClassTransformer.java:123)", 2160, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2161 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/RemoveAnnotationClassTransformer.java:139)", 2161, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2162 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/RemoveAnnotationClassTransformer.java:141)", 2162, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2163 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/RemoveAnnotationClassTransformer.java:146)", 2163, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2164 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/RemoveAnnotationClassTransformer.java:162)", 2164, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.__L2165 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/RemoveAnnotationClassTransformer.java:164)", 2165, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.extensibility.jpa.copy.RemoveAnnotationClassTransformer.initPerturbationLocation0();
+    }
 }
+

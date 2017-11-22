@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,27 +17,36 @@
  */
 package org.broadleafcommerce.common.filter;
 
-/**
- * @author Jeff Fischer
- */
-public class PropertyFilter extends Filter {
 
+public class PropertyFilter extends org.broadleafcommerce.common.filter.Filter {
     protected boolean isJoinTableFilter = false;
-    protected String propertyName;
 
-    public Boolean getJoinTableFilter() {
-        return isJoinTableFilter;
+    protected java.lang.String propertyName;
+
+    public java.lang.Boolean getJoinTableFilter() {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.filter.PropertyFilter.__L2737, isJoinTableFilter);
     }
 
-    public void setJoinTableFilter(Boolean joinTableFilter) {
-        isJoinTableFilter = joinTableFilter;
+    public void setJoinTableFilter(java.lang.Boolean joinTableFilter) {
+        isJoinTableFilter = ((boolean) (joinTableFilter));
     }
 
-    public String getPropertyName() {
+    public java.lang.String getPropertyName() {
         return propertyName;
     }
 
-    public void setPropertyName(String propertyName) {
+    public void setPropertyName(java.lang.String propertyName) {
         this.propertyName = propertyName;
     }
+
+    public static perturbation.location.PerturbationLocation __L2737;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.filter.PropertyFilter.__L2737 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/filter/PropertyFilter.java:29)", 2737, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.filter.PropertyFilter.initPerturbationLocation0();
+    }
 }
+

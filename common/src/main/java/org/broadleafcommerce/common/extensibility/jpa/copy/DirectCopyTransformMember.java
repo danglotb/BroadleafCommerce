@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,31 +17,14 @@
  */
 package org.broadleafcommerce.common.extensibility.jpa.copy;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 
-/**
- *
- * @author Jeff Fischer
- */
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
+@java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
+@java.lang.annotation.Target({ java.lang.annotation.ElementType.TYPE })
 public @interface DirectCopyTransformMember {
-
-    String[] templateTokens();
+    java.lang.String[] templateTokens();
 
     boolean renameMethodOverlaps() default false;
 
-    /**
-     * <p>Defaults to false.</p>
-     * <p>skipOverlaps is useful if you want to make sure the load time weaving does not try to insert methods you have
-     * already implemented. For example, if you have already implemented the Status interface and methods (e.g. Offer),
-     * then you don't want the system to try to overwrite these.</p>
-     *
-     * @return
-     */
     boolean skipOverlaps() default true;
-
 }
+

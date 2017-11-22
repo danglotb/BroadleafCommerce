@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,43 +17,28 @@
  */
 package org.broadleafcommerce.common.i18n.service;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.i18n.dao.ISODao;
-import org.broadleafcommerce.common.i18n.domain.ISOCountry;
-import org.broadleafcommerce.common.util.TransactionUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+@org.springframework.stereotype.Service("blISOService")
+public class ISOServiceImpl implements org.broadleafcommerce.common.i18n.service.ISOService {
+    protected static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.i18n.service.ISOServiceImpl.class);
 
-import javax.annotation.Resource;
+    @javax.annotation.Resource(name = "blISODao")
+    protected org.broadleafcommerce.common.i18n.dao.ISODao isoDao;
 
-/**
- * @author Elbert Bautista (elbertbautista)
- */
-@Service("blISOService")
-public class ISOServiceImpl implements ISOService {
-
-    protected static final Log LOG = LogFactory.getLog(ISOServiceImpl.class);
-
-    @Resource(name="blISODao")
-    protected ISODao isoDao;
-
-    @Override
-    public List<ISOCountry> findISOCountries() {
+    @java.lang.Override
+    public java.util.List<org.broadleafcommerce.common.i18n.domain.ISOCountry> findISOCountries() {
         return isoDao.findISOCountries();
     }
 
-    @Override
-    public ISOCountry findISOCountryByAlpha2Code(String alpha2) {
+    @java.lang.Override
+    public org.broadleafcommerce.common.i18n.domain.ISOCountry findISOCountryByAlpha2Code(java.lang.String alpha2) {
         return isoDao.findISOCountryByAlpha2Code(alpha2);
     }
 
-    @Override
-    @Transactional(TransactionUtils.DEFAULT_TRANSACTION_MANAGER)
-    public ISOCountry save(ISOCountry isoCountry) {
+    @java.lang.Override
+    @org.springframework.transaction.annotation.Transactional(org.broadleafcommerce.common.util.TransactionUtils.DEFAULT_TRANSACTION_MANAGER)
+    public org.broadleafcommerce.common.i18n.domain.ISOCountry save(org.broadleafcommerce.common.i18n.domain.ISOCountry isoCountry) {
         return isoDao.save(isoCountry);
     }
-
 }
+

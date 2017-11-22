@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,17 +17,10 @@
  */
 package org.broadleafcommerce.common.cache.engine;
 
-import java.io.Serializable;
 
-/**
- * 
- * @author jfischer
- *
- */
 public interface HydratedCacheManager {
+    public java.lang.Object getHydratedCacheElementItem(java.lang.String cacheRegion, java.lang.String cacheName, java.io.Serializable elementKey, java.lang.String elementItemName);
 
-    public Object getHydratedCacheElementItem(String cacheRegion, String cacheName, Serializable elementKey, String elementItemName);
-
-    public void addHydratedCacheElementItem(String cacheRegion, String cacheName, Serializable elementKey, String elementItemName, Object elementValue);
-    
+    public void addHydratedCacheElementItem(java.lang.String cacheRegion, java.lang.String cacheName, java.io.Serializable elementKey, java.lang.String elementItemName, java.lang.Object elementValue);
 }
+

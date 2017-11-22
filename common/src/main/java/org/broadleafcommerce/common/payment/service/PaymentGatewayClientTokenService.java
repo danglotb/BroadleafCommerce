@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,18 +17,8 @@
  */
 package org.broadleafcommerce.common.payment.service;
 
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
 
-/**
- * <p>The intention of this API is to generate the necessary parameters and fields
- * needed by the payment gateway's JavaScript library in order to create a tokenization request.
- * These parameters will be placed on the ResponseDTO for consumption by a client application or template.</p>
- *
- * @author Elbert Bautista (elbertbautista)
- */
 public interface PaymentGatewayClientTokenService {
-
-    public PaymentResponseDTO generateClientToken(PaymentRequestDTO requestDTO);
-
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO generateClientToken(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO);
 }
+

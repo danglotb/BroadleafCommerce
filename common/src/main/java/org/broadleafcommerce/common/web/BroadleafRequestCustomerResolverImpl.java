@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,66 +17,65 @@
  */
 package org.broadleafcommerce.common.web;
 
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.ServletWebRequest;
-import org.springframework.web.context.request.WebRequest;
 
-import javax.servlet.http.HttpServletRequest;
+@org.springframework.stereotype.Service("blRequestCustomerResolver")
+public class BroadleafRequestCustomerResolverImpl implements org.broadleafcommerce.common.web.BroadleafRequestCustomerResolver , org.springframework.context.ApplicationContextAware {
+    private static org.springframework.context.ApplicationContext applicationContext;
 
-/**
- * By default, we'll resolve the customer from the "customer" attribute on the request.
- * 
- * @author Andre Azzolini (apazzolini)
- */
-@Service("blRequestCustomerResolver")
-public class BroadleafRequestCustomerResolverImpl implements ApplicationContextAware, BroadleafRequestCustomerResolver {
-    
-    private static ApplicationContext applicationContext;
+    protected static java.lang.String customerRequestAttributeName = "customer";
 
-    protected static String customerRequestAttributeName = "customer";
-
-    @Override
-    public Object getCustomer(HttpServletRequest request) {
-        return getCustomer(new ServletWebRequest(request));
+    @java.lang.Override
+    public java.lang.Object getCustomer(javax.servlet.http.HttpServletRequest request) {
+        return getCustomer(new org.springframework.web.context.request.ServletWebRequest(request));
     }
-    
-    @Override
-    public Object getCustomer() {
-        WebRequest request = BroadleafRequestContext.getBroadleafRequestContext().getWebRequest();
+
+    @java.lang.Override
+    public java.lang.Object getCustomer() {
+        org.springframework.web.context.request.WebRequest request = org.broadleafcommerce.common.web.BroadleafRequestContext.getBroadleafRequestContext().getWebRequest();
         return getCustomer(request);
     }
 
-    @Override
-    public Object getCustomer(WebRequest request) {
-        return request.getAttribute(getCustomerRequestAttributeName(), WebRequest.SCOPE_REQUEST);
+    @java.lang.Override
+    public java.lang.Object getCustomer(org.springframework.web.context.request.WebRequest request) {
+        return request.getAttribute(getCustomerRequestAttributeName(), perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.BroadleafRequestCustomerResolverImpl.__L7842, org.springframework.web.context.request.WebRequest.SCOPE_REQUEST));
     }
 
-    @Override
-    public void setCustomer(Object customer) {
-        WebRequest request = BroadleafRequestContext.getBroadleafRequestContext().getWebRequest();
-        request.setAttribute(getCustomerRequestAttributeName(), customer, WebRequest.SCOPE_REQUEST);
+    @java.lang.Override
+    public void setCustomer(java.lang.Object customer) {
+        org.springframework.web.context.request.WebRequest request = org.broadleafcommerce.common.web.BroadleafRequestContext.getBroadleafRequestContext().getWebRequest();
+        request.setAttribute(getCustomerRequestAttributeName(), customer, perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.BroadleafRequestCustomerResolverImpl.__L7843, org.springframework.web.context.request.WebRequest.SCOPE_REQUEST));
     }
 
-    @Override
-    public String getCustomerRequestAttributeName() {
-        return customerRequestAttributeName;
+    @java.lang.Override
+    public java.lang.String getCustomerRequestAttributeName() {
+        return org.broadleafcommerce.common.web.BroadleafRequestCustomerResolverImpl.customerRequestAttributeName;
     }
 
-    @Override
-    public void setCustomerRequestAttributeName(String customerRequestAttributeName) {
-        BroadleafRequestCustomerResolverImpl.customerRequestAttributeName = customerRequestAttributeName;
+    @java.lang.Override
+    public void setCustomerRequestAttributeName(java.lang.String customerRequestAttributeName) {
+        org.broadleafcommerce.common.web.BroadleafRequestCustomerResolverImpl.customerRequestAttributeName = customerRequestAttributeName;
     }
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        BroadleafRequestCustomerResolverImpl.applicationContext = applicationContext;
+    @java.lang.Override
+    public void setApplicationContext(org.springframework.context.ApplicationContext applicationContext) throws org.springframework.beans.BeansException {
+        org.broadleafcommerce.common.web.BroadleafRequestCustomerResolverImpl.applicationContext = applicationContext;
     }
-    
-    public static BroadleafRequestCustomerResolver getRequestCustomerResolver() {
-        return (BroadleafRequestCustomerResolver) applicationContext.getBean("blRequestCustomerResolver");
+
+    public static org.broadleafcommerce.common.web.BroadleafRequestCustomerResolver getRequestCustomerResolver() {
+        return ((org.broadleafcommerce.common.web.BroadleafRequestCustomerResolver) (org.broadleafcommerce.common.web.BroadleafRequestCustomerResolverImpl.applicationContext.getBean("blRequestCustomerResolver")));
     }
-    
+
+    public static perturbation.location.PerturbationLocation __L7842;
+
+    public static perturbation.location.PerturbationLocation __L7843;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.BroadleafRequestCustomerResolverImpl.__L7842 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BroadleafRequestCustomerResolverImpl.java:54)", 7842, "Numerical");
+        org.broadleafcommerce.common.web.BroadleafRequestCustomerResolverImpl.__L7843 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BroadleafRequestCustomerResolverImpl.java:60)", 7843, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.BroadleafRequestCustomerResolverImpl.initPerturbationLocation0();
+    }
 }
+

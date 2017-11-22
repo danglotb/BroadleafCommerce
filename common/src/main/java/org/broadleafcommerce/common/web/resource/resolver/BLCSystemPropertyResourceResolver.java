@@ -1,8 +1,8 @@
 /*
  * #%L
- * broadleaf-theme
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -18,111 +18,105 @@
 package org.broadleafcommerce.common.web.resource.resolver;
 
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.resource.GeneratedResource;
-import org.broadleafcommerce.common.util.BLCSystemProperty;
-import org.broadleafcommerce.common.web.BaseUrlResolver;
-import org.springframework.core.Ordered;
-import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.util.StringUtils;
-import org.springframework.web.servlet.resource.AbstractResourceResolver;
-import org.springframework.web.servlet.resource.ResourceResolver;
-import org.springframework.web.servlet.resource.ResourceResolverChain;
+@org.springframework.stereotype.Component("blSystemPropertyJSResolver")
+public class BLCSystemPropertyResourceResolver extends org.springframework.web.servlet.resource.AbstractResourceResolver implements org.springframework.core.Ordered {
+    protected static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.class);
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+    protected static final java.lang.String BLC_SYSTEM_PROPERTY_FILE = "BLC-system-property.js";
 
-import javax.servlet.http.HttpServletRequest;
+    protected static final java.nio.charset.Charset DEFAULT_CHARSET = java.nio.charset.Charset.forName("UTF-8");
 
-/**
- * A {@link ResourceResolver} that replaces system properties in BLC-system-property.js 
- * 
- * @since 4.0
- * 
- * @author Reggie Cole
- * @author Brian Polster
- * @since Broadleaf 4.0
- */
-@Component("blSystemPropertyJSResolver")
-public class BLCSystemPropertyResourceResolver extends AbstractResourceResolver implements Ordered {
-
-    protected static final Log LOG = LogFactory.getLog(BLCSystemPropertyResourceResolver.class);
-
-    protected static final String BLC_SYSTEM_PROPERTY_FILE = "BLC-system-property.js";
-    protected static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
-
-    private int order = BroadleafResourceResolverOrder.BLC_SYSTEM_PROPERTY_RESOURCE_RESOLVER;
+    private int order = org.broadleafcommerce.common.web.resource.resolver.BroadleafResourceResolverOrder.BLC_SYSTEM_PROPERTY_RESOURCE_RESOLVER;
 
     @javax.annotation.Resource(name = "blBaseUrlResolver")
-    BaseUrlResolver urlResolver;
+    org.broadleafcommerce.common.web.BaseUrlResolver urlResolver;
 
-    @Override
-    protected String resolveUrlPathInternal(String resourceUrlPath, List<? extends Resource> locations,
-            ResourceResolverChain chain) {
+    @java.lang.Override
+    protected java.lang.String resolveUrlPathInternal(java.lang.String resourceUrlPath, java.util.List<? extends org.springframework.core.io.Resource> locations, org.springframework.web.servlet.resource.ResourceResolverChain chain) {
         return chain.resolveUrlPath(resourceUrlPath, locations);
     }
-    
-    @Override
-    protected Resource resolveResourceInternal(HttpServletRequest request, String requestPath,
-            List<? extends Resource> locations, ResourceResolverChain chain) {
 
-        Resource resource = chain.resolveResource(request, requestPath, locations);
-
-        if (requestPath.equalsIgnoreCase(BLC_SYSTEM_PROPERTY_FILE)) {
+    @java.lang.Override
+    protected org.springframework.core.io.Resource resolveResourceInternal(javax.servlet.http.HttpServletRequest request, java.lang.String requestPath, java.util.List<? extends org.springframework.core.io.Resource> locations, org.springframework.web.servlet.resource.ResourceResolverChain chain) {
+        org.springframework.core.io.Resource resource = chain.resolveResource(request, requestPath, locations);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.__L7468, requestPath.equalsIgnoreCase(org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.BLC_SYSTEM_PROPERTY_FILE))) {
             try {
                 resource = convertResource(resource, requestPath);
-            } catch (IOException ioe) {
-                LOG.error("Exception modifying " + BLC_SYSTEM_PROPERTY_FILE, ioe);
+            } catch (java.io.IOException ioe) {
+                org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.LOG.error(("Exception modifying " + (org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.BLC_SYSTEM_PROPERTY_FILE)), ioe);
             }
         }
-
         return resource;
     }
 
-    protected Resource convertResource(Resource origResource, String resourceFileName) throws IOException {
-        byte[] bytes = FileCopyUtils.copyToByteArray(origResource.getInputStream());
-        String content = new String(bytes, DEFAULT_CHARSET);
-        
-        String newContent = content;
-        if (! StringUtils.isEmpty(content)) {
-            String regexKey = "\\\"BLC_PROP:(.*)\\\"";
-
-            Pattern p = Pattern.compile(regexKey);
-            Matcher m = p.matcher(content);
-            while (m.find()) {
-                String matchedPlaceholder = m.group(0);
-                String propertyName = m.group(1);
-
-                String propVal = BLCSystemProperty.resolveSystemProperty(propertyName);
-                if (propVal == null) {
+    protected org.springframework.core.io.Resource convertResource(org.springframework.core.io.Resource origResource, java.lang.String resourceFileName) throws java.io.IOException {
+        byte[] bytes = org.springframework.util.FileCopyUtils.copyToByteArray(origResource.getInputStream());
+        java.lang.String content = new java.lang.String(bytes, org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.DEFAULT_CHARSET);
+        java.lang.String newContent = content;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.__L7470, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.__L7469, org.springframework.util.StringUtils.isEmpty(content)))))) {
+            java.lang.String regexKey = "\\\"BLC_PROP:(.*)\\\"";
+            java.util.regex.Pattern p = java.util.regex.Pattern.compile(regexKey);
+            java.util.regex.Matcher m = p.matcher(content);
+            while (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.__L7471, m.find())) {
+                java.lang.String matchedPlaceholder = m.group(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.__L7472, 0));
+                java.lang.String propertyName = m.group(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.__L7473, 1));
+                java.lang.String propVal = org.broadleafcommerce.common.util.BLCSystemProperty.resolveSystemProperty(propertyName);
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.__L7474, (propVal == null))) {
                     propVal = "";
                 }
-
-                newContent = newContent.replaceAll(matchedPlaceholder, '"' + propVal + '"');
-            }
+                newContent = newContent.replaceAll(matchedPlaceholder, (('"' + propVal) + '"'));
+            } 
         }
-        
-        return new GeneratedResource(newContent.getBytes(), resourceFileName);
-    }
-    
-    protected String addVersion(String requestPath, String version) {
-        String baseFilename = StringUtils.stripFilenameExtension(requestPath);
-        String extension = StringUtils.getFilenameExtension(requestPath);
-        return baseFilename + version + "." + extension;
+        return new org.broadleafcommerce.common.resource.GeneratedResource(newContent.getBytes(), resourceFileName);
     }
 
-    @Override
+    protected java.lang.String addVersion(java.lang.String requestPath, java.lang.String version) {
+        java.lang.String baseFilename = org.springframework.util.StringUtils.stripFilenameExtension(requestPath);
+        java.lang.String extension = org.springframework.util.StringUtils.getFilenameExtension(requestPath);
+        return ((baseFilename + version) + ".") + extension;
+    }
+
+    @java.lang.Override
     public int getOrder() {
-        return order;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.__L7475, order);
     }
 
     public void setOrder(int order) {
-        this.order = order;
+        this.order = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.__L7476, order);
+    }
+
+    public static perturbation.location.PerturbationLocation __L7468;
+
+    public static perturbation.location.PerturbationLocation __L7469;
+
+    public static perturbation.location.PerturbationLocation __L7470;
+
+    public static perturbation.location.PerturbationLocation __L7471;
+
+    public static perturbation.location.PerturbationLocation __L7472;
+
+    public static perturbation.location.PerturbationLocation __L7473;
+
+    public static perturbation.location.PerturbationLocation __L7474;
+
+    public static perturbation.location.PerturbationLocation __L7475;
+
+    public static perturbation.location.PerturbationLocation __L7476;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.__L7468 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BLCSystemPropertyResourceResolver.java:77)", 7468, "Boolean");
+        org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.__L7469 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BLCSystemPropertyResourceResolver.java:93)", 7469, "Boolean");
+        org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.__L7470 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BLCSystemPropertyResourceResolver.java:93)", 7470, "Boolean");
+        org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.__L7471 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BLCSystemPropertyResourceResolver.java:98)", 7471, "Boolean");
+        org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.__L7472 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BLCSystemPropertyResourceResolver.java:99)", 7472, "Numerical");
+        org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.__L7473 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BLCSystemPropertyResourceResolver.java:100)", 7473, "Numerical");
+        org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.__L7474 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BLCSystemPropertyResourceResolver.java:103)", 7474, "Boolean");
+        org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.__L7475 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BLCSystemPropertyResourceResolver.java:122)", 7475, "Numerical");
+        org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.__L7476 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BLCSystemPropertyResourceResolver.java:126)", 7476, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.resource.resolver.BLCSystemPropertyResourceResolver.initPerturbationLocation0();
     }
 }
+

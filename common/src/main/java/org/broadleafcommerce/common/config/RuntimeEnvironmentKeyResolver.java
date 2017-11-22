@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,16 +17,9 @@
  */
 package org.broadleafcommerce.common.config;
 
-/**
- * @deprecated Instead of using anything around the -Druntime-environment values, you should be using Spring profiles
- * and properties activated with that via {@link BroadleafEnvironmentConfiguringApplicationListener}.
- */
-@Deprecated
+
+@java.lang.Deprecated
 public interface RuntimeEnvironmentKeyResolver {
-    /**
-     * Determine and return the runtime environment; if an implementation is
-     * unable to determine the runtime environment, null can be returned to
-     * indicate this.
-     */
-    String resolveRuntimeEnvironmentKey();
+    java.lang.String resolveRuntimeEnvironmentKey();
 }
+

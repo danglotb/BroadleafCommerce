@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,158 +17,169 @@
  */
 package org.broadleafcommerce.common.page.dto;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.broadleafcommerce.common.structure.dto.ItemCriteriaDTO;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-/**
- * Page fields must be pre-processed (for example to fix image paths).
- * This DTO allows us to process the PageFields once and then cache
- * the results.
- *
- * Created by bpolster.
- */
-public class PageDTO implements Serializable {
+public class PageDTO implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
 
-    protected Long id;
-    protected String description;
-    protected String localeCode;
-    protected String templatePath;
-    protected String url;
-    protected Integer priority;
-    protected Map<String, Object> pageFields = new HashMap<String, Object>();
-    protected String ruleExpression;
-    protected List<ItemCriteriaDTO> itemCriteriaDTOList;
-    protected Map<String, String> pageAttributes = new HashMap<String, String>();
-    protected Map<String, Object> foreignPageFields = new HashMap<String, Object>();
+    protected java.lang.Long id;
 
-    /**
-     * Attempts to obtain the given property value from the dynamic property map first, and then an actual bean property
-     * via a getter
-     * 
-     * @param propertyName
-     * @return
-     */
-    public Object getPropertyValue(String propertyName) {
-        if (getPageFields().containsKey(propertyName)) {
+    protected java.lang.String description;
+
+    protected java.lang.String localeCode;
+
+    protected java.lang.String templatePath;
+
+    protected java.lang.String url;
+
+    protected java.lang.Integer priority;
+
+    protected java.util.Map<java.lang.String, java.lang.Object> pageFields = new java.util.HashMap<java.lang.String, java.lang.Object>();
+
+    protected java.lang.String ruleExpression;
+
+    protected java.util.List<org.broadleafcommerce.common.structure.dto.ItemCriteriaDTO> itemCriteriaDTOList;
+
+    protected java.util.Map<java.lang.String, java.lang.String> pageAttributes = new java.util.HashMap<java.lang.String, java.lang.String>();
+
+    protected java.util.Map<java.lang.String, java.lang.Object> foreignPageFields = new java.util.HashMap<java.lang.String, java.lang.Object>();
+
+    public java.lang.Object getPropertyValue(java.lang.String propertyName) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.page.dto.PageDTO.__L3722, getPageFields().containsKey(propertyName))) {
             return getPageFields().get(propertyName);
-        } else if (getPageAttributes().containsKey(propertyName)) {
-            return getPageAttributes().get(propertyName);
-        } else {
-            try {
-                return BeanUtils.getProperty(this, propertyName);
-            } catch (Exception e) {
-                return null;
+        }else
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.page.dto.PageDTO.__L3723, getPageAttributes().containsKey(propertyName))) {
+                return getPageAttributes().get(propertyName);
+            }else {
+                try {
+                    return org.apache.commons.beanutils.BeanUtils.getProperty(this, propertyName);
+                } catch (java.lang.Exception e) {
+                    return null;
+                }
             }
-        }
+
     }
 
-    public Long getId() {
+    public java.lang.Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(java.lang.Long id) {
         this.id = id;
     }
 
-    public String getDescription() {
+    public java.lang.String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(java.lang.String description) {
         this.description = description;
     }
 
-    public String getLocaleCode() {
+    public java.lang.String getLocaleCode() {
         return localeCode;
     }
 
-    public void setLocaleCode(String localeCode) {
+    public void setLocaleCode(java.lang.String localeCode) {
         this.localeCode = localeCode;
     }
 
-    public String getTemplatePath() {
+    public java.lang.String getTemplatePath() {
         return templatePath;
     }
 
-    public void setTemplatePath(String templatePath) {
+    public void setTemplatePath(java.lang.String templatePath) {
         this.templatePath = templatePath;
     }
 
-    public String getUrl() {
+    public java.lang.String getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(java.lang.String url) {
         this.url = url;
     }
 
-    public Map<String, Object> getPageFields() {
+    public java.util.Map<java.lang.String, java.lang.Object> getPageFields() {
         return pageFields;
     }
 
-    public void setPageFields(Map<String, Object> pageFields) {
+    public void setPageFields(java.util.Map<java.lang.String, java.lang.Object> pageFields) {
         this.pageFields = pageFields;
     }
-    
-    public String getRuleExpression() {
+
+    public java.lang.String getRuleExpression() {
         return ruleExpression;
     }
 
-    public void setRuleExpression(String ruleExpression) {
+    public void setRuleExpression(java.lang.String ruleExpression) {
         this.ruleExpression = ruleExpression;
     }
 
-    public List<ItemCriteriaDTO> getItemCriteriaDTOList() {
+    public java.util.List<org.broadleafcommerce.common.structure.dto.ItemCriteriaDTO> getItemCriteriaDTOList() {
         return itemCriteriaDTOList;
     }
 
-    public void setItemCriteriaDTOList(List<ItemCriteriaDTO> itemCriteriaDTOList) {
+    public void setItemCriteriaDTOList(java.util.List<org.broadleafcommerce.common.structure.dto.ItemCriteriaDTO> itemCriteriaDTOList) {
         this.itemCriteriaDTOList = itemCriteriaDTOList;
     }
 
-    public Integer getPriority() {
-        return priority;
+    public java.lang.Integer getPriority() {
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.page.dto.PageDTO.__L3724, priority);
     }
 
-    public void setPriority(Integer priority) {
-        this.priority = priority;
+    public void setPriority(java.lang.Integer priority) {
+        this.priority = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.page.dto.PageDTO.__L3725, priority);
     }
-    
-    public Map<String, String> getPageAttributes() {
+
+    public java.util.Map<java.lang.String, java.lang.String> getPageAttributes() {
         return pageAttributes;
     }
-    
-    public void setPageAttributes(Map<String, String> pageAttributes) {
+
+    public void setPageAttributes(java.util.Map<java.lang.String, java.lang.String> pageAttributes) {
         this.pageAttributes = pageAttributes;
-    }   
-    
-    public Map<String, Object> getForeignPageFields() {
+    }
+
+    public java.util.Map<java.lang.String, java.lang.Object> getForeignPageFields() {
         return foreignPageFields;
     }
-    
-    public void setForeignPageFields(Map<String, Object> foreignPageFields) {
+
+    public void setForeignPageFields(java.util.Map<java.lang.String, java.lang.Object> foreignPageFields) {
         this.foreignPageFields = foreignPageFields;
     }
 
-    public void copy(PageDTO original) {
+    public void copy(org.broadleafcommerce.common.page.dto.PageDTO original) {
         description = original.description;
         id = original.id;
         localeCode = original.localeCode;
         templatePath = original.templatePath;
         url = original.url;
-        priority = original.priority;
-        
-        // Extension Handlers Might Modify This
-        pageFields = new HashMap<String, Object>(original.pageFields);
+        priority = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.page.dto.PageDTO.__L3726, original.priority);
+        pageFields = new java.util.HashMap<java.lang.String, java.lang.Object>(original.pageFields);
         ruleExpression = original.ruleExpression;
         itemCriteriaDTOList = original.itemCriteriaDTOList;
         pageAttributes = original.pageAttributes;
     }
-    
+
+    public static perturbation.location.PerturbationLocation __L3722;
+
+    public static perturbation.location.PerturbationLocation __L3723;
+
+    public static perturbation.location.PerturbationLocation __L3724;
+
+    public static perturbation.location.PerturbationLocation __L3725;
+
+    public static perturbation.location.PerturbationLocation __L3726;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.page.dto.PageDTO.__L3722 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/page/dto/PageDTO.java:58)", 3722, "Boolean");
+        org.broadleafcommerce.common.page.dto.PageDTO.__L3723 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/page/dto/PageDTO.java:60)", 3723, "Boolean");
+        org.broadleafcommerce.common.page.dto.PageDTO.__L3724 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/page/dto/PageDTO.java:136)", 3724, "Numerical");
+        org.broadleafcommerce.common.page.dto.PageDTO.__L3725 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/page/dto/PageDTO.java:140)", 3725, "Numerical");
+        org.broadleafcommerce.common.page.dto.PageDTO.__L3726 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/page/dto/PageDTO.java:165)", 3726, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.page.dto.PageDTO.initPerturbationLocation0();
+    }
 }
+

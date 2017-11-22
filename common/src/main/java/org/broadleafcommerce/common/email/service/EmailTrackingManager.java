@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,17 +17,12 @@
  */
 package org.broadleafcommerce.common.email.service;
 
-import java.util.Map;
 
-
-/**
- * @author jfischer
- *
- */
 public interface EmailTrackingManager {
+    public java.lang.Long createTrackedEmail(java.lang.String emailAddress, java.lang.String type, java.lang.String extraValue);
 
-    public Long createTrackedEmail(String emailAddress, String type, String extraValue);
-    public void recordOpen (Long emailId, Map<String, String> extraValues);
-    public void recordClick(Long emailId , Map<String, String> parameterMap, String customerId, Map<String, String> extraValues);
+    public void recordOpen(java.lang.Long emailId, java.util.Map<java.lang.String, java.lang.String> extraValues);
 
+    public void recordClick(java.lang.Long emailId, java.util.Map<java.lang.String, java.lang.String> parameterMap, java.lang.String customerId, java.util.Map<java.lang.String, java.lang.String> extraValues);
 }
+

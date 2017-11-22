@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Workflow
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,53 +17,64 @@
  */
 package org.broadleafcommerce.common.util;
 
-/**
- * @author Jeff Fischer
- */
-public abstract class StreamCapableTransactionalOperationAdapter implements StreamCapableTransactionalOperation {
 
-    protected Object[] pagedItems;
+public abstract class StreamCapableTransactionalOperationAdapter implements org.broadleafcommerce.common.util.StreamCapableTransactionalOperation {
+    protected java.lang.Object[] pagedItems;
 
-    @Override
-    public void pagedExecute(Object[] param) throws Throwable {
-        //do nothing
+    @java.lang.Override
+    public void pagedExecute(java.lang.Object[] param) throws java.lang.Throwable {
     }
 
-    @Override
-    public void executeAfterCommit(Object[] param) {
-        //do nothing
+    @java.lang.Override
+    public void executeAfterCommit(java.lang.Object[] param) {
     }
 
-    @Override
-    public void execute() throws Throwable {
-        //do nothing
+    @java.lang.Override
+    public void execute() throws java.lang.Throwable {
     }
 
-    @Override
-    public Object[] retrievePage(int startPos, int pageSize) {
+    @java.lang.Override
+    public java.lang.Object[] retrievePage(int startPos, int pageSize) {
         return null;
     }
 
-    @Override
-    public Long retrieveTotalCount() {
+    @java.lang.Override
+    public java.lang.Long retrieveTotalCount() {
         return null;
     }
 
-    public Object[] getPagedItems() {
+    public java.lang.Object[] getPagedItems() {
         return pagedItems;
     }
 
-    public void setPagedItems(Object[] pagedItems) {
+    public void setPagedItems(java.lang.Object[] pagedItems) {
         this.pagedItems = pagedItems;
     }
 
-    @Override
+    @java.lang.Override
     public boolean shouldRetryOnTransactionLockAcquisitionFailure() {
-        return false;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.StreamCapableTransactionalOperationAdapter.__L6603, false);
     }
 
-    @Override
+    @java.lang.Override
     public int retryMaxCountOverrideForLockAcquisitionFailure() {
-        return -1;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.StreamCapableTransactionalOperationAdapter.__L6605, (-(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.StreamCapableTransactionalOperationAdapter.__L6604, 1))));
+    }
+
+    public static perturbation.location.PerturbationLocation __L6603;
+
+    public static perturbation.location.PerturbationLocation __L6604;
+
+    public static perturbation.location.PerturbationLocation __L6605;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.StreamCapableTransactionalOperationAdapter.__L6603 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/StreamCapableTransactionalOperationAdapter.java:62)", 6603, "Boolean");
+        org.broadleafcommerce.common.util.StreamCapableTransactionalOperationAdapter.__L6604 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/StreamCapableTransactionalOperationAdapter.java:67)", 6604, "Numerical");
+        org.broadleafcommerce.common.util.StreamCapableTransactionalOperationAdapter.__L6605 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/StreamCapableTransactionalOperationAdapter.java:67)", 6605, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.StreamCapableTransactionalOperationAdapter.initPerturbationLocation0();
     }
 }
+

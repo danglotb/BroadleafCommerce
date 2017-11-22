@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,18 +17,12 @@
  */
 package org.broadleafcommerce.common.persistence;
 
-/**
- * Interface that denotes whether or not an entity is archived. Usually, entities that implement this interface also only
- * undergo soft-deletes.
- * 
- * @author Jeff Fischer
- */
+
 public interface Status {
+    public void setArchived(java.lang.Character archived);
 
-    public void setArchived(Character archived);
-
-    public Character getArchived();
+    public java.lang.Character getArchived();
 
     public boolean isActive();
-
 }
+

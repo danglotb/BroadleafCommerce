@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,17 +17,10 @@
  */
 package org.broadleafcommerce.common.site.service.provider;
 
-import org.broadleafcommerce.common.site.domain.Site;
 
-import java.util.Map;
-
-/**
- * @author Jeff Fischer
- */
 public interface SiteConfigProvider {
+    public void configSite(org.broadleafcommerce.common.site.domain.Site site);
 
-    public void configSite(Site site);
-    
-    public void init(Map<String, Object> map);
-
+    public void init(java.util.Map<java.lang.String, java.lang.Object> map);
 }
+

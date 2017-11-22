@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,41 +17,29 @@
  */
 package org.broadleafcommerce.api.common.web.filter;
 
-import org.broadleafcommerce.common.util.BLCRequestUtils;
-import org.broadleafcommerce.common.web.filter.AbstractIgnorableFilter;
-import org.broadleafcommerce.common.web.filter.FilterOrdered;
-import org.broadleafcommerce.common.web.filter.SessionlessHttpServletRequestWrapper;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.ServletWebRequest;
 
-import java.io.IOException;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-/**
- * Sets a request attribute that informs all Broadleaf Filters that follow NOT to use the HTTP Session.
- * 
- * Intended for use by REST api requests.
- * 
- * @author bpolster
- */
-@Component("blStatelessSessionFilter")
-public class StatelessSessionFilter extends AbstractIgnorableFilter {
-
-    @Override
-    public void doFilterUnlessIgnored(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        BLCRequestUtils.setOKtoUseSession(new ServletWebRequest((HttpServletRequest) request, (HttpServletResponse) response), Boolean.FALSE);
-        SessionlessHttpServletRequestWrapper wrapper = new SessionlessHttpServletRequestWrapper((HttpServletRequest) request);
+@org.springframework.stereotype.Component("blStatelessSessionFilter")
+public class StatelessSessionFilter extends org.broadleafcommerce.common.web.filter.AbstractIgnorableFilter {
+    @java.lang.Override
+    public void doFilterUnlessIgnored(javax.servlet.ServletRequest request, javax.servlet.ServletResponse response, javax.servlet.FilterChain filterChain) throws java.io.IOException, javax.servlet.ServletException {
+        org.broadleafcommerce.common.util.BLCRequestUtils.setOKtoUseSession(new org.springframework.web.context.request.ServletWebRequest(((javax.servlet.http.HttpServletRequest) (request)), ((javax.servlet.http.HttpServletResponse) (response))), java.lang.Boolean.FALSE);
+        org.broadleafcommerce.common.web.filter.SessionlessHttpServletRequestWrapper wrapper = new org.broadleafcommerce.common.web.filter.SessionlessHttpServletRequestWrapper(((javax.servlet.http.HttpServletRequest) (request)));
         filterChain.doFilter(wrapper, response);
     }
 
-    @Override
+    @java.lang.Override
     public int getOrder() {
-        return FilterOrdered.PRE_SECURITY_HIGH;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.api.common.web.filter.StatelessSessionFilter.__L0, org.broadleafcommerce.common.web.filter.FilterOrdered.PRE_SECURITY_HIGH);
+    }
+
+    public static perturbation.location.PerturbationLocation __L0;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.api.common.web.filter.StatelessSessionFilter.__L0 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/api/common/web/filter/StatelessSessionFilter.java:55)", 0, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.api.common.web.filter.StatelessSessionFilter.initPerturbationLocation0();
     }
 }
+

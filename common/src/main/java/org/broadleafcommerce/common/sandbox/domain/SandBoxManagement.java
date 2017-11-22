@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,14 +17,10 @@
  */
 package org.broadleafcommerce.common.sandbox.domain;
 
-import java.io.Serializable;
 
-/**
- * @author Jeff Fischer
- */
-public interface SandBoxManagement extends Serializable {
+public interface SandBoxManagement extends java.io.Serializable {
+    org.broadleafcommerce.common.sandbox.domain.SandBox getSandBox();
 
-    SandBox getSandBox();
-
-    void setSandBox(SandBox sandBox);
+    void setSandBox(org.broadleafcommerce.common.sandbox.domain.SandBox sandBox);
 }
+

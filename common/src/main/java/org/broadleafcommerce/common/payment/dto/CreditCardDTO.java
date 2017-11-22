@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,35 +15,36 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.payment.dto;
 
-import java.util.HashMap;
-import java.util.Map;
 
-/**
- * @author Elbert Bautista (elbertbautista)
- */
 public class CreditCardDTO<T> {
-
     protected T parent;
 
-    protected Map<String, Object> additionalFields;
-    protected String creditCardHolderName;
-    protected String creditCardType;
-    protected String creditCardNum;
-    protected String creditCardLastFour;
-    protected String creditCardExpDate;
-    protected String creditCardExpMonth;
-    protected String creditCardExpYear;
-    protected String creditCardCvv;
+    protected java.util.Map<java.lang.String, java.lang.Object> additionalFields;
+
+    protected java.lang.String creditCardHolderName;
+
+    protected java.lang.String creditCardType;
+
+    protected java.lang.String creditCardNum;
+
+    protected java.lang.String creditCardLastFour;
+
+    protected java.lang.String creditCardExpDate;
+
+    protected java.lang.String creditCardExpMonth;
+
+    protected java.lang.String creditCardExpYear;
+
+    protected java.lang.String creditCardCvv;
 
     public CreditCardDTO() {
-        this.additionalFields = new HashMap<String, Object>();
+        this.additionalFields = new java.util.HashMap<java.lang.String, java.lang.Object>();
     }
 
     public CreditCardDTO(T parent) {
-        this.additionalFields = new HashMap<String, Object>();
+        this.additionalFields = new java.util.HashMap<java.lang.String, java.lang.Object>();
         this.parent = parent;
     }
 
@@ -51,97 +52,156 @@ public class CreditCardDTO<T> {
         return parent;
     }
 
-    public CreditCardDTO<T> additionalFields(String key, Object value) {
+    public org.broadleafcommerce.common.payment.dto.CreditCardDTO<T> additionalFields(java.lang.String key, java.lang.Object value) {
         additionalFields.put(key, value);
         return this;
     }
 
-    public CreditCardDTO<T> creditCardHolderName(String creditCardHolderName) {
+    public org.broadleafcommerce.common.payment.dto.CreditCardDTO<T> creditCardHolderName(java.lang.String creditCardHolderName) {
         this.creditCardHolderName = creditCardHolderName;
         return this;
     }
 
-    public CreditCardDTO<T> creditCardType(String creditCardType) {
+    public org.broadleafcommerce.common.payment.dto.CreditCardDTO<T> creditCardType(java.lang.String creditCardType) {
         this.creditCardType = creditCardType;
         return this;
     }
 
-    public CreditCardDTO<T> creditCardNum(String creditCardNum) {
+    public org.broadleafcommerce.common.payment.dto.CreditCardDTO<T> creditCardNum(java.lang.String creditCardNum) {
         this.creditCardNum = creditCardNum;
         return this;
     }
 
-    public CreditCardDTO<T> creditCardLastFour(String creditCardLastFour) {
+    public org.broadleafcommerce.common.payment.dto.CreditCardDTO<T> creditCardLastFour(java.lang.String creditCardLastFour) {
         this.creditCardLastFour = creditCardLastFour;
         return this;
     }
 
-    public CreditCardDTO<T> creditCardExpDate(String creditCardExpDate) {
+    public org.broadleafcommerce.common.payment.dto.CreditCardDTO<T> creditCardExpDate(java.lang.String creditCardExpDate) {
         this.creditCardExpDate = creditCardExpDate;
         return this;
     }
 
-    public CreditCardDTO<T> creditCardExpMonth(String creditCardExpMonth) {
+    public org.broadleafcommerce.common.payment.dto.CreditCardDTO<T> creditCardExpMonth(java.lang.String creditCardExpMonth) {
         this.creditCardExpMonth = creditCardExpMonth;
         return this;
     }
 
-    public CreditCardDTO<T> creditCardExpYear(String creditCardExpYear) {
+    public org.broadleafcommerce.common.payment.dto.CreditCardDTO<T> creditCardExpYear(java.lang.String creditCardExpYear) {
         this.creditCardExpYear = creditCardExpYear;
         return this;
     }
 
-    public CreditCardDTO<T> creditCardCvv(String creditCardCvv) {
+    public org.broadleafcommerce.common.payment.dto.CreditCardDTO<T> creditCardCvv(java.lang.String creditCardCvv) {
         this.creditCardCvv = creditCardCvv;
         return this;
     }
 
-
-    public Map<String, Object> getAdditionalFields() {
+    public java.util.Map<java.lang.String, java.lang.Object> getAdditionalFields() {
         return additionalFields;
     }
 
-    public String getCreditCardHolderName() {
+    public java.lang.String getCreditCardHolderName() {
         return creditCardHolderName;
     }
 
-    public String getCreditCardType() {
+    public java.lang.String getCreditCardType() {
         return creditCardType;
     }
 
-    public String getCreditCardNum() {
+    public java.lang.String getCreditCardNum() {
         return creditCardNum;
     }
 
-    public String getCreditCardLastFour() {
+    public java.lang.String getCreditCardLastFour() {
         return creditCardLastFour;
     }
 
-    public String getCreditCardExpDate() {
+    public java.lang.String getCreditCardExpDate() {
         return creditCardExpDate;
     }
 
-    public String getCreditCardExpMonth() {
+    public java.lang.String getCreditCardExpMonth() {
         return creditCardExpMonth;
     }
 
-    public String getCreditCardExpYear() {
+    public java.lang.String getCreditCardExpYear() {
         return creditCardExpYear;
     }
 
-    public String getCreditCardCvv() {
+    public java.lang.String getCreditCardCvv() {
         return creditCardCvv;
     }
 
     public boolean creditCardPopulated() {
-        return ((getAdditionalFields() != null && !getAdditionalFields().isEmpty()) ||
-                getCreditCardHolderName() != null ||
-                getCreditCardType() != null ||
-                getCreditCardNum() != null ||
-                getCreditCardLastFour() != null ||
-                getCreditCardExpDate() != null ||
-                getCreditCardExpMonth() != null ||
-                getCreditCardExpYear() != null ||
-                getCreditCardCvv() != null);
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3772, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3770, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3768, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3766, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3764, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3762, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3760, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3758, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3756, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3753, ((getAdditionalFields()) != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3755, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3754, getAdditionalFields().isEmpty())))))))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3757, ((getCreditCardHolderName()) != null)))))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3759, ((getCreditCardType()) != null)))))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3761, ((getCreditCardNum()) != null)))))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3763, ((getCreditCardLastFour()) != null)))))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3765, ((getCreditCardExpDate()) != null)))))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3767, ((getCreditCardExpMonth()) != null)))))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3769, ((getCreditCardExpYear()) != null)))))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3771, ((getCreditCardCvv()) != null)))));
+    }
+
+    public static perturbation.location.PerturbationLocation __L3753;
+
+    public static perturbation.location.PerturbationLocation __L3754;
+
+    public static perturbation.location.PerturbationLocation __L3755;
+
+    public static perturbation.location.PerturbationLocation __L3756;
+
+    public static perturbation.location.PerturbationLocation __L3757;
+
+    public static perturbation.location.PerturbationLocation __L3758;
+
+    public static perturbation.location.PerturbationLocation __L3759;
+
+    public static perturbation.location.PerturbationLocation __L3760;
+
+    public static perturbation.location.PerturbationLocation __L3761;
+
+    public static perturbation.location.PerturbationLocation __L3762;
+
+    public static perturbation.location.PerturbationLocation __L3763;
+
+    public static perturbation.location.PerturbationLocation __L3764;
+
+    public static perturbation.location.PerturbationLocation __L3765;
+
+    public static perturbation.location.PerturbationLocation __L3766;
+
+    public static perturbation.location.PerturbationLocation __L3767;
+
+    public static perturbation.location.PerturbationLocation __L3768;
+
+    public static perturbation.location.PerturbationLocation __L3769;
+
+    public static perturbation.location.PerturbationLocation __L3770;
+
+    public static perturbation.location.PerturbationLocation __L3771;
+
+    public static perturbation.location.PerturbationLocation __L3772;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3753 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/CreditCardDTO.java:137)", 3753, "Boolean");
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3754 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/CreditCardDTO.java:137)", 3754, "Boolean");
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3755 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/CreditCardDTO.java:137)", 3755, "Boolean");
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3756 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/CreditCardDTO.java:137)", 3756, "Boolean");
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3757 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/CreditCardDTO.java:138)", 3757, "Boolean");
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3758 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/CreditCardDTO.java:137)", 3758, "Boolean");
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3759 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/CreditCardDTO.java:139)", 3759, "Boolean");
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3760 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/CreditCardDTO.java:137)", 3760, "Boolean");
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3761 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/CreditCardDTO.java:140)", 3761, "Boolean");
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3762 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/CreditCardDTO.java:137)", 3762, "Boolean");
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3763 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/CreditCardDTO.java:141)", 3763, "Boolean");
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3764 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/CreditCardDTO.java:137)", 3764, "Boolean");
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3765 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/CreditCardDTO.java:142)", 3765, "Boolean");
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3766 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/CreditCardDTO.java:137)", 3766, "Boolean");
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3767 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/CreditCardDTO.java:143)", 3767, "Boolean");
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3768 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/CreditCardDTO.java:137)", 3768, "Boolean");
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3769 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/CreditCardDTO.java:144)", 3769, "Boolean");
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3770 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/CreditCardDTO.java:137)", 3770, "Boolean");
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3771 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/CreditCardDTO.java:145)", 3771, "Boolean");
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.__L3772 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/dto/CreditCardDTO.java:137)", 3772, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.payment.dto.CreditCardDTO.initPerturbationLocation0();
     }
 }
+

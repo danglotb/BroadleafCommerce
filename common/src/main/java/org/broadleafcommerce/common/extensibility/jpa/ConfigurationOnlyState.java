@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,30 +17,39 @@
  */
 package org.broadleafcommerce.common.extensibility.jpa;
 
-import org.broadleafcommerce.common.classloader.release.ThreadLocalManager;
 
-/**
- * @author Jeff Fischer
- */
 public class ConfigurationOnlyState {
-
-    private static final ThreadLocal<ConfigurationOnlyState> CONFIGURATIONONLYSTATE = ThreadLocalManager.createThreadLocal(ConfigurationOnlyState.class);
-
-    public static ConfigurationOnlyState getState() {
-        return CONFIGURATIONONLYSTATE.get();
-    }
-
-    public static void setState(ConfigurationOnlyState state) {
-        CONFIGURATIONONLYSTATE.set(state);
-    }
+    private static final java.lang.ThreadLocal<org.broadleafcommerce.common.extensibility.jpa.ConfigurationOnlyState> CONFIGURATIONONLYSTATE = org.broadleafcommerce.common.classloader.release.ThreadLocalManager.createThreadLocal(org.broadleafcommerce.common.extensibility.jpa.ConfigurationOnlyState.class);
 
     protected boolean isConfigurationOnly;
 
+    public static org.broadleafcommerce.common.extensibility.jpa.ConfigurationOnlyState getState() {
+        return org.broadleafcommerce.common.extensibility.jpa.ConfigurationOnlyState.CONFIGURATIONONLYSTATE.get();
+    }
+
+    public static void setState(org.broadleafcommerce.common.extensibility.jpa.ConfigurationOnlyState state) {
+        org.broadleafcommerce.common.extensibility.jpa.ConfigurationOnlyState.CONFIGURATIONONLYSTATE.set(state);
+    }
+
     public boolean isConfigurationOnly() {
-        return isConfigurationOnly;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.ConfigurationOnlyState.__L2166, isConfigurationOnly);
     }
 
     public void setConfigurationOnly(boolean configurationOnly) {
-        isConfigurationOnly = configurationOnly;
+        isConfigurationOnly = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.ConfigurationOnlyState.__L2167, configurationOnly);
+    }
+
+    public static perturbation.location.PerturbationLocation __L2166;
+
+    public static perturbation.location.PerturbationLocation __L2167;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.extensibility.jpa.ConfigurationOnlyState.__L2166 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/ConfigurationOnlyState.java:40)", 2166, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.ConfigurationOnlyState.__L2167 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/ConfigurationOnlyState.java:44)", 2167, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.extensibility.jpa.ConfigurationOnlyState.initPerturbationLocation0();
     }
 }
+

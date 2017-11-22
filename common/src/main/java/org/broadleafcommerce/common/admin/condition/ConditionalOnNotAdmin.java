@@ -17,25 +17,10 @@
  */
 package org.broadleafcommerce.common.admin.condition;
 
-import org.broadleafcommerce.common.condition.ConditionalOnMissingBroadleafModule;
-import org.broadleafcommerce.common.module.BroadleafModuleRegistration.BroadleafModuleEnum;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+@java.lang.annotation.Target({ java.lang.annotation.ElementType.TYPE, java.lang.annotation.ElementType.METHOD })
+@java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
+@java.lang.annotation.Documented
+@org.broadleafcommerce.common.condition.ConditionalOnMissingBroadleafModule(org.broadleafcommerce.common.module.BroadleafModuleRegistration.BroadleafModuleEnum.ADMIN)
+public @interface ConditionalOnNotAdmin {}
 
-/**
- * Indicates that this bean should not be created unless the broadleaf-open-admin-platform does not exists on the classpath. This
- * can be used for beans that are designed to only exist outside the admin.
- *
- * @author Jeff Fischer
- * @since 5.2
- */
-@Target({ElementType.TYPE, ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@ConditionalOnMissingBroadleafModule(BroadleafModuleEnum.ADMIN)
-public @interface ConditionalOnNotAdmin {
-}

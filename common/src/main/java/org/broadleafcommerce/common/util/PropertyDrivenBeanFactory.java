@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,31 +17,37 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.reflect.ConstructorUtils;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.springframework.beans.BeanUtils;
 
-/**
- * @author Jeff Fischer
- */
 public class PropertyDrivenBeanFactory {
-
-    public static Object createInstance(String className) {
-        return createInstance(className, new String[]{});
+    public static java.lang.Object createInstance(java.lang.String className) {
+        return org.broadleafcommerce.common.util.PropertyDrivenBeanFactory.createInstance(className, new java.lang.String[]{  });
     }
 
-    public static Object createInstance(String className, String... constructorArgs) {
+    public static java.lang.Object createInstance(java.lang.String className, java.lang.String... constructorArgs) {
         try {
-            Object bean;
-            if (!ArrayUtils.isEmpty(constructorArgs)) {
-                bean = ConstructorUtils.invokeExactConstructor(Class.forName(className), constructorArgs);
-            } else {
-                bean = BeanUtils.instantiateClass(Class.forName(className));
+            java.lang.Object bean;
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.PropertyDrivenBeanFactory.__L6498, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.PropertyDrivenBeanFactory.__L6497, org.apache.commons.lang.ArrayUtils.isEmpty(constructorArgs)))))) {
+                bean = org.apache.commons.lang.reflect.ConstructorUtils.invokeExactConstructor(java.lang.Class.forName(className), constructorArgs);
+            }else {
+                bean = org.springframework.beans.BeanUtils.instantiateClass(java.lang.Class.forName(className));
             }
             return bean;
-        } catch (Exception e) {
-            throw ExceptionHelper.refineException(e);
+        } catch (java.lang.Exception e) {
+            throw org.broadleafcommerce.common.exception.ExceptionHelper.refineException(e);
         }
     }
+
+    public static perturbation.location.PerturbationLocation __L6497;
+
+    public static perturbation.location.PerturbationLocation __L6498;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.PropertyDrivenBeanFactory.__L6497 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/PropertyDrivenBeanFactory.java:37)", 6497, "Boolean");
+        org.broadleafcommerce.common.util.PropertyDrivenBeanFactory.__L6498 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/PropertyDrivenBeanFactory.java:37)", 6498, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.PropertyDrivenBeanFactory.initPerturbationLocation0();
+    }
 }
+

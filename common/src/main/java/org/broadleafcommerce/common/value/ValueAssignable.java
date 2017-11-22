@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,40 +17,14 @@
  */
 package org.broadleafcommerce.common.value;
 
-import java.io.Serializable;
 
-/**
- * Describes simple classes that can be assigned a name and value
- *
- * @author Jeff Fischer
- */
-public interface ValueAssignable<T extends Serializable> extends Serializable {
-
-    /**
-     * The value
-     *
-     * @return The value
-     */
+public interface ValueAssignable<T extends java.io.Serializable> extends java.io.Serializable {
     T getValue();
 
-    /**
-     * The value
-     *
-     * @param value The value
-     */
     void setValue(T value);
 
-    /**
-     * The name
-     *
-     * @return The name
-     */
-    String getName();
+    java.lang.String getName();
 
-    /**
-     * The name
-     *
-     * @param name The name
-     */
-    void setName(String name);
+    void setName(java.lang.String name);
 }
+

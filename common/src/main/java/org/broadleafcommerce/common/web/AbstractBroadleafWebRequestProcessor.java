@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,17 +17,9 @@
  */
 package org.broadleafcommerce.common.web;
 
-import org.springframework.web.context.request.WebRequest;
 
-
-/**
- * Provides no-op implementations to optional methods
- */
-public abstract class AbstractBroadleafWebRequestProcessor implements BroadleafWebRequestProcessor {
-
-    
-    public void postProcess(WebRequest request) {
-        // nada
+public abstract class AbstractBroadleafWebRequestProcessor implements org.broadleafcommerce.common.web.BroadleafWebRequestProcessor {
+    public void postProcess(org.springframework.web.context.request.WebRequest request) {
     }
-
 }
+

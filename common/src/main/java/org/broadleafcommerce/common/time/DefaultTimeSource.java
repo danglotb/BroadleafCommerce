@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,9 +17,20 @@
  */
 package org.broadleafcommerce.common.time;
 
-public class DefaultTimeSource implements TimeSource {
 
+public class DefaultTimeSource implements org.broadleafcommerce.common.time.TimeSource {
     public long timeInMillis() {
-        return System.currentTimeMillis();
+        return perturbation.PerturbationEngine.plong(org.broadleafcommerce.common.time.DefaultTimeSource.__L5688, java.lang.System.currentTimeMillis());
+    }
+
+    public static perturbation.location.PerturbationLocation __L5688;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.time.DefaultTimeSource.__L5688 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/time/DefaultTimeSource.java:23)", 5688, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.time.DefaultTimeSource.initPerturbationLocation0();
     }
 }
+

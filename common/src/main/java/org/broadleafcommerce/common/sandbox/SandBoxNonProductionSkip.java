@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,12 +17,6 @@
  */
 package org.broadleafcommerce.common.sandbox;
 
-/**
- * The workflow code will not persist an entity if the changes detected are limited to fields whose type is assignable
- * from this interface, and the persistence is being requested for a production record outside of a production deploy
- * step.
- *
- * @author Jeff Fischer
- */
-public interface SandBoxNonProductionSkip {
-}
+
+public interface SandBoxNonProductionSkip {}
+

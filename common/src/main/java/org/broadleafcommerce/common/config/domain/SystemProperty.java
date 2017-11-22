@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,113 +17,38 @@
  */
 package org.broadleafcommerce.common.config.domain;
 
-import org.broadleafcommerce.common.config.service.type.SystemPropertyFieldType;
-import org.broadleafcommerce.common.copy.MultiTenantCloneable;
 
-import java.io.Serializable;
+public interface SystemProperty extends java.io.Serializable , org.broadleafcommerce.common.copy.MultiTenantCloneable<org.broadleafcommerce.common.config.domain.SystemProperty> {
+    public java.lang.Long getId();
 
-/**
- * This interface represents a System Property (name/value pair) stored in the database.  
- * <p/>
- * User: Kelly Tisdell
- * Date: 6/20/12
- */
-public interface SystemProperty extends Serializable, MultiTenantCloneable<SystemProperty> {
+    public void setId(java.lang.Long id);
 
-    /**
-     * Unique id of the DB record
-     * @return
-     */
-    public Long getId();
+    public java.lang.String getName();
 
-    /**
-     * Sets the id of the DB record
-     * @param id
-     */
-    public void setId(Long id);
+    public void setName(java.lang.String name);
 
-    /**
-     * The name of the property as it exists in property files (for example googleAnalytics.webPropertyId)
-     * @return
-     */
-    public String getName();
+    public java.lang.Boolean getOverrideGeneratedPropertyName();
 
-    /**
-     * Sets the property name.  
-     * @param name
-     */
-    public void setName(String name);
+    public void setOverrideGeneratedPropertyName(java.lang.Boolean overrideGeneratedPropertyName);
 
-    /**
-     * Declares whether or not the property name has been overridden, rather than using the default generated value.
-     * @return
-     */
-    public Boolean getOverrideGeneratedPropertyName();
+    public java.lang.String getValue();
 
-    /**
-     * Sets the overrideGeneratedPropertyName.
-     * @param overrideGeneratedPropertyName
-     */
-    public void setOverrideGeneratedPropertyName(Boolean overrideGeneratedPropertyName);
+    public void setValue(java.lang.String value);
 
-    /**
-     * Returns the property value.  
-     * @param name
-     */
-    public String getValue();
+    public org.broadleafcommerce.common.config.service.type.SystemPropertyFieldType getPropertyType();
 
-    /**
-     * Sets the property value.  
-     * @param name
-     */
-    public void setValue(String value);
+    public void setPropertyType(org.broadleafcommerce.common.config.service.type.SystemPropertyFieldType type);
 
-    /**
-     * Returns the property field type.   If not set, returns STRING
-     * @return
-     */
-    public SystemPropertyFieldType getPropertyType();
+    public java.lang.String getFriendlyName();
 
-    /**
-     * Sets the property field type.
-     * @param type
-     */
-    public void setPropertyType(SystemPropertyFieldType type);
+    public void setFriendlyName(java.lang.String friendlyName);
 
-    /**
-     * @return the friendly name of this property
-     */
-    public String getFriendlyName();
+    public java.lang.String getFriendlyGroup();
 
-    /**
-     * Sets the friendly name of this property
-     * 
-     * @param friendlyName
-     */
-    public void setFriendlyName(String friendlyName);
+    public void setFriendlyGroup(java.lang.String friendlyGroup);
 
-    /**
-     * @return the griendly group name of this property
-     */
-    public String getFriendlyGroup();
+    public java.lang.String getFriendlyTab();
 
-    /**
-     * Sets the friendly group name of this property
-     * 
-     * @param friendlyGroup
-     */
-    public void setFriendlyGroup(String friendlyGroup);
-
-    /**
-     * @return the friendly tab of this property
-     */
-    public String getFriendlyTab();
-
-    /**
-     * Sets the friendly tab of this property
-     * 
-     * @param friendlyTab
-     */
-    public void setFriendlyTab(String friendlyTab);
-
+    public void setFriendlyTab(java.lang.String friendlyTab);
 }
+

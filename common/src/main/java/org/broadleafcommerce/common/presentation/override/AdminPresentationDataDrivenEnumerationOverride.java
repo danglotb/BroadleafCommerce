@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,34 +17,13 @@
  */
 package org.broadleafcommerce.common.presentation.override;
 
-import org.broadleafcommerce.common.presentation.AdminPresentationDataDrivenEnumeration;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-/**
- * @author Jeff Fischer
- * @deprecated use {@link AdminPresentationMergeOverrides} instead
- */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-@Deprecated
+@java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
+@java.lang.annotation.Target(java.lang.annotation.ElementType.TYPE)
+@java.lang.Deprecated
 public @interface AdminPresentationDataDrivenEnumerationOverride {
+    java.lang.String name();
 
-    /**
-     * The name of the property whose AdminPresentationDataDrivenEnumeration annotation should be overwritten
-     *
-     * @return the name of the property that should be overwritten
-     */
-    String name();
-
-    /**
-     * The AdminPresentationDataDrivenEnumeration to overwrite the property with
-     *
-     * @return the AdminPresentation being mapped to the attribute
-     */
-    AdminPresentationDataDrivenEnumeration value();
-
+    org.broadleafcommerce.common.presentation.AdminPresentationDataDrivenEnumeration value();
 }
+

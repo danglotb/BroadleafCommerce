@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,195 +17,39 @@
  */
 package org.broadleafcommerce.common.file.service;
 
-import org.broadleafcommerce.common.file.domain.FileWorkArea;
 
-import java.io.File;
-import java.io.InputStream;
-import java.util.List;
-
-/**
- * Many components in the Broadleaf Framework can benefit from creating and manipulating temporary files as well
- * as storing and accessing files in a remote repository (such as AmazonS3).
- * 
- * This service provides a pluggable way to provide those services.
- * 
- * @author bpolster
- *
- */
 public interface BroadleafFileService {
+    public org.broadleafcommerce.common.file.domain.FileWorkArea initializeWorkArea();
 
-    /**
-     * Create a file work area that can be used for further operations. 
-     * @return
-     */
-    public FileWorkArea initializeWorkArea();
+    void closeWorkArea(org.broadleafcommerce.common.file.domain.FileWorkArea workArea);
 
-    /**
-     * Closes the passed in work area.   This method will delete all items contained in the work area.   Future calls
-     * using this WorkArea will cause a RuntimeError
-     * @param Work Area
-     */
-    void closeWorkArea(FileWorkArea workArea);
+    java.io.File getResource(java.lang.String name);
 
-    /**
-     * Returns a File representing the passed in name.  This method will always access the file via the FileProvider
-     * which might be a remote operation.
-     * 
-     * @param name - fully qualified path to the resource
-     * @return
-     */
-    File getResource(String name);
+    java.io.File getResource(java.lang.String name, java.lang.Long timeout);
 
-    /**
-     * Returns a File representing the resource.    This method first checks the local temporary directory for the file.   
-     * If it exists and has been modified within the timeout parameter, it will be returned.   Otherwise, this method
-     * will make a call to {@link #getResource(String)}.
-     * 
-     * If the timeout parameter is null then if the resource exists locally, it will be returned.
-     * 
-     * @param name - fully qualified path to the resource
-     * @param timeout - timeframe that the temporary file is considered valid
-     * @return
-     */
-    File getResource(String name, Long timeout);
+    java.io.File getLocalResource(java.lang.String fullUrl);
 
-    /**
-     * Checks for a resource in the temporary directory of the file-system.    Will check for a site-specific file.
-     * 
-     * @param fullUrl
-     * @return
-     */
-    File getLocalResource(String fullUrl);
+    java.io.File getSharedLocalResource(java.lang.String fullUrl);
 
-    /**
-     * Checks for a resource in the temporary directory of the file-system.    Will check for a global (e.g. not site
-     * specific file). 
-     * 
-     * @param fullUrl
-     * @return
-     */
-    File getSharedLocalResource(String fullUrl);
+    boolean checkForResourceOnClassPath(java.lang.String name);
 
-    /**
-     * Returns true if the resource is available on the classpath.
-     * @param name
-     * @return
-     */
-    boolean checkForResourceOnClassPath(String name);
+    java.io.InputStream getClasspathResource(java.lang.String name);
 
-    /**   
-     * Allows assets to be included in the Java classpath.   
-     * 
-     * This method was designed to support an internal Broadleaf use case and may not have general applicability 
-     * beyond that.    For Broadleaf demo sites, many of the product images are shared across the demo sites.   
-     * 
-     * Rather than copy those images, they are stored in a Jar file and shared by all of the sites.
-     * 
-     * @param name - fully qualified path to the resource
-     * @return
-     */
-    InputStream getClasspathResource(String name);
+    boolean removeResource(java.lang.String name);
 
-    /**
-     * Removes the resource from the configured FileProvider
-     * 
-     * @param name - fully qualified path to the resource
-     * @param applicationType - The type of file being accessed
-     */
-    boolean removeResource(String name);
+    @java.lang.Deprecated
+    void addOrUpdateResource(org.broadleafcommerce.common.file.domain.FileWorkArea workArea, java.io.File file, boolean removeFilesFromWorkArea);
 
-    /**
-     * <p>
-     * Takes in a temporary work area and a single File and copies that files to 
-     * the configured FileProvider's permanent storage.
-     * 
-     * <p>
-     * Passing in removeFilesFromWorkArea to true allows for more efficient file processing
-     * when using a local file system as it performs a move operation instead of a copy.
-     * 
-     * @param workArea
-     * @param fileName
-     * @param removeFilesFromWorkArea
-     * @deprecated use {@link #addOrUpdateResourceForPath(FileWorkArea, File, boolean)}
-     */
-    @Deprecated
-    void addOrUpdateResource(FileWorkArea workArea, File file, boolean removeFilesFromWorkArea);
-    
-    /**
-     * <p>
-     * Takes in a temporary work area and a single File and copies that files to 
-     * the configured FileProvider's permanent storage.
-     * 
-     * <p>
-     * Passing in removeFilesFromWorkArea to true allows for more efficient file processing
-     * when using a local file system as it performs a move operation instead of a copy.
-     * 
-     * @param workArea the work area from the given <b>file</b>
-     * @param file the file to upload
-     * @param removeFilesFromWorkArea whether or not the given <b>file</b> should be removed from <b>workArea</b> when it
-     * has been copied
-     */
-    String addOrUpdateResourceForPath(FileWorkArea workArea, File file, boolean removeFilesFromWorkArea);
+    java.lang.String addOrUpdateResourceForPath(org.broadleafcommerce.common.file.domain.FileWorkArea workArea, java.io.File file, boolean removeFilesFromWorkArea);
 
-    /**
-     * <p>
-     * Takes in a temporary work area and copies all of the files to the configured FileProvider's permanent storage.
-     * 
-     * <p>
-     * Passing in removeFilesFromWorkArea to true allows for more efficient file processing
-     * when using a local file system as it performs a move operation instead of a copy.
-     * 
-     * @param workArea
-     * @param removeFilesFromWorkArea
-     * @deprecated use {@link #addOrUpdateResourcesForPaths(FileWorkArea, boolean)} instead
-     */
-    @Deprecated
-    void addOrUpdateResources(FileWorkArea workArea, boolean removeFilesFromWorkArea);
-    
-    /**
-     * <p>
-     * Takes in a temporary work area and copies all of the files to the configured FileProvider's permanent storage.
-     * 
-     * <p>
-     * Passing in removeFilesFromWorkArea to true allows for more efficient file processing
-     * when using a local file system as it performs a move operation instead of a copy.
-     * 
-     * @param workArea
-     * @param removeFilesFromWorkArea
-     */
-    List<String> addOrUpdateResourcesForPaths(FileWorkArea workArea, boolean removeFilesFromWorkArea);
+    @java.lang.Deprecated
+    void addOrUpdateResources(org.broadleafcommerce.common.file.domain.FileWorkArea workArea, boolean removeFilesFromWorkArea);
 
-    /**
-     * <p>
-     * Takes in a temporary work area and a list of Files and copies them to 
-     * the configured FileProvider's permanent storage.
-     * 
-     * <p>
-     * Passing in removeFilesFromWorkArea to true allows for more efficient file processing
-     * when using a local file system as it performs a move operation instead of a copy.     
-     * 
-     * @param workArea
-     * @param files
-     * @param removeFilesFromWorkArea
-     * @deprecated use {@link #addOrUpdateResourcesForPaths(FileWorkArea, List, boolean)} instead
-     */
-    @Deprecated
-    void addOrUpdateResources(FileWorkArea workArea, List<File> files, boolean removeFilesFromWorkArea);
-    
-    /**
-     * <p>
-     * Takes in a temporary work area and a list of Files and copies them to 
-     * the configured FileProvider's permanent storage.
-     * 
-     * <p>
-     * Passing in removeFilesFromWorkArea to true allows for more efficient file processing
-     * when using a local file system as it performs a move operation instead of a copy.     
-     * 
-     * @param workArea the work area for the given <b>files</b>
-     * @param files the files to copy to the provider's permanent storage
-     * @param removeFilesFromWorkArea whether or not the given <b>files</b> hsould be removed from the given <b>workArea</b>
-     * after they are uploaded
-     */
-    List<String> addOrUpdateResourcesForPaths(FileWorkArea workArea, List<File> files, boolean removeFilesFromWorkArea);
+    java.util.List<java.lang.String> addOrUpdateResourcesForPaths(org.broadleafcommerce.common.file.domain.FileWorkArea workArea, boolean removeFilesFromWorkArea);
 
+    @java.lang.Deprecated
+    void addOrUpdateResources(org.broadleafcommerce.common.file.domain.FileWorkArea workArea, java.util.List<java.io.File> files, boolean removeFilesFromWorkArea);
+
+    java.util.List<java.lang.String> addOrUpdateResourcesForPaths(org.broadleafcommerce.common.file.domain.FileWorkArea workArea, java.util.List<java.io.File> files, boolean removeFilesFromWorkArea);
 }
+

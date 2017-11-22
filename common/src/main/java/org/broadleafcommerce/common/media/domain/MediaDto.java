@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,82 +17,91 @@
  */
 package org.broadleafcommerce.common.media.domain;
 
-import org.broadleafcommerce.common.util.UnknownUnwrapTypeException;
 
-/**
- * A null safe media object.
- * @author bpolster
- *
- */
-public class MediaDto implements Media {
-
+public class MediaDto implements org.broadleafcommerce.common.media.domain.Media {
     private static final long serialVersionUID = 1L;
 
     protected long id;
-    protected String url = "";
-    protected String title = "";
-    protected String altText = "";
-    protected String tags = "";
 
-    @Override
-    public Long getId() {
-        return id;
+    protected java.lang.String url = "";
+
+    protected java.lang.String title = "";
+
+    protected java.lang.String altText = "";
+
+    protected java.lang.String tags = "";
+
+    @java.lang.Override
+    public java.lang.Long getId() {
+        return perturbation.PerturbationEngine.plong(org.broadleafcommerce.common.media.domain.MediaDto.__L3462, id);
     }
 
-    @Override
-    public void setId(Long id) {
-        this.id = id;
+    @java.lang.Override
+    public void setId(java.lang.Long id) {
+        this.id = ((long) (id));
     }
 
-    @Override
-    public String getUrl() {
+    @java.lang.Override
+    public java.lang.String getUrl() {
         return url;
     }
 
-    @Override
-    public void setUrl(String url) {
+    @java.lang.Override
+    public void setUrl(java.lang.String url) {
         this.url = url;
     }
 
-    @Override
-    public String getTitle() {
+    @java.lang.Override
+    public java.lang.String getTitle() {
         return title;
     }
 
-    @Override
-    public void setTitle(String title) {
+    @java.lang.Override
+    public void setTitle(java.lang.String title) {
         this.title = title;
     }
 
-    @Override
-    public String getAltText() {
+    @java.lang.Override
+    public java.lang.String getAltText() {
         return altText;
     }
 
-    @Override
-    public void setAltText(String altText) {
+    @java.lang.Override
+    public void setAltText(java.lang.String altText) {
         this.altText = altText;
     }
-    
-    @Override
-    public String getTags() {
+
+    @java.lang.Override
+    public java.lang.String getTags() {
         return tags;
     }
-    
-    @Override
-    public void setTags(String tags) {
+
+    @java.lang.Override
+    public void setTags(java.lang.String tags) {
         this.tags = tags;
     }
 
-    @Override
-    public boolean isUnwrappableAs(Class unwrapType) {
-        return false;
+    @java.lang.Override
+    public boolean isUnwrappableAs(java.lang.Class unwrapType) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.media.domain.MediaDto.__L3463, false);
     }
 
-    @Override
-    public <T> T unwrap(Class<T> unwrapType) {
-        throw new UnknownUnwrapTypeException(unwrapType);
+    @java.lang.Override
+    public <T> T unwrap(java.lang.Class<T> unwrapType) {
+        throw new org.broadleafcommerce.common.util.UnknownUnwrapTypeException(unwrapType);
     }
 
+    public static perturbation.location.PerturbationLocation __L3462;
 
+    public static perturbation.location.PerturbationLocation __L3463;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.media.domain.MediaDto.__L3462 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/media/domain/MediaDto.java:39)", 3462, "Numerical");
+        org.broadleafcommerce.common.media.domain.MediaDto.__L3463 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/media/domain/MediaDto.java:89)", 3463, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.media.domain.MediaDto.initPerturbationLocation0();
+    }
 }
+

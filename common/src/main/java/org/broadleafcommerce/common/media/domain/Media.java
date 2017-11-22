@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,30 +17,26 @@
  */
 package org.broadleafcommerce.common.media.domain;
 
-import org.broadleafcommerce.common.util.Wrappable;
 
-import java.io.Serializable;
+public interface Media extends java.io.Serializable , org.broadleafcommerce.common.util.Wrappable {
+    public java.lang.Long getId();
 
-public interface Media extends Wrappable, Serializable {
+    public void setId(java.lang.Long id);
 
-    public Long getId();
+    public java.lang.String getUrl();
 
-    public void setId(Long id);
+    public void setUrl(java.lang.String url);
 
-    public String getUrl();
+    public java.lang.String getTitle();
 
-    public void setUrl(String url);
-    
-    public String getTitle();
+    public void setTitle(java.lang.String title);
 
-    public void setTitle(String title);
+    public java.lang.String getAltText();
 
-    public String getAltText();
+    public void setAltText(java.lang.String altText);
 
-    public void setAltText(String altText);
-    
-    public String getTags();
+    public java.lang.String getTags();
 
-    public void setTags(String tags);
-
+    public void setTags(java.lang.String tags);
 }
+

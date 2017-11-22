@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,115 +17,68 @@
  */
 package org.broadleafcommerce.common.util;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.TreeSet;
 
-
-/**
- * Convenience methods for interacting with maps
- * 
- * @author Andre Azzolini (apazzolini)
- */
 public class BLCMapUtils {
-    
-    /**
-     * Given a collection of values and a TypedClosure that maps an appropriate key for a given value,
-     * returns a HashMap of the key to the value.
-     * 
-     * <b>Note: If two values share the same key, the later one will override the previous one in the returned map</b>
-     * @see #keyedListMap(Iterable, TypedClosure)
-     * 
-     * List<V> --> Map<K, V>
-     * 
-     * @param values
-     * @param closure
-     * @return the map
-     */
-    public static <K, CV extends Iterable<V>, V> Map<K, V> keyedMap(CV values, TypedClosure<K, V> closure) {
-        Map<K, V> map = new HashMap<K, V>();
-        
+    public static <K, CV extends java.lang.Iterable<V>, V> java.util.Map<K, V> keyedMap(CV values, org.broadleafcommerce.common.util.TypedClosure<K, V> closure) {
+        java.util.Map<K, V> map = new java.util.HashMap<K, V>();
         for (V value : values) {
             K key = closure.getKey(value);
             map.put(key, value);
         }
-        
         return map;
     }
-    
-    /**
-     * Given an array of values and a TypedClosure that maps an appropriate key for a given value,
-     * returns a HashMap of the key to the value.
-     * 
-     * <b>Note: If two values share the same key, the later one will override the previous one in the returned map</b>
-     * @see #keyedListMap(Iterable, TypedClosure)
-     * 
-     * V[] --> Map<K, V>
-     * 
-     * @param values
-     * @param closure
-     * @return the map
-     */
-    public static <K, V> Map<K, V> keyedMap(V[] values, TypedClosure<K, V> closure) {
-        Map<K, V> map = new HashMap<K, V>();
-        
-        if (values != null) {
+
+    public static <K, V> java.util.Map<K, V> keyedMap(V[] values, org.broadleafcommerce.common.util.TypedClosure<K, V> closure) {
+        java.util.Map<K, V> map = new java.util.HashMap<K, V>();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCMapUtils.__L6156, (values != null))) {
             for (V value : values) {
                 K key = closure.getKey(value);
                 map.put(key, value);
             }
         }
-        
         return map;
     }
-    
-    /**
-     * Given a collection of values and a TypedClosure that maps an appropriate key for a given value,
-     * returns a HashMap of the key to a list of values that map to that key.
-     * 
-     * @see #keyedMap(Iterable, TypedClosure)
-     * 
-     * List<V> --> Map<K, List<V>>
-     * 
-     * @param values
-     * @param closure
-     * @return the map
-     */
-    public static <K, CV extends Iterable<V>, V> Map<K, List<V>> keyedListMap(CV values, TypedClosure<K, V> closure) {
-        Map<K, List<V>> map = new HashMap<K, List<V>>();
-        
+
+    public static <K, CV extends java.lang.Iterable<V>, V> java.util.Map<K, java.util.List<V>> keyedListMap(CV values, org.broadleafcommerce.common.util.TypedClosure<K, V> closure) {
+        java.util.Map<K, java.util.List<V>> map = new java.util.HashMap<K, java.util.List<V>>();
         for (V value : values) {
             K key = closure.getKey(value);
-            List<V> list = map.get(key);
-            if (list == null) {
-                list = new ArrayList<V>();
+            java.util.List<V> list = map.get(key);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCMapUtils.__L6157, (list == null))) {
+                list = new java.util.ArrayList<V>();
                 map.put(key, list);
             }
             list.add(value);
         }
-        
         return map;
     }
-    
-    public static <K, V> Map<K, V> valueSortedMap(Map<K, V> map, Comparator<Entry<K, V>> comparator) {
-        Set<Entry<K, V>> valueSortedEntries = new TreeSet<Entry<K, V>>(comparator);
-        
-        for (Entry<K, V> entry : map.entrySet()) {
+
+    public static <K, V> java.util.Map<K, V> valueSortedMap(java.util.Map<K, V> map, java.util.Comparator<java.util.Map.Entry<K, V>> comparator) {
+        java.util.Set<java.util.Map.Entry<K, V>> valueSortedEntries = new java.util.TreeSet<java.util.Map.Entry<K, V>>(comparator);
+        for (java.util.Map.Entry<K, V> entry : map.entrySet()) {
             valueSortedEntries.add(entry);
         }
-        
-        Map<K, V> sortedMap = new LinkedHashMap<K, V>(map.size());
-        for (Entry<K, V> entry : valueSortedEntries) {
+        java.util.Map<K, V> sortedMap = new java.util.LinkedHashMap<K, V>(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.BLCMapUtils.__L6158, map.size()));
+        for (java.util.Map.Entry<K, V> entry : valueSortedEntries) {
             sortedMap.put(entry.getKey(), entry.getValue());
         }
-        
         return sortedMap;
     }
 
+    public static perturbation.location.PerturbationLocation __L6156;
+
+    public static perturbation.location.PerturbationLocation __L6157;
+
+    public static perturbation.location.PerturbationLocation __L6158;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.BLCMapUtils.__L6156 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCMapUtils.java:78)", 6156, "Boolean");
+        org.broadleafcommerce.common.util.BLCMapUtils.__L6157 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCMapUtils.java:106)", 6157, "Boolean");
+        org.broadleafcommerce.common.util.BLCMapUtils.__L6158 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCMapUtils.java:123)", 6158, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.BLCMapUtils.initPerturbationLocation0();
+    }
 }
+

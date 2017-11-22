@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,81 +15,81 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.extensibility;
 
-import org.springframework.beans.factory.BeanDefinitionStoreException;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.GenericBeanDefinition;
-import org.springframework.core.io.Resource;
-import org.w3c.dom.Document;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
-/**
- * <p>
- * Ensures that any beans registered using this reader have a lower precedence than any beans defined in {@literal @}Configuration
- * classes, which otherwise have a lesser /priority than XML resources. This should be used anywhere that Broadleaf framework beans
- * are registered via XML to allow bean overriding in userland {@literal @}Configuration classes.
- * 
- * <p>
- * Note: this is a stop-gap measure as a pre-cursor to removing any relience on bean id overriding, which is officially an unsupported
- * feature in Spring.
- * 
- * @author Jeff Fischer
- * @author Phillip Verheyden (phillipuniverse)
- */
-public class FrameworkXmlBeanDefinitionReader extends MergeXmlBeanDefinitionReader {
-
-    public FrameworkXmlBeanDefinitionReader(BeanDefinitionRegistry registry) {
+public class FrameworkXmlBeanDefinitionReader extends org.broadleafcommerce.common.extensibility.MergeXmlBeanDefinitionReader {
+    public FrameworkXmlBeanDefinitionReader(org.springframework.beans.factory.support.BeanDefinitionRegistry registry) {
         super(registry);
     }
 
-    @Override
-    public int registerBeanDefinitions(Document doc, Resource resource) throws BeanDefinitionStoreException {
-        // First compile any @Bean definitions that have already been registered via @Configuration classes (which happen prior
-        // to the XML bean definition import).
-        Map<String, BeanDefinition> implementationBeanDefinitions = new HashMap<>();
-        for (String name : getRegistry().getBeanDefinitionNames()) {
-            BeanDefinition definition = getRegistry().getBeanDefinition(name);
-
-            if (isConfigurationClassBean(definition)) {
+    @java.lang.Override
+    public int registerBeanDefinitions(org.w3c.dom.Document doc, org.springframework.core.io.Resource resource) throws org.springframework.beans.factory.BeanDefinitionStoreException {
+        java.util.Map<java.lang.String, org.springframework.beans.factory.config.BeanDefinition> implementationBeanDefinitions = new java.util.HashMap<>();
+        for (java.lang.String name : getRegistry().getBeanDefinitionNames()) {
+            org.springframework.beans.factory.config.BeanDefinition definition = getRegistry().getBeanDefinition(name);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2375, isConfigurationClassBean(definition))) {
                 implementationBeanDefinitions.put(name, definition);
             }
         }
-        
-        // Now register the bean definitions in this XML file, which overrides any bean definitions defined previously
-        int processedCount = super.registerBeanDefinitions(doc, resource);
-
-        // Now mark framework xml beans with ROLE_SUPPORT so that later configuration class beans can override them.
-        for (String beanName : getRegistry().getBeanDefinitionNames()) {
-            BeanDefinition beanDefinition = getRegistry().getBeanDefinition(beanName);
-            if (isXMLBean(beanDefinition)) {
-                ((GenericBeanDefinition) beanDefinition).setRole(BeanDefinition.ROLE_SUPPORT);
+        int processedCount = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2376, super.registerBeanDefinitions(doc, resource));
+        for (java.lang.String beanName : getRegistry().getBeanDefinitionNames()) {
+            org.springframework.beans.factory.config.BeanDefinition beanDefinition = getRegistry().getBeanDefinition(beanName);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2377, isXMLBean(beanDefinition))) {
+                ((org.springframework.beans.factory.support.GenericBeanDefinition) (beanDefinition)).setRole(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2378, org.springframework.beans.factory.config.BeanDefinition.ROLE_SUPPORT));
             }
         }
-        
-        // Now that all beans in this XML file (and any <import>s from this XML file) have been registered, go ahead and re-apply
-        // the ones that were defined _prior_ to importing this XML file, which actualy registers the same beans a 3rd time.
-        // But, since we are registering these beans at the Framework level, anything defined previously should take precedence
-        for (Map.Entry<String, BeanDefinition> entry : implementationBeanDefinitions.entrySet()) {
-            BeanDefinition registeredBeanDefinition = getRegistry().getBeanDefinition(entry.getKey());
-            if (registeredBeanDefinition == null || !Objects.equals(registeredBeanDefinition, entry.getValue())) {
+        for (java.util.Map.Entry<java.lang.String, org.springframework.beans.factory.config.BeanDefinition> entry : implementationBeanDefinitions.entrySet()) {
+            org.springframework.beans.factory.config.BeanDefinition registeredBeanDefinition = getRegistry().getBeanDefinition(entry.getKey());
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2382, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2379, (registeredBeanDefinition == null))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2381, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2380, java.util.Objects.equals(registeredBeanDefinition, entry.getValue()))))))))) {
                 getRegistry().registerBeanDefinition(entry.getKey(), entry.getValue());
             }
         }
-
-        return processedCount;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2383, processedCount);
     }
 
-    protected boolean isConfigurationClassBean(BeanDefinition definition) {
-        // there is a somewhat loose assumption here that anything that is not a GenericBeanDefinition
-        // is actually a ConfigurationClassBeanDefinition. I can't use ConfigurationClassBeanDefinition here
-        // directly (which would be ideal) because it's a private class defined within org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader
-        return !(definition instanceof GenericBeanDefinition);
+    protected boolean isConfigurationClassBean(org.springframework.beans.factory.config.BeanDefinition definition) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2385, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2384, (definition instanceof org.springframework.beans.factory.support.GenericBeanDefinition)))));
     }
 
+    public static perturbation.location.PerturbationLocation __L2375;
+
+    public static perturbation.location.PerturbationLocation __L2376;
+
+    public static perturbation.location.PerturbationLocation __L2377;
+
+    public static perturbation.location.PerturbationLocation __L2378;
+
+    public static perturbation.location.PerturbationLocation __L2379;
+
+    public static perturbation.location.PerturbationLocation __L2380;
+
+    public static perturbation.location.PerturbationLocation __L2381;
+
+    public static perturbation.location.PerturbationLocation __L2382;
+
+    public static perturbation.location.PerturbationLocation __L2383;
+
+    public static perturbation.location.PerturbationLocation __L2384;
+
+    public static perturbation.location.PerturbationLocation __L2385;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2375 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/FrameworkXmlBeanDefinitionReader.java:59)", 2375, "Boolean");
+        org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2376 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/FrameworkXmlBeanDefinitionReader.java:65)", 2376, "Numerical");
+        org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2377 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/FrameworkXmlBeanDefinitionReader.java:70)", 2377, "Boolean");
+        org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2378 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/FrameworkXmlBeanDefinitionReader.java:71)", 2378, "Numerical");
+        org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2379 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/FrameworkXmlBeanDefinitionReader.java:80)", 2379, "Boolean");
+        org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2380 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/FrameworkXmlBeanDefinitionReader.java:80)", 2380, "Boolean");
+        org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2381 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/FrameworkXmlBeanDefinitionReader.java:80)", 2381, "Boolean");
+        org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2382 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/FrameworkXmlBeanDefinitionReader.java:80)", 2382, "Boolean");
+        org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2383 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/FrameworkXmlBeanDefinitionReader.java:85)", 2383, "Numerical");
+        org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2384 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/FrameworkXmlBeanDefinitionReader.java:92)", 2384, "Boolean");
+        org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.__L2385 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/FrameworkXmlBeanDefinitionReader.java:92)", 2385, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.initPerturbationLocation0();
+    }
 }
+

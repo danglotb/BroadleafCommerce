@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,70 +17,82 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.hibernate.Session;
-import org.hibernate.dialect.Dialect;
-import org.hibernate.dialect.MySQLDialect;
-import org.hibernate.dialect.Oracle8iDialect;
-import org.hibernate.dialect.PostgreSQL81Dialect;
-import org.hibernate.dialect.SQLServerDialect;
-import org.hibernate.engine.spi.SessionFactoryImplementor;
-import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-/**
- * @author Jeff Fischer
- */
-@Repository("blDialectHelper")
+@org.springframework.stereotype.Repository("blDialectHelper")
 public class DialectHelper {
+    @javax.persistence.PersistenceContext(unitName = "blPU")
+    protected javax.persistence.EntityManager defaultEntityManager;
 
-    @PersistenceContext(unitName="blPU")
-    protected EntityManager defaultEntityManager;
-
-
-    public Dialect getHibernateDialect() {
+    public org.hibernate.dialect.Dialect getHibernateDialect() {
         return getHibernateDialect(defaultEntityManager);
     }
 
-    public Dialect getHibernateDialect(EntityManager em) {
-        SessionFactoryImplementor factory = (SessionFactoryImplementor) em.unwrap(Session.class).getSessionFactory();
+    public org.hibernate.dialect.Dialect getHibernateDialect(javax.persistence.EntityManager em) {
+        org.hibernate.engine.spi.SessionFactoryImplementor factory = ((org.hibernate.engine.spi.SessionFactoryImplementor) (em.unwrap(org.hibernate.Session.class).getSessionFactory()));
         return factory.getDialect();
     }
 
     public boolean isOracle() {
-        //This should handle other Oracle dialects as well, since they derive from Oracle8iDialect
-        return getHibernateDialect(defaultEntityManager) instanceof Oracle8iDialect;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DialectHelper.__L6282, ((getHibernateDialect(defaultEntityManager)) instanceof org.hibernate.dialect.Oracle8iDialect));
     }
 
-    public boolean isOracle(EntityManager em) {
-        //This should handle other Oracle dialects as well, since they derive from Oracle8iDialect
-        return getHibernateDialect(em) instanceof Oracle8iDialect;
+    public boolean isOracle(javax.persistence.EntityManager em) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DialectHelper.__L6283, ((getHibernateDialect(em)) instanceof org.hibernate.dialect.Oracle8iDialect));
     }
 
     public boolean isPostgreSql() {
-        //This should handle other Postgres dialects as well, since they derive from PostgreSQL81Dialect
-        return getHibernateDialect(defaultEntityManager) instanceof PostgreSQL81Dialect;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DialectHelper.__L6284, ((getHibernateDialect(defaultEntityManager)) instanceof org.hibernate.dialect.PostgreSQL81Dialect));
     }
 
-    public boolean isPostgreSql(EntityManager em) {
-        //This should handle other Postgres dialects as well, since they derive from PostgreSQL81Dialect
-        return getHibernateDialect(em) instanceof PostgreSQL81Dialect;
+    public boolean isPostgreSql(javax.persistence.EntityManager em) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DialectHelper.__L6285, ((getHibernateDialect(em)) instanceof org.hibernate.dialect.PostgreSQL81Dialect));
     }
 
     public boolean isSqlServer() {
-        return getHibernateDialect(defaultEntityManager) instanceof SQLServerDialect;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DialectHelper.__L6286, ((getHibernateDialect(defaultEntityManager)) instanceof org.hibernate.dialect.SQLServerDialect));
     }
 
-    public boolean isSqlServer(EntityManager em) {
-        return getHibernateDialect(em) instanceof SQLServerDialect;
+    public boolean isSqlServer(javax.persistence.EntityManager em) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DialectHelper.__L6287, ((getHibernateDialect(em)) instanceof org.hibernate.dialect.SQLServerDialect));
     }
 
     public boolean isMySql() {
-        return getHibernateDialect(defaultEntityManager) instanceof MySQLDialect;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DialectHelper.__L6288, ((getHibernateDialect(defaultEntityManager)) instanceof org.hibernate.dialect.MySQLDialect));
     }
 
-    public boolean isMySql(EntityManager em) {
-        return getHibernateDialect(em) instanceof MySQLDialect;
+    public boolean isMySql(javax.persistence.EntityManager em) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DialectHelper.__L6289, ((getHibernateDialect(em)) instanceof org.hibernate.dialect.MySQLDialect));
+    }
+
+    public static perturbation.location.PerturbationLocation __L6282;
+
+    public static perturbation.location.PerturbationLocation __L6283;
+
+    public static perturbation.location.PerturbationLocation __L6284;
+
+    public static perturbation.location.PerturbationLocation __L6285;
+
+    public static perturbation.location.PerturbationLocation __L6286;
+
+    public static perturbation.location.PerturbationLocation __L6287;
+
+    public static perturbation.location.PerturbationLocation __L6288;
+
+    public static perturbation.location.PerturbationLocation __L6289;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.DialectHelper.__L6282 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DialectHelper.java:53)", 6282, "Boolean");
+        org.broadleafcommerce.common.util.DialectHelper.__L6283 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DialectHelper.java:58)", 6283, "Boolean");
+        org.broadleafcommerce.common.util.DialectHelper.__L6284 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DialectHelper.java:63)", 6284, "Boolean");
+        org.broadleafcommerce.common.util.DialectHelper.__L6285 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DialectHelper.java:68)", 6285, "Boolean");
+        org.broadleafcommerce.common.util.DialectHelper.__L6286 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DialectHelper.java:72)", 6286, "Boolean");
+        org.broadleafcommerce.common.util.DialectHelper.__L6287 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DialectHelper.java:76)", 6287, "Boolean");
+        org.broadleafcommerce.common.util.DialectHelper.__L6288 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DialectHelper.java:80)", 6288, "Boolean");
+        org.broadleafcommerce.common.util.DialectHelper.__L6289 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DialectHelper.java:84)", 6289, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.DialectHelper.initPerturbationLocation0();
     }
 }
+

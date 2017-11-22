@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,19 +17,10 @@
  */
 package org.broadleafcommerce.core.web.resolver;
 
-import org.broadleafcommerce.common.extension.AbstractExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
 
-
-/**
- * @author Andre Azzolini (apazzolini)
- */
-public abstract class AbstractDatabaseResourceResolverExtensionHandler extends AbstractExtensionHandler 
-        implements DatabaseResourceResolverExtensionHandler {
-    
-    public ExtensionResultStatusType resolveResource(ExtensionResultHolder erh, String resourceName) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+public abstract class AbstractDatabaseResourceResolverExtensionHandler extends org.broadleafcommerce.common.extension.AbstractExtensionHandler implements org.broadleafcommerce.core.web.resolver.DatabaseResourceResolverExtensionHandler {
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType resolveResource(org.broadleafcommerce.common.extension.ExtensionResultHolder erh, java.lang.String resourceName) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
-
 }
+

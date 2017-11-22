@@ -17,42 +17,26 @@
  */
 package org.broadleafcommerce.common.i18n.service;
 
-import org.broadleafcommerce.common.extension.StandardCacheItem;
 
-/**
- * Represents a cached translation pair.
- *
- * @author Jeff Fischer
- */
 public class LocalePair {
+    org.broadleafcommerce.common.extension.StandardCacheItem specificItem = null;
 
-    StandardCacheItem specificItem = null;
-    StandardCacheItem generalItem = null;
+    org.broadleafcommerce.common.extension.StandardCacheItem generalItem = null;
 
-    /**
-     * Retrieve the language and country specific translation.
-     *
-     * @return
-     */
-    public StandardCacheItem getSpecificItem() {
+    public org.broadleafcommerce.common.extension.StandardCacheItem getSpecificItem() {
         return specificItem;
     }
 
-    public void setSpecificItem(StandardCacheItem specificItem) {
+    public void setSpecificItem(org.broadleafcommerce.common.extension.StandardCacheItem specificItem) {
         this.specificItem = specificItem;
     }
 
-    /**
-     * Retrieve the language only translation.
-     *
-     * @return
-     */
-    public StandardCacheItem getGeneralItem() {
+    public org.broadleafcommerce.common.extension.StandardCacheItem getGeneralItem() {
         return generalItem;
     }
 
-    public void setGeneralItem(StandardCacheItem generalItem) {
+    public void setGeneralItem(org.broadleafcommerce.common.extension.StandardCacheItem generalItem) {
         this.generalItem = generalItem;
     }
-
 }
+

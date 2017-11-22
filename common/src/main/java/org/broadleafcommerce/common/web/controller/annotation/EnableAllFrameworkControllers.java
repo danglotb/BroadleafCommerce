@@ -17,60 +17,10 @@
  */
 package org.broadleafcommerce.common.web.controller.annotation;
 
-import org.broadleafcommerce.common.config.BroadleafBeanNameGenerator;
-import org.broadleafcommerce.common.web.controller.FrameworkControllerHandlerMapping;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScan.Filter;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+@java.lang.annotation.Target(java.lang.annotation.ElementType.TYPE)
+@java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
+@java.lang.annotation.Documented
+@org.springframework.context.annotation.ComponentScan(useDefaultFilters = false, basePackages = { "org.broadleafcommerce", "com.broadleafcommerce" }, includeFilters = @org.springframework.context.annotation.ComponentScan.Filter({ org.broadleafcommerce.common.web.controller.annotation.FrameworkController.class, org.broadleafcommerce.common.web.controller.annotation.FrameworkRestController.class }), nameGenerator = org.broadleafcommerce.common.config.BroadleafBeanNameGenerator.class)
+public @interface EnableAllFrameworkControllers {}
 
-/**
- * Enables {@link FrameworkController} and {@link FrameworkRestController} annotations.
- * <p>
- * Scan all Broadleaf modules for {@link FrameworkController} and {@link FrameworkRestController} so that their {@link
- * FrameworkMapping}s will get included in {@link
- * FrameworkControllerHandlerMapping} to provide default implementations of web endpoints.
- * <p>
- * If only some controllers are desired, then you must individually use {@link EnableFrameworkControllers} and
- * {@link EnableFrameworkRestControllers} and utilize their excludeFilters property to disable the unwanted controllers.
- * See {@link EnableFrameworkControllers} documentation for how to properly use these two annotations together.
- * <p>
- * <b>DO NOT place this annotation on the same class as another {@link ComponentScan} or other annotations that compose
- * {@link ComponentScan} such as {@code @SpringBootApplication}, as they will conflict when Spring performs annotation
- * composition.</b> Instead, you can create a nested class in your {@code @SprintBootApplication} class like this:
- * <pre>
- * {@code
- * @literal @SpringBootApplication
- * public class MyApplication {
- *
- *     @literal @EnableAllFrameworkControllers
- *     public static class EnableAllBroadleafControllers {}
- *
- *     public static void main(String[] args) {
- *         SpringApplication.run(MyApplication.class, args);
- *     }
- * }
- * }
- * </pre>
- *
- * @author Philip Baggett (pbaggett)
- * @see FrameworkController
- * @see FrameworkRestController
- * @see FrameworkMapping
- * @see FrameworkControllerHandlerMapping
- * @since 5.2
- */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@ComponentScan(
-        useDefaultFilters = false,
-        basePackages = {"org.broadleafcommerce", "com.broadleafcommerce"},
-        includeFilters = @Filter({FrameworkController.class, FrameworkRestController.class}),
-        nameGenerator = BroadleafBeanNameGenerator.class)
-public @interface EnableAllFrameworkControllers {
-}

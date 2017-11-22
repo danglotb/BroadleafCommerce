@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,18 +17,21 @@
  */
 package org.broadleafcommerce.common.demo;
 
-import org.springframework.context.annotation.Condition;
-import org.springframework.context.annotation.ConditionContext;
-import org.springframework.core.type.AnnotatedTypeMetadata;
 
-/**
- * @author Jeff Fischer
- */
-public class ImportCondition implements Condition {
-
-    @Override
-    public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-        return Boolean.parseBoolean(context.getEnvironment().getProperty("import.sql.enabled", "true"));
+public class ImportCondition implements org.springframework.context.annotation.Condition {
+    @java.lang.Override
+    public boolean matches(org.springframework.context.annotation.ConditionContext context, org.springframework.core.type.AnnotatedTypeMetadata metadata) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.demo.ImportCondition.__L844, java.lang.Boolean.parseBoolean(context.getEnvironment().getProperty("import.sql.enabled", "true")));
     }
 
+    public static perturbation.location.PerturbationLocation __L844;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.demo.ImportCondition.__L844 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/demo/ImportCondition.java:31)", 844, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.demo.ImportCondition.initPerturbationLocation0();
+    }
 }
+

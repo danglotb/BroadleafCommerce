@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,15 +17,10 @@
  */
 package org.broadleafcommerce.common.presentation;
 
-/**
- * 
- * @author jfischer
- *
- */
-public class NullBroadleafEnumerationType {
 
-    public String getType() {
+public class NullBroadleafEnumerationType {
+    public java.lang.String getType() {
         return null;
     }
-
 }
+

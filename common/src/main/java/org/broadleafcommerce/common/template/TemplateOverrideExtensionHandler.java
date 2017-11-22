@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,19 +17,8 @@
  */
 package org.broadleafcommerce.common.template;
 
-import org.broadleafcommerce.common.extension.ExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
 
-/**
- * Certain objects may have templates that resolve differently based on Broadleaf modules. This extension handler
- * provides the abilities for modules to provide that functionality.
- * 
- * @author Andre Azzolini (apazzolini)
- */
-public interface TemplateOverrideExtensionHandler extends ExtensionHandler {
-    
-    public ExtensionResultStatusType getOverrideTemplate(ExtensionResultHolder<String> erh, Object object);
-
-
+public interface TemplateOverrideExtensionHandler extends org.broadleafcommerce.common.extension.ExtensionHandler {
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType getOverrideTemplate(org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.String> erh, java.lang.Object object);
 }
+

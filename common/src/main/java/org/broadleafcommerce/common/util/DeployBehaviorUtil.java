@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,23 +17,33 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
-/**
- * @author Jeff Fischer
- */
-@Component("blDeployBehaviorUtil")
+@org.springframework.stereotype.Component("blDeployBehaviorUtil")
 public class DeployBehaviorUtil {
-
-    @Value("${enterprise.use.production.sandbox.mode:false}")
+    @org.springframework.beans.factory.annotation.Value("${enterprise.use.production.sandbox.mode:false}")
     protected boolean isProductionSandBoxMode;
 
-    @Value("${mt.loaded.flag:false}")
+    @org.springframework.beans.factory.annotation.Value("${mt.loaded.flag:false}")
     protected boolean isMtLoaded;
 
     public boolean isProductionSandBoxMode() {
-        //this functionality should only be active when multitenancy is in play
-        return isProductionSandBoxMode && isMtLoaded;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DeployBehaviorUtil.__L6281, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DeployBehaviorUtil.__L6279, isProductionSandBoxMode)) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DeployBehaviorUtil.__L6280, isMtLoaded))));
+    }
+
+    public static perturbation.location.PerturbationLocation __L6279;
+
+    public static perturbation.location.PerturbationLocation __L6280;
+
+    public static perturbation.location.PerturbationLocation __L6281;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.DeployBehaviorUtil.__L6279 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DeployBehaviorUtil.java:37)", 6279, "Boolean");
+        org.broadleafcommerce.common.util.DeployBehaviorUtil.__L6280 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DeployBehaviorUtil.java:37)", 6280, "Boolean");
+        org.broadleafcommerce.common.util.DeployBehaviorUtil.__L6281 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DeployBehaviorUtil.java:37)", 6281, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.DeployBehaviorUtil.initPerturbationLocation0();
     }
 }
+

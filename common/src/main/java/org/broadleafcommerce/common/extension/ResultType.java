@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,13 +17,7 @@
  */
 package org.broadleafcommerce.common.extension;
 
-/**
- * Used in conjunction with {@link org.broadleafcommerce.common.extension.SparselyPopulatedQueryExtensionHandler}. Describes
- * the current type of results desired from a query. STANDARD results relate specifically to a standard site (multitenant
- * concept). TEMPLATE results relate specifically to a template site's catalog or profile (also a multitenant concept)
- *
- * @author Jeff Fischer
- */
+
 public enum ResultType {
-    STANDARD,STANDARD_CACHE,TEMPLATE,TEMPLATE_CACHE,IGNORE, CATALOG_ONLY
-}
+    STANDARD, STANDARD_CACHE, TEMPLATE, TEMPLATE_CACHE, IGNORE, CATALOG_ONLY;}
+

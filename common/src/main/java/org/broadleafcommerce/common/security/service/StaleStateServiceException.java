@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,26 +17,21 @@
  */
 package org.broadleafcommerce.common.security.service;
 
-/**
- * This exception is thrown when the system detects a request from a "stale" page. This relates to a
- * Http Status 409 error response. See {@link StaleStateProtectionService} for more information.
- *
- * @author Jeff Fischer
- */
-public class StaleStateServiceException extends RuntimeException {
 
+public class StaleStateServiceException extends java.lang.RuntimeException {
     public StaleStateServiceException() {
     }
 
-    public StaleStateServiceException(Throwable cause) {
+    public StaleStateServiceException(java.lang.Throwable cause) {
         super(cause);
     }
 
-    public StaleStateServiceException(String message) {
+    public StaleStateServiceException(java.lang.String message) {
         super(message);
     }
 
-    public StaleStateServiceException(String message, Throwable cause) {
+    public StaleStateServiceException(java.lang.String message, java.lang.Throwable cause) {
         super(message, cause);
     }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,22 +17,10 @@
  */
 package org.broadleafcommerce.common.web.resource.resolver;
 
-import org.broadleafcommerce.common.web.resource.BroadleafResourceHttpRequestHandler;
-import org.springframework.core.Ordered;
 
-import javax.annotation.PostConstruct;
-
-/**
- * Constants representing out of box Broadleaf Resource Transformer ordering.
- * 
- * Used by {@link BroadleafResourceHttpRequestHandler} which sorts resolvers that 
- * implement {@link Ordered} in its {@link PostConstruct} method.
- * 
- * @author bpolster
- *
- */
 public class BroadleafResourceTransformerOrder {
-
     public static int BLC_CACHE_RESOURCE_TRANSFORMER = 1000;
+
     public static int BLC_MINIFY_RESOURCE_TRANSFORMER = 10000;
 }
+

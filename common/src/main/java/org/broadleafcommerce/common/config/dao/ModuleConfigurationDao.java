@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,40 +17,22 @@
  */
 package org.broadleafcommerce.common.config.dao;
 
-import org.broadleafcommerce.common.config.domain.ModuleConfiguration;
-import org.broadleafcommerce.common.config.service.type.ModuleConfigurationType;
-
-import java.util.List;
 
 public interface ModuleConfigurationDao {
+    public org.broadleafcommerce.common.config.domain.ModuleConfiguration readById(java.lang.Long id);
 
-    public ModuleConfiguration readById(Long id);
+    public org.broadleafcommerce.common.config.domain.ModuleConfiguration save(org.broadleafcommerce.common.config.domain.ModuleConfiguration config);
 
-    public ModuleConfiguration save(ModuleConfiguration config);
+    public void delete(org.broadleafcommerce.common.config.domain.ModuleConfiguration config);
 
-    public void delete(ModuleConfiguration config);
+    public java.util.List<org.broadleafcommerce.common.config.domain.ModuleConfiguration> readAllByType(org.broadleafcommerce.common.config.service.type.ModuleConfigurationType type);
 
-    public List<ModuleConfiguration> readAllByType(ModuleConfigurationType type);
+    public java.util.List<org.broadleafcommerce.common.config.domain.ModuleConfiguration> readActiveByType(org.broadleafcommerce.common.config.service.type.ModuleConfigurationType type);
 
-    public List<ModuleConfiguration> readActiveByType(ModuleConfigurationType type);
+    public java.util.List<org.broadleafcommerce.common.config.domain.ModuleConfiguration> readByType(java.lang.Class<? extends org.broadleafcommerce.common.config.domain.ModuleConfiguration> type);
 
-    public List<ModuleConfiguration> readByType(Class<? extends ModuleConfiguration> type);
+    public java.lang.Long getCurrentDateResolution();
 
-    /**
-     * Returns the number of milliseconds that the current date/time will be cached for queries before refreshing.
-     * This aids in query caching, otherwise every query that utilized current date would be different and caching
-     * would be ineffective.
-     *
-     * @return the milliseconds to cache the current date/time
-     */
-    public Long getCurrentDateResolution();
-
-    /**
-     * Sets the number of milliseconds that the current date/time will be cached for queries before refreshing.
-     * This aids in query caching, otherwise every query that utilized current date would be different and caching
-     * would be ineffective.
-     *
-     * @param currentDateResolution the milliseconds to cache the current date/time
-     */
-    public void setCurrentDateResolution(Long currentDateResolution);
+    public void setCurrentDateResolution(java.lang.Long currentDateResolution);
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,45 +17,33 @@
  */
 package org.broadleafcommerce.common.locale.service;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.locale.dao.LocaleDao;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
-import java.util.List;
+@org.springframework.stereotype.Service("blLocaleService")
+public class LocaleServiceImpl implements org.broadleafcommerce.common.locale.service.LocaleService {
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.locale.service.LocaleServiceImpl.class);
 
-/**
- * Created by bpolster.
- */
-@Service("blLocaleService")
-public class LocaleServiceImpl implements LocaleService {
-    private static final Log LOG = LogFactory.getLog(LocaleServiceImpl.class);
+    @javax.annotation.Resource(name = "blLocaleDao")
+    protected org.broadleafcommerce.common.locale.dao.LocaleDao localeDao;
 
-    @Resource(name="blLocaleDao")
-    protected LocaleDao localeDao;
-
-    @Override
-    public Locale findLocaleByCode(String localeCode) {
+    @java.lang.Override
+    public org.broadleafcommerce.common.locale.domain.Locale findLocaleByCode(java.lang.String localeCode) {
         return localeDao.findLocaleByCode(localeCode);
     }
-    
-    @Override
-    public Locale findDefaultLocale() {
+
+    @java.lang.Override
+    public org.broadleafcommerce.common.locale.domain.Locale findDefaultLocale() {
         return localeDao.findDefaultLocale();
     }
 
-    @Override
-    public List<Locale> findAllLocales() {
+    @java.lang.Override
+    public java.util.List<org.broadleafcommerce.common.locale.domain.Locale> findAllLocales() {
         return localeDao.findAllLocales();
     }
-    
-    @Override
-    @Transactional("blTransactionManager")
-    public Locale save(Locale locale) {
+
+    @java.lang.Override
+    @org.springframework.transaction.annotation.Transactional("blTransactionManager")
+    public org.broadleafcommerce.common.locale.domain.Locale save(org.broadleafcommerce.common.locale.domain.Locale locale) {
         return localeDao.save(locale);
     }
-    
 }
+

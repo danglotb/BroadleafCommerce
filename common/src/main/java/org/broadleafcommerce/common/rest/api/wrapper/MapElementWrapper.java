@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2013 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,41 +17,30 @@
  */
 package org.broadleafcommerce.common.rest.api.wrapper;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- * <p>
- * This is a JAXB wrapper to encapsulate a Map<String, Object>
- * <p/>
- * User: Elbert Bautista
- * Date: 4/26/12
- */
-@XmlRootElement(name = "element")
-@XmlAccessorType(value = XmlAccessType.FIELD)
+@javax.xml.bind.annotation.XmlRootElement(name = "element")
+@javax.xml.bind.annotation.XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.FIELD)
 public class MapElementWrapper {
+    @javax.xml.bind.annotation.XmlElement
+    protected java.lang.String key;
 
-    @XmlElement
-    protected String key;
+    @javax.xml.bind.annotation.XmlElement
+    protected java.lang.String value;
 
-    @XmlElement
-    protected String value;
-
-    public String getKey() {
+    public java.lang.String getKey() {
         return key;
     }
 
-    public void setKey(String key) {
+    public void setKey(java.lang.String key) {
         this.key = key;
     }
 
-    public String getValue() {
+    public java.lang.String getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(java.lang.String value) {
         this.value = value;
     }
 }
+

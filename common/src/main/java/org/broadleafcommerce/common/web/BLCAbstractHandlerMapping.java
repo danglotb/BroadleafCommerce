@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,57 +17,45 @@
  */
 package org.broadleafcommerce.common.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.web.servlet.handler.AbstractHandlerMapping;
 
-/**
- * Adds some convenience methods to the Spring AbstractHandlerMapping for
- * BLC specific HandlerMappings.
- * 
- * Always returns null from defaultHandlerMapping 
- * 
- * @author bpolster
- */
-public abstract class BLCAbstractHandlerMapping extends AbstractHandlerMapping {
+public abstract class BLCAbstractHandlerMapping extends org.springframework.web.servlet.handler.AbstractHandlerMapping {
+    protected java.lang.String controllerName;
 
-    protected String controllerName;
+    @org.springframework.beans.factory.annotation.Autowired
+    protected org.springframework.core.env.Environment env;
 
-    @Autowired
-    protected Environment env;
-
-    /**
-     * This handler mapping does not provide a default handler.   This method
-     * has been coded to always return null.
-     */
-    @Override
-    public Object getDefaultHandler() {
-        return null;        
+    @java.lang.Override
+    public java.lang.Object getDefaultHandler() {
+        return null;
     }
-    
-    /**
-     * Returns the controllerName if set or "blPageController" by default.
-     * @return
-     */
-    public String getControllerName() {
+
+    public java.lang.String getControllerName() {
         return controllerName;
     }
 
-    /**
-     * Sets the name of the bean to use as the Handler.  Typically the name of
-     * a controller bean.
-     * 
-     * @param controllerName
-     */
-    public void setControllerName(String controllerName) {
+    public void setControllerName(java.lang.String controllerName) {
         this.controllerName = controllerName;
     }
 
     public boolean allowProductResolutionUsingIdParam() {
-        return env.getProperty("allowProductResolutionUsingIdParam", boolean.class, false);
+        return env.getProperty("allowProductResolutionUsingIdParam", boolean.class, perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.BLCAbstractHandlerMapping.__L7696, false));
     }
 
     public boolean allowCategoryResolutionUsingIdParam() {
-        return env.getProperty("allowCategoryResolutionUsingIdParam", boolean.class, false);
+        return env.getProperty("allowCategoryResolutionUsingIdParam", boolean.class, perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.BLCAbstractHandlerMapping.__L7697, false));
+    }
+
+    public static perturbation.location.PerturbationLocation __L7696;
+
+    public static perturbation.location.PerturbationLocation __L7697;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.BLCAbstractHandlerMapping.__L7696 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BLCAbstractHandlerMapping.java:67)", 7696, "Boolean");
+        org.broadleafcommerce.common.web.BLCAbstractHandlerMapping.__L7697 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BLCAbstractHandlerMapping.java:71)", 7697, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.BLCAbstractHandlerMapping.initPerturbationLocation0();
     }
 }
+

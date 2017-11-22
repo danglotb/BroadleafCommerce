@@ -17,162 +17,192 @@
  */
 package org.broadleafcommerce.common.i18n.service;
 
-import net.sf.ehcache.Element;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.broadleafcommerce.common.cache.CacheStatType;
-import org.broadleafcommerce.common.cache.StatisticsService;
-import org.broadleafcommerce.common.extension.ItemStatus;
-import org.broadleafcommerce.common.extension.ResultType;
-import org.broadleafcommerce.common.extension.StandardCacheItem;
-import org.broadleafcommerce.common.i18n.dao.TranslationDao;
-import org.broadleafcommerce.common.i18n.domain.TranslatedEntity;
-import org.broadleafcommerce.common.i18n.domain.Translation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
+@org.springframework.stereotype.Component("blThresholdCacheTranslationOverrideStrategy")
+@org.springframework.context.annotation.Lazy
+public class ThresholdCacheTranslationOverrideStrategy implements org.broadleafcommerce.common.i18n.service.TranslationOverrideStrategy {
+    @javax.annotation.Resource(name = "blStatisticsService")
+    protected org.broadleafcommerce.common.cache.StatisticsService statisticsService;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+    @javax.annotation.Resource(name = "blTranslationDao")
+    protected org.broadleafcommerce.common.i18n.dao.TranslationDao dao;
 
-import javax.annotation.Resource;
+    @org.springframework.beans.factory.annotation.Autowired
+    protected org.broadleafcommerce.common.i18n.service.TranslationSupport translationSupport;
 
-/**
- * Default {@link TranslationOverrideStrategy}. Should run last and will always return a result. Primarily supports multitenant
- * scenarios with the following characteristics:
-  * <ul>
-  *     <li>Small to medium template translation catalog</li>
-  *     <li>Small to medium number of standard site overrides</li>
-  *     <li>Small or large quantity of individual standard sites</li>
-  * </ul>
- * This strategy tries to efficiently cache all standard site overries and/or all template catalog translations. This is the
- * highest efficiency settings, as all translations are cached on the app tier. However, if the override or template catalog
- * member count exceeds the threshold, the strategy falls back to on demand queries that are cached as they occur. See
- * {@link TranslationSupport#getThresholdForFullCache()} and {@link TranslationSupport#getTemplateThresholdForFullCache()}
- * for more information on these properties and how to set their values.
- *
- * @see SparseTranslationOverrideStrategy
- * @author Jeff Fischer
- */
-@Component("blThresholdCacheTranslationOverrideStrategy")
-@Lazy
-public class ThresholdCacheTranslationOverrideStrategy implements TranslationOverrideStrategy {
-
-    @Resource(name="blStatisticsService")
-    protected StatisticsService statisticsService;
-
-    @Resource(name = "blTranslationDao")
-    protected TranslationDao dao;
-
-    @Autowired
-    protected TranslationSupport translationSupport;
-
-    @Override
-    public LocalePair getLocaleBasedOverride(String property, TranslatedEntity entityType, String entityId,
-                                             String localeCode, String localeCountryCode, String basicCacheKey) {
-        String specificPropertyKey = property + "_" + localeCountryCode;
-        String generalPropertyKey = property + "_" + localeCode;
-        Element cacheResult = translationSupport.getCache().get(basicCacheKey);
-        Element result;
-        LocalePair response = new LocalePair();
-        if (cacheResult == null) {
-            statisticsService.addCacheStat(CacheStatType.TRANSLATION_CACHE_HIT_RATE.toString(), false);
-            if (dao.countTranslationEntries(entityType, ResultType.STANDARD_CACHE) < translationSupport.getThresholdForFullCache()) {
-                Map<String, Map<String, StandardCacheItem>> propertyTranslationMap = new HashMap<String, Map<String, StandardCacheItem>>();
-                List<StandardCacheItem> convertedList = dao.readConvertedTranslationEntries(entityType, ResultType.STANDARD_CACHE);
-                if (!CollectionUtils.isEmpty(convertedList)) {
-                    for (StandardCacheItem standardCache : convertedList) {
-                        Translation translation = (Translation) standardCache.getCacheItem();
-                        String key = translation.getFieldName() + "_" + translation.getLocaleCode();
-                        if (!propertyTranslationMap.containsKey(key)) {
-                            propertyTranslationMap.put(key, new HashMap<String, StandardCacheItem>());
+    @java.lang.Override
+    public org.broadleafcommerce.common.i18n.service.LocalePair getLocaleBasedOverride(java.lang.String property, org.broadleafcommerce.common.i18n.domain.TranslatedEntity entityType, java.lang.String entityId, java.lang.String localeCode, java.lang.String localeCountryCode, java.lang.String basicCacheKey) {
+        java.lang.String specificPropertyKey = (property + "_") + localeCountryCode;
+        java.lang.String generalPropertyKey = (property + "_") + localeCode;
+        net.sf.ehcache.Element cacheResult = translationSupport.getCache().get(basicCacheKey);
+        net.sf.ehcache.Element result;
+        org.broadleafcommerce.common.i18n.service.LocalePair response = new org.broadleafcommerce.common.i18n.service.LocalePair();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3013, (cacheResult == null))) {
+            statisticsService.addCacheStat(org.broadleafcommerce.common.cache.CacheStatType.TRANSLATION_CACHE_HIT_RATE.toString(), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3014, false));
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3015, ((dao.countTranslationEntries(entityType, org.broadleafcommerce.common.extension.ResultType.STANDARD_CACHE)) < (translationSupport.getThresholdForFullCache())))) {
+                java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.broadleafcommerce.common.extension.StandardCacheItem>> propertyTranslationMap = new java.util.HashMap<java.lang.String, java.util.Map<java.lang.String, org.broadleafcommerce.common.extension.StandardCacheItem>>();
+                java.util.List<org.broadleafcommerce.common.extension.StandardCacheItem> convertedList = dao.readConvertedTranslationEntries(entityType, org.broadleafcommerce.common.extension.ResultType.STANDARD_CACHE);
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3017, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3016, org.apache.commons.collections.CollectionUtils.isEmpty(convertedList)))))) {
+                    for (org.broadleafcommerce.common.extension.StandardCacheItem standardCache : convertedList) {
+                        org.broadleafcommerce.common.i18n.domain.Translation translation = ((org.broadleafcommerce.common.i18n.domain.Translation) (standardCache.getCacheItem()));
+                        java.lang.String key = ((translation.getFieldName()) + "_") + (translation.getLocaleCode());
+                        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3019, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3018, propertyTranslationMap.containsKey(key)))))) {
+                            propertyTranslationMap.put(key, new java.util.HashMap<java.lang.String, org.broadleafcommerce.common.extension.StandardCacheItem>());
                         }
                         propertyTranslationMap.get(key).put(translation.getEntityId(), standardCache);
                     }
                 }
-                Element newElement = new Element(basicCacheKey, propertyTranslationMap);
+                net.sf.ehcache.Element newElement = new net.sf.ehcache.Element(basicCacheKey, propertyTranslationMap);
                 translationSupport.getCache().put(newElement);
                 result = newElement;
-            } else {
-                //Translation is dual discriminated by site and catalog, which can make it impossible to find results under normal
-                //circumstances because the two discriminators can cancel eachother out. We use the CATALOG_ONLY ResultType
-                //to force the system to only honor the catalog discrimination during this call.
-                Translation translation = dao.readTranslation(entityType, entityId, property, localeCode, localeCountryCode, ResultType.CATALOG_ONLY);
+            }else {
+                org.broadleafcommerce.common.i18n.domain.Translation translation = dao.readTranslation(entityType, entityId, property, localeCode, localeCountryCode, org.broadleafcommerce.common.extension.ResultType.CATALOG_ONLY);
                 buildSingleItemResponse(response, translation);
                 return response;
             }
-        } else {
+        }else {
             result = cacheResult;
-            statisticsService.addCacheStat(CacheStatType.TRANSLATION_CACHE_HIT_RATE.toString(), true);
+            statisticsService.addCacheStat(org.broadleafcommerce.common.cache.CacheStatType.TRANSLATION_CACHE_HIT_RATE.toString(), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3020, true));
         }
-        Map<String, Map<String, StandardCacheItem>> propertyTranslationMap = (Map<String, Map<String, StandardCacheItem>>) result.getObjectValue();
-        // Check For a Specific Standard Site Match (language and country)
-        StandardCacheItem specificTranslation = translationSupport.lookupTranslationFromMap(specificPropertyKey, propertyTranslationMap, entityId);
-        // Check For a General Match (language and country)
-        StandardCacheItem generalTranslation = translationSupport.lookupTranslationFromMap(generalPropertyKey, propertyTranslationMap, entityId);
+        java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.broadleafcommerce.common.extension.StandardCacheItem>> propertyTranslationMap = ((java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.broadleafcommerce.common.extension.StandardCacheItem>>) (result.getObjectValue()));
+        org.broadleafcommerce.common.extension.StandardCacheItem specificTranslation = translationSupport.lookupTranslationFromMap(specificPropertyKey, propertyTranslationMap, entityId);
+        org.broadleafcommerce.common.extension.StandardCacheItem generalTranslation = translationSupport.lookupTranslationFromMap(generalPropertyKey, propertyTranslationMap, entityId);
         response.setSpecificItem(specificTranslation);
         response.setGeneralItem(generalTranslation);
-
         return response;
     }
 
-    @Override
-    public LocalePair getLocaleBasedTemplateValue(String templateCacheKey, String property, TranslatedEntity entityType,
-                                                  String entityId, String localeCode, String localeCountryCode, String specificPropertyKey, String generalPropertyKey) {
-        Element cacheResult = translationSupport.getCache().get(templateCacheKey);
-        LocalePair response = new LocalePair();
-        if (cacheResult == null) {
-            statisticsService.addCacheStat(CacheStatType.TRANSLATION_CACHE_HIT_RATE.toString(), false);
-            if (dao.countTranslationEntries(entityType, ResultType.TEMPLATE_CACHE) < translationSupport.getTemplateThresholdForFullCache()) {
-                Map<String, Map<String, Translation>> propertyTranslationMap = new HashMap<String, Map<String, Translation>>();
-                List<Translation> translationList = dao.readAllTranslationEntries(entityType, ResultType.TEMPLATE_CACHE);
-                if (!CollectionUtils.isEmpty(translationList)) {
-                    for (Translation translation : translationList) {
-                        String key = translation.getFieldName() + "_" + translation.getLocaleCode();
-                        if (!propertyTranslationMap.containsKey(key)) {
-                            propertyTranslationMap.put(key, new HashMap<String, Translation>());
+    @java.lang.Override
+    public org.broadleafcommerce.common.i18n.service.LocalePair getLocaleBasedTemplateValue(java.lang.String templateCacheKey, java.lang.String property, org.broadleafcommerce.common.i18n.domain.TranslatedEntity entityType, java.lang.String entityId, java.lang.String localeCode, java.lang.String localeCountryCode, java.lang.String specificPropertyKey, java.lang.String generalPropertyKey) {
+        net.sf.ehcache.Element cacheResult = translationSupport.getCache().get(templateCacheKey);
+        org.broadleafcommerce.common.i18n.service.LocalePair response = new org.broadleafcommerce.common.i18n.service.LocalePair();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3021, (cacheResult == null))) {
+            statisticsService.addCacheStat(org.broadleafcommerce.common.cache.CacheStatType.TRANSLATION_CACHE_HIT_RATE.toString(), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3022, false));
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3023, ((dao.countTranslationEntries(entityType, org.broadleafcommerce.common.extension.ResultType.TEMPLATE_CACHE)) < (translationSupport.getTemplateThresholdForFullCache())))) {
+                java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.broadleafcommerce.common.i18n.domain.Translation>> propertyTranslationMap = new java.util.HashMap<java.lang.String, java.util.Map<java.lang.String, org.broadleafcommerce.common.i18n.domain.Translation>>();
+                java.util.List<org.broadleafcommerce.common.i18n.domain.Translation> translationList = dao.readAllTranslationEntries(entityType, org.broadleafcommerce.common.extension.ResultType.TEMPLATE_CACHE);
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3025, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3024, org.apache.commons.collections.CollectionUtils.isEmpty(translationList)))))) {
+                    for (org.broadleafcommerce.common.i18n.domain.Translation translation : translationList) {
+                        java.lang.String key = ((translation.getFieldName()) + "_") + (translation.getLocaleCode());
+                        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3027, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3026, propertyTranslationMap.containsKey(key)))))) {
+                            propertyTranslationMap.put(key, new java.util.HashMap<java.lang.String, org.broadleafcommerce.common.i18n.domain.Translation>());
                         }
                         propertyTranslationMap.get(key).put(translation.getEntityId(), translation);
                     }
                 }
-                translationSupport.getCache().put(new Element(templateCacheKey, propertyTranslationMap));
-                Translation translation = translationSupport.findBestTemplateTranslation(specificPropertyKey, generalPropertyKey, propertyTranslationMap, entityId);
-                if (translation != null) {
+                translationSupport.getCache().put(new net.sf.ehcache.Element(templateCacheKey, propertyTranslationMap));
+                org.broadleafcommerce.common.i18n.domain.Translation translation = translationSupport.findBestTemplateTranslation(specificPropertyKey, generalPropertyKey, propertyTranslationMap, entityId);
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3028, (translation != null))) {
                     buildSingleItemResponse(response, translation);
                 }
-            } else {
-                Translation translation = dao.readTranslation(entityType, entityId, property, localeCode, localeCountryCode, ResultType.TEMPLATE);
-                if (translation != null) {
+            }else {
+                org.broadleafcommerce.common.i18n.domain.Translation translation = dao.readTranslation(entityType, entityId, property, localeCode, localeCountryCode, org.broadleafcommerce.common.extension.ResultType.TEMPLATE);
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3029, (translation != null))) {
                     buildSingleItemResponse(response, translation);
                 }
             }
-        } else {
-            statisticsService.addCacheStat(CacheStatType.TRANSLATION_CACHE_HIT_RATE.toString(), true);
-            Map<String, Map<String, Translation>> propertyTranslationMap = (Map<String, Map<String, Translation>>) cacheResult.getObjectValue();
-            Translation bestTranslation = translationSupport.findBestTemplateTranslation(specificPropertyKey, generalPropertyKey, propertyTranslationMap, entityId);
-            if (bestTranslation != null) {
+        }else {
+            statisticsService.addCacheStat(org.broadleafcommerce.common.cache.CacheStatType.TRANSLATION_CACHE_HIT_RATE.toString(), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3030, true));
+            java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.broadleafcommerce.common.i18n.domain.Translation>> propertyTranslationMap = ((java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.broadleafcommerce.common.i18n.domain.Translation>>) (cacheResult.getObjectValue()));
+            org.broadleafcommerce.common.i18n.domain.Translation bestTranslation = translationSupport.findBestTemplateTranslation(specificPropertyKey, generalPropertyKey, propertyTranslationMap, entityId);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3031, (bestTranslation != null))) {
                 buildSingleItemResponse(response, bestTranslation);
             }
         }
         return response;
     }
 
-    @Override
-    public boolean validateTemplateProcessing(String standardCacheKey, String templateCacheKey) {
-        return !standardCacheKey.equals(templateCacheKey);
+    @java.lang.Override
+    public boolean validateTemplateProcessing(java.lang.String standardCacheKey, java.lang.String templateCacheKey) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3033, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3032, standardCacheKey.equals(templateCacheKey)))));
     }
 
-    @Override
+    @java.lang.Override
     public int getOrder() {
-            return 0;
-        }
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3034, 0);
+    }
 
-    protected void buildSingleItemResponse(LocalePair response, Translation translation) {
-        StandardCacheItem cacheItem = new StandardCacheItem();
-        cacheItem.setItemStatus(ItemStatus.NORMAL);
-        cacheItem.setCacheItem(translation==null?"":translation);
+    protected void buildSingleItemResponse(org.broadleafcommerce.common.i18n.service.LocalePair response, org.broadleafcommerce.common.i18n.domain.Translation translation) {
+        org.broadleafcommerce.common.extension.StandardCacheItem cacheItem = new org.broadleafcommerce.common.extension.StandardCacheItem();
+        cacheItem.setItemStatus(org.broadleafcommerce.common.extension.ItemStatus.NORMAL);
+        cacheItem.setCacheItem((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3035, (translation == null)) ? "" : translation));
         response.setSpecificItem(cacheItem);
     }
 
+    public static perturbation.location.PerturbationLocation __L3013;
+
+    public static perturbation.location.PerturbationLocation __L3014;
+
+    public static perturbation.location.PerturbationLocation __L3015;
+
+    public static perturbation.location.PerturbationLocation __L3016;
+
+    public static perturbation.location.PerturbationLocation __L3017;
+
+    public static perturbation.location.PerturbationLocation __L3018;
+
+    public static perturbation.location.PerturbationLocation __L3019;
+
+    public static perturbation.location.PerturbationLocation __L3020;
+
+    public static perturbation.location.PerturbationLocation __L3021;
+
+    public static perturbation.location.PerturbationLocation __L3022;
+
+    public static perturbation.location.PerturbationLocation __L3023;
+
+    public static perturbation.location.PerturbationLocation __L3024;
+
+    public static perturbation.location.PerturbationLocation __L3025;
+
+    public static perturbation.location.PerturbationLocation __L3026;
+
+    public static perturbation.location.PerturbationLocation __L3027;
+
+    public static perturbation.location.PerturbationLocation __L3028;
+
+    public static perturbation.location.PerturbationLocation __L3029;
+
+    public static perturbation.location.PerturbationLocation __L3030;
+
+    public static perturbation.location.PerturbationLocation __L3031;
+
+    public static perturbation.location.PerturbationLocation __L3032;
+
+    public static perturbation.location.PerturbationLocation __L3033;
+
+    public static perturbation.location.PerturbationLocation __L3034;
+
+    public static perturbation.location.PerturbationLocation __L3035;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3013 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:79)", 3013, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3014 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:80)", 3014, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3015 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:81)", 3015, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3016 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:84)", 3016, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3017 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:84)", 3017, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3018 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:88)", 3018, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3019 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:88)", 3019, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3020 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:107)", 3020, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3021 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:125)", 3021, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3022 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:126)", 3022, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3023 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:127)", 3023, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3024 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:130)", 3024, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3025 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:130)", 3025, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3026 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:133)", 3026, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3027 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:133)", 3027, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3028 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:141)", 3028, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3029 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:146)", 3029, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3030 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:151)", 3030, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3031 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:154)", 3031, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3032 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:163)", 3032, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3033 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:163)", 3033, "Boolean");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3034 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:168)", 3034, "Numerical");
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.__L3035 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/ThresholdCacheTranslationOverrideStrategy.java:174)", 3035, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.i18n.service.ThresholdCacheTranslationOverrideStrategy.initPerturbationLocation0();
+    }
 }
+

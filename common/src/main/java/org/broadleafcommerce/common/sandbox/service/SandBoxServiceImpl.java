@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,162 +17,188 @@
  */
 package org.broadleafcommerce.common.sandbox.service;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.sandbox.dao.SandBoxDao;
-import org.broadleafcommerce.common.sandbox.domain.SandBox;
-import org.broadleafcommerce.common.sandbox.domain.SandBoxType;
-import org.broadleafcommerce.common.util.TransactionUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+@org.springframework.stereotype.Service("blSandBoxService")
+public class SandBoxServiceImpl implements org.broadleafcommerce.common.sandbox.service.SandBoxService {
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.class);
 
-import javax.annotation.Resource;
+    @javax.annotation.Resource(name = "blSandBoxDao")
+    protected org.broadleafcommerce.common.sandbox.dao.SandBoxDao sandBoxDao;
 
-@Service(value = "blSandBoxService")
-public class SandBoxServiceImpl implements SandBoxService {
-    
-    private static final Log LOG = LogFactory.getLog(SandBoxServiceImpl.class);
-
-    @Resource(name = "blSandBoxDao")
-    protected SandBoxDao sandBoxDao;
-
-    @Override
-    public SandBox retrieveSandBoxById(Long sandboxId) {
+    @java.lang.Override
+    public org.broadleafcommerce.common.sandbox.domain.SandBox retrieveSandBoxById(java.lang.Long sandboxId) {
         return sandBoxDao.retrieve(sandboxId);
     }
-    
-    @Override
-    public List<SandBox> retrieveAllSandBoxes() {
+
+    @java.lang.Override
+    public java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> retrieveAllSandBoxes() {
         return sandBoxDao.retrieveAllSandBoxes();
     }
-    
-    @Override
-    public List<SandBox> retrieveSandBoxesByType(SandBoxType type) {
+
+    @java.lang.Override
+    public java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> retrieveSandBoxesByType(org.broadleafcommerce.common.sandbox.domain.SandBoxType type) {
         return sandBoxDao.retrieveSandBoxesByType(type);
     }
-    
-    @Override
-    public SandBox retrieveUserSandBoxForParent(Long authorId, Long parentSandBoxId) {
+
+    @java.lang.Override
+    public org.broadleafcommerce.common.sandbox.domain.SandBox retrieveUserSandBoxForParent(java.lang.Long authorId, java.lang.Long parentSandBoxId) {
         return sandBoxDao.retrieveUserSandBoxForParent(authorId, parentSandBoxId);
     }
-    
-    @Override
-    public SandBox retrieveSandBoxManagementById(Long sandBoxId) {
+
+    @java.lang.Override
+    public org.broadleafcommerce.common.sandbox.domain.SandBox retrieveSandBoxManagementById(java.lang.Long sandBoxId) {
         return sandBoxDao.retrieveSandBoxManagementById(sandBoxId);
     }
 
-    @Override
-    public List<SandBox> retrievePreviewSandBoxes(Long authorId) {
-        List<SandBox> returnList = new ArrayList<SandBox>();
-        List<SandBox> authorBoxes = sandBoxDao.retrieveSandBoxesForAuthor(authorId, SandBoxType.USER);
-        List<SandBox> approvalBoxes = sandBoxDao.retrieveSandBoxesByType(SandBoxType.APPROVAL);
-        List<SandBox> defaultBoxes = sandBoxDao.retrieveSandBoxesByType(SandBoxType.DEFAULT);
-
-        List<SandBox> candidateBoxes = new ArrayList<SandBox>();
+    @java.lang.Override
+    public java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> retrievePreviewSandBoxes(java.lang.Long authorId) {
+        java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> returnList = new java.util.ArrayList<org.broadleafcommerce.common.sandbox.domain.SandBox>();
+        java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> authorBoxes = sandBoxDao.retrieveSandBoxesForAuthor(authorId, org.broadleafcommerce.common.sandbox.domain.SandBoxType.USER);
+        java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> approvalBoxes = sandBoxDao.retrieveSandBoxesByType(org.broadleafcommerce.common.sandbox.domain.SandBoxType.APPROVAL);
+        java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> defaultBoxes = sandBoxDao.retrieveSandBoxesByType(org.broadleafcommerce.common.sandbox.domain.SandBoxType.DEFAULT);
+        java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> candidateBoxes = new java.util.ArrayList<org.broadleafcommerce.common.sandbox.domain.SandBox>();
         candidateBoxes.addAll(approvalBoxes);
         candidateBoxes.addAll(defaultBoxes);
-        
         returnList.addAll(authorBoxes);
-
-        for (SandBox cb : candidateBoxes) {
-            boolean match = false;
-            for (SandBox authorBox : authorBoxes) {
-                if (authorBox.getId().equals(cb.getId()) || 
-                        (authorBox.getParentSandBox() != null && authorBox.getParentSandBox().getId().equals(cb.getId()))) {
-                    match = true;
+        for (org.broadleafcommerce.common.sandbox.domain.SandBox cb : candidateBoxes) {
+            boolean match = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4759, false);
+            for (org.broadleafcommerce.common.sandbox.domain.SandBox authorBox : authorBoxes) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4764, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4760, authorBox.getId().equals(cb.getId()))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4763, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4761, ((authorBox.getParentSandBox()) != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4762, authorBox.getParentSandBox().getId().equals(cb.getId()))))))))) {
+                    match = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4765, true);
                 }
             }
-            if (!match) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4767, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4766, match))))) {
                 returnList.add(cb);
             }
         }
-        
         return returnList;
     }
 
-    @Override
-    public SandBox retrieveUserSandBox(Long authorId, Long overrideSandBoxId, String sandBoxName) {
-        SandBox userSandbox;
-        if (overrideSandBoxId != null) {
+    @java.lang.Override
+    public org.broadleafcommerce.common.sandbox.domain.SandBox retrieveUserSandBox(java.lang.Long authorId, java.lang.Long overrideSandBoxId, java.lang.String sandBoxName) {
+        org.broadleafcommerce.common.sandbox.domain.SandBox userSandbox;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4768, (overrideSandBoxId != null))) {
             userSandbox = retrieveSandBoxById(overrideSandBoxId);
-        } else {
-            userSandbox = retrieveSandBox(sandBoxName, SandBoxType.USER);
-            if (userSandbox == null) {
-                userSandbox = createSandBox(sandBoxName, SandBoxType.USER);
+        }else {
+            userSandbox = retrieveSandBox(sandBoxName, org.broadleafcommerce.common.sandbox.domain.SandBoxType.USER);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4769, (userSandbox == null))) {
+                userSandbox = createSandBox(sandBoxName, org.broadleafcommerce.common.sandbox.domain.SandBoxType.USER);
             }
         }
-
         return userSandbox;
     }
-    
-    @Override
-    public Map<Long, String> retrieveAuthorNamesForSandBoxes(Set<Long> sandBoxIds) {
+
+    @java.lang.Override
+    public java.util.Map<java.lang.Long, java.lang.String> retrieveAuthorNamesForSandBoxes(java.util.Set<java.lang.Long> sandBoxIds) {
         return sandBoxDao.retrieveAuthorNamesForSandBoxes(sandBoxIds);
     }
 
-    @Override
-    public Map<Long, String> retrieveSandboxNamesForSandBoxes(Set<Long> sandBoxIds) {
+    @java.lang.Override
+    public java.util.Map<java.lang.Long, java.lang.String> retrieveSandboxNamesForSandBoxes(java.util.Set<java.lang.Long> sandBoxIds) {
         return sandBoxDao.retrieveSandboxNamesForSandBoxes(sandBoxIds);
     }
 
-    @Override
-    public synchronized SandBox createSandBox(String sandBoxName, SandBoxType sandBoxType) {
+    @java.lang.Override
+    public synchronized org.broadleafcommerce.common.sandbox.domain.SandBox createSandBox(java.lang.String sandBoxName, org.broadleafcommerce.common.sandbox.domain.SandBoxType sandBoxType) {
         return sandBoxDao.createSandBox(sandBoxName, sandBoxType);
     }
-    
-    @Override
-    public synchronized SandBox createUserSandBox(Long authorId, SandBox approvalSandBox) {
-        if (checkForExistingSandbox(SandBoxType.USER, approvalSandBox.getName(), authorId)) {
+
+    @java.lang.Override
+    public synchronized org.broadleafcommerce.common.sandbox.domain.SandBox createUserSandBox(java.lang.Long authorId, org.broadleafcommerce.common.sandbox.domain.SandBox approvalSandBox) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4770, checkForExistingSandbox(org.broadleafcommerce.common.sandbox.domain.SandBoxType.USER, approvalSandBox.getName(), authorId))) {
             return sandBoxDao.createUserSandBox(authorId, approvalSandBox);
         }
-
-        return sandBoxDao.retrieveNamedSandBox(SandBoxType.USER, approvalSandBox.getName(), authorId);
+        return sandBoxDao.retrieveNamedSandBox(org.broadleafcommerce.common.sandbox.domain.SandBoxType.USER, approvalSandBox.getName(), authorId);
     }
 
-    @Override
-    public synchronized SandBox createDefaultSandBox() {
+    @java.lang.Override
+    public synchronized org.broadleafcommerce.common.sandbox.domain.SandBox createDefaultSandBox() {
         return sandBoxDao.createDefaultSandBox();
     }
 
-    @Override
-    public SandBox retrieveSandBox(String sandBoxName, SandBoxType sandBoxType) {
+    @java.lang.Override
+    public org.broadleafcommerce.common.sandbox.domain.SandBox retrieveSandBox(java.lang.String sandBoxName, org.broadleafcommerce.common.sandbox.domain.SandBoxType sandBoxType) {
         return sandBoxDao.retrieveNamedSandBox(sandBoxType, sandBoxName);
     }
 
-    @Override
-    @Deprecated
-    public List<SandBox> retrieveAllUserSandBoxes(Long authorId) {
+    @java.lang.Override
+    @java.lang.Deprecated
+    public java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> retrieveAllUserSandBoxes(java.lang.Long authorId) {
         return sandBoxDao.retrieveAllUserSandBoxes(authorId);
     }
 
-    @Override
-    @Transactional(TransactionUtils.DEFAULT_TRANSACTION_MANAGER)
-    public void archiveChildSandboxes(Long parentSandBoxId) {
-        List<SandBox> childSandBoxes = retrieveChildSandBoxesByParentId(parentSandBoxId);
-        for (SandBox sandbox : childSandBoxes) {
+    @java.lang.Override
+    @org.springframework.transaction.annotation.Transactional(org.broadleafcommerce.common.util.TransactionUtils.DEFAULT_TRANSACTION_MANAGER)
+    public void archiveChildSandboxes(java.lang.Long parentSandBoxId) {
+        java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> childSandBoxes = retrieveChildSandBoxesByParentId(parentSandBoxId);
+        for (org.broadleafcommerce.common.sandbox.domain.SandBox sandbox : childSandBoxes) {
             sandbox.setArchived('Y');
             sandBoxDao.merge(sandbox);
         }
     }
 
-    public List<SandBox> retrieveChildSandBoxesByParentId(Long parentSandBoxId) {
+    public java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> retrieveChildSandBoxesByParentId(java.lang.Long parentSandBoxId) {
         return sandBoxDao.retrieveChildSandBoxesByParentId(parentSandBoxId);
     }
 
-    @Override
-    public boolean checkForExistingApprovalSandboxWithName(String sandboxName) {
-        return checkForExistingSandbox(SandBoxType.APPROVAL, sandboxName, null);
+    @java.lang.Override
+    public boolean checkForExistingApprovalSandboxWithName(java.lang.String sandboxName) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4771, checkForExistingSandbox(org.broadleafcommerce.common.sandbox.domain.SandBoxType.APPROVAL, sandboxName, null));
     }
 
-    @Override
-    public boolean checkForExistingSandbox(SandBoxType sandBoxType, String sandboxName, Long authorId) {
-        SandBox sb = sandBoxDao.retrieveNamedSandBox(sandBoxType, sandboxName, authorId);
-        return sb == null;
+    @java.lang.Override
+    public boolean checkForExistingSandbox(org.broadleafcommerce.common.sandbox.domain.SandBoxType sandBoxType, java.lang.String sandboxName, java.lang.Long authorId) {
+        org.broadleafcommerce.common.sandbox.domain.SandBox sb = sandBoxDao.retrieveNamedSandBox(sandBoxType, sandboxName, authorId);
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4772, (sb == null));
     }
 
+    public static perturbation.location.PerturbationLocation __L4759;
+
+    public static perturbation.location.PerturbationLocation __L4760;
+
+    public static perturbation.location.PerturbationLocation __L4761;
+
+    public static perturbation.location.PerturbationLocation __L4762;
+
+    public static perturbation.location.PerturbationLocation __L4763;
+
+    public static perturbation.location.PerturbationLocation __L4764;
+
+    public static perturbation.location.PerturbationLocation __L4765;
+
+    public static perturbation.location.PerturbationLocation __L4766;
+
+    public static perturbation.location.PerturbationLocation __L4767;
+
+    public static perturbation.location.PerturbationLocation __L4768;
+
+    public static perturbation.location.PerturbationLocation __L4769;
+
+    public static perturbation.location.PerturbationLocation __L4770;
+
+    public static perturbation.location.PerturbationLocation __L4771;
+
+    public static perturbation.location.PerturbationLocation __L4772;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4759 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/service/SandBoxServiceImpl.java:83)", 4759, "Boolean");
+        org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4760 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/service/SandBoxServiceImpl.java:85)", 4760, "Boolean");
+        org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4761 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/service/SandBoxServiceImpl.java:86)", 4761, "Boolean");
+        org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4762 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/service/SandBoxServiceImpl.java:86)", 4762, "Boolean");
+        org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4763 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/service/SandBoxServiceImpl.java:86)", 4763, "Boolean");
+        org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4764 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/service/SandBoxServiceImpl.java:85)", 4764, "Boolean");
+        org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4765 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/service/SandBoxServiceImpl.java:87)", 4765, "Boolean");
+        org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4766 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/service/SandBoxServiceImpl.java:90)", 4766, "Boolean");
+        org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4767 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/service/SandBoxServiceImpl.java:90)", 4767, "Boolean");
+        org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4768 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/service/SandBoxServiceImpl.java:101)", 4768, "Boolean");
+        org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4769 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/service/SandBoxServiceImpl.java:105)", 4769, "Boolean");
+        org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4770 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/service/SandBoxServiceImpl.java:130)", 4770, "Boolean");
+        org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4771 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/service/SandBoxServiceImpl.java:169)", 4771, "Boolean");
+        org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.__L4772 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/service/SandBoxServiceImpl.java:175)", 4772, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.sandbox.service.SandBoxServiceImpl.initPerturbationLocation0();
+    }
 }
+

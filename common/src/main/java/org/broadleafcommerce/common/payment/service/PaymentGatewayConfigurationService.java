@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,53 +15,40 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.payment.service;
 
-import org.broadleafcommerce.common.web.payment.expression.PaymentGatewayFieldExtensionHandler;
-import org.broadleafcommerce.common.web.payment.processor.CreditCardTypesExtensionHandler;
-import org.broadleafcommerce.common.web.payment.processor.TRCreditCardExtensionHandler;
 
-/**
- * Each payment gateway module should configure an instance of this. In order for multiple gateways to exist in the system
- * at the same time, a list of these is managed via the {@link PaymentGatewayConfigurationServiceProvider}. This allows for proper
- * delegation to the right gateway to perform operations against via different order payments on an order.
- * 
- * @author Elbert Bautista (elbertbautista)
- * @author Phillip Verheyden (phillipuniverse)
- */
 public interface PaymentGatewayConfigurationService {
+    public org.broadleafcommerce.common.payment.service.PaymentGatewayConfiguration getConfiguration();
 
-    public PaymentGatewayConfiguration getConfiguration();
+    public org.broadleafcommerce.common.payment.service.PaymentGatewayTransactionService getTransactionService();
 
-    public PaymentGatewayTransactionService getTransactionService();
+    public org.broadleafcommerce.common.payment.service.PaymentGatewayTransactionConfirmationService getTransactionConfirmationService();
 
-    public PaymentGatewayTransactionConfirmationService getTransactionConfirmationService();
+    public org.broadleafcommerce.common.payment.service.PaymentGatewayReportingService getReportingService();
 
-    public PaymentGatewayReportingService getReportingService();
+    public org.broadleafcommerce.common.payment.service.PaymentGatewayCreditCardService getCreditCardService();
 
-    public PaymentGatewayCreditCardService getCreditCardService();
+    public org.broadleafcommerce.common.payment.service.PaymentGatewayCustomerService getCustomerService();
 
-    public PaymentGatewayCustomerService getCustomerService();
+    public org.broadleafcommerce.common.payment.service.PaymentGatewaySubscriptionService getSubscriptionService();
 
-    public PaymentGatewaySubscriptionService getSubscriptionService();
+    public org.broadleafcommerce.common.payment.service.PaymentGatewayFraudService getFraudService();
 
-    public PaymentGatewayFraudService getFraudService();
+    public org.broadleafcommerce.common.payment.service.PaymentGatewayHostedService getHostedService();
 
-    public PaymentGatewayHostedService getHostedService();
+    public org.broadleafcommerce.common.payment.service.PaymentGatewayRollbackService getRollbackService();
 
-    public PaymentGatewayRollbackService getRollbackService();
+    public org.broadleafcommerce.common.payment.service.PaymentGatewayWebResponseService getWebResponseService();
 
-    public PaymentGatewayWebResponseService getWebResponseService();
+    public org.broadleafcommerce.common.payment.service.PaymentGatewayTransparentRedirectService getTransparentRedirectService();
 
-    public PaymentGatewayTransparentRedirectService getTransparentRedirectService();
+    public org.broadleafcommerce.common.payment.service.PaymentGatewayClientTokenService getClientTokenService();
 
-    public PaymentGatewayClientTokenService getClientTokenService();
+    public org.broadleafcommerce.common.web.payment.processor.TRCreditCardExtensionHandler getCreditCardExtensionHandler();
 
-    public TRCreditCardExtensionHandler getCreditCardExtensionHandler();
+    public org.broadleafcommerce.common.web.payment.expression.PaymentGatewayFieldExtensionHandler getFieldExtensionHandler();
 
-    public PaymentGatewayFieldExtensionHandler getFieldExtensionHandler();
-
-    public CreditCardTypesExtensionHandler getCreditCardTypesExtensionHandler();
-
+    public org.broadleafcommerce.common.web.payment.processor.CreditCardTypesExtensionHandler getCreditCardTypesExtensionHandler();
 }
+

@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,181 +17,34 @@
  */
 package org.broadleafcommerce.common.extension;
 
-import java.util.List;
 
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Order;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+public interface SparselyPopulatedQueryExtensionHandler extends org.broadleafcommerce.common.extension.ExtensionHandler {
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType refineRetrieve(java.lang.Class<?> type, org.broadleafcommerce.common.extension.ResultType resultType, javax.persistence.criteria.CriteriaBuilder builder, javax.persistence.criteria.CriteriaQuery criteria, javax.persistence.criteria.Root root, java.util.List<javax.persistence.criteria.Predicate> restrictions);
 
-/**
- * Extension handler (generally for DAO usage) that allows contribution to a query (presumably from another module). The primary
- * use case is to handle querying for sparsely populated caches in multitenant scenarios. Take for example, a price list scenario
- * where there may be thousands of standard sites all inheriting from a template catalog containing some basic pricelist information.
- * Rather than having a cache of these same basic price lists for every site, it is advantageous to have a single cache of the common
- * pricelists. Then, if one or more standard sites override one of these pricelists, then a sparse cache is maintained per site
- * with that site's overrides only.
- * </p>
- * This functionality is achieved by running several versions of a query based on the desired
- * {@link org.broadleafcommerce.common.extension.ResultType}. Requesting results for a ResultType of STANDARD drives results filtered
- * specifically to a standard site, which is multitenant module concept. A ResultType of TEMPLATE drives results specifically
- * for template site catalog or profile (also a multitenant concept). In the absence of the multitenant module, ExtensionManager
- * instance of this type should have no effect.
- *
- * @see org.broadleafcommerce.common.extension.ResultType
- * @author Jeff Fischer
- */
-public interface SparselyPopulatedQueryExtensionHandler extends ExtensionHandler {
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType refineParameterRetrieve(java.lang.Class<?> type, org.broadleafcommerce.common.extension.ResultType resultType, javax.persistence.criteria.CriteriaBuilder builder, javax.persistence.criteria.CriteriaQuery criteria, javax.persistence.criteria.Root root, java.util.List<javax.persistence.criteria.Predicate> restrictions);
 
-    /**
-     * Add additional restrictions to the fetch query
-     *
-     * @param type the class type for the query
-     * @param resultType pass a ResultType of IGNORE to explicitly ignore refineRetrieve, even if the multitenant module is loaded
-     * @param builder
-     * @param criteria
-     * @param root
-     * @param restrictions any additional JPA criteria restrictions should be added here
-     * @return the status of the extension operation
-     */
-    ExtensionResultStatusType refineRetrieve(Class<?> type, ResultType resultType, CriteriaBuilder builder, CriteriaQuery criteria, Root root, List<Predicate> restrictions);
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType refineQuery(java.lang.Class<?> type, org.broadleafcommerce.common.extension.ResultType resultType, javax.persistence.TypedQuery query);
 
-    /**
-     * Add additional restrictions to the fetch query. Uses parameters, rather than embedding values directly in the query. This is more
-     * efficient from a Hibernate statement cache and database prepared statement cache perspective. Use in conjunction with
-     * {@link #refineQuery(Class, ResultType, TypedQuery)} to pass the actual parameter values before retrieving the query
-     * results.
-     *
-     * @param type the class type for the query
-     * @param resultType pass a ResultType of IGNORE to explicitly ignore refineRetrieve, even if the multitenant module is loaded
-     * @param builder
-     * @param criteria
-     * @param root
-     * @param restrictions any additional JPA criteria restrictions should be added here
-     * @return the status of the extension operation
-     */
-    ExtensionResultStatusType refineParameterRetrieve(Class<?> type, ResultType resultType, CriteriaBuilder builder, CriteriaQuery criteria, Root root, List<Predicate> restrictions);
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType setup(java.lang.Class<?> type, org.broadleafcommerce.common.extension.ResultType resultType);
 
-    /**
-     * Finish the query - possibly setting parameters
-     *
-     * @param type the class type for the query
-     * @param resultType pass a ResultType of IGNORE to explicitly ignore refineQuery, even if the multitenant module is loaded
-     * @param query the final Query instance to embellish
-     * @return
-     */
-    ExtensionResultStatusType refineQuery(Class<?> type, ResultType resultType, TypedQuery query);
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType breakdown(java.lang.Class<?> type, org.broadleafcommerce.common.extension.ResultType resultType);
 
-    /**
-     * Perform any setup operations. This is usually done before executing the query and can serve to prepare the BroadleafRequestContext (if applicable).
-     *
-     * @param type the class type for the query
-     * @param resultType pass a ResultType of IGNORE to explicitly ignore setup, even if the multitenant module is loaded
-     * @return the status of the extension operation
-     */
-    ExtensionResultStatusType setup(Class<?> type, ResultType resultType);
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType refineOrder(java.lang.Class<?> type, org.broadleafcommerce.common.extension.ResultType resultType, javax.persistence.criteria.CriteriaBuilder builder, javax.persistence.criteria.CriteriaQuery criteria, javax.persistence.criteria.Root root, java.util.List<javax.persistence.criteria.Order> sorts);
 
-    /**
-     * Perform any breakdown operations. This is usually done after executing the query and can serve to reset the BroadleafRequestContext (if applicable)
-     *
-     * @param type the class type for the query
-     * @param resultType pass a ResultType of IGNORE to explicitly ignore breakdown, even if the multitenant module is loaded
-     * @return the status of the extension operation
-     */
-    ExtensionResultStatusType breakdown(Class<?> type, ResultType resultType);
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType refineResults(java.lang.Class<?> type, org.broadleafcommerce.common.extension.ResultType resultType, java.util.List queryResults, org.broadleafcommerce.common.extension.ExtensionResultHolder<java.util.List> response);
 
-    /**
-     * Add sorting to the fetch query
-     *
-     * @param type the class type for the query
-     * @param resultType
-     * @param builder
-     * @param criteria
-     * @param root
-     * @param sorts any additional JPA order expressions should be added here
-     * @return the status of the extension operation
-     */
-    ExtensionResultStatusType refineOrder(Class<?> type, ResultType resultType, CriteriaBuilder builder, CriteriaQuery criteria, Root root, List<Order> sorts);
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType getResultType(java.lang.Object testObject, org.broadleafcommerce.common.extension.ExtensionResultHolder<org.broadleafcommerce.common.extension.ResultType> response);
 
-    /**
-     * Filter the results from the database in Java
-     *
-     * @param type the class type for the query
-     * @param resultType
-     * @param queryResults the results of the fetch query from the database
-     * @param response the container for the filtered results
-     * @return the status of the extension operation
-     */
-    ExtensionResultStatusType refineResults(Class<?> type, ResultType resultType, List queryResults, ExtensionResultHolder<List> response);
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType getCacheKey(java.lang.Object testObject, java.lang.String qualifier, org.broadleafcommerce.common.extension.ResultType resultType, org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.String> response);
 
-    /**
-     * By examining the multitenant information related to a test object, return whether the object is related to a standard
-     * site, or a template profile or catalog, if applicable.
-     *
-     * @param testObject the multitenant object to test
-     * @param response the response container
-     * @return the status of the extension operation
-     */
-    ExtensionResultStatusType getResultType(Object testObject, ExtensionResultHolder<ResultType> response);
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType getCacheKey(java.lang.String qualifier, org.broadleafcommerce.common.extension.ResultType resultType, org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.String> response);
 
-    /**
-     * Build the cache key to be used for either the STANDARD or TEMPLATE style cache, driven by the resultType.
-     *
-     * @param testObject object to examine for a portion of the cache key
-     * @param qualifier the suffix for the cache key
-     * @param resultType the type of cache key to create (STANDARD or TEMPLATE)
-     * @param response the response container
-     * @return the status of the extension operation
-     */
-    ExtensionResultStatusType getCacheKey(Object testObject, String qualifier, ResultType resultType, ExtensionResultHolder<String> response);
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType getCacheKeyListForTemplateSite(java.lang.String qualifier, org.broadleafcommerce.common.extension.ExtensionResultHolder<java.util.List<java.lang.String>> response);
 
-    /**
-     * Build the cache key to be used for either the STANDARD or TEMPLATE style cache, driven by the resultType.
-     *
-     * @param qualifier the suffix for the cache key
-     * @param resultType the type of cache key to create (STANDARD or TEMPLATE)
-     * @param response the response container
-     * @return the status of the extension operation
-     */
-    ExtensionResultStatusType getCacheKey(String qualifier, ResultType resultType, ExtensionResultHolder<String> response);
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType buildStatus(java.lang.Class<?> type, java.util.List queryResults, org.broadleafcommerce.common.extension.ExtensionResultHolder<java.util.List<org.broadleafcommerce.common.extension.StandardCacheItem>> response);
 
-    /**
-     * Build a list of cache keys that are related to a TEMPLATE template site
-     *
-     * @param qualifier the suffix for the cache key
-     * @param response the response container
-     * @return the status of the extension operation
-     */
-    ExtensionResultStatusType getCacheKeyListForTemplateSite(String qualifier, ExtensionResultHolder<List<String>> response);
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType isValidState(org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.Boolean> response);
 
-    /**
-     * Convert the list of query results into a list that denotes not only the query results, but also whether or not each member
-     * represents a deleted/archived item, or an active/normal item.
-     *
-     * @param type the class type for the query
-     * @param queryResults the results of the fetch query from the database
-     * @param response the response container - the list is sorted with deleted item appearing first
-     * @return the status of the extension operation
-     */
-    ExtensionResultStatusType buildStatus(Class<?> type, List queryResults, ExtensionResultHolder<List<StandardCacheItem>> response);
-
-    /**
-     * Determine if the current thread is in a valid state for sparse cache handling
-     *
-     * @param response
-     * @return
-     */
-    ExtensionResultStatusType isValidState(ExtensionResultHolder<Boolean> response);
-
-    /**
-     * Get a common id for an object that is consistent for a standard site (whether or not the test object is overridden in the standard site)
-     *
-     * @param testObject the object whose id is normalized
-     * @param response the container for the normalized id
-     * @return the status of the extension operation
-     */
-    ExtensionResultStatusType getNormalizedId(Object testObject, ExtensionResultHolder<Long> response);
-
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType getNormalizedId(java.lang.Object testObject, org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.Long> response);
 }
+

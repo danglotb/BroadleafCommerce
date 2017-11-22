@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,15 +17,8 @@
  */
 package org.broadleafcommerce.common.web.expression;
 
-/**
- * Classes that implement this interface will be exposed to the Thymeleaf expression evaluation context.
- * If an implementing class defines its name as "theme" and has a method called attr(String name), that method
- * could then be invoked by ${#theme.attr('someName')}.
- * 
- * @author Andre Azzolini (apazzolini)
- */
+
 public interface BroadleafVariableExpression {
-    
-    public String getName();
-    
+    public java.lang.String getName();
 }
+

@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,33 +17,11 @@
  */
 package org.broadleafcommerce.common.site.domain;
 
-import org.broadleafcommerce.common.presentation.AdminGroupPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
-import org.broadleafcommerce.common.presentation.AdminTabPresentation;
 
-/**
- * Control tab layout and grouping for the SiteImpl entity
- *
- * @author Jeff Fischer
- */
-@AdminPresentationClass(friendlyName = "baseSite",
-    tabs = {
-        @AdminTabPresentation(name = SiteAdminPresentation.TabName.General,
-            order = SiteAdminPresentation.TabOrder.General,
-            groups = {
-                @AdminGroupPresentation(name = SiteAdminPresentation.GroupName.General,
-                    order = SiteAdminPresentation.GroupOrder.General,
-                    untitled = true),
-                @AdminGroupPresentation(name = SiteAdminPresentation.GroupName.Security,
-                    order = SiteAdminPresentation.GroupOrder.Security)
-            }
-        )
-    }
-)
+@org.broadleafcommerce.common.presentation.AdminPresentationClass(friendlyName = "baseSite", tabs = { @org.broadleafcommerce.common.presentation.AdminTabPresentation(name = org.broadleafcommerce.common.site.domain.SiteAdminPresentation.TabName.General, order = org.broadleafcommerce.common.site.domain.SiteAdminPresentation.TabOrder.General, groups = { @org.broadleafcommerce.common.presentation.AdminGroupPresentation(name = org.broadleafcommerce.common.site.domain.SiteAdminPresentation.GroupName.General, order = org.broadleafcommerce.common.site.domain.SiteAdminPresentation.GroupOrder.General, untitled = true), @org.broadleafcommerce.common.presentation.AdminGroupPresentation(name = org.broadleafcommerce.common.site.domain.SiteAdminPresentation.GroupName.Security, order = org.broadleafcommerce.common.site.domain.SiteAdminPresentation.GroupOrder.Security) }) })
 public interface SiteAdminPresentation {
-
     public static class TabName {
-        public static final String General = "General";
+        public static final java.lang.String General = "General";
     }
 
     public static class TabOrder {
@@ -51,13 +29,15 @@ public interface SiteAdminPresentation {
     }
 
     public static class GroupName {
-        public static final String General = "General";
-        public static final String Security = "SiteImpl_Security_Description";
+        public static final java.lang.String General = "General";
+
+        public static final java.lang.String Security = "SiteImpl_Security_Description";
     }
 
     public static class GroupOrder {
         public static final int General = 1000;
+
         public static final int Security = 4000;
     }
-
 }
+

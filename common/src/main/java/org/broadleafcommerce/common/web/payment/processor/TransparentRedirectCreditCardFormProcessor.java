@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,142 +15,129 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.web.payment.processor;
 
-import org.apache.commons.collections.MapUtils;
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO;
-import org.broadleafcommerce.common.vendor.service.exception.PaymentException;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
-import org.broadleafcommerce.presentation.dialect.AbstractBroadleafModelModifierProcessor;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateContext;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateElement;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateModel;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateModelModifierDTO;
-import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
+@org.springframework.stereotype.Component("blTransparentRedirectCreditCardFormProcessor")
+@org.broadleafcommerce.presentation.condition.ConditionalOnTemplating
+public class TransparentRedirectCreditCardFormProcessor extends org.broadleafcommerce.presentation.dialect.AbstractBroadleafModelModifierProcessor {
+    @javax.annotation.Resource(name = "blTRCreditCardExtensionManager")
+    protected org.broadleafcommerce.common.web.payment.processor.TRCreditCardExtensionManager extensionManager;
 
-import javax.annotation.Resource;
-
-/**
- * <p>The following processor will modify the declared Credit Card Form
- * and call the Transparent Redirect Service of the configured payment gateway. </p>
- *
- * <p>This processor will change the form's action URL and append any hidden input fields
- * that are necessary to make the call. Certain gateway implementations accept configuration
- * settings in order to generate the form. These configuration parameters can be passed into
- * the module, by prefixing any configuration settings name with "config-" + attribute name = attribute value
- * </p>
- * <p>Here is an example:</p>
- *
- * <pre><code>
- *     <blc:transparent_credit_card_form action="#" method="POST"
- *         paymentRequestDTO="${requestDTO}"
- *         config-specificGatewayParam="value1"
- *         config-specificGatewayParam2="value2"
- *         config-specificGatewayParam3="value3">
- *
- *         <input type="text" name="credit_card_num"/>
- *         ...
- *
- *     </blc:transparent_credit_form>
- * </code></pre>
- *
- * <p>NOTE: please see {@link org.broadleafcommerce.common.web.payment.expression.PaymentGatewayFieldVariableExpression}
- * to modify the input "name" fields for a particular gateway</p>
- *
- * @see {@link org.broadleafcommerce.common.web.payment.expression.PaymentGatewayFieldVariableExpression}
- * @see {@link TRCreditCardExtensionHandler}
- * @see {@link AbstractTRCreditCardExtensionHandler}
- *
- * @author Elbert Bautista (elbertbautista)
- */
-@Component("blTransparentRedirectCreditCardFormProcessor")
-@ConditionalOnTemplating
-public class TransparentRedirectCreditCardFormProcessor extends AbstractBroadleafModelModifierProcessor {
-
-    @Resource(name = "blTRCreditCardExtensionManager")
-    protected TRCreditCardExtensionManager extensionManager;
-
-    public TRCreditCardExtensionManager getExtensionManager() {
+    public org.broadleafcommerce.common.web.payment.processor.TRCreditCardExtensionManager getExtensionManager() {
         return extensionManager;
     }
 
-    public void setExtensionManager(TRCreditCardExtensionManager extensionManager) {
+    public void setExtensionManager(org.broadleafcommerce.common.web.payment.processor.TRCreditCardExtensionManager extensionManager) {
         this.extensionManager = extensionManager;
     }
-    
-    @Override
-    public String getName() {
+
+    @java.lang.Override
+    public java.lang.String getName() {
         return "transparent_credit_card_form";
     }
-    
-    @Override
+
+    @java.lang.Override
     public int getPrecedence() {
-        return 1;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7398, 1);
     }
-    
-    @Override
-    public BroadleafTemplateModelModifierDTO getInjectedModelAndTagAttributes(String rootTagName, Map<String, String> rootTagAttributes, BroadleafTemplateContext context) {
-        PaymentRequestDTO requestDTO = (PaymentRequestDTO) context.parseExpression(rootTagAttributes.get("paymentRequestDTO"));
 
-        Map<String, Map<String, String>> formParameters = new HashMap<>();
-        Map<String, String> configurationSettings = new HashMap<>();
-
-        //Create the configuration settings map to pass into the payment module
-        Map<String, String> keysToKeep = new HashMap<>();
-        for (String key : rootTagAttributes.keySet()) {
-            if (key.startsWith("config-")) {
-                final int trimLength = "config-".length();
-                String configParam = key.substring(trimLength);
+    @java.lang.Override
+    public org.broadleafcommerce.presentation.model.BroadleafTemplateModelModifierDTO getInjectedModelAndTagAttributes(java.lang.String rootTagName, java.util.Map<java.lang.String, java.lang.String> rootTagAttributes, org.broadleafcommerce.presentation.model.BroadleafTemplateContext context) {
+        org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO = ((org.broadleafcommerce.common.payment.dto.PaymentRequestDTO) (context.parseExpression(rootTagAttributes.get("paymentRequestDTO"))));
+        java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>> formParameters = new java.util.HashMap<>();
+        java.util.Map<java.lang.String, java.lang.String> configurationSettings = new java.util.HashMap<>();
+        java.util.Map<java.lang.String, java.lang.String> keysToKeep = new java.util.HashMap<>();
+        for (java.lang.String key : rootTagAttributes.keySet()) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7399, key.startsWith("config-"))) {
+                final int trimLength = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7400, "config-".length());
+                java.lang.String configParam = key.substring(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7401, trimLength));
                 configurationSettings.put(configParam, rootTagAttributes.get(key));
-            } else {
+            }else {
                 keysToKeep.put(key, rootTagAttributes.get(key));
             }
         }
         keysToKeep.remove("paymentRequestDTO");
-
         try {
-            extensionManager.getProxy().createTransparentRedirectForm(formParameters,
-                requestDTO, configurationSettings);
-        } catch (PaymentException e) {
-            throw new RuntimeException("Unable to Create the Transparent Redirect Form", e);
+            extensionManager.getProxy().createTransparentRedirectForm(formParameters, requestDTO, configurationSettings);
+        } catch (org.broadleafcommerce.common.vendor.service.exception.PaymentException e) {
+            throw new java.lang.RuntimeException("Unable to Create the Transparent Redirect Form", e);
         }
-
-        StringBuilder formActionKey = new StringBuilder("formActionKey");
-        StringBuilder formHiddenParamsKey = new StringBuilder("formHiddenParamsKey");
+        java.lang.StringBuilder formActionKey = new java.lang.StringBuilder("formActionKey");
+        java.lang.StringBuilder formHiddenParamsKey = new java.lang.StringBuilder("formHiddenParamsKey");
         extensionManager.getProxy().setFormActionKey(formActionKey);
         extensionManager.getProxy().setFormHiddenParamsKey(formHiddenParamsKey);
-
-        //Change the action attribute on the form to the Payment Gateways Endpoint
-        String actionUrl = "";
-        Map<String, String> actionValue = formParameters.get(formActionKey.toString());
-        if (actionValue != null && actionValue.size() > 0) {
-            String key = (String) actionValue.keySet().toArray()[0];
+        java.lang.String actionUrl = "";
+        java.util.Map<java.lang.String, java.lang.String> actionValue = formParameters.get(formActionKey.toString());
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7406, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7402, (actionValue != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7405, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7403, actionValue.size())) > (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7404, 0)))))))) {
+            java.lang.String key = ((java.lang.String) (actionValue.keySet().toArray()[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7407, 0)]));
             actionUrl = actionValue.get(key);
         }
         keysToKeep.put("action", actionUrl);
-
-        BroadleafTemplateModel model = context.createModel();
-        //Append any hidden fields necessary for the Transparent Redirect
-        Map<String, String> hiddenFields = formParameters.get(formHiddenParamsKey.toString());
-        if (MapUtils.isNotEmpty(hiddenFields)) {
-            for (String key : hiddenFields.keySet()) {
-                Map<String, String> attributes = new HashMap<>();
+        org.broadleafcommerce.presentation.model.BroadleafTemplateModel model = context.createModel();
+        java.util.Map<java.lang.String, java.lang.String> hiddenFields = formParameters.get(formHiddenParamsKey.toString());
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7408, org.apache.commons.collections.MapUtils.isNotEmpty(hiddenFields))) {
+            for (java.lang.String key : hiddenFields.keySet()) {
+                java.util.Map<java.lang.String, java.lang.String> attributes = new java.util.HashMap<>();
                 attributes.put("type", "hidden");
                 attributes.put("name", key);
                 attributes.put("value", hiddenFields.get(key));
-                BroadleafTemplateElement input = context.createStandaloneElement("input", attributes, true);
+                org.broadleafcommerce.presentation.model.BroadleafTemplateElement input = context.createStandaloneElement("input", attributes, perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7409, true));
                 model.addElement(input);
             }
         }
-        return new BroadleafTemplateModelModifierDTO(model, keysToKeep, "form");
+        return new org.broadleafcommerce.presentation.model.BroadleafTemplateModelModifierDTO(model, keysToKeep, "form");
     }
 
-    @Override
+    @java.lang.Override
     public boolean reprocessModel() {
-        return true;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7410, true);
+    }
+
+    public static perturbation.location.PerturbationLocation __L7398;
+
+    public static perturbation.location.PerturbationLocation __L7399;
+
+    public static perturbation.location.PerturbationLocation __L7400;
+
+    public static perturbation.location.PerturbationLocation __L7401;
+
+    public static perturbation.location.PerturbationLocation __L7402;
+
+    public static perturbation.location.PerturbationLocation __L7403;
+
+    public static perturbation.location.PerturbationLocation __L7404;
+
+    public static perturbation.location.PerturbationLocation __L7405;
+
+    public static perturbation.location.PerturbationLocation __L7406;
+
+    public static perturbation.location.PerturbationLocation __L7407;
+
+    public static perturbation.location.PerturbationLocation __L7408;
+
+    public static perturbation.location.PerturbationLocation __L7409;
+
+    public static perturbation.location.PerturbationLocation __L7410;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7398 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/TransparentRedirectCreditCardFormProcessor.java:92)", 7398, "Numerical");
+        org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7399 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/TransparentRedirectCreditCardFormProcessor.java:105)", 7399, "Boolean");
+        org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7400 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/TransparentRedirectCreditCardFormProcessor.java:106)", 7400, "Numerical");
+        org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7401 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/TransparentRedirectCreditCardFormProcessor.java:107)", 7401, "Numerical");
+        org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7402 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/TransparentRedirectCreditCardFormProcessor.java:130)", 7402, "Boolean");
+        org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7403 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/TransparentRedirectCreditCardFormProcessor.java:130)", 7403, "Numerical");
+        org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7404 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/TransparentRedirectCreditCardFormProcessor.java:130)", 7404, "Numerical");
+        org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7405 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/TransparentRedirectCreditCardFormProcessor.java:130)", 7405, "Boolean");
+        org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7406 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/TransparentRedirectCreditCardFormProcessor.java:130)", 7406, "Boolean");
+        org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7407 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/TransparentRedirectCreditCardFormProcessor.java:131)", 7407, "Numerical");
+        org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7408 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/TransparentRedirectCreditCardFormProcessor.java:139)", 7408, "Boolean");
+        org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7409 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/TransparentRedirectCreditCardFormProcessor.java:145)", 7409, "Boolean");
+        org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.__L7410 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/TransparentRedirectCreditCardFormProcessor.java:154)", 7410, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.payment.processor.TransparentRedirectCreditCardFormProcessor.initPerturbationLocation0();
     }
 }
+

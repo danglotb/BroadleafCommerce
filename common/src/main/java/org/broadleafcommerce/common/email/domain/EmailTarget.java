@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,21 +17,18 @@
  */
 package org.broadleafcommerce.common.email.domain;
 
-import java.io.Serializable;
 
-/**
- * The EmailTarget interface is used to specify the recipients of the email.
- *
- * @see EmailTargetImpl
- * @author bpolster
- */
-public interface EmailTarget extends Serializable {
+public interface EmailTarget extends java.io.Serializable {
+    public java.lang.String getEmailAddress();
 
-    public String getEmailAddress();
-    public void setEmailAddress(String emailAddress);
-    public String[] getCCAddresses();
-    public void setCCAddresses(String[] ccAddresses);
-    public String[] getBCCAddresses();
-    public void setBCCAddresses(String[] BCCAddresses);
+    public void setEmailAddress(java.lang.String emailAddress);
 
+    public java.lang.String[] getCCAddresses();
+
+    public void setCCAddresses(java.lang.String[] ccAddresses);
+
+    public java.lang.String[] getBCCAddresses();
+
+    public void setBCCAddresses(java.lang.String[] BCCAddresses);
 }
+

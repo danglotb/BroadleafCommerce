@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,38 +17,14 @@
  */
 package org.broadleafcommerce.common.presentation;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 
-
-/**
- * Configuration items to be used in conjunction with {@link ValidationConfiguration} and used by an instace of
- * org.broadleafcommerce.openadmin.server.service.persistence.validation.PropertyValidator
- * 
- * @author jfischer
- */
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD})
+@java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
+@java.lang.annotation.Target({ java.lang.annotation.ElementType.FIELD })
 public @interface ConfigurationItem {
-    
-    /**
-     * Item name for the error message (could also be a key to a properties file to support localization)
-     */
-    public static String ERROR_MESSAGE = "errorMessage";
-    
-    /**
-     * <p>The name of the validation configuration item</p>
-     * 
-     * @return the config item name
-     */
-    String itemName();
-    
-    /**
-     * <p>The value for the validation configuration item</p>
-     * 
-     * @return the config item value
-     */
-    String itemValue();
+    public static java.lang.String ERROR_MESSAGE = "errorMessage";
+
+    java.lang.String itemName();
+
+    java.lang.String itemValue();
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,263 +17,214 @@
  */
 package org.broadleafcommerce.common.extensibility.context.merge;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanCreationException;
-import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.beans.factory.config.ListFactoryBean;
-import org.springframework.beans.factory.config.MapFactoryBean;
-import org.springframework.beans.factory.config.SetFactoryBean;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.DependsOn;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-/**
- * <p>
- * Contains useful processing code for merge bean post processors. The BeanPostProcessor instances can
- * be used to merge additional collection members into collections declared elsewhere. In effect, this allows
- * an implementer to only declare the collection members they're currently interested in cause those members
- * to be merged into a larger, pre-existing list. This is more desirable than a traditional, comprehensive
- * override that would require re-declaring the original bean and all of its members in addition to the current
- * members being considered.
- * </p>
- * <p>
- * This code demonstrates using one of the concrete implementations, {@link LateStageMergeBeanPostProcessor}. The
- * basic usage pattern is to specify the id of the collection you want to merge (collectionRef) and the id
- * of the pre-existing, target collection (targetRef) that should receive the merge collection. The collection
- * can be represented using ListFactoryBean, SetFactoryBean or MapFactoryBean.
- * </p>
- * <pre>
- * {@code
- * <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageMergeBeanPostProcessor">
- *  <property name="collectionRef" value="blPriceListRuleBuilderFieldServices"/>
- *  <property name="targetRef" value="blRuleBuilderFieldServices"/>
- * </bean>
- *
- * <bean id="blPriceListRuleBuilderFieldServices" class="org.springframework.beans.factory.config.ListFactoryBean">
- *  <property name="sourceList">
- *      <list>
- *          <ref bean="blPricingContextFieldService"/>
- *      </list>
- *  </property>
- * </bean>
- * }
- * </pre>
- *
- * @see LateStageMergeBeanPostProcessor
- * @see EarlyStageMergeBeanPostProcessor
- * @author Jeff Fischer
- */
-public abstract class AbstractMergeBeanPostProcessor implements BeanPostProcessor, ApplicationContextAware {
-
+public abstract class AbstractMergeBeanPostProcessor implements org.springframework.beans.factory.config.BeanPostProcessor , org.springframework.context.ApplicationContextAware {
     public static class BeanPackage {
+        protected java.lang.String sourceRef;
 
-        protected String sourceRef;
-        protected String targetRef;
-        protected Placement placement = Placement.APPEND;
+        protected java.lang.String targetRef;
+
+        protected org.broadleafcommerce.common.extensibility.context.merge.Placement placement = org.broadleafcommerce.common.extensibility.context.merge.Placement.APPEND;
+
         protected int position;
-        protected MergeBeanStatusProvider statusProvider;
+
+        protected org.broadleafcommerce.common.extensibility.context.merge.MergeBeanStatusProvider statusProvider;
+
         protected boolean bySource = false;
 
-        public String getSourceRef() {
+        public java.lang.String getSourceRef() {
             return sourceRef;
         }
 
-        public void setSourceRef(String sourceRef) {
+        public void setSourceRef(java.lang.String sourceRef) {
             this.sourceRef = sourceRef;
         }
 
-        public String getTargetRef() {
+        public java.lang.String getTargetRef() {
             return targetRef;
         }
 
-        public void setTargetRef(String targetRef) {
+        public void setTargetRef(java.lang.String targetRef) {
             this.targetRef = targetRef;
         }
 
-        public Placement getPlacement() {
+        public org.broadleafcommerce.common.extensibility.context.merge.Placement getPlacement() {
             return placement;
         }
 
-        public void setPlacement(Placement placement) {
+        public void setPlacement(org.broadleafcommerce.common.extensibility.context.merge.Placement placement) {
             this.placement = placement;
         }
 
         public int getPosition() {
-            return position;
+            return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.BeanPackage.__L1518, position);
         }
 
         public void setPosition(int position) {
-            this.position = position;
+            this.position = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.BeanPackage.__L1519, position);
         }
 
-        public MergeBeanStatusProvider getStatusProvider() {
+        public org.broadleafcommerce.common.extensibility.context.merge.MergeBeanStatusProvider getStatusProvider() {
             return statusProvider;
         }
 
-        public void setStatusProvider(MergeBeanStatusProvider statusProvider) {
+        public void setStatusProvider(org.broadleafcommerce.common.extensibility.context.merge.MergeBeanStatusProvider statusProvider) {
             this.statusProvider = statusProvider;
         }
 
+        public static perturbation.location.PerturbationLocation __L1518;
+
+        public static perturbation.location.PerturbationLocation __L1519;
+
+        private static void initPerturbationLocation0() {
+            org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.BeanPackage.__L1518 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:114)", 1518, "Numerical");
+            org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.BeanPackage.__L1519 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:118)", 1519, "Numerical");
+        }
+
+        static {
+            org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.BeanPackage.initPerturbationLocation0();
+        }
     }
 
-    protected static final Log LOG = LogFactory.getLog(AbstractMergeBeanPostProcessor.class);
+    protected static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.class);
 
-    protected ApplicationContext applicationContext;
-    protected BeanPackage defaultBeanPackage = new BeanPackage();
+    protected org.springframework.context.ApplicationContext applicationContext;
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    protected org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.BeanPackage defaultBeanPackage = new org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.BeanPackage();
+
+    @java.lang.Override
+    public void setApplicationContext(org.springframework.context.ApplicationContext applicationContext) throws org.springframework.beans.BeansException {
         this.applicationContext = applicationContext;
     }
 
-    @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+    @java.lang.Override
+    public java.lang.Object postProcessAfterInitialization(java.lang.Object bean, java.lang.String beanName) throws org.springframework.beans.BeansException {
         return bean;
     }
 
-    @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+    @java.lang.Override
+    public java.lang.Object postProcessBeforeInitialization(java.lang.Object bean, java.lang.String beanName) throws org.springframework.beans.BeansException {
         return processPackage(defaultBeanPackage, bean, beanName);
     }
 
-    protected BeanPackage constructBeanPackage(String beanName, Map<String, Object> methodAnnotationAttributes) {
-        BeanPackage beanPackage = new BeanPackage();
+    protected org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.BeanPackage constructBeanPackage(java.lang.String beanName, java.util.Map<java.lang.String, java.lang.Object> methodAnnotationAttributes) {
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.BeanPackage beanPackage = new org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.BeanPackage();
         beanPackage.setSourceRef(beanName);
-        beanPackage.setTargetRef((String) methodAnnotationAttributes.get("targetRef"));
-        beanPackage.setPlacement((Placement) methodAnnotationAttributes.get("placement"));
-        beanPackage.setPosition((Integer) methodAnnotationAttributes.get("position"));
-        Class<MergeBeanStatusProvider> clazz = (Class<MergeBeanStatusProvider>) methodAnnotationAttributes.get("statusProvider");
-        if (MergeBeanStatusProvider.class != clazz) {
+        beanPackage.setTargetRef(((java.lang.String) (methodAnnotationAttributes.get("targetRef"))));
+        beanPackage.setPlacement(((org.broadleafcommerce.common.extensibility.context.merge.Placement) (methodAnnotationAttributes.get("placement"))));
+        beanPackage.setPosition(((java.lang.Integer) (methodAnnotationAttributes.get("position"))));
+        java.lang.Class<org.broadleafcommerce.common.extensibility.context.merge.MergeBeanStatusProvider> clazz = ((java.lang.Class<org.broadleafcommerce.common.extensibility.context.merge.MergeBeanStatusProvider>) (methodAnnotationAttributes.get("statusProvider")));
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1520, ((org.broadleafcommerce.common.extensibility.context.merge.MergeBeanStatusProvider.class) != clazz))) {
             try {
                 beanPackage.setStatusProvider(clazz.newInstance());
-            } catch (InstantiationException e) {
-                throw ExceptionHelper.refineException(e);
-            } catch (IllegalAccessException e) {
-                throw ExceptionHelper.refineException(e);
+            } catch (java.lang.InstantiationException e) {
+                throw org.broadleafcommerce.common.exception.ExceptionHelper.refineException(e);
+            } catch (java.lang.IllegalAccessException e) {
+                throw org.broadleafcommerce.common.exception.ExceptionHelper.refineException(e);
             }
         }
         return beanPackage;
     }
 
-    protected Object processPackage(BeanPackage beanPackage, Object bean, String beanName) {
-        String sourceRef = beanPackage.getSourceRef();
-        String targetRef = beanPackage.getTargetRef();
-        Placement placement = beanPackage.getPlacement();
-        int position = beanPackage.getPosition();
-        MergeBeanStatusProvider statusProvider = beanPackage.getStatusProvider();
-        Object sourceItem = null;
-        Object targetItem = null;
-        if (beanName.equals(targetRef)){
+    protected java.lang.Object processPackage(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.BeanPackage beanPackage, java.lang.Object bean, java.lang.String beanName) {
+        java.lang.String sourceRef = beanPackage.getSourceRef();
+        java.lang.String targetRef = beanPackage.getTargetRef();
+        org.broadleafcommerce.common.extensibility.context.merge.Placement placement = beanPackage.getPlacement();
+        int position = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1521, beanPackage.getPosition());
+        org.broadleafcommerce.common.extensibility.context.merge.MergeBeanStatusProvider statusProvider = beanPackage.getStatusProvider();
+        java.lang.Object sourceItem = null;
+        java.lang.Object targetItem = null;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1522, beanName.equals(targetRef))) {
             targetItem = bean;
-            if (!StringUtils.isEmpty(sourceRef)) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1524, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1523, org.apache.commons.lang3.StringUtils.isEmpty(sourceRef)))))) {
                 sourceItem = applicationContext.getBean(sourceRef);
-            } else {
-                throw new IllegalArgumentException("Must declare an source reference value. See #setCollectionRef()");
+            }else {
+                throw new java.lang.IllegalArgumentException("Must declare an source reference value. See #setCollectionRef()");
             }
         }
-        if (sourceItem != null && targetItem != null) {
-            if (statusProvider != null && !statusProvider.isProcessingEnabled(targetItem, beanName, applicationContext)) {
-                if (LOG.isTraceEnabled()) {
-                    LOG.trace(String.format("Not performing post-processing on targetRef [%s] because the registered " +
-                            "status provider [%s] returned false", targetRef, statusProvider.getClass().getSimpleName()));
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1527, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1525, (sourceItem != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1526, (targetItem != null)))))) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1531, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1528, (statusProvider != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1530, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1529, statusProvider.isProcessingEnabled(targetItem, beanName, applicationContext))))))))) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1532, org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.LOG.isTraceEnabled())) {
+                    org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.LOG.trace(java.lang.String.format(("Not performing post-processing on targetRef [%s] because the registered " + "status provider [%s] returned false"), targetRef, statusProvider.getClass().getSimpleName()));
                 }
-
                 return bean;
             }
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1535, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1533, (targetItem instanceof org.springframework.beans.factory.config.ListFactoryBean))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1534, (targetItem instanceof java.util.List)))))) {
+                try {
+                    if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1536, (sourceItem instanceof java.util.List))) {
+                        addListToList(targetItem, sourceItem, placement, perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1537, position));
+                    }else {
+                        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1538, (sourceItem instanceof java.util.Collection))) {
+                            throw new java.lang.IllegalArgumentException(java.lang.String.format(("Attempting to merge a collection of type " + ("%s into a target list. Only source collections of type ListFactoryBean or List " + "may be used.")), sourceItem.getClass().getName()));
+                        }
+                        addItemToList(targetItem, sourceItem, placement, perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1539, position));
+                    }
+                } catch (java.lang.Exception e) {
+                    throw new org.springframework.beans.factory.BeanCreationException(e.getMessage());
+                }
+            }else
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1542, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1540, (targetItem instanceof org.springframework.beans.factory.config.SetFactoryBean))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1541, (targetItem instanceof java.util.Set)))))) {
+                    try {
+                        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1543, (sourceItem instanceof java.util.Set))) {
+                            addSetToSet(targetItem, sourceItem, placement, perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1544, position));
+                        }else {
+                            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1545, (sourceItem instanceof java.util.Collection))) {
+                                throw new java.lang.IllegalArgumentException(java.lang.String.format(("Attempting to merge a collection of type " + ("%s into a target set. Only source collections of type SetFactoryBean or Set " + "may be used.")), sourceItem.getClass().getName()));
+                            }
+                            addItemToSet(targetItem, sourceItem, placement, perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1546, position));
+                        }
+                    } catch (java.lang.Exception e) {
+                        throw new org.springframework.beans.factory.BeanCreationException(e.getMessage());
+                    }
+                }else
+                    if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1549, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1547, (targetItem instanceof org.springframework.beans.factory.config.MapFactoryBean))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1548, (targetItem instanceof java.util.Map)))))) {
+                        try {
+                            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1550, (sourceItem instanceof java.util.Map))) {
+                                addMapToMap(targetItem, ((java.util.Map) (sourceItem)), placement, perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1551, position));
+                            }else {
+                                throw new java.lang.IllegalArgumentException(java.lang.String.format(("Attempting to merge an item of type " + ("%s into a target map. Only source items of type MapFactoryBean or Map " + "may be used.")), sourceItem.getClass().getName()));
+                            }
+                        } catch (java.lang.Exception e) {
+                            throw new org.springframework.beans.factory.BeanCreationException(e.getMessage());
+                        }
+                    }else {
+                        throw new java.lang.IllegalArgumentException((((("Bean (" + beanName) + ") is specified as a merge target, ") + "but is not") + " of type ListFactoryBean, SetFactoryBean or MapFactoryBean"));
+                    }
 
-            if (targetItem instanceof ListFactoryBean || targetItem instanceof List) {
-                try {
-                    if (sourceItem instanceof List) {
-                        addListToList(targetItem, sourceItem, placement, position);
-                    } else {
-                        if (sourceItem instanceof Collection) {
-                            throw new IllegalArgumentException(String.format("Attempting to merge a collection of type " +
-                                    "%s into a target list. Only source collections of type ListFactoryBean or List " +
-                                    "may be used.", sourceItem.getClass().getName()));
-                        }
-                        addItemToList(targetItem, sourceItem, placement, position);
-                    }
-                } catch (Exception e) {
-                    throw new BeanCreationException(e.getMessage());
-                }
-            } else if (targetItem instanceof SetFactoryBean || targetItem instanceof Set) {
-                try {
-                    if (sourceItem instanceof Set) {
-                        addSetToSet(targetItem, sourceItem, placement, position);
-                    } else {
-                        if (sourceItem instanceof Collection) {
-                            throw new IllegalArgumentException(String.format("Attempting to merge a collection of type " +
-                                    "%s into a target set. Only source collections of type SetFactoryBean or Set " +
-                                    "may be used.", sourceItem.getClass().getName()));
-                        }
-                        addItemToSet(targetItem, sourceItem, placement, position);
-                    }
-                } catch (Exception e) {
-                    throw new BeanCreationException(e.getMessage());
-                }
-            } else if (targetItem instanceof MapFactoryBean || targetItem instanceof Map) {
-                try {
-                    if (sourceItem instanceof Map) {
-                        addMapToMap(targetItem, (Map) sourceItem, placement, position);
-                    } else {
-                        throw new IllegalArgumentException(String.format("Attempting to merge an item of type " +
-                                    "%s into a target map. Only source items of type MapFactoryBean or Map " +
-                                    "may be used.", sourceItem.getClass().getName()));
-                    }
-                } catch (Exception e) {
-                    throw new BeanCreationException(e.getMessage());
-                }
-            } else {
-                throw new IllegalArgumentException("Bean (" + beanName + ") is specified as a merge target, " +
-                        "but is not" +
-                        " of type ListFactoryBean, SetFactoryBean or MapFactoryBean");
-            }
+
         }
-
         return bean;
     }
 
-    protected Object processPackage(Map<String, Object> methodAnnotationAttributes, Object bean, String beanName) {
-        BeanPackage beanPackage = constructBeanPackage(beanName, methodAnnotationAttributes);
+    protected java.lang.Object processPackage(java.util.Map<java.lang.String, java.lang.Object> methodAnnotationAttributes, java.lang.Object bean, java.lang.String beanName) {
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.BeanPackage beanPackage = constructBeanPackage(beanName, methodAnnotationAttributes);
         return processPackage(beanPackage, bean, beanName);
     }
 
-    protected void addMapToMap(Object bean, Map sourceItem, Placement placement, int position) throws NoSuchFieldException, IllegalAccessException {
-        Map sourcerMap = sourceItem;
-        Map targetMap;
-        if (bean instanceof MapFactoryBean) {
-            Field field = MapFactoryBean.class.getDeclaredField("sourceMap");
-            field.setAccessible(true);
-            targetMap = (Map) field.get(bean);
-        } else {
-            targetMap = (Map) bean;
+    protected void addMapToMap(java.lang.Object bean, java.util.Map sourceItem, org.broadleafcommerce.common.extensibility.context.merge.Placement placement, int position) throws java.lang.IllegalAccessException, java.lang.NoSuchFieldException {
+        java.util.Map sourcerMap = sourceItem;
+        java.util.Map targetMap;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1552, (bean instanceof org.springframework.beans.factory.config.MapFactoryBean))) {
+            java.lang.reflect.Field field = org.springframework.beans.factory.config.MapFactoryBean.class.getDeclaredField("sourceMap");
+            field.setAccessible(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1553, true));
+            targetMap = ((java.util.Map) (field.get(bean)));
+        }else {
+            targetMap = ((java.util.Map) (bean));
         }
-        LinkedHashMap tempMap = new LinkedHashMap();
+        java.util.LinkedHashMap tempMap = new java.util.LinkedHashMap();
         switch (placement) {
-            case APPEND:
+            case APPEND :
                 tempMap.putAll(targetMap);
                 tempMap.putAll(sourcerMap);
                 break;
-            case PREPEND:
+            case PREPEND :
                 tempMap.putAll(sourcerMap);
                 tempMap.putAll(targetMap);
                 break;
-            case SPECIFIC:
+            case SPECIFIC :
                 boolean added = false;
                 int j = 0;
-                for (Object key : targetMap.keySet()) {
+                for (java.lang.Object key : targetMap.keySet()) {
                     if (j == position) {
                         tempMap.putAll(sourcerMap);
                         added = true;
@@ -290,25 +241,25 @@ public abstract class AbstractMergeBeanPostProcessor implements BeanPostProcesso
         targetMap.putAll(tempMap);
     }
 
-    protected void addSetToSet(Object bean, Object sourceItem, Placement placement, int position) throws NoSuchFieldException, IllegalAccessException {
-        Set sourceSet = (Set) sourceItem;
-        Set targetSet;
-        if (bean instanceof SetFactoryBean) {
-            Field field = SetFactoryBean.class.getDeclaredField("sourceSet");
-            field.setAccessible(true);
-            targetSet = (Set) field.get(bean);
-        } else {
-            targetSet = (Set)bean;
+    protected void addSetToSet(java.lang.Object bean, java.lang.Object sourceItem, org.broadleafcommerce.common.extensibility.context.merge.Placement placement, int position) throws java.lang.IllegalAccessException, java.lang.NoSuchFieldException {
+        java.util.Set sourceSet = ((java.util.Set) (sourceItem));
+        java.util.Set targetSet;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1554, (bean instanceof org.springframework.beans.factory.config.SetFactoryBean))) {
+            java.lang.reflect.Field field = org.springframework.beans.factory.config.SetFactoryBean.class.getDeclaredField("sourceSet");
+            field.setAccessible(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1555, true));
+            targetSet = ((java.util.Set) (field.get(bean)));
+        }else {
+            targetSet = ((java.util.Set) (bean));
         }
-        List tempList = new ArrayList(targetSet);
+        java.util.List tempList = new java.util.ArrayList(targetSet);
         switch (placement) {
-            case APPEND:
+            case APPEND :
                 tempList.addAll(sourceSet);
                 break;
-            case PREPEND:
+            case PREPEND :
                 tempList.addAll(0, sourceSet);
                 break;
-            case SPECIFIC:
+            case SPECIFIC :
                 tempList.addAll(position, sourceSet);
                 break;
         }
@@ -316,24 +267,24 @@ public abstract class AbstractMergeBeanPostProcessor implements BeanPostProcesso
         targetSet.addAll(tempList);
     }
 
-    protected void addItemToSet(Object bean, Object sourceItem, Placement placement, int position) throws NoSuchFieldException, IllegalAccessException {
-        Set targetSet;
-        if (bean instanceof SetFactoryBean) {
-            Field field = SetFactoryBean.class.getDeclaredField("sourceSet");
-            field.setAccessible(true);
-            targetSet = (Set) field.get(bean);
-        } else {
-            targetSet = (Set)bean;
+    protected void addItemToSet(java.lang.Object bean, java.lang.Object sourceItem, org.broadleafcommerce.common.extensibility.context.merge.Placement placement, int position) throws java.lang.IllegalAccessException, java.lang.NoSuchFieldException {
+        java.util.Set targetSet;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1556, (bean instanceof org.springframework.beans.factory.config.SetFactoryBean))) {
+            java.lang.reflect.Field field = org.springframework.beans.factory.config.SetFactoryBean.class.getDeclaredField("sourceSet");
+            field.setAccessible(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1557, true));
+            targetSet = ((java.util.Set) (field.get(bean)));
+        }else {
+            targetSet = ((java.util.Set) (bean));
         }
-        List tempList = new ArrayList(targetSet);
+        java.util.List tempList = new java.util.ArrayList(targetSet);
         switch (placement) {
-            case APPEND:
+            case APPEND :
                 tempList.add(sourceItem);
                 break;
-            case PREPEND:
+            case PREPEND :
                 tempList.add(0, sourceItem);
                 break;
-            case SPECIFIC:
+            case SPECIFIC :
                 tempList.add(position, sourceItem);
                 break;
         }
@@ -341,166 +292,238 @@ public abstract class AbstractMergeBeanPostProcessor implements BeanPostProcesso
         targetSet.addAll(tempList);
     }
 
-    protected void addListToList(Object bean, Object sourceItem, Placement placement, int position) throws NoSuchFieldException, IllegalAccessException {
-        List sourceList = (List) sourceItem;
-        List targetList;
-        if (bean instanceof ListFactoryBean) {
-            Field field = ListFactoryBean.class.getDeclaredField("sourceList");
-            field.setAccessible(true);
-            targetList = (List) field.get(bean);
-        } else {
-            targetList = (List) bean;
+    protected void addListToList(java.lang.Object bean, java.lang.Object sourceItem, org.broadleafcommerce.common.extensibility.context.merge.Placement placement, int position) throws java.lang.IllegalAccessException, java.lang.NoSuchFieldException {
+        java.util.List sourceList = ((java.util.List) (sourceItem));
+        java.util.List targetList;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1558, (bean instanceof org.springframework.beans.factory.config.ListFactoryBean))) {
+            java.lang.reflect.Field field = org.springframework.beans.factory.config.ListFactoryBean.class.getDeclaredField("sourceList");
+            field.setAccessible(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1559, true));
+            targetList = ((java.util.List) (field.get(bean)));
+        }else {
+            targetList = ((java.util.List) (bean));
         }
         switch (placement) {
-            case APPEND:
+            case APPEND :
                 targetList.addAll(sourceList);
                 break;
-            case PREPEND:
+            case PREPEND :
                 targetList.addAll(0, sourceList);
                 break;
-            case SPECIFIC:
+            case SPECIFIC :
                 targetList.addAll(position, sourceList);
                 break;
         }
     }
 
-    protected void addItemToList(Object bean, Object sourceItem, Placement placement, int position) throws NoSuchFieldException, IllegalAccessException {
-        List targetList;
-        if (bean instanceof ListFactoryBean) {
-            Field field = ListFactoryBean.class.getDeclaredField("sourceList");
-            field.setAccessible(true);
-            targetList = (List) field.get(bean);
-        } else {
-            targetList = (List) bean;
+    protected void addItemToList(java.lang.Object bean, java.lang.Object sourceItem, org.broadleafcommerce.common.extensibility.context.merge.Placement placement, int position) throws java.lang.IllegalAccessException, java.lang.NoSuchFieldException {
+        java.util.List targetList;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1560, (bean instanceof org.springframework.beans.factory.config.ListFactoryBean))) {
+            java.lang.reflect.Field field = org.springframework.beans.factory.config.ListFactoryBean.class.getDeclaredField("sourceList");
+            field.setAccessible(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1561, true));
+            targetList = ((java.util.List) (field.get(bean)));
+        }else {
+            targetList = ((java.util.List) (bean));
         }
         switch (placement) {
-            case APPEND:
+            case APPEND :
                 targetList.add(sourceItem);
                 break;
-            case PREPEND:
+            case PREPEND :
                 targetList.add(0, sourceItem);
                 break;
-            case SPECIFIC:
+            case SPECIFIC :
                 targetList.add(position, sourceItem);
                 break;
         }
     }
 
-    /**
-     * Retrieve the id of the collection to be merged
-     *
-     * @deprecated use {@link #getSourceRef()} instead
-     * @return the id of the collection to be merged
-     */
-    @Deprecated
-    public String getCollectionRef() {
+    @java.lang.Deprecated
+    public java.lang.String getCollectionRef() {
         return defaultBeanPackage.getSourceRef();
     }
 
-    /**
-     * Set the id of the collection to be merged
-     *
-     * @deprecated use {@link #setSourceRef(String)} instead
-     * @param collectionRef the id of the collection to be merged
-     */
-    @Deprecated
-    public void setCollectionRef(String collectionRef) {
+    @java.lang.Deprecated
+    public void setCollectionRef(java.lang.String collectionRef) {
         defaultBeanPackage.setSourceRef(collectionRef);
     }
 
-    /**
-     * Retrieve the id of the collection (or individual bean) to be merged
-     *
-     * @return the id of the item to be merged
-     */
-    public String getSourceRef() {
+    public java.lang.String getSourceRef() {
         return defaultBeanPackage.getSourceRef();
     }
 
-    /**
-     * Set the id of the collection (or individual bean) to be merged
-     *
-     * @param sourceRef the id of the item to be merged
-     */
-    public void setSourceRef(String sourceRef) {
+    public void setSourceRef(java.lang.String sourceRef) {
         defaultBeanPackage.setSourceRef(sourceRef);
     }
 
-    /**
-     * Retrieve the id of the collection to receive the merge
-     *
-     * @return the id of the collection receiving the merge
-     */
-    public String getTargetRef() {
+    public java.lang.String getTargetRef() {
         return defaultBeanPackage.getTargetRef();
     }
 
-    /**
-     * Set the id of the collection to receive the merge
-     *
-     * @param targetRef the id of the collection receiving the merge
-     */
-    public void setTargetRef(String targetRef) {
+    public void setTargetRef(java.lang.String targetRef) {
         defaultBeanPackage.setTargetRef(targetRef);
     }
 
-    /**
-     * The position in the target collection to place the merge. This can be at the beginning,
-     * end or at an explicit position.
-     *
-     * @return the position in the target collection to place the merge
-     */
-    public Placement getPlacement() {
+    public org.broadleafcommerce.common.extensibility.context.merge.Placement getPlacement() {
         return defaultBeanPackage.getPlacement();
     }
 
-    /**
-     * The position in the target collection to place the merge. This can be at the beginning,
-     * end or at an explicit position.
-     *
-     * @param placement the position in the target collection to place the merge
-     */
-    public void setPlacement(Placement placement) {
+    public void setPlacement(org.broadleafcommerce.common.extensibility.context.merge.Placement placement) {
         defaultBeanPackage.setPlacement(placement);
     }
 
-    /**
-     * If a placement of type Placement.SPECIFIC is used, then this is the integer position in the target
-     * target collection at which the merge will be performed.
-     *
-     * @return the specific position in the target collection
-     */
     public int getPosition() {
-        return defaultBeanPackage.getPosition();
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1562, defaultBeanPackage.getPosition());
     }
 
-    /**
-     * If a placement of type Placement.SPECIFIC is used, then this is the integer position in the target
-     * target collection at which the merge will be performed.
-     *
-     * @param position the specific position in the target collection
-     */
     public void setPosition(int position) {
-        defaultBeanPackage.setPosition(position);
+        defaultBeanPackage.setPosition(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1563, position));
     }
 
-    /**
-     * Gets the status provider that is configured for this post processor
-     * 
-     * @return the MergeStatusBeanProvider
-     */
-    public MergeBeanStatusProvider getStatusProvider() {
+    public org.broadleafcommerce.common.extensibility.context.merge.MergeBeanStatusProvider getStatusProvider() {
         return defaultBeanPackage.getStatusProvider();
     }
-    
-    /**
-     * Sets the MergeBeanStatusProvider, which controls whether or not this post processor is activated.
-     * If no statusProvider is set, then we will always execute.
-     * 
-     * @param statusProvider
-     */
-    public void setStatusProvider(MergeBeanStatusProvider statusProvider) {
+
+    public void setStatusProvider(org.broadleafcommerce.common.extensibility.context.merge.MergeBeanStatusProvider statusProvider) {
         defaultBeanPackage.setStatusProvider(statusProvider);
     }
 
+    public static perturbation.location.PerturbationLocation __L1520;
+
+    public static perturbation.location.PerturbationLocation __L1521;
+
+    public static perturbation.location.PerturbationLocation __L1522;
+
+    public static perturbation.location.PerturbationLocation __L1523;
+
+    public static perturbation.location.PerturbationLocation __L1524;
+
+    public static perturbation.location.PerturbationLocation __L1525;
+
+    public static perturbation.location.PerturbationLocation __L1526;
+
+    public static perturbation.location.PerturbationLocation __L1527;
+
+    public static perturbation.location.PerturbationLocation __L1528;
+
+    public static perturbation.location.PerturbationLocation __L1529;
+
+    public static perturbation.location.PerturbationLocation __L1530;
+
+    public static perturbation.location.PerturbationLocation __L1531;
+
+    public static perturbation.location.PerturbationLocation __L1532;
+
+    public static perturbation.location.PerturbationLocation __L1533;
+
+    public static perturbation.location.PerturbationLocation __L1534;
+
+    public static perturbation.location.PerturbationLocation __L1535;
+
+    public static perturbation.location.PerturbationLocation __L1536;
+
+    public static perturbation.location.PerturbationLocation __L1537;
+
+    public static perturbation.location.PerturbationLocation __L1538;
+
+    public static perturbation.location.PerturbationLocation __L1539;
+
+    public static perturbation.location.PerturbationLocation __L1540;
+
+    public static perturbation.location.PerturbationLocation __L1541;
+
+    public static perturbation.location.PerturbationLocation __L1542;
+
+    public static perturbation.location.PerturbationLocation __L1543;
+
+    public static perturbation.location.PerturbationLocation __L1544;
+
+    public static perturbation.location.PerturbationLocation __L1545;
+
+    public static perturbation.location.PerturbationLocation __L1546;
+
+    public static perturbation.location.PerturbationLocation __L1547;
+
+    public static perturbation.location.PerturbationLocation __L1548;
+
+    public static perturbation.location.PerturbationLocation __L1549;
+
+    public static perturbation.location.PerturbationLocation __L1550;
+
+    public static perturbation.location.PerturbationLocation __L1551;
+
+    public static perturbation.location.PerturbationLocation __L1552;
+
+    public static perturbation.location.PerturbationLocation __L1553;
+
+    public static perturbation.location.PerturbationLocation __L1554;
+
+    public static perturbation.location.PerturbationLocation __L1555;
+
+    public static perturbation.location.PerturbationLocation __L1556;
+
+    public static perturbation.location.PerturbationLocation __L1557;
+
+    public static perturbation.location.PerturbationLocation __L1558;
+
+    public static perturbation.location.PerturbationLocation __L1559;
+
+    public static perturbation.location.PerturbationLocation __L1560;
+
+    public static perturbation.location.PerturbationLocation __L1561;
+
+    public static perturbation.location.PerturbationLocation __L1562;
+
+    public static perturbation.location.PerturbationLocation __L1563;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1520 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:158)", 1520, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1521 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:174)", 1521, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1522 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:178)", 1522, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1523 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:180)", 1523, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1524 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:180)", 1524, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1525 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:186)", 1525, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1526 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:186)", 1526, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1527 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:186)", 1527, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1528 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:187)", 1528, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1529 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:187)", 1529, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1530 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:187)", 1530, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1531 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:187)", 1531, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1532 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:188)", 1532, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1533 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:196)", 1533, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1534 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:196)", 1534, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1535 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:196)", 1535, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1536 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:198)", 1536, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1537 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:199)", 1537, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1538 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:201)", 1538, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1539 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:206)", 1539, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1540 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:211)", 1540, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1541 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:211)", 1541, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1542 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:211)", 1542, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1543 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:213)", 1543, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1544 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:214)", 1544, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1545 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:216)", 1545, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1546 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:221)", 1546, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1547 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:226)", 1547, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1548 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:226)", 1548, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1549 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:226)", 1549, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1550 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:228)", 1550, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1551 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:229)", 1551, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1552 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:256)", 1552, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1553 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:258)", 1553, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1554 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:296)", 1554, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1555 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:298)", 1555, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1556 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:321)", 1556, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1557 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:323)", 1557, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1558 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:347)", 1558, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1559 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:349)", 1559, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1560 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:369)", 1560, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1561 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:371)", 1561, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1562 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:474)", 1562, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.__L1563 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractMergeBeanPostProcessor.java:484)", 1563, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor.initPerturbationLocation0();
+    }
 }
+

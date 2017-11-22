@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,77 +17,65 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
-import java.text.DateFormatSymbols;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
-
-/**
- * Convenience class to facilitate date manipulation.
- * 
- * @author Chris Kittrell (ckittrell)
- */
 public class BLCDateUtils {
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.util.BLCDateUtils.class);
 
-    private static final Log LOG = LogFactory.getLog(BLCDateUtils.class);
+    public static final java.lang.String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.s";
 
-    public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.s";
-    
-    /**
-     * Converts the given date to the UTC time zone so that dates can be correctly converted on the client side
-     * 
-     * @param date
-     * @return the message
-     */
-    public static String convertDateToUTC(Date date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-
+    public static java.lang.String convertDateToUTC(java.util.Date date) {
+        java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat(org.broadleafcommerce.common.util.BLCDateUtils.DEFAULT_DATE_FORMAT);
+        dateFormat.setTimeZone(java.util.TimeZone.getTimeZone("UTC"));
         return dateFormat.format(date);
     }
 
-    public static String formatDateAsString(Date date) {
-        // format date list grid cells
-        SimpleDateFormat formatter = new SimpleDateFormat("MMM d, Y @ hh:mma");
-        DateFormatSymbols symbols = new DateFormatSymbols(Locale.getDefault());
-        symbols.setAmPmStrings(new String[] { "am", "pm" });
+    public static java.lang.String formatDateAsString(java.util.Date date) {
+        java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("MMM d, Y @ hh:mma");
+        java.text.DateFormatSymbols symbols = new java.text.DateFormatSymbols(java.util.Locale.getDefault());
+        symbols.setAmPmStrings(new java.lang.String[]{ "am", "pm" });
         formatter.setDateFormatSymbols(symbols);
-
         return formatter.format(date);
     }
 
-    public static Date parseStringToDate(String dateString) {
-        return parseStringToDate(dateString, DEFAULT_DATE_FORMAT);
+    public static java.util.Date parseStringToDate(java.lang.String dateString) {
+        return org.broadleafcommerce.common.util.BLCDateUtils.parseStringToDate(dateString, org.broadleafcommerce.common.util.BLCDateUtils.DEFAULT_DATE_FORMAT);
     }
 
-    public static Date parseStringToDate(String dateString, String dateFormat) {
-        Date parsedDate = null;
+    public static java.util.Date parseStringToDate(java.lang.String dateString, java.lang.String dateFormat) {
+        java.util.Date parsedDate = null;
         try {
-            if (StringUtils.isNotEmpty(dateString)) {
-                SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCDateUtils.__L6101, org.apache.commons.lang3.StringUtils.isNotEmpty(dateString))) {
+                java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(dateFormat);
                 parsedDate = formatter.parse(dateString);
             }
-        } catch (ParseException e) {
-            LOG.warn("The date string could not be parsed into the given format: " + dateFormat, e);
+        } catch (java.text.ParseException e) {
+            org.broadleafcommerce.common.util.BLCDateUtils.LOG.warn(("The date string could not be parsed into the given format: " + dateFormat), e);
         }
         return parsedDate;
     }
 
-    public static String formatDate(Date date) {
-        return formatDate(date, DEFAULT_DATE_FORMAT);
+    public static java.lang.String formatDate(java.util.Date date) {
+        return org.broadleafcommerce.common.util.BLCDateUtils.formatDate(date, org.broadleafcommerce.common.util.BLCDateUtils.DEFAULT_DATE_FORMAT);
     }
 
-    public static String formatDate(Date date, String format) {
-        if (date == null) {
+    public static java.lang.String formatDate(java.util.Date date, java.lang.String format) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCDateUtils.__L6102, (date == null))) {
             return null;
         }
+        return new java.text.SimpleDateFormat(format).format(date);
+    }
 
-        return new SimpleDateFormat(format).format(date);
+    public static perturbation.location.PerturbationLocation __L6101;
+
+    public static perturbation.location.PerturbationLocation __L6102;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.BLCDateUtils.__L6101 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCDateUtils.java:72)", 6101, "Boolean");
+        org.broadleafcommerce.common.util.BLCDateUtils.__L6102 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCDateUtils.java:87)", 6102, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.BLCDateUtils.initPerturbationLocation0();
     }
 }
+

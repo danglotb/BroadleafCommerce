@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,30 +17,21 @@
  */
 package org.broadleafcommerce.common.presentation.override;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 
-/**
- * 
- * @author pverheyden
- * @deprecated use {@link AdminPresentationMergeOverrides} instead
- */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-@Deprecated
+@java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
+@java.lang.annotation.Target(java.lang.annotation.ElementType.TYPE)
+@java.lang.Deprecated
 public @interface AdminPresentationOverrides {
+    org.broadleafcommerce.common.presentation.override.AdminPresentationOverride[] value() default {  };
 
-    AdminPresentationOverride[] value() default {};
+    org.broadleafcommerce.common.presentation.override.AdminPresentationCollectionOverride[] collections() default {  };
 
-    AdminPresentationCollectionOverride[] collections() default {};
+    org.broadleafcommerce.common.presentation.override.AdminPresentationAdornedTargetCollectionOverride[] adornedTargetCollections() default {  };
 
-    AdminPresentationAdornedTargetCollectionOverride[] adornedTargetCollections() default {};
+    org.broadleafcommerce.common.presentation.override.AdminPresentationMapOverride[] maps() default {  };
 
-    AdminPresentationMapOverride[] maps() default {};
+    org.broadleafcommerce.common.presentation.override.AdminPresentationToOneLookupOverride[] toOneLookups() default {  };
 
-    AdminPresentationToOneLookupOverride[] toOneLookups() default{};
-
-    AdminPresentationDataDrivenEnumerationOverride[] dataDrivenEnums() default{};
+    org.broadleafcommerce.common.presentation.override.AdminPresentationDataDrivenEnumerationOverride[] dataDrivenEnums() default {  };
 }
+

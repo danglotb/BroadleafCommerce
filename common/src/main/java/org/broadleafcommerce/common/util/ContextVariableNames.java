@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -18,16 +18,11 @@
 package org.broadleafcommerce.common.util;
 
 
-/**
- * ContextVariableNames can be added as a Job or Event detail in order to establish the context.
- * 
- * @see MultiTenantScheduledJobThreadInitializer in the BLC MultiTenant module.
- * @author bpolster
- *
- */
 public class ContextVariableNames {
+    public static java.lang.String SITE = "SITE";
 
-    public static String SITE = "SITE";
-    public static String PROFILE = "PROFILE";
-    public static String CATALOG = "CATALOG";
+    public static java.lang.String PROFILE = "PROFILE";
+
+    public static java.lang.String CATALOG = "CATALOG";
 }
+

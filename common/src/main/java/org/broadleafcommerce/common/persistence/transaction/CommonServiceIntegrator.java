@@ -17,37 +17,23 @@
  */
 package org.broadleafcommerce.common.persistence.transaction;
 
-import org.hibernate.cfg.Configuration;
-import org.hibernate.engine.spi.SessionFactoryImplementor;
-import org.hibernate.integrator.spi.ServiceContributingIntegrator;
-import org.hibernate.metamodel.source.MetadataImplementor;
-import org.hibernate.service.ServiceRegistryBuilder;
-import org.hibernate.service.spi.SessionFactoryServiceRegistry;
 
-/**
- * Support introduction of customized or additional services to the Hibernate service registry.
- *
- * @author Jeff Fischer
- */
-public class CommonServiceIntegrator implements ServiceContributingIntegrator {
-
-    @Override
-    public void prepareServices(ServiceRegistryBuilder serviceRegistryBuilder) {
-        serviceRegistryBuilder.addInitiator(LifecycleAwareJDBCServicesInitiator.INSTANCE);
+public class CommonServiceIntegrator implements org.hibernate.integrator.spi.ServiceContributingIntegrator {
+    @java.lang.Override
+    public void prepareServices(org.hibernate.service.ServiceRegistryBuilder serviceRegistryBuilder) {
+        serviceRegistryBuilder.addInitiator(org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJDBCServicesInitiator.INSTANCE);
     }
 
-    @Override
-    public void integrate(Configuration configuration, SessionFactoryImplementor sessionFactory, SessionFactoryServiceRegistry serviceRegistry) {
-        //do nothing
+    @java.lang.Override
+    public void integrate(org.hibernate.cfg.Configuration configuration, org.hibernate.engine.spi.SessionFactoryImplementor sessionFactory, org.hibernate.service.spi.SessionFactoryServiceRegistry serviceRegistry) {
     }
 
-    @Override
-    public void integrate(MetadataImplementor metadata, SessionFactoryImplementor sessionFactory, SessionFactoryServiceRegistry serviceRegistry) {
-        //do nothing
+    @java.lang.Override
+    public void integrate(org.hibernate.metamodel.source.MetadataImplementor metadata, org.hibernate.engine.spi.SessionFactoryImplementor sessionFactory, org.hibernate.service.spi.SessionFactoryServiceRegistry serviceRegistry) {
     }
 
-    @Override
-    public void disintegrate(SessionFactoryImplementor sessionFactory, SessionFactoryServiceRegistry serviceRegistry) {
-        //do nothing
+    @java.lang.Override
+    public void disintegrate(org.hibernate.engine.spi.SessionFactoryImplementor sessionFactory, org.hibernate.service.spi.SessionFactoryServiceRegistry serviceRegistry) {
     }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,152 +15,141 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.payment.dto;
 
-import java.util.HashMap;
-import java.util.Map;
 
-/**
- * @author Elbert Bautista (elbertbautista)
- *
- * Many Hosted solutions, (e.g. PayPal Express/Sagepay Form) allow you to pass in the contents of your
- * cart to be displayed on their hosted pages.
- *
- * The following DTO represent the usual parameters that you may wish to pass:
- *
- * name: a Name for this Line Item
- * description: a Description for this Line Item
- * category: a Category for this Line Item (PayPal Express uses this to differentiate between Digital vs Physical)
- * quantity: the Quantity for this Line Item
- * amount: the unit cost of the item without tax
- * tax: the tax applied to this unit item
- * itemTotal: the cost of the unit item with tax
- * total: the total cost of this line item (Quanity x Cost Including Tax)
- *
- */
 public class LineItemDTO {
+    protected org.broadleafcommerce.common.payment.dto.PaymentRequestDTO parent;
 
-    protected PaymentRequestDTO parent;
+    protected java.util.Map<java.lang.String, java.lang.Object> additionalFields;
 
-    protected Map<String, Object> additionalFields;
-    protected String name;
-    protected String description;
-    protected String shortDescription;
-    protected String systemId;
-    protected String category;
-    protected String quantity;
-    protected String amount;
-    protected String tax;
-    protected String itemTotal;
-    protected String total;
+    protected java.lang.String name;
 
-    public PaymentRequestDTO done(){
+    protected java.lang.String description;
+
+    protected java.lang.String shortDescription;
+
+    protected java.lang.String systemId;
+
+    protected java.lang.String category;
+
+    protected java.lang.String quantity;
+
+    protected java.lang.String amount;
+
+    protected java.lang.String tax;
+
+    protected java.lang.String itemTotal;
+
+    protected java.lang.String total;
+
+    public org.broadleafcommerce.common.payment.dto.PaymentRequestDTO done() {
         parent.lineItems.add(this);
         return parent;
     }
 
-    public LineItemDTO(PaymentRequestDTO parent) {
-        this.additionalFields = new HashMap<String, Object>();
+    public LineItemDTO(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO parent) {
+        this.additionalFields = new java.util.HashMap<java.lang.String, java.lang.Object>();
         this.parent = parent;
     }
 
-    public LineItemDTO additionalField(String key, Object value) {
+    public org.broadleafcommerce.common.payment.dto.LineItemDTO additionalField(java.lang.String key, java.lang.Object value) {
         additionalFields.put(key, value);
         return this;
     }
 
-    public LineItemDTO name(String name) {
+    public org.broadleafcommerce.common.payment.dto.LineItemDTO name(java.lang.String name) {
         this.name = name;
         return this;
     }
 
-    public LineItemDTO description(String description) {
+    public org.broadleafcommerce.common.payment.dto.LineItemDTO description(java.lang.String description) {
         this.description = description;
         return this;
     }
 
-    public LineItemDTO shortDescription(String shortDescription) {
+    public org.broadleafcommerce.common.payment.dto.LineItemDTO shortDescription(java.lang.String shortDescription) {
         this.shortDescription = shortDescription;
         return this;
     }
 
-    public LineItemDTO systemId(String systemId) {
+    public org.broadleafcommerce.common.payment.dto.LineItemDTO systemId(java.lang.String systemId) {
         this.systemId = systemId;
         return this;
     }
 
-    public LineItemDTO category(String category) {
+    public org.broadleafcommerce.common.payment.dto.LineItemDTO category(java.lang.String category) {
         this.category = category;
         return this;
     }
 
-    public LineItemDTO quantity(String quantity) {
+    public org.broadleafcommerce.common.payment.dto.LineItemDTO quantity(java.lang.String quantity) {
         this.quantity = quantity;
         return this;
     }
 
-    public LineItemDTO amount(String amount) {
+    public org.broadleafcommerce.common.payment.dto.LineItemDTO amount(java.lang.String amount) {
         this.amount = amount;
         return this;
     }
 
-    public LineItemDTO tax(String tax) {
+    public org.broadleafcommerce.common.payment.dto.LineItemDTO tax(java.lang.String tax) {
         this.tax = tax;
         return this;
     }
 
-    public LineItemDTO itemTotal(String itemTotal) {
+    public org.broadleafcommerce.common.payment.dto.LineItemDTO itemTotal(java.lang.String itemTotal) {
         this.itemTotal = itemTotal;
         return this;
     }
 
-    public LineItemDTO total(String total) {
+    public org.broadleafcommerce.common.payment.dto.LineItemDTO total(java.lang.String total) {
         this.total = total;
         return this;
     }
 
-    public Map<String, Object> getAdditionalFields() {
+    public java.util.Map<java.lang.String, java.lang.Object> getAdditionalFields() {
         return additionalFields;
     }
 
-    public String getName() {
+    public java.lang.String getName() {
         return name;
     }
 
-    public String getDescription() {
+    public java.lang.String getDescription() {
         return description;
     }
 
-    public String getShortDescription() {
+    public java.lang.String getShortDescription() {
         return shortDescription;
     }
 
-    public String getSystemId() {
+    public java.lang.String getSystemId() {
         return systemId;
     }
 
-    public String getCategory() {
+    public java.lang.String getCategory() {
         return category;
     }
 
-    public String getQuantity() {
+    public java.lang.String getQuantity() {
         return quantity;
     }
 
-    public String getAmount() {
+    public java.lang.String getAmount() {
         return amount;
     }
 
-    public String getTax() {
+    public java.lang.String getTax() {
         return tax;
     }
 
-    public String getItemTotal() {
+    public java.lang.String getItemTotal() {
         return itemTotal;
     }
 
-    public String getTotal() {
+    public java.lang.String getTotal() {
         return total;
     }
 }
+

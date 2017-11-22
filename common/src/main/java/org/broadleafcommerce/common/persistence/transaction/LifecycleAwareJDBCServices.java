@@ -17,22 +17,25 @@
  */
 package org.broadleafcommerce.common.persistence.transaction;
 
-import org.hibernate.engine.jdbc.internal.JdbcServicesImpl;
-import org.hibernate.engine.jdbc.spi.SqlStatementLogger;
 
-/**
- * A customization of {@link JdbcServicesImpl} that allows further usage of the sql statement logging. This is useful
- * for tracking all sql executed during the lifecycle of a transaction.
- *
- * @see TransactionLifecycleAwareSqlStatementLogger
- * @see TransactionLifecycleMonitor
- * @author Jeff Fischer
- */
-public class LifecycleAwareJDBCServices extends JdbcServicesImpl {
+public class LifecycleAwareJDBCServices extends org.hibernate.engine.jdbc.internal.JdbcServicesImpl {
+    @java.lang.Override
+    public org.hibernate.engine.jdbc.spi.SqlStatementLogger getSqlStatementLogger() {
+        org.hibernate.engine.jdbc.spi.SqlStatementLogger defaultLogger = super.getSqlStatementLogger();
+        return new org.broadleafcommerce.common.persistence.transaction.TransactionLifecycleAwareSqlStatementLogger(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJDBCServices.__L4123, defaultLogger.isLogToStdout()), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJDBCServices.__L4124, defaultLogger.isFormat()));
+    }
 
-    @Override
-    public SqlStatementLogger getSqlStatementLogger() {
-        SqlStatementLogger defaultLogger = super.getSqlStatementLogger();
-        return new TransactionLifecycleAwareSqlStatementLogger(defaultLogger.isLogToStdout(), defaultLogger.isFormat());
+    public static perturbation.location.PerturbationLocation __L4123;
+
+    public static perturbation.location.PerturbationLocation __L4124;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJDBCServices.__L4123 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/LifecycleAwareJDBCServices.java:36)", 4123, "Boolean");
+        org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJDBCServices.__L4124 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/persistence/transaction/LifecycleAwareJDBCServices.java:36)", 4124, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.persistence.transaction.LifecycleAwareJDBCServices.initPerturbationLocation0();
     }
 }
+

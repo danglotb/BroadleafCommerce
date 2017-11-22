@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,50 +17,60 @@
  */
 package org.broadleafcommerce.common.exception;
 
-/**
- * Exception thrown when a {@link EntityService service} method fails.
- * 
- * @author jfischer
- */
-public class ServiceException extends Exception {
-    
+
+public class ServiceException extends java.lang.Exception {
     private static final long serialVersionUID = -7084792578727995587L;
-    
-    // for serialization purposes
+
     protected ServiceException() {
         super();
     }
-    
-    public ServiceException(String message, Throwable cause) {
+
+    public ServiceException(java.lang.String message, java.lang.Throwable cause) {
         super(message, cause);
     }
-    
-    public ServiceException(String message) {
+
+    public ServiceException(java.lang.String message) {
         super(message);
     }
-    
-    public ServiceException(Throwable cause) {
+
+    public ServiceException(java.lang.Throwable cause) {
         super(cause);
     }
-    
-    /**
-     * Checks to see if any of the causes of the chain of exceptions that led to this ServiceException are an instance
-     * of the given class.
-     * 
-     * @param clazz
-     * @return whether or not this exception's causes includes the given class.
-     */
-    public boolean containsCause(Class<? extends Throwable> clazz) {
-        Throwable current = this;
 
+    public boolean containsCause(java.lang.Class<? extends java.lang.Throwable> clazz) {
+        java.lang.Throwable current = this;
         do {
-            if (clazz.isAssignableFrom(current.getClass())) {
-                return true;
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.ServiceException.__L1258, clazz.isAssignableFrom(current.getClass()))) {
+                return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.ServiceException.__L1259, true);
             }
             current = current.getCause();
-        } while (current != null && current.getCause() != null);
-
-        return false;
+        } while (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.ServiceException.__L1257, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.ServiceException.__L1255, (current != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.ServiceException.__L1256, ((current.getCause()) != null))))) );
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.ServiceException.__L1260, false);
     }
 
+    public static perturbation.location.PerturbationLocation __L1255;
+
+    public static perturbation.location.PerturbationLocation __L1256;
+
+    public static perturbation.location.PerturbationLocation __L1257;
+
+    public static perturbation.location.PerturbationLocation __L1258;
+
+    public static perturbation.location.PerturbationLocation __L1259;
+
+    public static perturbation.location.PerturbationLocation __L1260;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.exception.ServiceException.__L1255 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/ServiceException.java:61)", 1255, "Boolean");
+        org.broadleafcommerce.common.exception.ServiceException.__L1256 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/ServiceException.java:61)", 1256, "Boolean");
+        org.broadleafcommerce.common.exception.ServiceException.__L1257 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/ServiceException.java:61)", 1257, "Boolean");
+        org.broadleafcommerce.common.exception.ServiceException.__L1258 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/ServiceException.java:57)", 1258, "Boolean");
+        org.broadleafcommerce.common.exception.ServiceException.__L1259 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/ServiceException.java:58)", 1259, "Boolean");
+        org.broadleafcommerce.common.exception.ServiceException.__L1260 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/ServiceException.java:63)", 1260, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.exception.ServiceException.initPerturbationLocation0();
+    }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,19 +17,11 @@
  */
 package org.broadleafcommerce.common.site.service;
 
-import org.broadleafcommerce.common.extension.ExtensionManager;
-import org.springframework.stereotype.Service;
 
-/**
- * Extension manager that holds the list of {@link SiteServiceExtensionHandler}.
- * 
- * @author Phillip Verheyden (phillipuniverse)
- */
-@Service("blSiteServiceExtensionManager")
-public class SiteServiceExtensionManager extends ExtensionManager<SiteServiceExtensionHandler> {
-
+@org.springframework.stereotype.Service("blSiteServiceExtensionManager")
+public class SiteServiceExtensionManager extends org.broadleafcommerce.common.extension.ExtensionManager<org.broadleafcommerce.common.site.service.SiteServiceExtensionHandler> {
     public SiteServiceExtensionManager() {
-        super(SiteServiceExtensionHandler.class);
+        super(org.broadleafcommerce.common.site.service.SiteServiceExtensionHandler.class);
     }
-
 }
+

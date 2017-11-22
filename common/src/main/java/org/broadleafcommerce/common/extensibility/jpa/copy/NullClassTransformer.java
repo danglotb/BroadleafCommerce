@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,31 +17,15 @@
  */
 package org.broadleafcommerce.common.extensibility.jpa.copy;
 
-import org.broadleafcommerce.common.extensibility.jpa.convert.BroadleafClassTransformer;
 
-import java.lang.instrument.IllegalClassFormatException;
-import java.security.ProtectionDomain;
-import java.util.Properties;
-
-/**
- * This class transformer will do nothing. The main use case for this transformer is when you would prefer to not
- * have a module's template classes copied over, and would rather do it yourself. 
- * 
- * This transformer should not typically be used.
- * 
- * @author Andre Azzolini (apazzolini)
- */
-public class NullClassTransformer implements BroadleafClassTransformer {
-    
-    @Override
-    public void compileJPAProperties(Properties props, Object key) throws Exception {
+public class NullClassTransformer implements org.broadleafcommerce.common.extensibility.jpa.convert.BroadleafClassTransformer {
+    @java.lang.Override
+    public void compileJPAProperties(java.util.Properties props, java.lang.Object key) throws java.lang.Exception {
     }
 
-    @Override
-    public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, 
-            ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
+    @java.lang.Override
+    public byte[] transform(java.lang.ClassLoader loader, java.lang.String className, java.lang.Class<?> classBeingRedefined, java.security.ProtectionDomain protectionDomain, byte[] classfileBuffer) throws java.lang.instrument.IllegalClassFormatException {
         return null;
     }
-
 }
 

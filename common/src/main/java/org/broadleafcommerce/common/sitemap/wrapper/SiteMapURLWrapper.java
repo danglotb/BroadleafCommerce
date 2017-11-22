@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,93 +15,92 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.sitemap.wrapper;
 
-import org.broadleafcommerce.common.sitemap.service.type.SiteMapChangeFreqType;
-import org.broadleafcommerce.common.sitemap.service.type.SiteMapPriorityType;
-import org.broadleafcommerce.common.util.FormatUtil;
 
-import java.io.Serializable;
-import java.util.Date;
+@javax.xml.bind.annotation.XmlRootElement(name = "url")
+@javax.xml.bind.annotation.XmlType(propOrder = { "loc", "lastmod", "changefreq", "priority" })
+public class SiteMapURLWrapper implements java.io.Serializable {
+    private static final long serialVersionUID = 1L;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+    protected java.lang.String loc;
 
-/**
- * Representation of SiteMapURLEntry that can be used to generate an XML element.
- * 
- * @author bpolster
- */
-@XmlRootElement(name = "url")
-@XmlType(propOrder = { "loc", "lastmod", "changefreq", "priority" })
-public class SiteMapURLWrapper implements Serializable {
+    protected java.lang.String lastmod;
 
-    private static final long serialVersionUID = 1L;   
+    protected java.lang.String changefreq;
 
-    protected String loc;
+    protected java.lang.String priority;
 
-    protected String lastmod;
-
-    protected String changefreq;
-
-    protected String priority;
-
-    public void setLastModDate(Date lastModDate) {
-        if (lastModDate != null) {
-            lastmod = FormatUtil.formatDateUsingW3C(lastModDate);
-        } else {
-            lastmod = FormatUtil.formatDateUsingW3C(new Date());
+    public void setLastModDate(java.util.Date lastModDate) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sitemap.wrapper.SiteMapURLWrapper.__L5565, (lastModDate != null))) {
+            lastmod = org.broadleafcommerce.common.util.FormatUtil.formatDateUsingW3C(lastModDate);
+        }else {
+            lastmod = org.broadleafcommerce.common.util.FormatUtil.formatDateUsingW3C(new java.util.Date());
         }
     }
 
-    public void setPriorityType(SiteMapPriorityType priorityType) {
-        if (priorityType != null) {
+    public void setPriorityType(org.broadleafcommerce.common.sitemap.service.type.SiteMapPriorityType priorityType) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sitemap.wrapper.SiteMapURLWrapper.__L5566, (priorityType != null))) {
             setPriority(priorityType.getType());
         }
     }
 
-    public void setChangeFreqType(SiteMapChangeFreqType changeFreqType) {
-        if (changeFreqType != null) {
+    public void setChangeFreqType(org.broadleafcommerce.common.sitemap.service.type.SiteMapChangeFreqType changeFreqType) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sitemap.wrapper.SiteMapURLWrapper.__L5567, (changeFreqType != null))) {
             setChangefreq(changeFreqType.getFriendlyType());
         }
     }
 
-    public String getLoc() {
+    public java.lang.String getLoc() {
         return loc;
     }
 
-    @XmlElement
-    public void setLoc(String loc) {
+    @javax.xml.bind.annotation.XmlElement
+    public void setLoc(java.lang.String loc) {
         this.loc = loc;
     }
 
-    public String getLastmod() {
+    public java.lang.String getLastmod() {
         return lastmod;
     }
 
-    @XmlElement
-    public void setLastmod(String lastmod) {
+    @javax.xml.bind.annotation.XmlElement
+    public void setLastmod(java.lang.String lastmod) {
         this.lastmod = lastmod;
     }
 
-    public String getChangefreq() {
+    public java.lang.String getChangefreq() {
         return changefreq;
     }
 
-    @XmlElement
-    public void setChangefreq(String changefreq) {
+    @javax.xml.bind.annotation.XmlElement
+    public void setChangefreq(java.lang.String changefreq) {
         this.changefreq = changefreq;
     }
-    
-    public String getPriority() {
+
+    public java.lang.String getPriority() {
         return priority;
     }
 
-    @XmlElement
-    public void setPriority(String priority) {
+    @javax.xml.bind.annotation.XmlElement
+    public void setPriority(java.lang.String priority) {
         this.priority = priority;
     }
-    
+
+    public static perturbation.location.PerturbationLocation __L5565;
+
+    public static perturbation.location.PerturbationLocation __L5566;
+
+    public static perturbation.location.PerturbationLocation __L5567;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.sitemap.wrapper.SiteMapURLWrapper.__L5565 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sitemap/wrapper/SiteMapURLWrapper.java:52)", 5565, "Boolean");
+        org.broadleafcommerce.common.sitemap.wrapper.SiteMapURLWrapper.__L5566 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sitemap/wrapper/SiteMapURLWrapper.java:60)", 5566, "Boolean");
+        org.broadleafcommerce.common.sitemap.wrapper.SiteMapURLWrapper.__L5567 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sitemap/wrapper/SiteMapURLWrapper.java:66)", 5567, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.sitemap.wrapper.SiteMapURLWrapper.initPerturbationLocation0();
+    }
 }
+

@@ -17,38 +17,30 @@
  */
 package org.broadleafcommerce.common.site.service;
 
-import org.broadleafcommerce.common.classloader.release.ThreadLocalManager;
-import org.broadleafcommerce.common.site.domain.Site;
 
-import java.util.HashMap;
-import java.util.Map;
-
-/**
- * @author Jeff Fischer
- */
 public class NonPersistentSiteThreadLocalCache {
+    private static final java.lang.ThreadLocal<org.broadleafcommerce.common.site.service.NonPersistentSiteThreadLocalCache> SITES_CACHE = org.broadleafcommerce.common.classloader.release.ThreadLocalManager.createThreadLocal(org.broadleafcommerce.common.site.service.NonPersistentSiteThreadLocalCache.class);
 
-    private static final ThreadLocal<NonPersistentSiteThreadLocalCache> SITES_CACHE = ThreadLocalManager.createThreadLocal(NonPersistentSiteThreadLocalCache.class);
+    protected java.util.Map<java.lang.Long, org.broadleafcommerce.common.site.domain.Site> sites = new java.util.HashMap<java.lang.Long, org.broadleafcommerce.common.site.domain.Site>();
 
-    public static NonPersistentSiteThreadLocalCache getSitesCache() {
-        return SITES_CACHE.get();
+    public static org.broadleafcommerce.common.site.service.NonPersistentSiteThreadLocalCache getSitesCache() {
+        return org.broadleafcommerce.common.site.service.NonPersistentSiteThreadLocalCache.SITES_CACHE.get();
     }
 
-    public static void setSitesCache(NonPersistentSiteThreadLocalCache sitesCache) {
-        SITES_CACHE.set(sitesCache);
+    public static void setSitesCache(org.broadleafcommerce.common.site.service.NonPersistentSiteThreadLocalCache sitesCache) {
+        org.broadleafcommerce.common.site.service.NonPersistentSiteThreadLocalCache.SITES_CACHE.set(sitesCache);
     }
 
-    protected Map<Long, Site> sites = new HashMap<Long, Site>();
-
-    public Map<Long, Site> getSites() {
+    public java.util.Map<java.lang.Long, org.broadleafcommerce.common.site.domain.Site> getSites() {
         return sites;
     }
 
-    public void setSites(Map<Long, Site> sites) {
+    public void setSites(java.util.Map<java.lang.Long, org.broadleafcommerce.common.site.domain.Site> sites) {
         this.sites = sites;
     }
 
     public void clear() {
-        SITES_CACHE.remove();
+        org.broadleafcommerce.common.site.service.NonPersistentSiteThreadLocalCache.SITES_CACHE.remove();
     }
 }
+

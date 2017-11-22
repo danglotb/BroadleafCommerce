@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,72 +17,71 @@
  */
 package org.broadleafcommerce.common.module;
 
-import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.condition.ConditionalOnBroadleafModule;
-import org.broadleafcommerce.common.condition.OnBroadleafModuleCondition;
-import org.broadleafcommerce.common.logging.ModuleLifecycleLoggingBean;
-import org.broadleafcommerce.common.module.BroadleafModuleRegistration.BroadleafModuleEnum;
-import org.springframework.core.io.support.SpringFactoriesLoader;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
-/**
- * <p>
- * Utility class that checks for the presence of registered Broadleaf modules.
- *
- * @see {@link ConditionalOnBroadleafModule}
- * @see {@link OnBroadleafModuleCondition}
- * @author Nathan Moore (nathanmoore).
- * @author Phillip Verheyden (phillipuniverse)
- * @author Philip Baggett (pbaggett)
- */
 public class ModulePresentUtil {
+    public static final java.util.List<org.broadleafcommerce.common.module.BroadleafModuleRegistration> MODULE_REGISTRATIONS = org.springframework.core.io.support.SpringFactoriesLoader.loadFactories(org.broadleafcommerce.common.module.BroadleafModuleRegistration.class, null);
 
-    public static final List<BroadleafModuleRegistration> MODULE_REGISTRATIONS = SpringFactoriesLoader.loadFactories(BroadleafModuleRegistration.class, null);
-    
-    /**
-     * Checks if the given module is registered
-     *
-     * @param moduleInQuestion the module that should be checked
-     * @return whether the module in question has registered itself at runtime
-     * @see {@link #isPresent(String)}
-     */
-    public static boolean isPresent(@Nonnull final BroadleafModuleEnum moduleInQuestion) {
-        return isPresent(moduleInQuestion.getName());
+    public static boolean isPresent(@javax.annotation.Nonnull
+    final org.broadleafcommerce.common.module.BroadleafModuleRegistration.BroadleafModuleEnum moduleInQuestion) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.module.ModulePresentUtil.__L3537, org.broadleafcommerce.common.module.ModulePresentUtil.isPresent(moduleInQuestion.getName()));
     }
 
-    /**
-     * Checks that every module in the list is registered.
-     *
-     * @param modulesInQuestion list of modules that should be checked
-     * @return true if all modules in the list are present, false otherwise
-     * @see #isPresent(String)
-     */
-    public static boolean allPresent(@Nonnull final List<String> modulesInQuestion) {
-        for (String module : modulesInQuestion) {
-            if (StringUtils.isEmpty(module) || !isPresent(module)) {
-                return false;
+    public static boolean allPresent(@javax.annotation.Nonnull
+    final java.util.List<java.lang.String> modulesInQuestion) {
+        for (java.lang.String module : modulesInQuestion) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.module.ModulePresentUtil.__L3541, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.module.ModulePresentUtil.__L3538, org.apache.commons.lang3.StringUtils.isEmpty(module))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.module.ModulePresentUtil.__L3540, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.module.ModulePresentUtil.__L3539, org.broadleafcommerce.common.module.ModulePresentUtil.isPresent(module))))))))) {
+                return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.module.ModulePresentUtil.__L3542, false);
             }
         }
-        return true;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.module.ModulePresentUtil.__L3543, true);
     }
 
-    /**
-     * This version takes a String instead of a {@link BroadleafModuleEnum} but operates in the same way by checking to see if
-     * a particular Broadleaf module has registered itself
-     *
-     * @param moduleInQuestion a String that maps to {@link ModuleLifecycleLoggingBean#getModuleName()}
-     */
-    public static boolean isPresent(@Nonnull final String moduleInQuestion) {
-        for (BroadleafModuleRegistration registration : MODULE_REGISTRATIONS) {
-            String moduleName = registration.getModuleName();
-            if (moduleInQuestion.equals(moduleName)) {
-                return true;
+    public static boolean isPresent(@javax.annotation.Nonnull
+    final java.lang.String moduleInQuestion) {
+        for (org.broadleafcommerce.common.module.BroadleafModuleRegistration registration : org.broadleafcommerce.common.module.ModulePresentUtil.MODULE_REGISTRATIONS) {
+            java.lang.String moduleName = registration.getModuleName();
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.module.ModulePresentUtil.__L3544, moduleInQuestion.equals(moduleName))) {
+                return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.module.ModulePresentUtil.__L3545, true);
             }
         }
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.module.ModulePresentUtil.__L3546, false);
+    }
 
-        return false;
+    public static perturbation.location.PerturbationLocation __L3537;
+
+    public static perturbation.location.PerturbationLocation __L3538;
+
+    public static perturbation.location.PerturbationLocation __L3539;
+
+    public static perturbation.location.PerturbationLocation __L3540;
+
+    public static perturbation.location.PerturbationLocation __L3541;
+
+    public static perturbation.location.PerturbationLocation __L3542;
+
+    public static perturbation.location.PerturbationLocation __L3543;
+
+    public static perturbation.location.PerturbationLocation __L3544;
+
+    public static perturbation.location.PerturbationLocation __L3545;
+
+    public static perturbation.location.PerturbationLocation __L3546;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.module.ModulePresentUtil.__L3537 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/module/ModulePresentUtil.java:53)", 3537, "Boolean");
+        org.broadleafcommerce.common.module.ModulePresentUtil.__L3538 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/module/ModulePresentUtil.java:65)", 3538, "Boolean");
+        org.broadleafcommerce.common.module.ModulePresentUtil.__L3539 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/module/ModulePresentUtil.java:65)", 3539, "Boolean");
+        org.broadleafcommerce.common.module.ModulePresentUtil.__L3540 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/module/ModulePresentUtil.java:65)", 3540, "Boolean");
+        org.broadleafcommerce.common.module.ModulePresentUtil.__L3541 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/module/ModulePresentUtil.java:65)", 3541, "Boolean");
+        org.broadleafcommerce.common.module.ModulePresentUtil.__L3542 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/module/ModulePresentUtil.java:66)", 3542, "Boolean");
+        org.broadleafcommerce.common.module.ModulePresentUtil.__L3543 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/module/ModulePresentUtil.java:69)", 3543, "Boolean");
+        org.broadleafcommerce.common.module.ModulePresentUtil.__L3544 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/module/ModulePresentUtil.java:81)", 3544, "Boolean");
+        org.broadleafcommerce.common.module.ModulePresentUtil.__L3545 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/module/ModulePresentUtil.java:82)", 3545, "Boolean");
+        org.broadleafcommerce.common.module.ModulePresentUtil.__L3546 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/module/ModulePresentUtil.java:86)", 3546, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.module.ModulePresentUtil.initPerturbationLocation0();
     }
 }
+

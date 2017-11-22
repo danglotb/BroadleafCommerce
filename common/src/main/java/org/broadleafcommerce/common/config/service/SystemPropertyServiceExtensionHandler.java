@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,23 +17,8 @@
  */
 package org.broadleafcommerce.common.config.service;
 
-import org.broadleafcommerce.common.extension.ExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
 
-
-/**
- * @author bpolster
- */
-public interface SystemPropertyServiceExtensionHandler extends ExtensionHandler {
-    
-    /**
-     * Provides an opportunity for modules to resolve a system property.
-     * 
-     * @param propertyName
-     * @param resultHolder
-     * @return
-     */
-    public ExtensionResultStatusType resolveProperty(String propertyName, ExtensionResultHolder resultHolder);
-    
+public interface SystemPropertyServiceExtensionHandler extends org.broadleafcommerce.common.extension.ExtensionHandler {
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType resolveProperty(java.lang.String propertyName, org.broadleafcommerce.common.extension.ExtensionResultHolder resultHolder);
 }
+

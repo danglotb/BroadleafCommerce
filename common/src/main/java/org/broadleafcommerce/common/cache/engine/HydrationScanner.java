@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,239 +17,284 @@
  */
 package org.broadleafcommerce.common.cache.engine;
 
-import org.broadleafcommerce.common.cache.Hydrated;
-import org.hibernate.annotations.Cache;
-import org.objectweb.asm.AnnotationVisitor;
-import org.objectweb.asm.Attribute;
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.FieldVisitor;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Type;
-import org.objectweb.asm.commons.EmptyVisitor;
 
-import javax.persistence.Id;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-
-/**
- * 
- * @author jfischer
- *
- */
-public class HydrationScanner implements ClassVisitor, FieldVisitor, AnnotationVisitor {
-    
+public class HydrationScanner implements org.objectweb.asm.AnnotationVisitor , org.objectweb.asm.ClassVisitor , org.objectweb.asm.FieldVisitor {
     private static final int CLASSSTAGE = 0;
+
     private static final int FIELDSTAGE = 1;
-    
-    @SuppressWarnings("unchecked")
-    public HydrationScanner(Class topEntityClass, Class entityClass) {
+
+    private java.lang.String cacheRegion;
+
+    private java.util.Map<java.lang.String, java.lang.reflect.Method[]> idMutators = new java.util.HashMap<java.lang.String, java.lang.reflect.Method[]>();
+
+    private java.util.Map<java.lang.String, org.broadleafcommerce.common.cache.engine.HydrationItemDescriptor> cacheMutators = new java.util.HashMap<java.lang.String, org.broadleafcommerce.common.cache.engine.HydrationItemDescriptor>();
+
+    @java.lang.SuppressWarnings("unchecked")
+    private final java.lang.Class entityClass;
+
+    @java.lang.SuppressWarnings("unchecked")
+    private final java.lang.Class topEntityClass;
+
+    private int stage = org.broadleafcommerce.common.cache.engine.HydrationScanner.CLASSSTAGE;
+
+    @java.lang.SuppressWarnings("unchecked")
+    private java.lang.Class clazz;
+
+    private java.lang.String annotation;
+
+    private java.lang.String fieldName;
+
+    @java.lang.SuppressWarnings("unchecked")
+    private java.lang.Class fieldClass;
+
+    @java.lang.SuppressWarnings("unchecked")
+    public HydrationScanner(java.lang.Class topEntityClass, java.lang.Class entityClass) {
         this.topEntityClass = topEntityClass;
         this.entityClass = entityClass;
     }
-    
-    private String cacheRegion;
-    private Map<String, Method[]> idMutators = new HashMap<String, Method[]>();
-    private Map<String, HydrationItemDescriptor> cacheMutators = new HashMap<String, HydrationItemDescriptor>();
-    @SuppressWarnings("unchecked")
-    private final Class entityClass;
-    @SuppressWarnings("unchecked")
-    private final Class topEntityClass;
-    
-    private int stage = CLASSSTAGE;
-    @SuppressWarnings("unchecked")
-    private Class clazz;
-    private String annotation;
-    private String fieldName;
-    @SuppressWarnings("unchecked")
-    private Class fieldClass;
-    
+
     public void init() {
         try {
-            InputStream in = HydrationScanner.class.getClassLoader().getResourceAsStream(topEntityClass.getName().replace('.', '/') + ".class");
-            new ClassReader(in).accept(this, ClassReader.SKIP_DEBUG);
-            in = HydrationScanner.class.getClassLoader().getResourceAsStream(entityClass.getName().replace('.', '/') + ".class");
-            new ClassReader(in).accept(this, ClassReader.SKIP_DEBUG);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            java.io.InputStream in = org.broadleafcommerce.common.cache.engine.HydrationScanner.class.getClassLoader().getResourceAsStream(((topEntityClass.getName().replace('.', '/')) + ".class"));
+            new org.objectweb.asm.ClassReader(in).accept(this, perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L175, org.objectweb.asm.ClassReader.SKIP_DEBUG));
+            in = org.broadleafcommerce.common.cache.engine.HydrationScanner.class.getClassLoader().getResourceAsStream(((entityClass.getName().replace('.', '/')) + ".class"));
+            new org.objectweb.asm.ClassReader(in).accept(this, perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L176, org.objectweb.asm.ClassReader.SKIP_DEBUG));
+        } catch (java.io.IOException e) {
+            throw new java.lang.RuntimeException(e);
         }
     }
-    
-    public String getCacheRegion() {
+
+    public java.lang.String getCacheRegion() {
         return cacheRegion;
     }
 
-    public Map<String, Method[]> getIdMutators() {
+    public java.util.Map<java.lang.String, java.lang.reflect.Method[]> getIdMutators() {
         return idMutators;
     }
 
-    public Map<String, HydrationItemDescriptor> getCacheMutators() {
+    public java.util.Map<java.lang.String, org.broadleafcommerce.common.cache.engine.HydrationItemDescriptor> getCacheMutators() {
         return cacheMutators;
     }
 
-    //Common
-    public AnnotationVisitor visitAnnotation(String arg0, boolean arg1) {
-        Type annotationType = Type.getType(arg0);
-        switch(stage) {
-        case CLASSSTAGE: {
-            if (annotationType.getClassName().equals(Cache.class.getName())){
-                annotation = Cache.class.getName();
-            }
-            break;
-        }
-        case FIELDSTAGE: {
-            if (annotationType.getClassName().equals(Id.class.getName())){
-                idMutators.put(fieldName, retrieveMutators());
-            }
-            if (annotationType.getClassName().equals(Hydrated.class.getName())){
-                annotation = Hydrated.class.getName();
-            }
-            break;
-        }
-        default : {
-            annotation = null;
-            fieldName = null;
-            break;
-        }
+    public org.objectweb.asm.AnnotationVisitor visitAnnotation(java.lang.String arg0, boolean arg1) {
+        org.objectweb.asm.Type annotationType = org.objectweb.asm.Type.getType(arg0);
+        switch (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L177, stage)) {
+            case org.broadleafcommerce.common.cache.engine.HydrationScanner.CLASSSTAGE :
+                {
+                    if (annotationType.getClassName().equals(org.hibernate.annotations.Cache.class.getName())) {
+                        annotation = org.hibernate.annotations.Cache.class.getName();
+                    }
+                    break;
+                }
+            case org.broadleafcommerce.common.cache.engine.HydrationScanner.FIELDSTAGE :
+                {
+                    if (annotationType.getClassName().equals(javax.persistence.Id.class.getName())) {
+                        idMutators.put(fieldName, retrieveMutators());
+                    }
+                    if (annotationType.getClassName().equals(org.broadleafcommerce.common.cache.Hydrated.class.getName())) {
+                        annotation = org.broadleafcommerce.common.cache.Hydrated.class.getName();
+                    }
+                    break;
+                }
+            default :
+                {
+                    annotation = null;
+                    fieldName = null;
+                    break;
+                }
         }
         return this;
     }
-    
-    private Method[] retrieveMutators() {
-        String mutatorName = fieldName.substring(0,1).toUpperCase() + fieldName.substring(1, fieldName.length());
-        Method getMethod = null;
+
+    private java.lang.reflect.Method[] retrieveMutators() {
+        java.lang.String mutatorName = (fieldName.substring(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L178, 0), perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L179, 1)).toUpperCase()) + (fieldName.substring(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L180, 1), perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L181, fieldName.length())));
+        java.lang.reflect.Method getMethod = null;
         try {
-            getMethod = clazz.getMethod("get"+mutatorName, new Class[]{});
-        } catch (Exception e) {
-            //do nothing
+            getMethod = clazz.getMethod(("get" + mutatorName), new java.lang.Class[]{  });
+        } catch (java.lang.Exception e) {
         }
-        if (getMethod == null) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L182, (getMethod == null))) {
             try {
-                getMethod = clazz.getMethod("is"+mutatorName, new Class[]{});
-            } catch (Exception e) {
-                //do nothing
+                getMethod = clazz.getMethod(("is" + mutatorName), new java.lang.Class[]{  });
+            } catch (java.lang.Exception e) {
             }
         }
-        if (getMethod == null) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L183, (getMethod == null))) {
             try {
-                getMethod = clazz.getMethod(fieldName, new Class[]{});
-            } catch (Exception e) {
-                //do nothing
+                getMethod = clazz.getMethod(fieldName, new java.lang.Class[]{  });
+            } catch (java.lang.Exception e) {
             }
         }
-        Method setMethod = null;
+        java.lang.reflect.Method setMethod = null;
         try {
-            setMethod = clazz.getMethod("set"+mutatorName, new Class[]{fieldClass});
-        } catch (Exception e) {
-            //do nothing
+            setMethod = clazz.getMethod(("set" + mutatorName), new java.lang.Class[]{ fieldClass });
+        } catch (java.lang.Exception e) {
         }
-        if (getMethod == null || setMethod == null) {
-            throw new RuntimeException("Unable to find a getter and setter method for the AdminPresentation field: " + fieldName + ". Make sure you have a getter method entitled: get" + mutatorName + "(), or is" + mutatorName + "(), or " + fieldName + "(). Make sure you have a setter method entitled: set" + mutatorName + "(..).");
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L186, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L184, (getMethod == null))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L185, (setMethod == null)))))) {
+            throw new java.lang.RuntimeException((((((((((("Unable to find a getter and setter method for the AdminPresentation field: " + (fieldName)) + ". Make sure you have a getter method entitled: get") + mutatorName) + "(), or is") + mutatorName) + "(), or ") + (fieldName)) + "(). Make sure you have a setter method entitled: set") + mutatorName) + "(..)."));
         }
-        return new Method[]{getMethod, setMethod};
+        return new java.lang.reflect.Method[]{ getMethod, setMethod };
     }
 
-    //FieldVisitor
-    public void visitAttribute(Attribute arg0) {
-        //do nothing
+    public void visitAttribute(org.objectweb.asm.Attribute arg0) {
     }
 
     public void visitEnd() {
-        //do nothing
     }
 
-    //ClassVisitor
-    public void visit(int arg0, int arg1, String arg2, String arg3, String arg4, String[] arg5) {
+    public void visit(int arg0, int arg1, java.lang.String arg2, java.lang.String arg3, java.lang.String arg4, java.lang.String[] arg5) {
         try {
-            clazz = Class.forName(arg2.replaceAll("/", "."));
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            clazz = java.lang.Class.forName(arg2.replaceAll("/", "."));
+        } catch (java.lang.ClassNotFoundException e) {
+            throw new java.lang.RuntimeException(e);
         }
-        stage = CLASSSTAGE;
+        stage = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L187, org.broadleafcommerce.common.cache.engine.HydrationScanner.CLASSSTAGE);
     }
 
-    public FieldVisitor visitField(int arg0, String arg1, String arg2, String arg3, Object arg4) {
-        stage = FIELDSTAGE;
+    public org.objectweb.asm.FieldVisitor visitField(int arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, java.lang.Object arg4) {
+        stage = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L188, org.broadleafcommerce.common.cache.engine.HydrationScanner.FIELDSTAGE);
         fieldName = arg1;
-        Type fieldType = Type.getType(arg2);
-        switch(fieldType.getSort()){
-        case Type.BOOLEAN:
-            fieldClass = boolean.class;
-            break;
-        case Type.BYTE:
-            fieldClass = byte.class;
-            break;
-        case Type.CHAR:
-            fieldClass = char.class;
-            break;
-        case Type.DOUBLE:
-            fieldClass = double.class;
-            break;
-        case Type.FLOAT:
-            fieldClass = float.class;
-            break;
-        case Type.INT:
-            fieldClass = int.class;
-            break;
-        case Type.LONG:
-            fieldClass = long.class;
-            break;
-        case Type.SHORT:
-            fieldClass = short.class;
-            break;
-        case Type.OBJECT:
-            try {
-                fieldClass = Class.forName(Type.getType(arg2).getClassName());
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-            break;
+        org.objectweb.asm.Type fieldType = org.objectweb.asm.Type.getType(arg2);
+        switch (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L189, fieldType.getSort())) {
+            case org.objectweb.asm.Type.BOOLEAN :
+                fieldClass = boolean.class;
+                break;
+            case org.objectweb.asm.Type.BYTE :
+                fieldClass = byte.class;
+                break;
+            case org.objectweb.asm.Type.CHAR :
+                fieldClass = char.class;
+                break;
+            case org.objectweb.asm.Type.DOUBLE :
+                fieldClass = double.class;
+                break;
+            case org.objectweb.asm.Type.FLOAT :
+                fieldClass = float.class;
+                break;
+            case org.objectweb.asm.Type.INT :
+                fieldClass = int.class;
+                break;
+            case org.objectweb.asm.Type.LONG :
+                fieldClass = long.class;
+                break;
+            case org.objectweb.asm.Type.SHORT :
+                fieldClass = short.class;
+                break;
+            case org.objectweb.asm.Type.OBJECT :
+                try {
+                    fieldClass = java.lang.Class.forName(org.objectweb.asm.Type.getType(arg2).getClassName());
+                } catch (java.lang.ClassNotFoundException e) {
+                    throw new java.lang.RuntimeException(e);
+                }
+                break;
         }
         return this;
     }
 
-    public void visitInnerClass(String arg0, String arg1, String arg2, int arg3) {
-        //do nothing
+    public void visitInnerClass(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, int arg3) {
     }
 
-    public MethodVisitor visitMethod(int arg0, String arg1, String arg2, String arg3, String[] arg4) {
-        return new EmptyVisitor();
+    public org.objectweb.asm.MethodVisitor visitMethod(int arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, java.lang.String[] arg4) {
+        return new org.objectweb.asm.commons.EmptyVisitor();
     }
 
-    public void visitOuterClass(String arg0, String arg1, String arg2) {
-        //do nothing
+    public void visitOuterClass(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2) {
     }
 
-    public void visitSource(String arg0, String arg1) {
-        //do nothing
+    public void visitSource(java.lang.String arg0, java.lang.String arg1) {
     }
 
-    //AnnotationVisitor
-    public void visit(String arg0, Object arg1) {
-        if (Cache.class.getName().equals(annotation) && "region".equals(arg0)) {
-            cacheRegion = (String) arg1;
+    public void visit(java.lang.String arg0, java.lang.Object arg1) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L192, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L190, org.hibernate.annotations.Cache.class.getName().equals(annotation))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L191, "region".equals(arg0)))))) {
+            cacheRegion = ((java.lang.String) (arg1));
         }
-        if (Hydrated.class.getName().equals(annotation) && "factoryMethod".equals(arg0)) {
-            HydrationItemDescriptor itemDescriptor = new HydrationItemDescriptor();
-            itemDescriptor.setFactoryMethod((String) arg1);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L195, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L193, org.broadleafcommerce.common.cache.Hydrated.class.getName().equals(annotation))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.HydrationScanner.__L194, "factoryMethod".equals(arg0)))))) {
+            org.broadleafcommerce.common.cache.engine.HydrationItemDescriptor itemDescriptor = new org.broadleafcommerce.common.cache.engine.HydrationItemDescriptor();
+            itemDescriptor.setFactoryMethod(((java.lang.String) (arg1)));
             itemDescriptor.setMutators(retrieveMutators());
             cacheMutators.put(fieldName, itemDescriptor);
         }
     }
 
-    public AnnotationVisitor visitAnnotation(String arg0, String arg1) {
+    public org.objectweb.asm.AnnotationVisitor visitAnnotation(java.lang.String arg0, java.lang.String arg1) {
         return this;
     }
 
-    public AnnotationVisitor visitArray(String arg0) {
+    public org.objectweb.asm.AnnotationVisitor visitArray(java.lang.String arg0) {
         return this;
     }
 
-    public void visitEnum(String arg0, String arg1, String arg2) {
-        //do nothing
+    public void visitEnum(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2) {
     }
 
+    public static perturbation.location.PerturbationLocation __L175;
+
+    public static perturbation.location.PerturbationLocation __L176;
+
+    public static perturbation.location.PerturbationLocation __L177;
+
+    public static perturbation.location.PerturbationLocation __L178;
+
+    public static perturbation.location.PerturbationLocation __L179;
+
+    public static perturbation.location.PerturbationLocation __L180;
+
+    public static perturbation.location.PerturbationLocation __L181;
+
+    public static perturbation.location.PerturbationLocation __L182;
+
+    public static perturbation.location.PerturbationLocation __L183;
+
+    public static perturbation.location.PerturbationLocation __L184;
+
+    public static perturbation.location.PerturbationLocation __L185;
+
+    public static perturbation.location.PerturbationLocation __L186;
+
+    public static perturbation.location.PerturbationLocation __L187;
+
+    public static perturbation.location.PerturbationLocation __L188;
+
+    public static perturbation.location.PerturbationLocation __L189;
+
+    public static perturbation.location.PerturbationLocation __L190;
+
+    public static perturbation.location.PerturbationLocation __L191;
+
+    public static perturbation.location.PerturbationLocation __L192;
+
+    public static perturbation.location.PerturbationLocation __L193;
+
+    public static perturbation.location.PerturbationLocation __L194;
+
+    public static perturbation.location.PerturbationLocation __L195;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L175 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:73)", 175, "Numerical");
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L176 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:75)", 176, "Numerical");
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L177 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:96)", 177, "Numerical");
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L178 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:122)", 178, "Numerical");
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L179 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:122)", 179, "Numerical");
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L180 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:122)", 180, "Numerical");
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L181 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:122)", 181, "Numerical");
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L182 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:129)", 182, "Boolean");
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L183 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:136)", 183, "Boolean");
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L184 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:149)", 184, "Boolean");
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L185 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:149)", 185, "Boolean");
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L186 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:149)", 186, "Boolean");
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L187 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:171)", 187, "Numerical");
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L188 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:175)", 188, "Numerical");
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L189 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:178)", 189, "Numerical");
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L190 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:232)", 190, "Boolean");
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L191 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:232)", 191, "Boolean");
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L192 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:232)", 192, "Boolean");
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L193 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:235)", 193, "Boolean");
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L194 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:235)", 194, "Boolean");
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.__L195 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/HydrationScanner.java:235)", 195, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.cache.engine.HydrationScanner.initPerturbationLocation0();
+    }
 }
+

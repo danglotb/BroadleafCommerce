@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,31 +17,39 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.springframework.beans.factory.FactoryBean;
 
-public class EnvironmentFactoryBean implements FactoryBean {
+public class EnvironmentFactoryBean implements org.springframework.beans.factory.FactoryBean {
+    private java.lang.String className;
 
-    private String className;
-
-    public EnvironmentFactoryBean(String className) {
+    public EnvironmentFactoryBean(java.lang.String className) {
         this.className = className;
     }
 
-    public Object getObject() throws Exception {
-        return Class.forName(className).newInstance();
+    public java.lang.Object getObject() throws java.lang.Exception {
+        return java.lang.Class.forName(className).newInstance();
     }
 
-    @SuppressWarnings("unchecked")
-    public Class getObjectType() {
+    @java.lang.SuppressWarnings("unchecked")
+    public java.lang.Class getObjectType() {
         try {
-            return Class.forName(className);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            return java.lang.Class.forName(className);
+        } catch (java.lang.ClassNotFoundException e) {
+            throw new java.lang.RuntimeException(e);
         }
     }
 
     public boolean isSingleton() {
-        return false;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EnvironmentFactoryBean.__L6351, false);
     }
 
+    public static perturbation.location.PerturbationLocation __L6351;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.EnvironmentFactoryBean.__L6351 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EnvironmentFactoryBean.java:44)", 6351, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.EnvironmentFactoryBean.initPerturbationLocation0();
+    }
 }
+

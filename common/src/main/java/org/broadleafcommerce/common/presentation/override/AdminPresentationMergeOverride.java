@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,44 +17,12 @@
  */
 package org.broadleafcommerce.common.presentation.override;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 
-/**
- * Allows a non-comprehensive override of admin presentation annotation
- * property values for a target entity field.
- *
- * @see org.broadleafcommerce.common.presentation.AdminPresentation
- * @see org.broadleafcommerce.common.presentation.AdminPresentationToOneLookup
- * @see org.broadleafcommerce.common.presentation.AdminPresentationDataDrivenEnumeration
- * @see org.broadleafcommerce.common.presentation.AdminPresentationCollection
- * @see org.broadleafcommerce.common.presentation.AdminPresentationAdornedTargetCollection
- * @see org.broadleafcommerce.common.presentation.AdminPresentationMap
- * @author Jeff Fischer
- */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
+@java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
+@java.lang.annotation.Target(java.lang.annotation.ElementType.TYPE)
 public @interface AdminPresentationMergeOverride {
+    java.lang.String name();
 
-    /**
-     * The name of the property whose admin presentation annotation should be overwritten
-     *
-     * @return the name of the property that should be overwritten
-     */
-    String name();
-
-    /**
-     * The array of override configuration values. Each entry correlates to a property on
-     * {@link org.broadleafcommerce.common.presentation.AdminPresentation},
-     * {@link org.broadleafcommerce.common.presentation.AdminPresentationToOneLookup},
-     * {@link org.broadleafcommerce.common.presentation.AdminPresentationDataDrivenEnumeration},
-     * {@link org.broadleafcommerce.common.presentation.AdminPresentationAdornedTargetCollection},
-     * {@link org.broadleafcommerce.common.presentation.AdminPresentationCollection} or
-     * {@link org.broadleafcommerce.common.presentation.AdminPresentationMap}
-     *
-     * @return The array of override configuration values.
-     */
-    AdminPresentationMergeEntry[] mergeEntries();
+    org.broadleafcommerce.common.presentation.override.AdminPresentationMergeEntry[] mergeEntries();
 }
+

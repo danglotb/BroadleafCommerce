@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,26 +17,24 @@
  */
 package org.broadleafcommerce.common.vendor.service.exception;
 
-import org.broadleafcommerce.common.exception.BroadleafException;
 
-public class PaymentException extends BroadleafException {
-
+public class PaymentException extends org.broadleafcommerce.common.exception.BroadleafException {
     private static final long serialVersionUID = 1L;
 
     public PaymentException() {
         super();
     }
 
-    public PaymentException(String message, Throwable cause) {
+    public PaymentException(java.lang.String message, java.lang.Throwable cause) {
         super(message, cause);
     }
 
-    public PaymentException(String message) {
+    public PaymentException(java.lang.String message) {
         super(message);
     }
 
-    public PaymentException(Throwable cause) {
+    public PaymentException(java.lang.Throwable cause) {
         super(cause);
     }
-
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,17 +17,8 @@
  */
 package org.broadleafcommerce.common.time;
 
-/**
- * Provides an abstraction from the current system time.
- * Certain aspects of Broadleaf can be run in a mode that allows the end user to override the
- * current time.
- *
- * A convenient example of this is when previewing content.   An approver may want to view
- * the site as it would appear on a particular date or time.
- *
- * See BroadleafProcessURLFilter for example usage of this construct.
- */
-public interface TimeSource {
 
+public interface TimeSource {
     long timeInMillis();
 }
+

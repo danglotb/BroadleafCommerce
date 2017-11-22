@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,47 +17,66 @@
  */
 package org.broadleafcommerce.common.i18n.service;
 
-import org.broadleafcommerce.common.classloader.release.ThreadLocalManager;
 
-/**
- * Container for ThreadLocal attributes that relate to Translation.
- * 
- * @author Andre Azzolini (apazzolini)
- */
 public class TranslationConsiderationContext {
+    private static final java.lang.ThreadLocal<org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext> translationConsiderationContext = org.broadleafcommerce.common.classloader.release.ThreadLocalManager.createThreadLocal(org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.class);
 
-    private static final ThreadLocal<TranslationConsiderationContext> translationConsiderationContext = ThreadLocalManager.createThreadLocal(TranslationConsiderationContext.class);
+    protected java.lang.Boolean enabled = ((boolean) (false));
 
-    public static TranslationConsiderationContext getTranslationConsiderationContext() {
-        return translationConsiderationContext.get();
+    protected org.broadleafcommerce.common.i18n.service.TranslationService service;
+
+    public static org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext getTranslationConsiderationContext() {
+        return org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.translationConsiderationContext.get();
     }
-    
+
     public static boolean hasTranslation() {
-        return isTranslationConsiderationContextEnabled() != null
-                && isTranslationConsiderationContextEnabled() && getTranslationService() != null;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.__L3053, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.__L3051, (((org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.isTranslationConsiderationContextEnabled()) != null) && (org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.isTranslationConsiderationContextEnabled())))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.__L3052, ((org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.getTranslationService()) != null)))));
     }
-    
-    public static Boolean isTranslationConsiderationContextEnabled() {
-        Boolean val = TranslationConsiderationContext.translationConsiderationContext.get().enabled;
-        return val == null ? false : val;
+
+    public static java.lang.Boolean isTranslationConsiderationContextEnabled() {
+        java.lang.Boolean val = org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.translationConsiderationContext.get().enabled;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.__L3056, (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.__L3054, (val == null)) ? perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.__L3055, false) : val));
     }
-    
-    public static void setTranslationConsiderationContext(Boolean isEnabled) {
-        TranslationConsiderationContext.translationConsiderationContext.get().enabled = isEnabled;
+
+    public static void setTranslationConsiderationContext(java.lang.Boolean isEnabled) {
+        org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.translationConsiderationContext.get().enabled = isEnabled;
     }
-    
-    public static TranslationService getTranslationService() {
-        return TranslationConsiderationContext.translationConsiderationContext.get().service;
+
+    public static org.broadleafcommerce.common.i18n.service.TranslationService getTranslationService() {
+        return org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.translationConsiderationContext.get().service;
     }
-    
-    public static void setTranslationService(TranslationService translationService) {
-        TranslationConsiderationContext.translationConsiderationContext.get().service = translationService;
+
+    public static void setTranslationService(org.broadleafcommerce.common.i18n.service.TranslationService translationService) {
+        org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.translationConsiderationContext.get().service = translationService;
     }
 
     public static void removeTranslationConsiderationContext() {
-        ThreadLocalManager.remove(translationConsiderationContext);
+        org.broadleafcommerce.common.classloader.release.ThreadLocalManager.remove(org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.translationConsiderationContext);
     }
 
-    protected Boolean enabled = false;
-    protected TranslationService service;
+    public static perturbation.location.PerturbationLocation __L3051;
+
+    public static perturbation.location.PerturbationLocation __L3052;
+
+    public static perturbation.location.PerturbationLocation __L3053;
+
+    public static perturbation.location.PerturbationLocation __L3054;
+
+    public static perturbation.location.PerturbationLocation __L3055;
+
+    public static perturbation.location.PerturbationLocation __L3056;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.__L3051 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/TranslationConsiderationContext.java:36)", 3051, "Boolean");
+        org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.__L3052 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/TranslationConsiderationContext.java:37)", 3052, "Boolean");
+        org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.__L3053 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/TranslationConsiderationContext.java:36)", 3053, "Boolean");
+        org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.__L3054 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/TranslationConsiderationContext.java:42)", 3054, "Boolean");
+        org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.__L3055 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/TranslationConsiderationContext.java:42)", 3055, "Boolean");
+        org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.__L3056 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/service/TranslationConsiderationContext.java:42)", 3056, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.initPerturbationLocation0();
+    }
 }
+

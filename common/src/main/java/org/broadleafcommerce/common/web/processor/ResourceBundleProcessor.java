@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,222 +17,187 @@
  */
 package org.broadleafcommerce.common.web.processor;
 
-import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.resource.service.ResourceBundlingService;
-import org.broadleafcommerce.common.util.BLCSystemProperty;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
-import org.broadleafcommerce.presentation.dialect.AbstractBroadleafTagReplacementProcessor;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateContext;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateModel;
-import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+@org.springframework.stereotype.Component("blResourceBundleProcessor")
+@org.broadleafcommerce.presentation.condition.ConditionalOnTemplating
+public class ResourceBundleProcessor extends org.broadleafcommerce.presentation.dialect.AbstractBroadleafTagReplacementProcessor {
+    @javax.annotation.Resource(name = "blResourceBundlingService")
+    protected org.broadleafcommerce.common.resource.service.ResourceBundlingService bundlingService;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
-
-/**
- * <p>
- * Works with the blc:bundle tag.   
- * 
- * <p>
- * This processor does not do the actual bundling.   It merely changes the URL which causes the 
- * other bundling components to be invoked through the normal static resource handling processes.
- * 
- * <p>
- * This processor relies {@code bundle.enabled}.   If this property is false (typical for dev) then the list of
- * resources will be output as individual SCRIPT or LINK elements for each JavaScript or CSS file respectively.
- * 
- * <p>
- * To use this processor, supply a name, mapping prefix, and list of files.   
- * 
- * <pre>
- * {@code
- * <blc:bundle name="lib.js" 
- *             mapping-prefix="/js/"
- *             files="plugins.js,
- *                    libs/jquery.MetaData.js,
- *                    libs/jquery.rating.pack.js,
- *                    libs/jquery.dotdotdot-1.5.1.js" />
- *  }
- * </pre>                  
- * 
- * <p>
- * With bundling enabled this will turn into:
- * 
- * <pre>
- * 
- * {@code
- *  <script type="text/javascript" src="/js/lib-blbundle12345.js" />
- * }
- * </pre>
- * 
- * <p>
- * Where the <b>-blbundle12345</b> is used by the BundleUrlResourceResolver to determine the
- * actual bundle name.  
- * 
- * <p>
- * With bundling disabled this turns into:
- * 
- * <pre>
- * {@code
- *  <script type="text/javascript" src="/js/plugins.js" />
- *  <script type="text/javascript" src="/js/jquery.MetaData.js" />
- *  <script type="text/javascript" src="/js/jquery.rating.pack.js.js" />
- *  <script type="text/javascript" src="/js/jquery.dotdotdot-1.5.1.js" />
- * }
- * </pre>
- * 
- * <p>
- * This processor also supports producing the 'async' and 'defer' attributes for Javascript files. For instance:
- * 
- * <pre>
- * {@code
- * <blc:bundle name="lib.js" 
- *             async="true"
- *             defer="true"
- *             mapping-prefix="/js/"
- *             files="plugins.js,
- *                    libs/jquery.MetaData.js,
- *                    libs/jquery.rating.pack.js,
- *                    libs/jquery.dotdotdot-1.5.1.js" />
- *  }
- * </pre>
- * 
- * <p>
- * If bundling is turned on, the single output file contains the 'async' and 'defer' name-only attributes. When bundling is
- * turned off, then those name-only attributes are applied to each individual file reference.
- * 
- * <p>
- * This processor only supports files that end in <b>.js</b> and <b>.css</b>
- * 
- * @param <b>name</b>           (required) the final name prefix of the bundle
- * @param <b>mapping-prefix</b> (required) the prefix appended to the final tag output whether that be 
- *                              the list of files or the single minified file
- * @param <b>files</b>          (required) a comma-separated list of files that should be bundled together
- * 
- * @author apazzolini
- * @author bpolster
- * @see {@link ResourceBundlingService}
- */
-@Component("blResourceBundleProcessor")
-@ConditionalOnTemplating
-public class ResourceBundleProcessor extends AbstractBroadleafTagReplacementProcessor {
-    
-    @Resource(name = "blResourceBundlingService")
-    protected ResourceBundlingService bundlingService;
-    
     protected boolean getBundleEnabled() {
-        return BLCSystemProperty.resolveBooleanSystemProperty("bundle.enabled");
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7424, org.broadleafcommerce.common.util.BLCSystemProperty.resolveBooleanSystemProperty("bundle.enabled"));
     }
-    
-    @Override
-    public String getName() {
+
+    @java.lang.Override
+    public java.lang.String getName() {
         return "bundle";
     }
-    
-    @Override
+
+    @java.lang.Override
     public int getPrecedence() {
-        return 10000;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7425, 10000);
     }
-    
-    @Override
-    public BroadleafTemplateModel getReplacementModel(String tagName, Map<String, String> tagAttributes, BroadleafTemplateContext context) {
-        String name = tagAttributes.get("name");
-        String mappingPrefix = tagAttributes.get("mapping-prefix");
-        boolean async = tagAttributes.containsKey("async");
-        boolean defer = tagAttributes.containsKey("defer");
-        
-        List<String> files = new ArrayList<>();
-        for (String file : tagAttributes.get("files").split(",")) {
+
+    @java.lang.Override
+    public org.broadleafcommerce.presentation.model.BroadleafTemplateModel getReplacementModel(java.lang.String tagName, java.util.Map<java.lang.String, java.lang.String> tagAttributes, org.broadleafcommerce.presentation.model.BroadleafTemplateContext context) {
+        java.lang.String name = tagAttributes.get("name");
+        java.lang.String mappingPrefix = tagAttributes.get("mapping-prefix");
+        boolean async = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7426, tagAttributes.containsKey("async"));
+        boolean defer = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7427, tagAttributes.containsKey("defer"));
+        java.util.List<java.lang.String> files = new java.util.ArrayList<>();
+        for (java.lang.String file : tagAttributes.get("files").split(",")) {
             files.add(file.trim());
         }
-        List<String> additionalBundleFiles = bundlingService.getAdditionalBundleFiles(name);
-        if (additionalBundleFiles != null) {
+        java.util.List<java.lang.String> additionalBundleFiles = bundlingService.getAdditionalBundleFiles(name);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7428, (additionalBundleFiles != null))) {
             files.addAll(additionalBundleFiles);
         }
-        BroadleafTemplateModel model = context.createModel();
-        if (getBundleEnabled()) {
-            String bundleResourceName = bundlingService.resolveBundleResourceName(name, mappingPrefix, files);
-            String bundleUrl = getBundleUrl(bundleResourceName, context);
-            
-            addElementToModel(bundleUrl, async, defer, context, model);
-        } else {
-            for (String fileName : files) {
+        org.broadleafcommerce.presentation.model.BroadleafTemplateModel model = context.createModel();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7429, getBundleEnabled())) {
+            java.lang.String bundleResourceName = bundlingService.resolveBundleResourceName(name, mappingPrefix, files);
+            java.lang.String bundleUrl = getBundleUrl(bundleResourceName, context);
+            addElementToModel(bundleUrl, perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7430, async), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7431, defer), context, model);
+        }else {
+            for (java.lang.String fileName : files) {
                 fileName = fileName.trim();
-                String fullFileName = (String) context.parseExpression("@{'" + mappingPrefix + fileName + "'}");
-                addElementToModel(fullFileName, async, defer, context, model);
+                java.lang.String fullFileName = ((java.lang.String) (context.parseExpression(((("@{'" + mappingPrefix) + fileName) + "'}"))));
+                addElementToModel(fullFileName, perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7432, async), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7433, defer), context, model);
             }
         }
         return model;
     }
-    
-    /**
-     * Adds the context path to the bundleUrl.    We don't use the Thymeleaf "@" syntax or any other mechanism to 
-     * encode this URL as the resolvers could have a conflict.   
-     * 
-     * For example, resolving a bundle named "style.css" that has a file also named "style.css" creates problems as
-     * the TF or version resolvers both want to version this file.
-     *  
-     * @param arguments
-     * @param bundleName
-     * @return
-     */
-    protected String getBundleUrl(String bundleName, BroadleafTemplateContext context) {
-        String bundleUrl = bundleName;
 
-        if (!StringUtils.startsWith(bundleUrl, "/")) {
+    protected java.lang.String getBundleUrl(java.lang.String bundleName, org.broadleafcommerce.presentation.model.BroadleafTemplateContext context) {
+        java.lang.String bundleUrl = bundleName;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7435, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7434, org.apache.commons.lang3.StringUtils.startsWith(bundleUrl, "/")))))) {
             bundleUrl = "/" + bundleUrl;
         }
-        
-        HttpServletRequest request = context.getRequest();
-        String contextPath = "";
-        if (request != null) {
+        javax.servlet.http.HttpServletRequest request = context.getRequest();
+        java.lang.String contextPath = "";
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7436, (request != null))) {
             contextPath = request.getContextPath();
         }
-        if (StringUtils.isNotEmpty(contextPath)) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7437, org.apache.commons.lang3.StringUtils.isNotEmpty(contextPath))) {
             bundleUrl = contextPath + bundleUrl;
         }
-
         return bundleUrl;
     }
-    
-    protected void addElementToModel(String src, boolean async, boolean defer, BroadleafTemplateContext context, BroadleafTemplateModel model) {
-        if (src.contains(";")) {
-            src = src.substring(0, src.indexOf(';'));
+
+    protected void addElementToModel(java.lang.String src, boolean async, boolean defer, org.broadleafcommerce.presentation.model.BroadleafTemplateContext context, org.broadleafcommerce.presentation.model.BroadleafTemplateModel model) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7438, src.contains(";"))) {
+            src = src.substring(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7439, 0), perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7440, src.indexOf(';')));
         }
-        
-        if (src.endsWith(".js")) {
-            model.addElement(context.createNonVoidElement("script", getScriptAttributes(src, async, defer), true));
-        } else if (src.endsWith(".css")) {
-            model.addElement(context.createNonVoidElement("link", getLinkAttributes(src), true));
-        } else {
-            throw new IllegalArgumentException("Unknown extension for: " + src + " - only .js and .css are supported");
-        }
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7441, src.endsWith(".js"))) {
+            model.addElement(context.createNonVoidElement("script", getScriptAttributes(src, perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7442, async), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7443, defer)), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7444, true)));
+        }else
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7445, src.endsWith(".css"))) {
+                model.addElement(context.createNonVoidElement("link", getLinkAttributes(src), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7446, true)));
+            }else {
+                throw new java.lang.IllegalArgumentException((("Unknown extension for: " + src) + " - only .js and .css are supported"));
+            }
+
     }
 
-    protected Map<String, String> getScriptAttributes(String src, boolean async, boolean defer) {
-        Map<String, String> attributes = new HashMap<>();
+    protected java.util.Map<java.lang.String, java.lang.String> getScriptAttributes(java.lang.String src, boolean async, boolean defer) {
+        java.util.Map<java.lang.String, java.lang.String> attributes = new java.util.HashMap<>();
         attributes.put("type", "text/javascript");
         attributes.put("src", src);
-        if (async) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7447, async)) {
             attributes.put("async", null);
         }
-        if (defer) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7448, defer)) {
             attributes.put("defer", null);
         }
         return attributes;
     }
-    
-    protected Map<String, String> getLinkAttributes(String src) {
-        Map<String, String> attributes = new HashMap<>();
+
+    protected java.util.Map<java.lang.String, java.lang.String> getLinkAttributes(java.lang.String src) {
+        java.util.Map<java.lang.String, java.lang.String> attributes = new java.util.HashMap<>();
         attributes.put("rel", "stylesheet");
         attributes.put("href", src);
         return attributes;
     }
 
+    public static perturbation.location.PerturbationLocation __L7424;
+
+    public static perturbation.location.PerturbationLocation __L7425;
+
+    public static perturbation.location.PerturbationLocation __L7426;
+
+    public static perturbation.location.PerturbationLocation __L7427;
+
+    public static perturbation.location.PerturbationLocation __L7428;
+
+    public static perturbation.location.PerturbationLocation __L7429;
+
+    public static perturbation.location.PerturbationLocation __L7430;
+
+    public static perturbation.location.PerturbationLocation __L7431;
+
+    public static perturbation.location.PerturbationLocation __L7432;
+
+    public static perturbation.location.PerturbationLocation __L7433;
+
+    public static perturbation.location.PerturbationLocation __L7434;
+
+    public static perturbation.location.PerturbationLocation __L7435;
+
+    public static perturbation.location.PerturbationLocation __L7436;
+
+    public static perturbation.location.PerturbationLocation __L7437;
+
+    public static perturbation.location.PerturbationLocation __L7438;
+
+    public static perturbation.location.PerturbationLocation __L7439;
+
+    public static perturbation.location.PerturbationLocation __L7440;
+
+    public static perturbation.location.PerturbationLocation __L7441;
+
+    public static perturbation.location.PerturbationLocation __L7442;
+
+    public static perturbation.location.PerturbationLocation __L7443;
+
+    public static perturbation.location.PerturbationLocation __L7444;
+
+    public static perturbation.location.PerturbationLocation __L7445;
+
+    public static perturbation.location.PerturbationLocation __L7446;
+
+    public static perturbation.location.PerturbationLocation __L7447;
+
+    public static perturbation.location.PerturbationLocation __L7448;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7424 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:130)", 7424, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7425 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:140)", 7425, "Numerical");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7426 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:147)", 7426, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7427 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:148)", 7427, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7428 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:155)", 7428, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7429 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:159)", 7429, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7430 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:163)", 7430, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7431 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:163)", 7431, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7432 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:168)", 7432, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7433 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:168)", 7433, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7434 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:188)", 7434, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7435 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:188)", 7435, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7436 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:194)", 7436, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7437 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:197)", 7437, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7438 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:205)", 7438, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7439 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:206)", 7439, "Numerical");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7440 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:206)", 7440, "Numerical");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7441 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:209)", 7441, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7442 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:210)", 7442, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7443 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:210)", 7443, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7444 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:210)", 7444, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7445 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:211)", 7445, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7446 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:212)", 7446, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7447 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:222)", 7447, "Boolean");
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.__L7448 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ResourceBundleProcessor.java:225)", 7448, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.processor.ResourceBundleProcessor.initPerturbationLocation0();
+    }
 }
+

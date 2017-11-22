@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,54 +17,72 @@
  */
 package org.broadleafcommerce.common.vendor.service;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.Map;
 
 public abstract class AbstractVendorService {
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.vendor.service.AbstractVendorService.class);
 
-    private static final Log LOG = LogFactory.getLog(AbstractVendorService.class);
-    private static final String POST_METHOD = "POST";
+    private static final java.lang.String POST_METHOD = "POST";
 
-    protected InputStream postMessage(Map<String, String>content, URL destination, String encodeCharset) throws IOException {
-        HttpURLConnection connection = (HttpURLConnection) destination.openConnection();
-        connection.setDoInput(true);
-        connection.setDoOutput(true);
-        connection.setRequestMethod(POST_METHOD);
-
-        OutputStreamWriter osw = null;
+    protected java.io.InputStream postMessage(java.util.Map<java.lang.String, java.lang.String> content, java.net.URL destination, java.lang.String encodeCharset) throws java.io.IOException {
+        java.net.HttpURLConnection connection = ((java.net.HttpURLConnection) (destination.openConnection()));
+        connection.setDoInput(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.vendor.service.AbstractVendorService.__L7026, true));
+        connection.setDoOutput(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.vendor.service.AbstractVendorService.__L7027, true));
+        connection.setRequestMethod(org.broadleafcommerce.common.vendor.service.AbstractVendorService.POST_METHOD);
+        java.io.OutputStreamWriter osw = null;
         try {
-            osw = new OutputStreamWriter(connection.getOutputStream());
-            boolean isFirst = true;
-            for (String key : content.keySet()) {
-                if (!isFirst) {
+            osw = new java.io.OutputStreamWriter(connection.getOutputStream());
+            boolean isFirst = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.vendor.service.AbstractVendorService.__L7028, true);
+            for (java.lang.String key : content.keySet()) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.vendor.service.AbstractVendorService.__L7030, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.vendor.service.AbstractVendorService.__L7029, isFirst))))) {
                     osw.write("&");
                 }
-                isFirst = false;
-                String value = content.get(key);
-                osw.write(URLEncoder.encode(key, encodeCharset));
+                isFirst = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.vendor.service.AbstractVendorService.__L7031, false);
+                java.lang.String value = content.get(key);
+                osw.write(java.net.URLEncoder.encode(key, encodeCharset));
                 osw.write("=");
-                osw.write(URLEncoder.encode(value, encodeCharset));
+                osw.write(java.net.URLEncoder.encode(value, encodeCharset));
             }
             osw.flush();
             osw.close();
-        } catch (IOException e) {
-            // We'll try to avoid stopping processing and just log the error if the OutputStream doesn't close
-            LOG.error("Problem closing the OuputStream to destination: " + destination.toExternalForm(), e);
+        } catch (java.io.IOException e) {
+            org.broadleafcommerce.common.vendor.service.AbstractVendorService.LOG.error(("Problem closing the OuputStream to destination: " + (destination.toExternalForm())), e);
         } finally {
-            if (osw != null) {
-                try { osw.close(); } catch (Throwable e) {}
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.vendor.service.AbstractVendorService.__L7032, (osw != null))) {
+                try {
+                    osw.close();
+                } catch (java.lang.Throwable e) {
+                }
             }
         }
+        return new java.io.BufferedInputStream(connection.getInputStream());
+    }
 
-        return new BufferedInputStream(connection.getInputStream());
+    public static perturbation.location.PerturbationLocation __L7026;
+
+    public static perturbation.location.PerturbationLocation __L7027;
+
+    public static perturbation.location.PerturbationLocation __L7028;
+
+    public static perturbation.location.PerturbationLocation __L7029;
+
+    public static perturbation.location.PerturbationLocation __L7030;
+
+    public static perturbation.location.PerturbationLocation __L7031;
+
+    public static perturbation.location.PerturbationLocation __L7032;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.vendor.service.AbstractVendorService.__L7026 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/vendor/service/AbstractVendorService.java:39)", 7026, "Boolean");
+        org.broadleafcommerce.common.vendor.service.AbstractVendorService.__L7027 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/vendor/service/AbstractVendorService.java:40)", 7027, "Boolean");
+        org.broadleafcommerce.common.vendor.service.AbstractVendorService.__L7028 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/vendor/service/AbstractVendorService.java:46)", 7028, "Boolean");
+        org.broadleafcommerce.common.vendor.service.AbstractVendorService.__L7029 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/vendor/service/AbstractVendorService.java:48)", 7029, "Boolean");
+        org.broadleafcommerce.common.vendor.service.AbstractVendorService.__L7030 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/vendor/service/AbstractVendorService.java:48)", 7030, "Boolean");
+        org.broadleafcommerce.common.vendor.service.AbstractVendorService.__L7031 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/vendor/service/AbstractVendorService.java:51)", 7031, "Boolean");
+        org.broadleafcommerce.common.vendor.service.AbstractVendorService.__L7032 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/vendor/service/AbstractVendorService.java:63)", 7032, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.vendor.service.AbstractVendorService.initPerturbationLocation0();
     }
 }
+

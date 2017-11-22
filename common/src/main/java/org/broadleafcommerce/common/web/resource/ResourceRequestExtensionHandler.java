@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,38 +17,12 @@
  */
 package org.broadleafcommerce.common.web.resource;
 
-import org.broadleafcommerce.common.extension.ExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.springframework.core.io.Resource;
 
-/**
- * Provides extension points for dealing with requests for resources
- * 
- * @author bpolster, apazzolini
- */
-public interface ResourceRequestExtensionHandler extends ExtensionHandler {
-    
-    public static final String RESOURCE_ATTR = "RESOURCE_ATTR";
-    
-    /**
-     * Populates the RESOURCE_ATTR field in the ExtensionResultHolder map with an instance of
-     * {@link Resource} if the value of the modified resource.
-     * 
-     * @param path
-     * @param erh
-     * @return the {@link ExtensionResultStatusType}
-     */
-    public ExtensionResultStatusType getModifiedResource(String path, ExtensionResultHolder erh);
+public interface ResourceRequestExtensionHandler extends org.broadleafcommerce.common.extension.ExtensionHandler {
+    public static final java.lang.String RESOURCE_ATTR = "RESOURCE_ATTR";
 
-    /**
-     * Populates the RESOURCE_ATTR field in the ExtensionResultHolder map with an instance of
-     * {@link Resource} if there is an override resource available for the current path.
-     * 
-     * @param path
-     * @param erh
-     * @return the {@link ExtensionResultStatusType}
-     */
-    public ExtensionResultStatusType getOverrideResource(String path, ExtensionResultHolder erh);
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType getModifiedResource(java.lang.String path, org.broadleafcommerce.common.extension.ExtensionResultHolder erh);
 
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType getOverrideResource(java.lang.String path, org.broadleafcommerce.common.extension.ExtensionResultHolder erh);
 }
+

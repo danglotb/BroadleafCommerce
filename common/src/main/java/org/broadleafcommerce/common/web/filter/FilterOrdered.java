@@ -17,23 +17,18 @@
  */
 package org.broadleafcommerce.common.web.filter;
 
-/**
- * For Spring Boot implementations, use the {@link org.springframework.core.Ordered} interface, in conjunction with these
- * order values, on any {@link javax.servlet.Filter} implementation beans instantiated through Spring. This serves to setup
- * proper overall http filtering ordering in relation to Spring Security filter chain execution.
- * </p>
- * If fine-grained ordering control is required for a custom Filter bean before or after an existing Broadleaf filter
- * bean, refer to the order value used by the target bean and adjust your bean's order appropriately.
- *
- * @author Jeff Fischer
- */
+
 public class FilterOrdered {
-
     public static final int PRE_SECURITY_HIGH = -1000000;
-    public static final int PRE_SECURITY_MEDIUM = -500000;
-    public static final int PRE_SECURITY_LOW = -10000;
-    public static final int POST_SECURITY_HIGH = 10000;
-    public static final int POST_SECURITY_MEDIUM = 500000;
-    public static final int POST_SECURITY_LOW = 1000000;
 
+    public static final int PRE_SECURITY_MEDIUM = -500000;
+
+    public static final int PRE_SECURITY_LOW = -10000;
+
+    public static final int POST_SECURITY_HIGH = 10000;
+
+    public static final int POST_SECURITY_MEDIUM = 500000;
+
+    public static final int POST_SECURITY_LOW = 1000000;
 }
+

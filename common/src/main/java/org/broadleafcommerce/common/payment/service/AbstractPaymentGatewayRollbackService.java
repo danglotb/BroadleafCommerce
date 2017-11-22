@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,30 +17,26 @@
  */
 package org.broadleafcommerce.common.payment.service;
 
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
-import org.broadleafcommerce.common.vendor.service.exception.PaymentException;
 
-public class AbstractPaymentGatewayRollbackService implements PaymentGatewayRollbackService {
-
-    @Override
-    public PaymentResponseDTO rollbackAuthorize(PaymentRequestDTO transactionToBeRolledBack) throws PaymentException {
-        throw new UnsupportedOperationException("Not Implemented");
+public class AbstractPaymentGatewayRollbackService implements org.broadleafcommerce.common.payment.service.PaymentGatewayRollbackService {
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO rollbackAuthorize(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO transactionToBeRolledBack) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
-    public PaymentResponseDTO rollbackCapture(PaymentRequestDTO transactionToBeRolledBack) throws PaymentException {
-        throw new UnsupportedOperationException("Not Implemented");
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO rollbackCapture(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO transactionToBeRolledBack) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
-    public PaymentResponseDTO rollbackAuthorizeAndCapture(PaymentRequestDTO transactionToBeRolledBack) throws PaymentException {
-        throw new UnsupportedOperationException("Not Implemented");
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO rollbackAuthorizeAndCapture(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO transactionToBeRolledBack) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
-    public PaymentResponseDTO rollbackRefund(PaymentRequestDTO transactionToBeRolledBack) throws PaymentException {
-        throw new UnsupportedOperationException("Not Implemented");
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO rollbackRefund(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO transactionToBeRolledBack) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
-
 }
+

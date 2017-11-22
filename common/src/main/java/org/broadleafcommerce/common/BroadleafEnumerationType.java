@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,16 +17,10 @@
  */
 package org.broadleafcommerce.common;
 
-/**
- * In order for the Broadleaf Administration to display enumerated values with meaningful labels,
- * enumerations should implement this interface.
- *
- * @author jfischer
- *
- */
-public interface BroadleafEnumerationType {
 
-    public String getType();
-    public String getFriendlyType();
-    
+public interface BroadleafEnumerationType {
+    public java.lang.String getType();
+
+    public java.lang.String getFriendlyType();
 }
+

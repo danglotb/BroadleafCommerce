@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,176 +15,123 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.i18n.domain;
 
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
-import org.broadleafcommerce.common.presentation.PopulateToOneFieldsEnum;
-import org.broadleafcommerce.common.presentation.RequiredOverride;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Index;
-import org.hibernate.annotations.Parameter;
-import org.hibernate.annotations.Table;
-import org.hibernate.annotations.Type;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Lob;
-
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@javax.persistence.Entity
+@javax.persistence.Inheritance(strategy = javax.persistence.InheritanceType.JOINED)
 @javax.persistence.Table(name = "BLC_TRANSLATION")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "blTranslationElements")
-@AdminPresentationClass(populateToOneFields = PopulateToOneFieldsEnum.TRUE, friendlyName = "TranslationImpl_baseTranslation")
-//multi-column indexes don't appear to get exported correctly when declared at the field level, so declaring here as a workaround
-@Table(appliesTo = "BLC_TRANSLATION", indexes = {
-        @Index(name = "TRANSLATION_INDEX", columnNames = { "ENTITY_TYPE", "ENTITY_ID", "FIELD_NAME", "LOCALE_CODE" })
-})
-@DirectCopyTransform({
-        @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.SANDBOX, skipOverlaps = true),
-        @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_CATALOG),
-        @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_SITE)
-})
-public class TranslationImpl implements Serializable, Translation {
-
+@org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE, region = "blTranslationElements")
+@org.broadleafcommerce.common.presentation.AdminPresentationClass(populateToOneFields = org.broadleafcommerce.common.presentation.PopulateToOneFieldsEnum.TRUE, friendlyName = "TranslationImpl_baseTranslation")
+@org.hibernate.annotations.Table(appliesTo = "BLC_TRANSLATION", indexes = { @org.hibernate.annotations.Index(name = "TRANSLATION_INDEX", columnNames = { "ENTITY_TYPE", "ENTITY_ID", "FIELD_NAME", "LOCALE_CODE" }) })
+@org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform({ @org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember(templateTokens = org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes.SANDBOX, skipOverlaps = true), @org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember(templateTokens = org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes.MULTITENANT_CATALOG), @org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember(templateTokens = org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes.MULTITENANT_SITE) })
+public class TranslationImpl implements java.io.Serializable , org.broadleafcommerce.common.i18n.domain.Translation {
     private static final long serialVersionUID = -122818474469147685L;
 
-    @Id
-    @GeneratedValue(generator = "TranslationId")
-    @GenericGenerator(
-            name = "TranslationId",
-            strategy = "org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
-            parameters = {
-                    @Parameter(name = "segment_value", value = "TranslationImpl"),
-                    @Parameter(name = "entity_name", value = "org.broadleafcommerce.common.i18n.domain.TranslationImpl")
-            })
-    @Column(name = "TRANSLATION_ID")
-    protected Long id;
+    @javax.persistence.Id
+    @javax.persistence.GeneratedValue(generator = "TranslationId")
+    @org.hibernate.annotations.GenericGenerator(name = "TranslationId", strategy = "org.broadleafcommerce.common.persistence.IdOverrideTableGenerator", parameters = { @org.hibernate.annotations.Parameter(name = "segment_value", value = "TranslationImpl"), @org.hibernate.annotations.Parameter(name = "entity_name", value = "org.broadleafcommerce.common.i18n.domain.TranslationImpl") })
+    @javax.persistence.Column(name = "TRANSLATION_ID")
+    protected java.lang.Long id;
 
-    @Column(name = "ENTITY_TYPE")
-    @AdminPresentation(friendlyName = "TranslationImpl_EntityType", prominent = true)
-    protected String entityType;
+    @javax.persistence.Column(name = "ENTITY_TYPE")
+    @org.broadleafcommerce.common.presentation.AdminPresentation(friendlyName = "TranslationImpl_EntityType", prominent = true)
+    protected java.lang.String entityType;
 
-    @Column(name = "ENTITY_ID")
-    @AdminPresentation(visibility = VisibilityEnum.HIDDEN_ALL)
-    protected String entityId;
+    @javax.persistence.Column(name = "ENTITY_ID")
+    @org.broadleafcommerce.common.presentation.AdminPresentation(visibility = org.broadleafcommerce.common.presentation.client.VisibilityEnum.HIDDEN_ALL)
+    protected java.lang.String entityId;
 
-    @Column(name = "FIELD_NAME")
-    @AdminPresentation(friendlyName = "TranslationImpl_FieldName", prominent = true)
-    protected String fieldName;
+    @javax.persistence.Column(name = "FIELD_NAME")
+    @org.broadleafcommerce.common.presentation.AdminPresentation(friendlyName = "TranslationImpl_FieldName", prominent = true)
+    protected java.lang.String fieldName;
 
-    @Column(name = "LOCALE_CODE")
-    @AdminPresentation(friendlyName = "TranslationImpl_LocaleCode", prominent = true)
-    protected String localeCode;
+    @javax.persistence.Column(name = "LOCALE_CODE")
+    @org.broadleafcommerce.common.presentation.AdminPresentation(friendlyName = "TranslationImpl_LocaleCode", prominent = true)
+    protected java.lang.String localeCode;
 
-    @Column(name = "TRANSLATED_VALUE", length = Integer.MAX_VALUE - 1)
-    @Lob
-    @Type(type = "org.hibernate.type.StringClobType")
-    @AdminPresentation(friendlyName = "TranslationImpl_TranslatedValue", prominent = true, requiredOverride = RequiredOverride.REQUIRED)
-    protected String translatedValue;
+    @javax.persistence.Column(name = "TRANSLATED_VALUE", length = (java.lang.Integer.MAX_VALUE) - 1)
+    @javax.persistence.Lob
+    @org.hibernate.annotations.Type(type = "org.hibernate.type.StringClobType")
+    @org.broadleafcommerce.common.presentation.AdminPresentation(friendlyName = "TranslationImpl_TranslatedValue", prominent = true, requiredOverride = org.broadleafcommerce.common.presentation.RequiredOverride.REQUIRED)
+    protected java.lang.String translatedValue;
 
-    /* ************************ */
-    /* CUSTOM GETTERS / SETTERS */
-    /* ************************ */
-
-    @Override
-    public TranslatedEntity getEntityType() {
-        return TranslatedEntity.getInstanceFromFriendlyType(entityType);
+    @java.lang.Override
+    public org.broadleafcommerce.common.i18n.domain.TranslatedEntity getEntityType() {
+        return org.broadleafcommerce.common.i18n.domain.TranslatedEntity.getInstanceFromFriendlyType(entityType);
     }
 
-    @Override
-    public void setEntityType(TranslatedEntity entityType) {
+    @java.lang.Override
+    public void setEntityType(org.broadleafcommerce.common.i18n.domain.TranslatedEntity entityType) {
         this.entityType = entityType.getFriendlyType();
     }
 
-    /* ************************** */
-    /* STANDARD GETTERS / SETTERS */
-    /* ************************** */
-
-    @Override
-    public Long getId() {
+    @java.lang.Override
+    public java.lang.Long getId() {
         return id;
     }
 
-    @Override
-    public void setId(Long id) {
+    @java.lang.Override
+    public void setId(java.lang.Long id) {
         this.id = id;
     }
 
-    @Override
-    public String getEntityId() {
+    @java.lang.Override
+    public java.lang.String getEntityId() {
         return entityId;
     }
 
-    @Override
-    public void setEntityId(String entityId) {
+    @java.lang.Override
+    public void setEntityId(java.lang.String entityId) {
         this.entityId = entityId;
     }
 
-    @Override
-    public String getFieldName() {
+    @java.lang.Override
+    public java.lang.String getFieldName() {
         return fieldName;
     }
 
-    @Override
-    public void setFieldName(String fieldName) {
+    @java.lang.Override
+    public void setFieldName(java.lang.String fieldName) {
         this.fieldName = fieldName;
     }
 
-    @Override
-    public String getLocaleCode() {
+    @java.lang.Override
+    public java.lang.String getLocaleCode() {
         return localeCode;
     }
 
-    @Override
-    public void setLocaleCode(String localeCode) {
+    @java.lang.Override
+    public void setLocaleCode(java.lang.String localeCode) {
         this.localeCode = localeCode;
     }
 
-    @Override
-    public String getTranslatedValue() {
+    @java.lang.Override
+    public java.lang.String getTranslatedValue() {
         return translatedValue;
     }
 
-    @Override
-    public void setTranslatedValue(String translatedValue) {
+    @java.lang.Override
+    public void setTranslatedValue(java.lang.String translatedValue) {
         this.translatedValue = translatedValue;
     }
 
-    @Override
-    public <G extends Translation> CreateResponse<G> createOrRetrieveCopyInstance(MultiTenantCopyContext context) throws CloneNotSupportedException {
-        CreateResponse<G> createResponse = context.createOrRetrieveCopyInstance(this);
-        if (createResponse.isAlreadyPopulated()) {
+    @java.lang.Override
+    public <G extends org.broadleafcommerce.common.i18n.domain.Translation> org.broadleafcommerce.common.copy.CreateResponse<G> createOrRetrieveCopyInstance(org.broadleafcommerce.common.copy.MultiTenantCopyContext context) throws java.lang.CloneNotSupportedException {
+        org.broadleafcommerce.common.copy.CreateResponse<G> createResponse = context.createOrRetrieveCopyInstance(this);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.domain.TranslationImpl.__L2899, createResponse.isAlreadyPopulated())) {
             return createResponse;
         }
-        Translation cloned = createResponse.getClone();
-
-        //this assumes that TranslationImpl copying occurs last after all other entity copying
-        Object referenceClone;
+        org.broadleafcommerce.common.i18n.domain.Translation cloned = createResponse.getClone();
+        java.lang.Object referenceClone;
         try {
-            referenceClone = context.getPreviousClone(Class.forName(getEntityType().getType()), Long.parseLong(entityId));
-        } catch (ClassNotFoundException e) {
-            throw ExceptionHelper.refineException(e);
+            referenceClone = context.getPreviousClone(java.lang.Class.forName(getEntityType().getType()), perturbation.PerturbationEngine.plong(org.broadleafcommerce.common.i18n.domain.TranslationImpl.__L2900, java.lang.Long.parseLong(entityId)));
+        } catch (java.lang.ClassNotFoundException e) {
+            throw org.broadleafcommerce.common.exception.ExceptionHelper.refineException(e);
         }
-        String convertedId = entityId;
-        if (referenceClone != null) {
-            convertedId = String.valueOf(context.getIdentifier(referenceClone));
+        java.lang.String convertedId = entityId;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.domain.TranslationImpl.__L2901, (referenceClone != null))) {
+            convertedId = java.lang.String.valueOf(context.getIdentifier(referenceClone));
         }
         cloned.setEntityId(convertedId);
         cloned.setFieldName(fieldName);
@@ -194,4 +141,20 @@ public class TranslationImpl implements Serializable, Translation {
         return createResponse;
     }
 
+    public static perturbation.location.PerturbationLocation __L2899;
+
+    public static perturbation.location.PerturbationLocation __L2900;
+
+    public static perturbation.location.PerturbationLocation __L2901;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.i18n.domain.TranslationImpl.__L2899 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/domain/TranslationImpl.java:173)", 2899, "Boolean");
+        org.broadleafcommerce.common.i18n.domain.TranslationImpl.__L2900 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/domain/TranslationImpl.java:181)", 2900, "Numerical");
+        org.broadleafcommerce.common.i18n.domain.TranslationImpl.__L2901 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/domain/TranslationImpl.java:186)", 2901, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.i18n.domain.TranslationImpl.initPerturbationLocation0();
+    }
 }
+

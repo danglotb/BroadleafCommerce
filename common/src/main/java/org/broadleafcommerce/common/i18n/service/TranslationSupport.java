@@ -17,87 +17,24 @@
  */
 package org.broadleafcommerce.common.i18n.service;
 
-import org.broadleafcommerce.common.extension.ResultType;
-import org.broadleafcommerce.common.extension.StandardCacheItem;
-import org.broadleafcommerce.common.i18n.domain.TranslatedEntity;
-import org.broadleafcommerce.common.i18n.domain.Translation;
 
-import java.util.List;
-import java.util.Map;
-
-import net.sf.ehcache.Cache;
-
-/**
- * {@link TranslationService} functionality, primarily in support of {@link TranslationOverrideStrategy} instances.
- *
- * @author Jeff Fischer
- */
 public interface TranslationSupport {
+    org.broadleafcommerce.common.extension.StandardCacheItem lookupTranslationFromMap(java.lang.String key, java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.broadleafcommerce.common.extension.StandardCacheItem>> propertyTranslationMap, java.lang.String entityId);
 
-    /**
-     * Retrieve a cached translation from an individual property translation map retrieved from the cache.
-     *
-     * @param key
-     * @param propertyTranslationMap
-     * @param entityId
-     * @return
-     */
-    StandardCacheItem lookupTranslationFromMap(String key, Map<String, Map<String, StandardCacheItem>> propertyTranslationMap, String entityId);
+    net.sf.ehcache.Cache getCache();
 
-    /**
-     * Retrieve the backing Ehcache Cache instance
-     *
-     * @return
-     */
-    Cache getCache();
+    java.util.List<java.lang.String> getCacheKeyListForTemplateSite(java.lang.String propertyName);
 
-    /**
-     *
-     * Returns a list of cacheKeys for a template site
-     *
-     * @param propertyName
-     * @return
-     */
-    List<String> getCacheKeyListForTemplateSite(String propertyName);
-
-    /**
-     * Retrieve the threshold under which the full list of standard site translation overrides are cached. See
-     * {@link TranslationServiceImpl#thresholdForFullCache} for more information on setting the value.
-     *
-     * @return
-     */
     int getThresholdForFullCache();
 
     void setThresholdForFullCache(int thresholdForFullCache);
 
-    /**
-     * Retrieve the threshold under which the full list of template catalog translations are cached. See
-     * {@link TranslationServiceImpl#templateThresholdForFullCache} for more information on setting the value.
-     *
-     * @return
-     */
     int getTemplateThresholdForFullCache();
 
     void setTemplateThresholdForFullCache(int templateThresholdForFullCache);
 
-    /**
-     * Find the most appropriate translation in the map. The most specific qualified translation will win.
-     *
-     * @param specificPropertyKey
-     * @param generalPropertyKey
-     * @param propertyTranslationMap
-     * @param entityId
-     * @return
-     */
-    Translation findBestTemplateTranslation(String specificPropertyKey, String generalPropertyKey, Map<String, Map<String, Translation>> propertyTranslationMap, String entityId);
+    org.broadleafcommerce.common.i18n.domain.Translation findBestTemplateTranslation(java.lang.String specificPropertyKey, java.lang.String generalPropertyKey, java.util.Map<java.lang.String, java.util.Map<java.lang.String, org.broadleafcommerce.common.i18n.domain.Translation>> propertyTranslationMap, java.lang.String entityId);
 
-    /**
-     * Build a cache key
-     *
-     * @param resultType
-     * @param entityType
-     * @return
-     */
-    String getCacheKey(ResultType resultType, TranslatedEntity entityType);
-
+    java.lang.String getCacheKey(org.broadleafcommerce.common.extension.ResultType resultType, org.broadleafcommerce.common.i18n.domain.TranslatedEntity entityType);
 }
+

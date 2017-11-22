@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,61 +17,81 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.broadleafcommerce.common.time.SystemTime;
-
-import java.util.Date;
 
 public class DateUtil {
+    public static final long ONE_HOUR_MILLIS = ((long) ((60 * 60) * 1000));
 
-    public static final long ONE_HOUR_MILLIS = 60 * 60 * 1000;
-    public static final long ONE_DAY_MILLIS = ONE_HOUR_MILLIS * 24;
-    public static final long ONE_WEEK_MILLIS = ONE_DAY_MILLIS * 7;
+    public static final long ONE_DAY_MILLIS = (org.broadleafcommerce.common.util.DateUtil.ONE_HOUR_MILLIS) * 24;
 
-    public static final long ONE_HOUR_SECONDS = 60 * 60;
-    public static final long ONE_DAY_SECONDS = ONE_HOUR_SECONDS * 24;
-    public static final long ONE_WEEK_SECONDS = ONE_DAY_SECONDS * 7;
-    public static final long SIX_MONTHS_SECONDS = ONE_DAY_SECONDS * 6 * 30;
+    public static final long ONE_WEEK_MILLIS = (org.broadleafcommerce.common.util.DateUtil.ONE_DAY_MILLIS) * 7;
 
-    /**
-     * Determine if a date range is active.
-     * <p>
-     * A date range is active if the following statement is true: {@code startDate < now <= endDate}
-     * <p>
-     * If {@code startDate} is {@code null} then the date range is inactive. If {@code endDate} is null, then only the
-     * {@code startDate} is checked.
-     *
-     * @param includeTime If true, then the full timestamp to the millisecond is used. If false, only the date will be
-     * used and the time is zeroed out.
-     * @return True if the date range is currently active, false otherwise.
-     */
-    public static boolean isActive(Date startDate, Date endDate, boolean includeTime) {
-        Long date = SystemTime.asMillis(includeTime);
-        return !(startDate == null || startDate.getTime() >= date || (endDate != null && endDate.getTime() < date));
+    public static final long ONE_HOUR_SECONDS = ((long) (60 * 60));
+
+    public static final long ONE_DAY_SECONDS = (org.broadleafcommerce.common.util.DateUtil.ONE_HOUR_SECONDS) * 24;
+
+    public static final long ONE_WEEK_SECONDS = (org.broadleafcommerce.common.util.DateUtil.ONE_DAY_SECONDS) * 7;
+
+    public static final long SIX_MONTHS_SECONDS = ((org.broadleafcommerce.common.util.DateUtil.ONE_DAY_SECONDS) * 6) * 30;
+
+    public static boolean isActive(java.util.Date startDate, java.util.Date endDate, boolean includeTime) {
+        java.lang.Long date = perturbation.PerturbationEngine.plong(org.broadleafcommerce.common.util.DateUtil.__L6232, ((long) (org.broadleafcommerce.common.time.SystemTime.asMillis(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DateUtil.__L6231, includeTime)))));
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DateUtil.__L6240, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DateUtil.__L6239, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DateUtil.__L6235, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DateUtil.__L6233, (startDate == null))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DateUtil.__L6234, ((startDate.getTime()) >= date)))))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DateUtil.__L6238, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DateUtil.__L6236, (endDate != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DateUtil.__L6237, ((endDate.getTime()) < date)))))))))));
     }
 
-    /**
-     * Return the {@link Date} to be used in a query based on a cached {@link Date} and a resolution.
-     * <p>
-     * This is meant to be used as a mechanism to allow caching to occur in queries that compare a date to {@code now}.
-     * Since caching will only occur if the query is exactly the same, you cannot use the exact current timestamp or the
-     * query will never be cached. This method will return the same timestamp for a {@link Date} until it has exceeded
-     * the resolution, at which point the current timestamp will be used.
-     * <p>
-     * NOTE: This method will update the passed in {@code cachedDate} if the resolution has passed.
-     *
-     * @param cachedDate a {@link Date} that is cached, typically by a DAO, to be used in queries that involve date
-     * ranges. This object will be updated if the resolution has passed.
-     * @param currentDateResolution resolution in milliseconds.
-     * @return the {@link Date} object to use in a query involving date ranges.
-     */
-    public static Date getCurrentDateAfterFactoringInDateResolution(Date cachedDate, Long currentDateResolution) {
-        Date returnDate = SystemTime.getCurrentDateWithinTimeResolution(cachedDate, currentDateResolution);
-        if (returnDate != cachedDate) {
-            if (SystemTime.shouldCacheDate()) {
-                cachedDate.setTime(returnDate.getTime());
+    public static java.util.Date getCurrentDateAfterFactoringInDateResolution(java.util.Date cachedDate, java.lang.Long currentDateResolution) {
+        java.util.Date returnDate = org.broadleafcommerce.common.time.SystemTime.getCurrentDateWithinTimeResolution(cachedDate, currentDateResolution);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DateUtil.__L6241, (returnDate != cachedDate))) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.DateUtil.__L6242, org.broadleafcommerce.common.time.SystemTime.shouldCacheDate())) {
+                cachedDate.setTime(perturbation.PerturbationEngine.plong(org.broadleafcommerce.common.util.DateUtil.__L6243, returnDate.getTime()));
             }
         }
         return returnDate;
     }
 
+    public static perturbation.location.PerturbationLocation __L6231;
+
+    public static perturbation.location.PerturbationLocation __L6232;
+
+    public static perturbation.location.PerturbationLocation __L6233;
+
+    public static perturbation.location.PerturbationLocation __L6234;
+
+    public static perturbation.location.PerturbationLocation __L6235;
+
+    public static perturbation.location.PerturbationLocation __L6236;
+
+    public static perturbation.location.PerturbationLocation __L6237;
+
+    public static perturbation.location.PerturbationLocation __L6238;
+
+    public static perturbation.location.PerturbationLocation __L6239;
+
+    public static perturbation.location.PerturbationLocation __L6240;
+
+    public static perturbation.location.PerturbationLocation __L6241;
+
+    public static perturbation.location.PerturbationLocation __L6242;
+
+    public static perturbation.location.PerturbationLocation __L6243;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.DateUtil.__L6231 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DateUtil.java:48)", 6231, "Boolean");
+        org.broadleafcommerce.common.util.DateUtil.__L6232 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DateUtil.java:48)", 6232, "Numerical");
+        org.broadleafcommerce.common.util.DateUtil.__L6233 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DateUtil.java:49)", 6233, "Boolean");
+        org.broadleafcommerce.common.util.DateUtil.__L6234 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DateUtil.java:49)", 6234, "Boolean");
+        org.broadleafcommerce.common.util.DateUtil.__L6235 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DateUtil.java:49)", 6235, "Boolean");
+        org.broadleafcommerce.common.util.DateUtil.__L6236 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DateUtil.java:49)", 6236, "Boolean");
+        org.broadleafcommerce.common.util.DateUtil.__L6237 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DateUtil.java:49)", 6237, "Boolean");
+        org.broadleafcommerce.common.util.DateUtil.__L6238 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DateUtil.java:49)", 6238, "Boolean");
+        org.broadleafcommerce.common.util.DateUtil.__L6239 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DateUtil.java:49)", 6239, "Boolean");
+        org.broadleafcommerce.common.util.DateUtil.__L6240 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DateUtil.java:49)", 6240, "Boolean");
+        org.broadleafcommerce.common.util.DateUtil.__L6241 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DateUtil.java:69)", 6241, "Boolean");
+        org.broadleafcommerce.common.util.DateUtil.__L6242 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DateUtil.java:70)", 6242, "Boolean");
+        org.broadleafcommerce.common.util.DateUtil.__L6243 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/DateUtil.java:71)", 6243, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.DateUtil.initPerturbationLocation0();
+    }
 }
+

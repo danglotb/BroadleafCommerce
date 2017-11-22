@@ -15,50 +15,32 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-/**
- * 
- */
 package org.broadleafcommerce.common.web.filter;
 
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.BroadleafRequestFilter;
-import org.springframework.core.annotation.Order;
-import org.springframework.web.filter.OncePerRequestFilter;
 
-import java.io.IOException;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-
-/**
- * <p>
- * Used to validate usages of em.find() when querying for a primary key specifically across sibling Multi-Tenant sites.
- * This Servlet filter should only turned on if you often query an entity by ID. Generally this only happens in
- * API-based use cases since most other use cases rely on querying by name, url, etc and not directly on a primary key.
- * 
- * <p>
- * This is intentionally not activated by default but is included here for convenience within other projects. If you are
- * in Spring Boot, this filter can be activated simply in an @Bean method. If you are not using Spring Boot, this
- * filter must come <i>after</i> the {@link BroadleafRequestFilter} and is generally initialized in {@code applicationContext-filter.xml}.
- * 
- * @author Phillip Verheyden (phillipuniverse)
- * @since 5.2
- * @see BroadleafRequestContext#setInternalIgnoreFilters(Boolean)
- */
-@Order(FilterOrdered.POST_SECURITY_MEDIUM)
-public class EntityManagerFindValidationFilter extends OncePerRequestFilter {
-
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+@org.springframework.core.annotation.Order(org.broadleafcommerce.common.web.filter.FilterOrdered.POST_SECURITY_MEDIUM)
+public class EntityManagerFindValidationFilter extends org.springframework.web.filter.OncePerRequestFilter {
+    @java.lang.Override
+    protected void doFilterInternal(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response, javax.servlet.FilterChain filterChain) throws java.io.IOException, javax.servlet.ServletException {
         try {
-            BroadleafRequestContext.getBroadleafRequestContext().setInternalValidateFind(true);
+            org.broadleafcommerce.common.web.BroadleafRequestContext.getBroadleafRequestContext().setInternalValidateFind(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.filter.EntityManagerFindValidationFilter.__L7229, true));
             filterChain.doFilter(request, response);
         } finally {
-            BroadleafRequestContext.getBroadleafRequestContext().setInternalIgnoreFilters(false);
-        }        
+            org.broadleafcommerce.common.web.BroadleafRequestContext.getBroadleafRequestContext().setInternalIgnoreFilters(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.filter.EntityManagerFindValidationFilter.__L7230, false));
+        }
     }
 
+    public static perturbation.location.PerturbationLocation __L7229;
+
+    public static perturbation.location.PerturbationLocation __L7230;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.filter.EntityManagerFindValidationFilter.__L7229 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/filter/EntityManagerFindValidationFilter.java:57)", 7229, "Boolean");
+        org.broadleafcommerce.common.web.filter.EntityManagerFindValidationFilter.__L7230 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/filter/EntityManagerFindValidationFilter.java:60)", 7230, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.filter.EntityManagerFindValidationFilter.initPerturbationLocation0();
+    }
 }
+

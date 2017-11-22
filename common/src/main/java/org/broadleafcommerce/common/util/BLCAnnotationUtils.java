@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,51 +17,34 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.springframework.core.annotation.AliasFor;
-import org.springframework.core.annotation.AnnotationUtils;
 
-import java.lang.annotation.Annotation;
-
-/**
- * <p>
- * Spring has a much more elaborate and full-featured version of this within its {@link AnnotationUtils}. Consider
- * using that instead of relying on this class.
- * 
- * <p>
- * Convenience methods for interacting with annotations.
- * 
- * @author Chris Kittrell
- * @deprecated use Spring's {@link AnnotationUtils} instead.
- */
-@Deprecated
+@java.lang.Deprecated
 public class BLCAnnotationUtils {
-    
-    /**
-     * <p>
-     * Rather than using this method, consider using Spring's {@link AnnotationUtils} which also includes support for
-     * composed, meta-annotations and synthesizing annotations with {@link AliasFor}.
-     * 
-     * <p>
-     * Given an array and a typed predicate, determines if the array has an object that matches the condition of the
-     * predicate. The predicate should evaluate to true when a match occurs.
-     * 
-     * @param annotationClass
-     * @param clazz
-     * @return the annotation of annotationClass if it can be found
-     * @deprecated use SPring's {@link AnnotationUtils} instead
-     */
-    @Deprecated
-    public static <A extends Annotation> A getAnnotationFromClassOrInterface(Class<A> annotationClass, Class clazz) {
-        Annotation result = clazz.getAnnotation(annotationClass);
-        if (result == null) {
-            for (Class inter : clazz.getInterfaces()) {
+    @java.lang.Deprecated
+    public static <A extends java.lang.annotation.Annotation> A getAnnotationFromClassOrInterface(java.lang.Class<A> annotationClass, java.lang.Class clazz) {
+        java.lang.annotation.Annotation result = clazz.getAnnotation(annotationClass);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCAnnotationUtils.__L6076, (result == null))) {
+            for (java.lang.Class inter : clazz.getInterfaces()) {
                 result = inter.getAnnotation(annotationClass);
-                if (result != null) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCAnnotationUtils.__L6077, (result != null))) {
                     break;
                 }
             }
         }
-        return (A) result;
+        return ((A) (result));
     }
 
+    public static perturbation.location.PerturbationLocation __L6076;
+
+    public static perturbation.location.PerturbationLocation __L6077;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.BLCAnnotationUtils.__L6076 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCAnnotationUtils.java:56)", 6076, "Boolean");
+        org.broadleafcommerce.common.util.BLCAnnotationUtils.__L6077 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCAnnotationUtils.java:59)", 6077, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.BLCAnnotationUtils.initPerturbationLocation0();
+    }
 }
+

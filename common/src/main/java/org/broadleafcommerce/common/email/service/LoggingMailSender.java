@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,54 +17,52 @@
  */
 package org.broadleafcommerce.common.email.service;
 
-import java.io.ByteArrayOutputStream;
 
-import javax.activation.DataHandler;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+public class LoggingMailSender extends org.springframework.mail.javamail.JavaMailSenderImpl {
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.email.service.LoggingMailSender.class);
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.mail.MailException;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessagePreparator;
-
-/**
- * @author Andre Azzolini (apazzolini)
- */
-public class LoggingMailSender extends JavaMailSenderImpl {
-    private static final Log LOG = LogFactory.getLog(LoggingMailSender.class);
-
-    @Override
-    public void send(MimeMessagePreparator[] mimeMessagePreparators) throws MailException {
-        for (MimeMessagePreparator preparator : mimeMessagePreparators) {
+    @java.lang.Override
+    public void send(org.springframework.mail.javamail.MimeMessagePreparator[] mimeMessagePreparators) throws org.springframework.mail.MailException {
+        for (org.springframework.mail.javamail.MimeMessagePreparator preparator : mimeMessagePreparators) {
             try {
-                MimeMessage mimeMessage = createMimeMessage();
+                javax.mail.internet.MimeMessage mimeMessage = createMimeMessage();
                 preparator.prepare(mimeMessage);
-                LOG.info("\"Sending\" email: ");
-                if (mimeMessage.getContent() instanceof MimeMultipart) {
-                    MimeMultipart msg = (MimeMultipart) mimeMessage.getContent();
-                    DataHandler dh = msg.getBodyPart(0).getDataHandler();
-                    ByteArrayOutputStream baos = null;
+                org.broadleafcommerce.common.email.service.LoggingMailSender.LOG.info("\"Sending\" email: ");
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.email.service.LoggingMailSender.__L1214, ((mimeMessage.getContent()) instanceof javax.mail.internet.MimeMultipart))) {
+                    javax.mail.internet.MimeMultipart msg = ((javax.mail.internet.MimeMultipart) (mimeMessage.getContent()));
+                    javax.activation.DataHandler dh = msg.getBodyPart(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.email.service.LoggingMailSender.__L1215, 0)).getDataHandler();
+                    java.io.ByteArrayOutputStream baos = null;
                     try {
-                        baos = new ByteArrayOutputStream();
+                        baos = new java.io.ByteArrayOutputStream();
                         dh.writeTo(baos);
-                    } catch (Exception e) {
-                        // Do nothing
+                    } catch (java.lang.Exception e) {
                     } finally {
                         try {
                             baos.close();
-                        } catch (Exception e) {
-                            LOG.error("Couldn't close byte array output stream");
+                        } catch (java.lang.Exception e) {
+                            org.broadleafcommerce.common.email.service.LoggingMailSender.LOG.error("Couldn't close byte array output stream");
                         }
                     }
-                } else {
-                    LOG.info(mimeMessage.getContent());
+                }else {
+                    org.broadleafcommerce.common.email.service.LoggingMailSender.LOG.info(mimeMessage.getContent());
                 }
-            } catch (Exception e) {
-                LOG.error("Could not create message", e);
+            } catch (java.lang.Exception e) {
+                org.broadleafcommerce.common.email.service.LoggingMailSender.LOG.error("Could not create message", e);
             }
         }
     }
 
+    public static perturbation.location.PerturbationLocation __L1214;
+
+    public static perturbation.location.PerturbationLocation __L1215;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.email.service.LoggingMailSender.__L1214 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/LoggingMailSender.java:45)", 1214, "Boolean");
+        org.broadleafcommerce.common.email.service.LoggingMailSender.__L1215 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/LoggingMailSender.java:47)", 1215, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.email.service.LoggingMailSender.initPerturbationLocation0();
+    }
 }
+

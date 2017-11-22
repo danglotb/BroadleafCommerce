@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,85 +17,67 @@
  */
 package org.broadleafcommerce.common.logging;
 
-/**
- * <p>An implementation of SupportLoggerAdapter that would disable SupportLogger logging. (i.e. do nothing)</p>
- * @author Elbert Bautista (elbertbautista)
- */
-public class DisableSupportLoggerAdapter implements SupportLoggerAdapter {
 
-    @Override
-    public String getName() {
+public class DisableSupportLoggerAdapter implements org.broadleafcommerce.common.logging.SupportLoggerAdapter {
+    @java.lang.Override
+    public java.lang.String getName() {
         return null;
     }
 
-    @Override
-    public void setName(String name) {
-        //do nothing
+    @java.lang.Override
+    public void setName(java.lang.String name) {
     }
 
-    @Override
-    public void support(String message) {
-        //do nothing
+    @java.lang.Override
+    public void support(java.lang.String message) {
     }
 
-    @Override
-    public void support(String message, Throwable t) {
-        //do nothing
+    @java.lang.Override
+    public void support(java.lang.String message, java.lang.Throwable t) {
     }
 
-    @Override
-    public void lifecycle(LifeCycleEvent lifeCycleEvent, String message) {
-        //do nothing
+    @java.lang.Override
+    public void lifecycle(org.broadleafcommerce.common.logging.LifeCycleEvent lifeCycleEvent, java.lang.String message) {
     }
 
-    @Override
-    public void debug(String message) {
-        //do nothing
+    @java.lang.Override
+    public void debug(java.lang.String message) {
     }
 
-    @Override
-    public void debug(String message, Throwable t) {
-        //do nothing
+    @java.lang.Override
+    public void debug(java.lang.String message, java.lang.Throwable t) {
     }
 
-    @Override
-    public void error(String message) {
-        //do nothing
+    @java.lang.Override
+    public void error(java.lang.String message) {
     }
 
-    @Override
-    public void error(String message, Throwable t) {
-        //do nothing
+    @java.lang.Override
+    public void error(java.lang.String message, java.lang.Throwable t) {
     }
 
-    @Override
-    public void fatal(String message) {
-        //do nothing
+    @java.lang.Override
+    public void fatal(java.lang.String message) {
     }
 
-    @Override
-    public void fatal(String message, Throwable t) {
-        //do nothing
+    @java.lang.Override
+    public void fatal(java.lang.String message, java.lang.Throwable t) {
     }
 
-    @Override
-    public void info(String message) {
-        //do nothing
+    @java.lang.Override
+    public void info(java.lang.String message) {
     }
 
-    @Override
-    public void info(String message, Throwable t) {
-        //do nothing
+    @java.lang.Override
+    public void info(java.lang.String message, java.lang.Throwable t) {
     }
 
-    @Override
-    public void warn(String message) {
-        //do nothing
+    @java.lang.Override
+    public void warn(java.lang.String message) {
     }
 
-    @Override
-    public void warn(String message, Throwable t) {
-        //do nothing
+    @java.lang.Override
+    public void warn(java.lang.String message, java.lang.Throwable t) {
     }
-
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,42 +17,49 @@
  */
 package org.broadleafcommerce.common.breadcrumbs.dto;
 
-/**
- * Represents a single crumb in a Breadcrumb list
- * @author bpolster, gdiaz  
- *
- */
+
 public class BreadcrumbDTO {
+    private java.lang.String text;
 
-    private String text;
-    private String link;
-    private BreadcrumbDTOType type;
+    private java.lang.String link;
 
-    public String getText() {
+    private org.broadleafcommerce.common.breadcrumbs.dto.BreadcrumbDTOType type;
+
+    public java.lang.String getText() {
         return text;
     }
 
-    public void setText(String text) {
+    public void setText(java.lang.String text) {
         this.text = text;
     }
 
-    public String getLink() {
+    public java.lang.String getLink() {
         return link;
     }
 
-    public void setLink(String link) {
+    public void setLink(java.lang.String link) {
         this.link = link;
     }
 
-    public String getType() {
-        if (type != null) {
+    public java.lang.String getType() {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.breadcrumbs.dto.BreadcrumbDTO.__L80, ((type) != null))) {
             return type.getType();
         }
         return "";
     }
 
-    public void setType(BreadcrumbDTOType type) {
+    public void setType(org.broadleafcommerce.common.breadcrumbs.dto.BreadcrumbDTOType type) {
         this.type = type;
     }
 
+    public static perturbation.location.PerturbationLocation __L80;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.breadcrumbs.dto.BreadcrumbDTO.__L80 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/breadcrumbs/dto/BreadcrumbDTO.java:48)", 80, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.breadcrumbs.dto.BreadcrumbDTO.initPerturbationLocation0();
+    }
 }
+

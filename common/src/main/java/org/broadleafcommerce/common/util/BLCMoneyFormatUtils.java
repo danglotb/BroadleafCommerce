@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,34 +17,31 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.broadleafcommerce.common.currency.util.BroadleafCurrencyUtils;
-import org.broadleafcommerce.common.money.Money;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
 
-/**
- * Convenience class to format prices for front-end display.
- * 
- * @author Chris Kittrell (ckittrell)
- */
 public class BLCMoneyFormatUtils {
-    
-    /**
-     * Reformats the given price field for front-end display.
-     * 
-     * @param price
-     * @return the formatted price
-     */
-    public static String formatPrice(Money price) {
-        if (price == null) {
+    public static java.lang.String formatPrice(org.broadleafcommerce.common.money.Money price) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCMoneyFormatUtils.__L6159, (price == null))) {
             return "Not Available";
         }
-
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
-        if (brc.getJavaLocale() != null) {
-            return BroadleafCurrencyUtils.getNumberFormatFromCache(brc.getJavaLocale(), price.getCurrency()).format(price.getAmount());
-        } else {
-            // Setup your BLC_CURRENCY and BLC_LOCALE to display a diff default.
-            return "$ " + price.getAmount().toString();
+        org.broadleafcommerce.common.web.BroadleafRequestContext brc = org.broadleafcommerce.common.web.BroadleafRequestContext.getBroadleafRequestContext();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCMoneyFormatUtils.__L6160, ((brc.getJavaLocale()) != null))) {
+            return org.broadleafcommerce.common.currency.util.BroadleafCurrencyUtils.getNumberFormatFromCache(brc.getJavaLocale(), price.getCurrency()).format(price.getAmount());
+        }else {
+            return "$ " + (price.getAmount().toString());
         }
     }
+
+    public static perturbation.location.PerturbationLocation __L6159;
+
+    public static perturbation.location.PerturbationLocation __L6160;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.BLCMoneyFormatUtils.__L6159 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCMoneyFormatUtils.java:38)", 6159, "Boolean");
+        org.broadleafcommerce.common.util.BLCMoneyFormatUtils.__L6160 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCMoneyFormatUtils.java:43)", 6160, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.BLCMoneyFormatUtils.initPerturbationLocation0();
+    }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,51 +17,42 @@
  */
 package org.broadleafcommerce.common.resource;
 
-import org.springframework.core.io.Resource;
 
-import java.util.List;
-
-/**
- * Tracks a bundle version name and path/file information for a dynamically created resource bundle.  This information can be used later to 
- * rebuild a bundle resource should that resource be found to not exist.
- * 
- * @author dcolgrove
- *
- */
 public class BundledResourceInfo {
-    protected Resource resource;
-    protected String versionedBundleName;
-    protected List<String> bundledFilePaths;
+    protected org.springframework.core.io.Resource resource;
 
-    public BundledResourceInfo(Resource resource, String versionedBundleName, List<String> bundledFilePaths) {
+    protected java.lang.String versionedBundleName;
+
+    protected java.util.List<java.lang.String> bundledFilePaths;
+
+    public BundledResourceInfo(org.springframework.core.io.Resource resource, java.lang.String versionedBundleName, java.util.List<java.lang.String> bundledFilePaths) {
         this.resource = resource;
         this.versionedBundleName = versionedBundleName;
         this.bundledFilePaths = bundledFilePaths;
     }
 
-    public Resource getResource() {
+    public org.springframework.core.io.Resource getResource() {
         return resource;
     }
 
-    public void setResource(Resource resource) {
+    public void setResource(org.springframework.core.io.Resource resource) {
         this.resource = resource;
     }
 
-    public String getVersionedBundleName() {
+    public java.lang.String getVersionedBundleName() {
         return versionedBundleName;
     }
-    
-    public void setVersionedBundleName(String versionedBundleName) {
+
+    public void setVersionedBundleName(java.lang.String versionedBundleName) {
         this.versionedBundleName = versionedBundleName;
     }
 
-    public List<String> getBundledFilePaths() {
+    public java.util.List<java.lang.String> getBundledFilePaths() {
         return bundledFilePaths;
     }
-    
-    public void setBundledFilePaths(List<String> bundledFilePaths) {
+
+    public void setBundledFilePaths(java.util.List<java.lang.String> bundledFilePaths) {
         this.bundledFilePaths = bundledFilePaths;
     }
-
-        
 }
+

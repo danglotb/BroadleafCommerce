@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,265 +17,279 @@
  */
 package org.broadleafcommerce.common.service;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.persistence.TargetModeType;
-import org.broadleafcommerce.common.util.StreamCapableTransactionalOperationAdapter;
-import org.broadleafcommerce.common.util.StreamingTransactionCapableUtil;
-import org.broadleafcommerce.common.util.dao.DynamicDaoHelperImpl;
-import org.broadleafcommerce.common.util.dao.EJB3ConfigurationDao;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.metadata.ClassMetadata;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.SmartLifecycle;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.PlatformTransactionManager;
 
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+@org.springframework.stereotype.Service("blPersistenceService")
+public class PersistenceServiceImpl implements org.broadleafcommerce.common.service.PersistenceService , org.springframework.context.SmartLifecycle {
+    protected static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.service.PersistenceServiceImpl.class);
 
-import javax.annotation.Resource;
-import javax.persistence.EntityManager;
+    protected static final java.lang.String ENTITY_MANAGER_KEY = "entityManager";
 
-/**
- * Service to help gather the correct {@link EntityManager}, {@link PlatformTransactionManager},
- *  or {@link EJB3ConfigurationDao} based on a class and {@link TargetModeType}. This functionality is
- *  especially useful when multiple {@link javax.persistence.PersistenceUnit}s are in use.
- *
- * Note: All "default" items reference blPU, which is used to manage most Broadleaf entities in the Admin.
- *
- * @author Chris Kittrell (ckittrell)
- */
-@Service("blPersistenceService")
-public class PersistenceServiceImpl implements PersistenceService, SmartLifecycle {
+    protected static final java.lang.String TRANSACTION_MANAGER_KEY = "transactionManager";
 
-    protected static final Log LOG = LogFactory.getLog(PersistenceServiceImpl.class);
+    protected static final java.lang.String EJB3_CONFIG_DAO_KEY = "ejb3ConfigurationDao";
 
-    protected static final String ENTITY_MANAGER_KEY = "entityManager";
-    protected static final String TRANSACTION_MANAGER_KEY = "transactionManager";
-    protected static final String EJB3_CONFIG_DAO_KEY = "ejb3ConfigurationDao";
+    @javax.annotation.Resource(name = "blEntityConfiguration")
+    protected org.broadleafcommerce.common.persistence.EntityConfiguration entityConfiguration;
 
-    @Resource (name = "blEntityConfiguration")
-    protected EntityConfiguration entityConfiguration;
+    @javax.annotation.Resource(name = "blTargetModeMaps")
+    protected java.util.List<java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.Object>>> targetModeMaps;
 
-    @Resource(name = "blTargetModeMaps")
-    protected List<Map<String, Map<String, Object>>> targetModeMaps;
+    @javax.annotation.Resource(name = "blDefaultTargetModeMap")
+    protected java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.Object>> defaultTargetModeMap;
 
-    @Resource(name = "blDefaultTargetModeMap")
-    protected Map<String, Map<String, Object>> defaultTargetModeMap;
+    @javax.annotation.Resource(name = "blStreamingTransactionCapableUtil")
+    protected org.broadleafcommerce.common.util.StreamingTransactionCapableUtil transUtil;
 
-    @Resource(name="blStreamingTransactionCapableUtil")
-    protected StreamingTransactionCapableUtil transUtil;
+    @org.springframework.beans.factory.annotation.Autowired
+    protected java.util.List<javax.persistence.EntityManager> entityManagers;
 
-    @Autowired
-    protected List<EntityManager> entityManagers;
+    private final java.util.Map<java.lang.String, javax.persistence.EntityManager> ENTITY_MANAGER_CACHE = new java.util.concurrent.ConcurrentHashMap<>();
 
-    private final Map<String, EntityManager> ENTITY_MANAGER_CACHE = new ConcurrentHashMap<>();
-    private final Map<String, PlatformTransactionManager> TRANSACTION_MANAGER_CACHE = new ConcurrentHashMap<>();
-    private final Map<String, EJB3ConfigurationDao> EJB3_CONFIG_DAO_CACHE = new ConcurrentHashMap<>();
+    private final java.util.Map<java.lang.String, org.springframework.transaction.PlatformTransactionManager> TRANSACTION_MANAGER_CACHE = new java.util.concurrent.ConcurrentHashMap<>();
 
-    private DynamicDaoHelperImpl daoHelper = new DynamicDaoHelperImpl();
+    private final java.util.Map<java.lang.String, org.broadleafcommerce.common.util.dao.EJB3ConfigurationDao> EJB3_CONFIG_DAO_CACHE = new java.util.concurrent.ConcurrentHashMap<>();
 
-    @Override
+    private org.broadleafcommerce.common.util.dao.DynamicDaoHelperImpl daoHelper = new org.broadleafcommerce.common.util.dao.DynamicDaoHelperImpl();
+
+    @java.lang.Override
     public boolean isAutoStartup() {
-        return true;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5182, true);
     }
 
-    @Override
-    public void stop(Runnable callback) {
+    @java.lang.Override
+    public void stop(java.lang.Runnable callback) {
         callback.run();
     }
 
-    @Override
+    @java.lang.Override
     public void start() {
         initializeEntityManagerCache();
     }
 
-    @Override
+    @java.lang.Override
     public void stop() {
-        //do nothing
     }
 
-    @Override
+    @java.lang.Override
     public boolean isRunning() {
-        return false;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5183, false);
     }
 
-    @Override
+    @java.lang.Override
     public int getPhase() {
-        return 0;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5184, 0);
     }
 
     protected void initializeEntityManagerCache() {
-        for (Map<String, Map<String, Object>> targetModeMap : targetModeMaps) {
-            for (final String targetMode : targetModeMap.keySet()) {
-                final Map<String, Object> managerMap = targetModeMap.get(targetMode);
-
-                transUtil.runTransactionalOperation(new StreamCapableTransactionalOperationAdapter() {
-                    @Override
-                    public void execute() throws Throwable {
+        for (java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.Object>> targetModeMap : targetModeMaps) {
+            for (final java.lang.String targetMode : targetModeMap.keySet()) {
+                final java.util.Map<java.lang.String, java.lang.Object> managerMap = targetModeMap.get(targetMode);
+                transUtil.runTransactionalOperation(new org.broadleafcommerce.common.util.StreamCapableTransactionalOperationAdapter() {
+                    @java.lang.Override
+                    public void execute() throws java.lang.Throwable {
                         populateCaches(targetMode, managerMap);
                     }
-                }, RuntimeException.class, getTransactionManager(managerMap));
+                }, java.lang.RuntimeException.class, getTransactionManager(managerMap));
             }
         }
     }
 
-    protected void populateCaches(String targetMode, Map<String, Object> managerMap) {
-        final EntityManager em = getEntityManager(managerMap);
-        final PlatformTransactionManager txManager = getTransactionManager(managerMap);
-        final EJB3ConfigurationDao ejb3ConfigurationDao = getEJB3ConfigurationDao(managerMap);
-
-        SessionFactory sessionFactory = em.unwrap(Session.class).getSessionFactory();
-        for (Object item : sessionFactory.getAllClassMetadata().values()) {
-            ClassMetadata metadata = (ClassMetadata) item;
-            Class<?> mappedClass = metadata.getMappedClass();
-
-            String managerCacheKey = buildManagerCacheKey(targetMode, mappedClass);
+    protected void populateCaches(java.lang.String targetMode, java.util.Map<java.lang.String, java.lang.Object> managerMap) {
+        final javax.persistence.EntityManager em = getEntityManager(managerMap);
+        final org.springframework.transaction.PlatformTransactionManager txManager = getTransactionManager(managerMap);
+        final org.broadleafcommerce.common.util.dao.EJB3ConfigurationDao ejb3ConfigurationDao = getEJB3ConfigurationDao(managerMap);
+        org.hibernate.SessionFactory sessionFactory = em.unwrap(org.hibernate.Session.class).getSessionFactory();
+        for (java.lang.Object item : sessionFactory.getAllClassMetadata().values()) {
+            org.hibernate.metadata.ClassMetadata metadata = ((org.hibernate.metadata.ClassMetadata) (item));
+            java.lang.Class<?> mappedClass = metadata.getMappedClass();
+            java.lang.String managerCacheKey = buildManagerCacheKey(targetMode, mappedClass);
             ENTITY_MANAGER_CACHE.put(managerCacheKey, em);
             TRANSACTION_MANAGER_CACHE.put(managerCacheKey, txManager);
-
-            String ejb3ConfigDaoCacheKey = buildEJB3ConfigDaoCacheKey(mappedClass);
-            if (!EJB3_CONFIG_DAO_CACHE.containsKey(ejb3ConfigDaoCacheKey)) {
+            java.lang.String ejb3ConfigDaoCacheKey = buildEJB3ConfigDaoCacheKey(mappedClass);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5186, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5185, EJB3_CONFIG_DAO_CACHE.containsKey(ejb3ConfigDaoCacheKey)))))) {
                 EJB3_CONFIG_DAO_CACHE.put(ejb3ConfigDaoCacheKey, ejb3ConfigurationDao);
             }
         }
     }
 
-    @Override
-    public boolean validateEntityClassName(String entityClassName) {
-        String cacheKey = buildManagerCacheKey(TargetModeType.SANDBOX.getType(), entityClassName);
-        boolean isValid = ENTITY_MANAGER_CACHE.containsKey(cacheKey);
-
-        if (!isValid) {
-            LOG.warn("The system detected an entity class name submitted that is not present in the registered entities known to the system.");
+    @java.lang.Override
+    public boolean validateEntityClassName(java.lang.String entityClassName) {
+        java.lang.String cacheKey = buildManagerCacheKey(org.broadleafcommerce.common.persistence.TargetModeType.SANDBOX.getType(), entityClassName);
+        boolean isValid = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5187, ENTITY_MANAGER_CACHE.containsKey(cacheKey));
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5189, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5188, isValid))))) {
+            org.broadleafcommerce.common.service.PersistenceServiceImpl.LOG.warn("The system detected an entity class name submitted that is not present in the registered entities known to the system.");
         }
-
-        return isValid;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5190, isValid);
     }
 
-    @Override
-    public EntityManager identifyEntityManager(Class entityClass) {
-        return identifyEntityManager(entityClass, TargetModeType.SANDBOX);
+    @java.lang.Override
+    public javax.persistence.EntityManager identifyEntityManager(java.lang.Class entityClass) {
+        return identifyEntityManager(entityClass, org.broadleafcommerce.common.persistence.TargetModeType.SANDBOX);
     }
 
-    @Override
-    public EntityManager identifyEntityManager(Class entityClass, TargetModeType targetModeType) {
-        String cacheKey = buildManagerCacheKey(targetModeType.getType(), entityClass);
-        EntityManager entityManager = ENTITY_MANAGER_CACHE.get(cacheKey);
-
-        if (entityManager == null) {
-            throw new RuntimeException("Unable to determine the EntityManager for the following " +
-                    "targetModeType and class pair: " + cacheKey);
+    @java.lang.Override
+    public javax.persistence.EntityManager identifyEntityManager(java.lang.Class entityClass, org.broadleafcommerce.common.persistence.TargetModeType targetModeType) {
+        java.lang.String cacheKey = buildManagerCacheKey(targetModeType.getType(), entityClass);
+        javax.persistence.EntityManager entityManager = ENTITY_MANAGER_CACHE.get(cacheKey);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5191, (entityManager == null))) {
+            throw new java.lang.RuntimeException((("Unable to determine the EntityManager for the following " + "targetModeType and class pair: ") + cacheKey));
         }
-
         return entityManager;
     }
 
-    @Override
-    public PlatformTransactionManager identifyTransactionManager(String className, TargetModeType targetModeType) {
-        String cacheKey = buildManagerCacheKey(targetModeType.getType(), className);
-        PlatformTransactionManager txManager = TRANSACTION_MANAGER_CACHE.get(cacheKey);
-
-        if (txManager == null) {
-            throw new RuntimeException("Unable to determine the PlatformTransactionManager for the following " +
-                    "targetModeType and class pair: " + cacheKey);
+    @java.lang.Override
+    public org.springframework.transaction.PlatformTransactionManager identifyTransactionManager(java.lang.String className, org.broadleafcommerce.common.persistence.TargetModeType targetModeType) {
+        java.lang.String cacheKey = buildManagerCacheKey(targetModeType.getType(), className);
+        org.springframework.transaction.PlatformTransactionManager txManager = TRANSACTION_MANAGER_CACHE.get(cacheKey);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5192, (txManager == null))) {
+            throw new java.lang.RuntimeException((("Unable to determine the PlatformTransactionManager for the following " + "targetModeType and class pair: ") + cacheKey));
         }
-
         return txManager;
     }
 
-    @Override
-    public EJB3ConfigurationDao identifyEJB3ConfigurationDao(Class entityClass) {
-        String cacheKey = buildEJB3ConfigDaoCacheKey(entityClass);
-        EJB3ConfigurationDao ejb3ConfigurationDao = EJB3_CONFIG_DAO_CACHE.get(cacheKey);
-
-        if (ejb3ConfigurationDao == null) {
-            throw new RuntimeException("Unable to determine the EJB3ConfigurationDao for the following class: " + entityClass.getName());
+    @java.lang.Override
+    public org.broadleafcommerce.common.util.dao.EJB3ConfigurationDao identifyEJB3ConfigurationDao(java.lang.Class entityClass) {
+        java.lang.String cacheKey = buildEJB3ConfigDaoCacheKey(entityClass);
+        org.broadleafcommerce.common.util.dao.EJB3ConfigurationDao ejb3ConfigurationDao = EJB3_CONFIG_DAO_CACHE.get(cacheKey);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5193, (ejb3ConfigurationDao == null))) {
+            throw new java.lang.RuntimeException(("Unable to determine the EJB3ConfigurationDao for the following class: " + (entityClass.getName())));
         }
-
         return ejb3ConfigurationDao;
     }
 
-    @Override
-    public EntityManager identifyDefaultEntityManager(TargetModeType targetModeType) {
-        Map<String, Object> managerMap = defaultTargetModeMap.get(targetModeType.getType());
+    @java.lang.Override
+    public javax.persistence.EntityManager identifyDefaultEntityManager(org.broadleafcommerce.common.persistence.TargetModeType targetModeType) {
+        java.util.Map<java.lang.String, java.lang.Object> managerMap = defaultTargetModeMap.get(targetModeType.getType());
         return getEntityManager(managerMap);
     }
 
-    @Override
-    public EntityManager getEntityManager(Map<String, Object> managerMap) {
-        return (EntityManager) managerMap.get(ENTITY_MANAGER_KEY);
+    @java.lang.Override
+    public javax.persistence.EntityManager getEntityManager(java.util.Map<java.lang.String, java.lang.Object> managerMap) {
+        return ((javax.persistence.EntityManager) (managerMap.get(org.broadleafcommerce.common.service.PersistenceServiceImpl.ENTITY_MANAGER_KEY)));
     }
 
-    @Override
-    public PlatformTransactionManager identifyDefaultTransactionManager(TargetModeType targetModeType) {
-        Map<String, Object> managerMap = defaultTargetModeMap.get(targetModeType.getType());
+    @java.lang.Override
+    public org.springframework.transaction.PlatformTransactionManager identifyDefaultTransactionManager(org.broadleafcommerce.common.persistence.TargetModeType targetModeType) {
+        java.util.Map<java.lang.String, java.lang.Object> managerMap = defaultTargetModeMap.get(targetModeType.getType());
         return getTransactionManager(managerMap);
     }
 
-    @Override
-    public PlatformTransactionManager getTransactionManager(Map<String, Object> managerMap) {
-        return (PlatformTransactionManager) managerMap.get(TRANSACTION_MANAGER_KEY);
+    @java.lang.Override
+    public org.springframework.transaction.PlatformTransactionManager getTransactionManager(java.util.Map<java.lang.String, java.lang.Object> managerMap) {
+        return ((org.springframework.transaction.PlatformTransactionManager) (managerMap.get(org.broadleafcommerce.common.service.PersistenceServiceImpl.TRANSACTION_MANAGER_KEY)));
     }
 
-    @Override
-    public EJB3ConfigurationDao identifyDefaultEJB3ConfigurationDao(TargetModeType targetModeType) {
-        Map<String, Object> managerMap = defaultTargetModeMap.get(targetModeType.getType());
+    @java.lang.Override
+    public org.broadleafcommerce.common.util.dao.EJB3ConfigurationDao identifyDefaultEJB3ConfigurationDao(org.broadleafcommerce.common.persistence.TargetModeType targetModeType) {
+        java.util.Map<java.lang.String, java.lang.Object> managerMap = defaultTargetModeMap.get(targetModeType.getType());
         return getEJB3ConfigurationDao(managerMap);
     }
 
-    @Override
-    public EJB3ConfigurationDao getEJB3ConfigurationDao(Map<String, Object> managerMap) {
-        return (EJB3ConfigurationDao) managerMap.get(EJB3_CONFIG_DAO_KEY);
+    @java.lang.Override
+    public org.broadleafcommerce.common.util.dao.EJB3ConfigurationDao getEJB3ConfigurationDao(java.util.Map<java.lang.String, java.lang.Object> managerMap) {
+        return ((org.broadleafcommerce.common.util.dao.EJB3ConfigurationDao) (managerMap.get(org.broadleafcommerce.common.service.PersistenceServiceImpl.EJB3_CONFIG_DAO_KEY)));
     }
 
-    @Override
-    public Class<?> getCeilingImplClassFromEntityManagers(String className) {
-        Class<?> beanIdClass = getClassForName(className);
-
-        for (EntityManager em : entityManagers) {
-            Class<?>[] entitiesFromCeiling = daoHelper.getAllPolymorphicEntitiesFromCeiling(beanIdClass, em.unwrap(Session.class).getSessionFactory(), true, true);
-
-            if (ArrayUtils.isNotEmpty(entitiesFromCeiling)) {
-                return entitiesFromCeiling[entitiesFromCeiling.length - 1];
+    @java.lang.Override
+    public java.lang.Class<?> getCeilingImplClassFromEntityManagers(java.lang.String className) {
+        java.lang.Class<?> beanIdClass = getClassForName(className);
+        for (javax.persistence.EntityManager em : entityManagers) {
+            java.lang.Class<?>[] entitiesFromCeiling = daoHelper.getAllPolymorphicEntitiesFromCeiling(beanIdClass, em.unwrap(org.hibernate.Session.class).getSessionFactory(), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5194, true), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5195, true));
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5196, org.apache.commons.lang3.ArrayUtils.isNotEmpty(entitiesFromCeiling))) {
+                return entitiesFromCeiling[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5199, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5197, entitiesFromCeiling.length)) - (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5198, 1))))];
             }
         }
         return null;
     }
 
-    protected String buildManagerCacheKey(String targetMode, Class<?> clazz) {
+    protected java.lang.String buildManagerCacheKey(java.lang.String targetMode, java.lang.Class<?> clazz) {
         return buildManagerCacheKey(targetMode, clazz.getName());
     }
 
-    protected String buildManagerCacheKey(String targetMode, String className) {
-        String managedClassName = getManagedClassName(className);
-
-        return targetMode + "|" + managedClassName;
+    protected java.lang.String buildManagerCacheKey(java.lang.String targetMode, java.lang.String className) {
+        java.lang.String managedClassName = getManagedClassName(className);
+        return (targetMode + "|") + managedClassName;
     }
 
-    protected String buildEJB3ConfigDaoCacheKey(Class<?> clazz) {
+    protected java.lang.String buildEJB3ConfigDaoCacheKey(java.lang.Class<?> clazz) {
         return getManagedClassName(clazz.getName());
     }
 
-    protected String getManagedClassName(String className) {
+    protected java.lang.String getManagedClassName(java.lang.String className) {
         try {
             return entityConfiguration.lookupEntityClass(className).getName();
-        } catch (NoSuchBeanDefinitionException e) {
+        } catch (org.springframework.beans.factory.NoSuchBeanDefinitionException e) {
             return getCeilingImplClassFromEntityManagers(className).getName();
         }
     }
 
-    protected Class<?> getClassForName(String className) {
+    protected java.lang.Class<?> getClassForName(java.lang.String className) {
         try {
-            return Class.forName(className);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            return java.lang.Class.forName(className);
+        } catch (java.lang.ClassNotFoundException e) {
+            throw new java.lang.RuntimeException(e);
         }
     }
+
+    public static perturbation.location.PerturbationLocation __L5182;
+
+    public static perturbation.location.PerturbationLocation __L5183;
+
+    public static perturbation.location.PerturbationLocation __L5184;
+
+    public static perturbation.location.PerturbationLocation __L5185;
+
+    public static perturbation.location.PerturbationLocation __L5186;
+
+    public static perturbation.location.PerturbationLocation __L5187;
+
+    public static perturbation.location.PerturbationLocation __L5188;
+
+    public static perturbation.location.PerturbationLocation __L5189;
+
+    public static perturbation.location.PerturbationLocation __L5190;
+
+    public static perturbation.location.PerturbationLocation __L5191;
+
+    public static perturbation.location.PerturbationLocation __L5192;
+
+    public static perturbation.location.PerturbationLocation __L5193;
+
+    public static perturbation.location.PerturbationLocation __L5194;
+
+    public static perturbation.location.PerturbationLocation __L5195;
+
+    public static perturbation.location.PerturbationLocation __L5196;
+
+    public static perturbation.location.PerturbationLocation __L5197;
+
+    public static perturbation.location.PerturbationLocation __L5198;
+
+    public static perturbation.location.PerturbationLocation __L5199;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5182 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/PersistenceServiceImpl.java:86)", 5182, "Boolean");
+        org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5183 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/PersistenceServiceImpl.java:106)", 5183, "Boolean");
+        org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5184 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/PersistenceServiceImpl.java:111)", 5184, "Numerical");
+        org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5185 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/PersistenceServiceImpl.java:144)", 5185, "Boolean");
+        org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5186 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/PersistenceServiceImpl.java:144)", 5186, "Boolean");
+        org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5187 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/PersistenceServiceImpl.java:153)", 5187, "Boolean");
+        org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5188 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/PersistenceServiceImpl.java:155)", 5188, "Boolean");
+        org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5189 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/PersistenceServiceImpl.java:155)", 5189, "Boolean");
+        org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5190 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/PersistenceServiceImpl.java:159)", 5190, "Boolean");
+        org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5191 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/PersistenceServiceImpl.java:172)", 5191, "Boolean");
+        org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5192 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/PersistenceServiceImpl.java:185)", 5192, "Boolean");
+        org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5193 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/PersistenceServiceImpl.java:198)", 5193, "Boolean");
+        org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5194 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/PersistenceServiceImpl.java:243)", 5194, "Boolean");
+        org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5195 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/PersistenceServiceImpl.java:243)", 5195, "Boolean");
+        org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5196 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/PersistenceServiceImpl.java:245)", 5196, "Boolean");
+        org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5197 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/PersistenceServiceImpl.java:246)", 5197, "Numerical");
+        org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5198 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/PersistenceServiceImpl.java:246)", 5198, "Numerical");
+        org.broadleafcommerce.common.service.PersistenceServiceImpl.__L5199 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/service/PersistenceServiceImpl.java:246)", 5199, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.service.PersistenceServiceImpl.initPerturbationLocation0();
+    }
 }
+

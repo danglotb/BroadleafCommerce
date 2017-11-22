@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,39 +17,10 @@
  */
 package org.broadleafcommerce.common.web;
 
-import org.broadleafcommerce.common.template.TemplateType;
-
-import javax.servlet.http.HttpServletRequest;
-
 
 public interface TemplateTypeAware {
+    public abstract java.lang.String getExpectedTemplateName(javax.servlet.http.HttpServletRequest request);
 
-    /**
-     * If a custom handler is written and it knows the eventual template name, then it should return the 
-     * template name when this method is called.    This method will always be called after 
-     * {@link #getBroadleafHandlerInternal(HttpServletRequest)} and only if the Handler was able to handle the 
-     * request (e.g. it returns a non-null value from {@link #getBroadleafHandlerInternal(HttpServletRequest)}.  
-     * 
-     * Listed as expected because the HandlerMapping is making a call before the controller logic has 
-     * been processed.   The controller may send the user somewhere else (e.g. an error page, etc.) in which 
-     * case, the expected template won't be the actual destination.
-     * 
-     * @param request
-     * @return
-     * @throws Exception
-     */
-    public abstract String getExpectedTemplateName(HttpServletRequest request);
-
-    /**
-     * If a custom handler is written and it knows the eventual template name, then it should return the 
-     * TemplateType when this method is called.    This method will always be called after 
-     * {@link #getBroadleafHandlerInternal(HttpServletRequest)} and only if the Handler was able to handle the 
-     * request (e.g. it returns a non-null value from {@link #getBroadleafHandlerInternal(HttpServletRequest)}.  
-     * 
-     * @param request
-     * @return
-     * @throws Exception
-     */
-    public abstract TemplateType getTemplateType(HttpServletRequest request);
-
+    public abstract org.broadleafcommerce.common.template.TemplateType getTemplateType(javax.servlet.http.HttpServletRequest request);
 }
+

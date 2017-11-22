@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,24 +17,12 @@
  */
 package org.broadleafcommerce.common.email.service.info;
 
-import java.io.IOException;
 
-/**
- * Implementation of EmailInfo that will not send an Email.   The out of box configuration for
- * broadleaf does not send emails but does have hooks to send emails for use cases like
- * registration, forgot password, etc.
- *
- * The email send functionality will not send an email if the passed in EmailInfo is an instance
- * of this class.
- *
- * @author vjain
- *
- */
-public class NullEmailInfo extends EmailInfo {
+public class NullEmailInfo extends org.broadleafcommerce.common.email.service.info.EmailInfo {
     private static final long serialVersionUID = 1L;
 
-    public NullEmailInfo() throws IOException {
+    public NullEmailInfo() throws java.io.IOException {
         super();
     }
-
 }
+

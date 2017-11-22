@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,48 +15,34 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.sitemap.wrapper;
 
-import java.io.Serializable;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-
-/**
- * Representation the sitemap element defined in the schema definition at
- * http://www.sitemaps.org/schemas/sitemap/0.9.
- * 
- * @author bpolster
- */
-@XmlRootElement(name = "sitemap")
-@XmlType(propOrder = { "loc", "lastmod" })
-public class SiteMapWrapper implements Serializable {
-
+@javax.xml.bind.annotation.XmlRootElement(name = "sitemap")
+@javax.xml.bind.annotation.XmlType(propOrder = { "loc", "lastmod" })
+public class SiteMapWrapper implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
 
-    protected String loc;
+    protected java.lang.String loc;
 
-    protected String lastmod;
+    protected java.lang.String lastmod;
 
-
-    public String getLoc() {
+    public java.lang.String getLoc() {
         return loc;
     }
 
-    @XmlElement
-    public void setLoc(String loc) {
+    @javax.xml.bind.annotation.XmlElement
+    public void setLoc(java.lang.String loc) {
         this.loc = loc;
     }
 
-
-    public String getLastmod() {
+    public java.lang.String getLastmod() {
         return lastmod;
     }
 
-    @XmlElement
-    public void setLastmod(String lastmod) {
+    @javax.xml.bind.annotation.XmlElement
+    public void setLastmod(java.lang.String lastmod) {
         this.lastmod = lastmod;
     }
 }
+

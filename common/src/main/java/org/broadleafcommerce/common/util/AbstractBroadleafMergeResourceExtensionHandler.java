@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,16 +17,11 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.broadleafcommerce.common.extension.AbstractExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import java.util.Locale;
 
-public class AbstractBroadleafMergeResourceExtensionHandler extends AbstractExtensionHandler implements BroadleafMergeResourceExtensionHandler {
-
-    @Override
-    public ExtensionResultStatusType resolveMessageSource(String code, Locale locale, ExtensionResultHolder<String> result) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+public class AbstractBroadleafMergeResourceExtensionHandler extends org.broadleafcommerce.common.extension.AbstractExtensionHandler implements org.broadleafcommerce.common.util.BroadleafMergeResourceExtensionHandler {
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType resolveMessageSource(java.lang.String code, java.util.Locale locale, org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.String> result) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
-
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,31 +17,24 @@
  */
 package org.broadleafcommerce.common.exception;
 
-/**
- * The admin will throw this exception when a query is attempted across multiple class hierarchies
- * because it is impossible for such a query to produce any results.
- * 
- * @author Andre Azzolini (apazzolini)
- */
-public class NoPossibleResultsException extends RuntimeException {
-    
+
+public class NoPossibleResultsException extends java.lang.RuntimeException {
     private static final long serialVersionUID = 2422275745139590462L;
 
-    // for serialization purposes
     protected NoPossibleResultsException() {
         super();
     }
-    
-    public NoPossibleResultsException(String message, Throwable cause) {
+
+    public NoPossibleResultsException(java.lang.String message, java.lang.Throwable cause) {
         super(message, cause);
     }
-    
-    public NoPossibleResultsException(String message) {
+
+    public NoPossibleResultsException(java.lang.String message) {
         super(message);
     }
-    
-    public NoPossibleResultsException(Throwable cause) {
+
+    public NoPossibleResultsException(java.lang.Throwable cause) {
         super(cause);
     }
-
 }
+

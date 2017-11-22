@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,77 +17,73 @@
  */
 package org.broadleafcommerce.common.exception;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
-import java.util.UUID;
+@org.springframework.stereotype.Component("blSimpleMappingExceptionResolver")
+public class BroadleafSimpleMappingExceptionResolver extends org.springframework.web.servlet.handler.SimpleMappingExceptionResolver {
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.exception.BroadleafSimpleMappingExceptionResolver.class);
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-/**
- * This exception resolver can be used to handle exceptions in a user friendly way by displaying an error template.  
- * It also serves a security purpose of not showing stack traces to users.  This is disabled by default and should 
- * only be enabled when there is not already a way to handle exceptions in the current project.  
- * 
- * This can be enabled by setting exception.handler.enabled=true in your properties file.  You will need to create 
- * a template file at path "utility/error" or override the method getDefaultErrorView() to return a different path 
- * to an error file.
- * 
- * @author Chad Harchar (charchar)
- */
-@Component("blSimpleMappingExceptionResolver")
-public class BroadleafSimpleMappingExceptionResolver extends SimpleMappingExceptionResolver {
-
-    private static final Log LOG = LogFactory.getLog(BroadleafSimpleMappingExceptionResolver.class);
-
-    @Value("${exception.handler.enabled:false}")
+    @org.springframework.beans.factory.annotation.Value("${exception.handler.enabled:false}")
     protected boolean exceptionHandlerEnabled;
 
-    protected String DEFAULT_ERROR_VIEW = "utility/error";
+    protected java.lang.String DEFAULT_ERROR_VIEW = "utility/error";
 
-    @Override
-    protected ModelAndView doResolveException(HttpServletRequest request,
-            HttpServletResponse response, Object handler, Exception ex) {
-
-        String viewName = getDefaultErrorView();
-
-        Integer statusCode = super.determineStatusCode(request, viewName);
-        if (statusCode != null) {
-            applyStatusCodeIfPossible(request, response, statusCode);
+    @java.lang.Override
+    protected org.springframework.web.servlet.ModelAndView doResolveException(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response, java.lang.Object handler, java.lang.Exception ex) {
+        java.lang.String viewName = getDefaultErrorView();
+        java.lang.Integer statusCode = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.exception.BroadleafSimpleMappingExceptionResolver.__L1239, super.determineStatusCode(request, viewName));
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.BroadleafSimpleMappingExceptionResolver.__L1240, (statusCode != null))) {
+            applyStatusCodeIfPossible(request, response, perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.exception.BroadleafSimpleMappingExceptionResolver.__L1241, statusCode));
         }
-
-        ModelAndView modelAndView = getModelAndView(viewName, ex, request);
-        String uuid = "";
-        if (request.getAttribute("exceptionUUID") != null) {
+        org.springframework.web.servlet.ModelAndView modelAndView = getModelAndView(viewName, ex, request);
+        java.lang.String uuid = "";
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.BroadleafSimpleMappingExceptionResolver.__L1242, ((request.getAttribute("exceptionUUID")) != null))) {
             uuid = request.getAttribute("exceptionUUID").toString();
         }
         modelAndView.getModel().put("exceptionUUID", uuid);
         return modelAndView;
     }
 
-    @Override
-    public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response,
-            Object handler, Exception ex) {
-
-        if (exceptionHandlerEnabled) {
-            String uuid = UUID.randomUUID().toString();
-            if (LOG.isErrorEnabled()) {
-                LOG.error(String.format("Error caught and handled.:%s", uuid), ex);
+    @java.lang.Override
+    public org.springframework.web.servlet.ModelAndView resolveException(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response, java.lang.Object handler, java.lang.Exception ex) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.BroadleafSimpleMappingExceptionResolver.__L1243, exceptionHandlerEnabled)) {
+            java.lang.String uuid = java.util.UUID.randomUUID().toString();
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.BroadleafSimpleMappingExceptionResolver.__L1244, org.broadleafcommerce.common.exception.BroadleafSimpleMappingExceptionResolver.LOG.isErrorEnabled())) {
+                org.broadleafcommerce.common.exception.BroadleafSimpleMappingExceptionResolver.LOG.error(java.lang.String.format("Error caught and handled.:%s", uuid), ex);
             }
             request.setAttribute("exceptionUUID", uuid);
             return doResolveException(request, response, handler, ex);
-        } else {
+        }else {
             return null;
         }
     }
 
-    public String getDefaultErrorView(){
+    public java.lang.String getDefaultErrorView() {
         return DEFAULT_ERROR_VIEW;
     }
 
+    public static perturbation.location.PerturbationLocation __L1239;
+
+    public static perturbation.location.PerturbationLocation __L1240;
+
+    public static perturbation.location.PerturbationLocation __L1241;
+
+    public static perturbation.location.PerturbationLocation __L1242;
+
+    public static perturbation.location.PerturbationLocation __L1243;
+
+    public static perturbation.location.PerturbationLocation __L1244;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.exception.BroadleafSimpleMappingExceptionResolver.__L1239 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/BroadleafSimpleMappingExceptionResolver.java:59)", 1239, "Numerical");
+        org.broadleafcommerce.common.exception.BroadleafSimpleMappingExceptionResolver.__L1240 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/BroadleafSimpleMappingExceptionResolver.java:60)", 1240, "Boolean");
+        org.broadleafcommerce.common.exception.BroadleafSimpleMappingExceptionResolver.__L1241 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/BroadleafSimpleMappingExceptionResolver.java:61)", 1241, "Numerical");
+        org.broadleafcommerce.common.exception.BroadleafSimpleMappingExceptionResolver.__L1242 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/BroadleafSimpleMappingExceptionResolver.java:66)", 1242, "Boolean");
+        org.broadleafcommerce.common.exception.BroadleafSimpleMappingExceptionResolver.__L1243 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/BroadleafSimpleMappingExceptionResolver.java:77)", 1243, "Boolean");
+        org.broadleafcommerce.common.exception.BroadleafSimpleMappingExceptionResolver.__L1244 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/BroadleafSimpleMappingExceptionResolver.java:79)", 1244, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.exception.BroadleafSimpleMappingExceptionResolver.initPerturbationLocation0();
+    }
 }
+

@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,38 +17,12 @@
  */
 package org.broadleafcommerce.common.web;
 
-import org.broadleafcommerce.common.extension.ExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
 
+public interface BroadleafTemplateViewResolverExtensionHandler extends org.broadleafcommerce.common.extension.ExtensionHandler {
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType overrideView(org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.String> erh, java.lang.String originalViewName, boolean isAjaxRequest);
 
-/**
- * @author Andre Azzolini (apazzolini), bpolster
- */
-public interface BroadleafTemplateViewResolverExtensionHandler extends ExtensionHandler {
-    
-    /**
-     * Allows an extension handler to override the view name.
-     * @param erh
-     * @return
-     */
-    ExtensionResultStatusType overrideView(ExtensionResultHolder<String> erh, String originalViewName,
-            boolean isAjaxRequest);
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType appendCacheKey(org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.String> erh, java.lang.String originalViewName, boolean isAjaxRequest);
 
-    /**
-     * Allows an extension handler to alter the cache key for the view.
-     * @param erh
-     * @return
-     */
-    ExtensionResultStatusType appendCacheKey(ExtensionResultHolder<String> erh, String originalViewName,
-            boolean isAjaxRequest);
-
-    /**
-     * Allows an extension handler to provide a wrapper for the template.
-     * @param erh
-     * @return
-     */
-    ExtensionResultStatusType provideTemplateWrapper(ExtensionResultHolder<String> erh, String originalViewName,
-            boolean isAjaxRequest);
-
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType provideTemplateWrapper(org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.String> erh, java.lang.String originalViewName, boolean isAjaxRequest);
 }
+

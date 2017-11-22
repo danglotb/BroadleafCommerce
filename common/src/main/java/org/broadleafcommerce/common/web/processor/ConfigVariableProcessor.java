@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,61 +17,43 @@
  */
 package org.broadleafcommerce.common.web.processor;
 
-import org.broadleafcommerce.common.util.BLCSystemProperty;
-import org.broadleafcommerce.common.web.expression.PropertiesVariableExpression;
-import org.broadleafcommerce.presentation.condition.ConditionalOnTemplating;
-import org.broadleafcommerce.presentation.dialect.AbstractBroadleafVariableModifierProcessor;
-import org.broadleafcommerce.presentation.model.BroadleafTemplateContext;
-import org.springframework.stereotype.Component;
 
-import com.google.common.collect.ImmutableMap;
-
-import java.util.Map;
-
-/**
- * <p>
- * Looks up the value of a configuration variable and adds the value to the model.
- * 
- * <p>
- * While this adds the configuration value onto the model, you might want to use the value of this in larger expression. In
- * that instance you may want to use {@link PropertiesVariableExpression} instead with {@code #props.get('property')}.
- * 
- * @parameter name (required) the name of the system property to look up
- * @parameter resultVar (optional) what model variable the system property value is added to, defaults to <b>value</b>
- * 
- * @author bpolster
- * @see {@link PropertiesVariableExpression}
- * @deprecated use {@link PropertiesVariableExpression} instead
- */
-@Deprecated
-@Component("blConfigVariableProcessor")
-@ConditionalOnTemplating
-public class ConfigVariableProcessor extends AbstractBroadleafVariableModifierProcessor {
-
-    @Override
-    public String getName() {
+@java.lang.Deprecated
+@org.springframework.stereotype.Component("blConfigVariableProcessor")
+@org.broadleafcommerce.presentation.condition.ConditionalOnTemplating
+public class ConfigVariableProcessor extends org.broadleafcommerce.presentation.dialect.AbstractBroadleafVariableModifierProcessor {
+    @java.lang.Override
+    public java.lang.String getName() {
         return "config";
     }
-    
-    @Override
+
+    @java.lang.Override
     public int getPrecedence() {
-        return 10000;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.processor.ConfigVariableProcessor.__L7411, 10000);
     }
 
-    /* (non-Javadoc)
-     * @see org.broadleafcommerce.presentation.dialect.AbstractModelVariableModifierProcessor#populateModelVariables(java.lang.String, java.util.Map, java.util.Map)
-     */
-    @Override
-    public Map<String, Object> populateModelVariables(String tagName, Map<String, String> tagAttributes, BroadleafTemplateContext context) {
-        String resultVar = tagAttributes.get("resultVar");
-        if (resultVar == null) {
+    @java.lang.Override
+    public java.util.Map<java.lang.String, java.lang.Object> populateModelVariables(java.lang.String tagName, java.util.Map<java.lang.String, java.lang.String> tagAttributes, org.broadleafcommerce.presentation.model.BroadleafTemplateContext context) {
+        java.lang.String resultVar = tagAttributes.get("resultVar");
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.processor.ConfigVariableProcessor.__L7412, (resultVar == null))) {
             resultVar = "value";
         }
-
-        String attributeName = tagAttributes.get("name");
-        String attributeValue = BLCSystemProperty.resolveSystemProperty(attributeName);
-        
-        return ImmutableMap.of(resultVar, (Object) attributeValue);
+        java.lang.String attributeName = tagAttributes.get("name");
+        java.lang.String attributeValue = org.broadleafcommerce.common.util.BLCSystemProperty.resolveSystemProperty(attributeName);
+        return com.google.common.collect.ImmutableMap.of(resultVar, ((java.lang.Object) (attributeValue)));
     }
 
+    public static perturbation.location.PerturbationLocation __L7411;
+
+    public static perturbation.location.PerturbationLocation __L7412;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.processor.ConfigVariableProcessor.__L7411 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ConfigVariableProcessor.java:58)", 7411, "Numerical");
+        org.broadleafcommerce.common.web.processor.ConfigVariableProcessor.__L7412 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/processor/ConfigVariableProcessor.java:67)", 7412, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.processor.ConfigVariableProcessor.initPerturbationLocation0();
+    }
 }
+

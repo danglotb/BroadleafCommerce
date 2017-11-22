@@ -15,24 +15,14 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-/**
- * 
- */
 package org.broadleafcommerce.common.config;
 
-import org.springframework.core.annotation.Order;
 
-/**
- * Customized property source for broadleaf-common
- * 
- * @author Phillip Verheyden (phillipuniverse)
- */
-@Order(FrameworkCommonClasspathPropertySource.BROADLEAF_COMMON_ORDER)
-public class BroadleafCommonPropertySource implements FrameworkCommonClasspathPropertySource {
-
-    @Override
-    public String getClasspathFolder() {
+@org.springframework.core.annotation.Order(org.broadleafcommerce.common.config.FrameworkCommonClasspathPropertySource.BROADLEAF_COMMON_ORDER)
+public class BroadleafCommonPropertySource implements org.broadleafcommerce.common.config.FrameworkCommonClasspathPropertySource {
+    @java.lang.Override
+    public java.lang.String getClasspathFolder() {
         return "config/bc/";
     }
-
 }
+

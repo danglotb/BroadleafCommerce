@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,119 +15,105 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common;
 
-import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.springframework.web.context.request.WebRequest;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-/**
- * Created by bpolster.
- */
-public class RequestDTOImpl implements RequestDTO, Serializable {
-
+public class RequestDTOImpl implements java.io.Serializable , org.broadleafcommerce.common.RequestDTO {
     private static final long serialVersionUID = 1L;
 
-    @AdminPresentation(friendlyName = "RequestDTOImpl_Request_URI")
-    private String requestURI;
+    @org.broadleafcommerce.common.presentation.AdminPresentation(friendlyName = "RequestDTOImpl_Request_URI")
+    private java.lang.String requestURI;
 
-    @AdminPresentation(friendlyName = "RequestDTOImpl_Full_Url")
-    private String fullUrlWithQueryString;
+    @org.broadleafcommerce.common.presentation.AdminPresentation(friendlyName = "RequestDTOImpl_Full_Url")
+    private java.lang.String fullUrlWithQueryString;
 
-    @AdminPresentation(friendlyName = "RequestDTOImpl_Is_Secure")
-    private Boolean secure;
+    @org.broadleafcommerce.common.presentation.AdminPresentation(friendlyName = "RequestDTOImpl_Is_Secure")
+    private java.lang.Boolean secure;
 
-    Map<String, String> requestContextAttributes = new HashMap<String, String>();
+    java.util.Map<java.lang.String, java.lang.String> requestContextAttributes = new java.util.HashMap<java.lang.String, java.lang.String>();
 
     public RequestDTOImpl() {
     }
 
-    public RequestDTOImpl(HttpServletRequest request) {
+    public RequestDTOImpl(javax.servlet.http.HttpServletRequest request) {
         requestURI = request.getRequestURI();
         fullUrlWithQueryString = request.getRequestURL().toString();
-        if (StringUtils.isNotEmpty(request.getQueryString())) {
-            fullUrlWithQueryString += "?" + request.getQueryString();
+        if (org.apache.commons.lang3.StringUtils.isNotEmpty(request.getQueryString())) {
+            fullUrlWithQueryString += "?" + (request.getQueryString());
         }
-        secure = ("HTTPS".equalsIgnoreCase(request.getScheme()) || request.isSecure());
-        for(Object key : request.getParameterMap().keySet()) {
-            String paramKey = key.toString();
+        secure = ("HTTPS".equalsIgnoreCase(request.getScheme())) || (request.isSecure());
+        for (java.lang.Object key : request.getParameterMap().keySet()) {
+            java.lang.String paramKey = key.toString();
             requestContextAttributes.put(paramKey, request.getParameter(paramKey));
         }
     }
 
-    public RequestDTOImpl(WebRequest request) {
-        // Page level targeting does not work for WebRequest.
+    public RequestDTOImpl(org.springframework.web.context.request.WebRequest request) {
         secure = request.isSecure();
-        for(String key : request.getParameterMap().keySet()) {
+        for (java.lang.String key : request.getParameterMap().keySet()) {
             requestContextAttributes.put(key, request.getParameter(key));
         }
     }
 
-    /**
-     * @return  returns the request not including the protocol, domain, or query string
-     */
-    @Override
-    public String getRequestURI() {
+    @java.lang.Override
+    public java.lang.String getRequestURI() {
         return requestURI;
     }
 
-    /**
-     * @return Returns the URL and parameters.
-     */
-    @Override
-    public String getFullUrLWithQueryString() {
+    @java.lang.Override
+    public java.lang.String getFullUrLWithQueryString() {
         return fullUrlWithQueryString;
     }
 
-    /**
-     * @return true if this request came in through HTTPS
-     */
-    @Override
-    public Boolean isSecure() {
+    @java.lang.Override
+    public java.lang.Boolean isSecure() {
         return secure;
     }
 
-    public Map<String, String> getRequestContextAttributes() {
+    public java.util.Map<java.lang.String, java.lang.String> getRequestContextAttributes() {
         return requestContextAttributes;
     }
 
-    public void setRequestContextAttributes(Map<String, String> requestContextAttributes) {
+    public void setRequestContextAttributes(java.util.Map<java.lang.String, java.lang.String> requestContextAttributes) {
         this.requestContextAttributes = requestContextAttributes;
     }
 
-    public String getFullUrlWithQueryString() {
+    public java.lang.String getFullUrlWithQueryString() {
         return fullUrlWithQueryString;
     }
 
-    public void setFullUrlWithQueryString(String fullUrlWithQueryString) {
+    public void setFullUrlWithQueryString(java.lang.String fullUrlWithQueryString) {
         this.fullUrlWithQueryString = fullUrlWithQueryString;
     }
 
-    public Boolean getSecure() {
+    public java.lang.Boolean getSecure() {
         return secure;
     }
 
-    public void setSecure(Boolean secure) {
+    public void setSecure(java.lang.Boolean secure) {
         this.secure = secure;
     }
 
-    public void setRequestURI(String requestURI) {
+    public void setRequestURI(java.lang.String requestURI) {
         this.requestURI = requestURI;
     }
 
-    public Map<String, Object> getProperties() {
-        if (BroadleafRequestContext.getBroadleafRequestContext() != null) {
-            return BroadleafRequestContext.getBroadleafRequestContext().getAdditionalProperties();
-        } else {
+    public java.util.Map<java.lang.String, java.lang.Object> getProperties() {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.RequestDTOImpl.__L8009, ((org.broadleafcommerce.common.web.BroadleafRequestContext.getBroadleafRequestContext()) != null))) {
+            return org.broadleafcommerce.common.web.BroadleafRequestContext.getBroadleafRequestContext().getAdditionalProperties();
+        }else {
             return null;
         }
     }
+
+    public static perturbation.location.PerturbationLocation __L8009;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.RequestDTOImpl.__L8009 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/RequestDTOImpl.java:127)", 8009, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.RequestDTOImpl.initPerturbationLocation0();
+    }
 }
+

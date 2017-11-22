@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,20 +17,28 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.springframework.beans.factory.FactoryBean;
 
-
-public class NullFactoryBean implements FactoryBean<Void> {
-
-    public Void getObject() throws Exception {
+public class NullFactoryBean implements org.springframework.beans.factory.FactoryBean<java.lang.Void> {
+    public java.lang.Void getObject() throws java.lang.Exception {
         return null;
     }
 
-    public Class<? extends Void> getObjectType() {
+    public java.lang.Class<? extends java.lang.Void> getObjectType() {
         return null;
     }
 
     public boolean isSingleton() {
-        return true;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.NullFactoryBean.__L6456, true);
+    }
+
+    public static perturbation.location.PerturbationLocation __L6456;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.NullFactoryBean.__L6456 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/NullFactoryBean.java:34)", 6456, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.NullFactoryBean.initPerturbationLocation0();
     }
 }
+

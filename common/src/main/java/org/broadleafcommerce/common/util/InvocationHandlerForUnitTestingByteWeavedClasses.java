@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,73 +17,37 @@
  */
 package org.broadleafcommerce.common.util;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 
-/**
- * Invocation handler for unit testing byte-weaved classes. Use this InvocationHandler and utility method when Spring is unavailable
- * to complete byte-weaving.
- * 
- * @author Joshua Skorton (jskorton)
- */
-public class InvocationHandlerForUnitTestingByteWeavedClasses implements InvocationHandler {
+public class InvocationHandlerForUnitTestingByteWeavedClasses implements java.lang.reflect.InvocationHandler {
+    protected java.lang.Object[] objectsForByteWeaving;
 
-    /**
-     * This utility method will return a Proxy of a chosen type that response to an array of chose Interfaces and uses a
-     * InvocationHandlerForUnitTestingByteWeavedClasses that is backed by an array of chosen Objects.
-     * 
-     * @param proxyType
-     * @param interfaces
-     * @param objectsForByteWeaving
-     * @return
-     */
-    public static <T> T createProxy(Class<T> proxyType, Class<?>[] interfaces, Object[] objectsForByteWeaving) {
-        InvocationHandler handler = new InvocationHandlerForUnitTestingByteWeavedClasses(objectsForByteWeaving);
-        return (T) Proxy.newProxyInstance(handler.getClass().getClassLoader(), interfaces, handler);
+    public static <T> T createProxy(java.lang.Class<T> proxyType, java.lang.Class<?>[] interfaces, java.lang.Object[] objectsForByteWeaving) {
+        java.lang.reflect.InvocationHandler handler = new org.broadleafcommerce.common.util.InvocationHandlerForUnitTestingByteWeavedClasses(objectsForByteWeaving);
+        return ((T) (java.lang.reflect.Proxy.newProxyInstance(handler.getClass().getClassLoader(), interfaces, handler)));
     }
 
-    protected Object[] objectsForByteWeaving;
-
-    public InvocationHandlerForUnitTestingByteWeavedClasses(Object[] objectsForByteWeaving) {
+    public InvocationHandlerForUnitTestingByteWeavedClasses(java.lang.Object[] objectsForByteWeaving) {
         this.objectsForByteWeaving = objectsForByteWeaving;
     }
 
-    /**
-     * Will invoke a chosen method against an array of Objects that are meant to be byte-weaved together.  Invoke will return when
-     * the first object is found that can be successfully used with the chosen method.  If no objects are found to work with
-     * the chosen method, null will be returned.
-     */
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        
-        for (Object object : objectsForByteWeaving) {
+    @java.lang.Override
+    public java.lang.Object invoke(java.lang.Object proxy, java.lang.reflect.Method method, java.lang.Object[] args) throws java.lang.Throwable {
+        for (java.lang.Object object : objectsForByteWeaving) {
             try {
                 return method.invoke(object, args);
-            } catch (IllegalArgumentException exception) {
+            } catch (java.lang.IllegalArgumentException exception) {
                 continue;
             }
         }
-
         return null;
     }
-    
-    /**
-     * Returns an array of Objects that are meant to be byte-weaved.
-     * 
-     * @return
-     */
-    public Object[] getObjectsForByteWeaving() {
+
+    public java.lang.Object[] getObjectsForByteWeaving() {
         return objectsForByteWeaving;
     }
 
-    /**
-     * Sets an array of Objects that are meant to be byte-weaved.
-     * 
-     * @param objects
-     */
-    public void setObjectsForByteWeaving(Object[] objects) {
+    public void setObjectsForByteWeaving(java.lang.Object[] objects) {
         this.objectsForByteWeaving = objects;
     }
-
 }
+

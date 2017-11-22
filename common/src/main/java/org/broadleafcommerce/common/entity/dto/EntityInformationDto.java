@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,136 +17,77 @@
  */
 package org.broadleafcommerce.common.entity.dto;
 
-import org.broadleafcommerce.common.entity.service.EntityInformationService;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.extensibility.jpa.copy.ProfileEntity;
 
-/**
- * This class holds information about an entity.
- * 
- * It is populated by a call to {@link EntityInformationService}.    The out-of-box implementation 
- * is a placeholder service.
- * 
- * The enterprise-workflow and multi-tenant modules add functionality to properly populate the dto.
- *    
- * @author bpolster
- *
- */
 public class EntityInformationDto {
+    private java.lang.Long profileId;
 
-    private Long profileId;
-    private Long catalogId;
-    private Long owningSiteId;
-    private Long catalogOwner;
-    private Boolean isOwnerToCatalogRelationshipActive;
+    private java.lang.Long catalogId;
 
-    /**
-     * For entities that implement {@link ProfileEntity}, returns the value of the profile with which 
-     * the entity is associated.    Otherwise, returns null.
-     * 
-     * @return the profileId
-     * 
-     */
-    public Long getProfileId() {
+    private java.lang.Long owningSiteId;
+
+    private java.lang.Long catalogOwner;
+
+    private java.lang.Boolean isOwnerToCatalogRelationshipActive;
+
+    public java.lang.Long getProfileId() {
         return profileId;
     }
 
-    /**
-     * Sets the profileId.  Typically called by {@link EntityInformationService} when creating this dto.
-     *
-     * @param profileId the profileId to set
-     * @see EntityInformationDto#getProfileId()
-     */
-    public void setProfileId(Long profileId) {
+    public void setProfileId(java.lang.Long profileId) {
         this.profileId = profileId;
     }
 
-    /**
-     * For entities that implement {@link DirectCopyTransformTypes.MULTITENANT_CATALOG}, returns the id of the catalog 
-     * with which the entity is associated.    Otherwise, returns null.
-     * 
-     * @return the catalogId
-     */
-    public Long getCatalogId() {
+    public java.lang.Long getCatalogId() {
         return catalogId;
     }
 
-    /**
-     * Sets the catalogId.  Typically called by {@link EntityInformationService} when creating this dto.
-     *
-     * @param catalogId the catalogId to set
-     * @see EntityInformationDto#getCatalogId()()
-     */
-    public void setCatalogId(Long catalogId) {
+    public void setCatalogId(java.lang.Long catalogId) {
         this.catalogId = catalogId;
     }
 
-    /**
-     * Return the site that owns this record.     If not in a MultiTenant scenario or if the entity is not
-     * setup for MultiTenant, this method will return null.
-     * @return the siteId
-     */
-    public Long getOwningSiteId() {
+    public java.lang.Long getOwningSiteId() {
         return owningSiteId;
     }
 
-    /**
-     * Sets the siteId that owns this record.
-     * @param siteId the siteId to set
-     */
-    public void setOwningSiteId(Long owningSiteId) {
+    public void setOwningSiteId(java.lang.Long owningSiteId) {
         this.owningSiteId = owningSiteId;
     }
 
-    /**
-     * Returns true if this dto represents a profile entity
-     * @return
-     */
     public boolean isProfileEntity() {
-        return getProfileId() != null;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.entity.dto.EntityInformationDto.__L1220, ((getProfileId()) != null));
     }
 
-    /**
-     * Returns true if this dto represents a catalog entity
-     * @return
-     */
     public boolean isCatalogEntity() {
-        return getCatalogId() != null;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.entity.dto.EntityInformationDto.__L1221, ((getCatalogId()) != null));
     }
 
-    /**
-     * Returns the site id of the site that manages the catalog id ({@link #getCatalogId()}), if applicable
-     *
-     * @return
-     */
-    public Long getCatalogOwner() {
+    public java.lang.Long getCatalogOwner() {
         return catalogOwner;
     }
 
-    /**
-     * Set the site id of the site that manages the catalog id, if applicable
-     *
-     * @param catalogOwner
-     */
-    public void setCatalogOwner(Long catalogOwner) {
+    public void setCatalogOwner(java.lang.Long catalogOwner) {
         this.catalogOwner = catalogOwner;
     }
 
-    /**
-     * Retrieve whether or not the relationship to the owned catalog is active for this site
-     *
-     * @return
-     */
-    public Boolean getOwnerToCatalogRelationshipActive() {
+    public java.lang.Boolean getOwnerToCatalogRelationshipActive() {
         return isOwnerToCatalogRelationshipActive;
     }
 
-    /**
-     * Set whether or not the relationship to the owned catalog is active for this site
-     *
-     * @param ownerToCatalogRelationshipActive
-     */
-    public void setOwnerToCatalogRelationshipActive(Boolean ownerToCatalogRelationshipActive) {
+    public void setOwnerToCatalogRelationshipActive(java.lang.Boolean ownerToCatalogRelationshipActive) {
         isOwnerToCatalogRelationshipActive = ownerToCatalogRelationshipActive;
     }
+
+    public static perturbation.location.PerturbationLocation __L1220;
+
+    public static perturbation.location.PerturbationLocation __L1221;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.entity.dto.EntityInformationDto.__L1220 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/entity/dto/EntityInformationDto.java:106)", 1220, "Boolean");
+        org.broadleafcommerce.common.entity.dto.EntityInformationDto.__L1221 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/entity/dto/EntityInformationDto.java:114)", 1221, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.entity.dto.EntityInformationDto.initPerturbationLocation0();
+    }
 }
+

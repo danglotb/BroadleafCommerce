@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,32 +17,12 @@
  */
 package org.broadleafcommerce.common.encryption;
 
-/**
- * Basic extension point for modules handling encryption.
- */
+
 public interface EncryptionModule {
+    public java.lang.String encrypt(java.lang.String plainText);
 
-    /**
-     * Encrypt a text string
-     * @param plainText
-     * @return
-     */
-    public String encrypt(String plainText);
+    public java.lang.String decrypt(java.lang.String cipherText);
 
-    /**
-     * Decrypt a encrypted string
-     * @param cipherText
-     * @return
-     */
-    public String decrypt(String cipherText);
-
-    /**
-     * Check to see if a text string matches a generated encrypted token.
-     * This is useful for encoders that always generate a unique hash.
-     * @param raw
-     * @param encrypted
-     * @return
-     */
-    public Boolean matches(String raw, String encrypted);
-
+    public java.lang.Boolean matches(java.lang.String raw, java.lang.String encrypted);
 }
+

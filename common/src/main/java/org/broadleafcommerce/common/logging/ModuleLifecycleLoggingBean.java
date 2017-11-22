@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,75 +17,59 @@
  */
 package org.broadleafcommerce.common.logging;
 
-import org.broadleafcommerce.common.module.BroadleafModuleRegistration;
 
-import javax.annotation.PostConstruct;
-
-/**
- * A simple bean that when declared in app context will cause a lifecycle
- * logging message to appear in the logging output.
- *
- * @author Jeff Fischer
- * @see {@link BroadleafModuleRegistration}
- */
 public class ModuleLifecycleLoggingBean {
+    private java.lang.String moduleName;
 
-    private String moduleName;
-    private LifeCycleEvent lifeCycleEvent;
-    
+    private org.broadleafcommerce.common.logging.LifeCycleEvent lifeCycleEvent;
+
     public ModuleLifecycleLoggingBean() {
     }
-    
-    public ModuleLifecycleLoggingBean(String moduleName, LifeCycleEvent lifeCycleEvent) {
+
+    public ModuleLifecycleLoggingBean(java.lang.String moduleName, org.broadleafcommerce.common.logging.LifeCycleEvent lifeCycleEvent) {
         this.moduleName = moduleName;
         this.lifeCycleEvent = lifeCycleEvent;
     }
 
-    /**
-     * Initialize the bean and cause the logging message to take place
-     */
-    @PostConstruct
+    @javax.annotation.PostConstruct
     public void init() {
-        if (moduleName == null || lifeCycleEvent == null) {
-            throw new IllegalArgumentException("Must supply the moduleName and lifeCycleEvent properties!");
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.logging.ModuleLifecycleLoggingBean.__L3365, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.logging.ModuleLifecycleLoggingBean.__L3363, ((moduleName) == null))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.logging.ModuleLifecycleLoggingBean.__L3364, ((lifeCycleEvent) == null)))))) {
+            throw new java.lang.IllegalArgumentException("Must supply the moduleName and lifeCycleEvent properties!");
         }
-        SupportLogger logger = SupportLogManager.getLogger(moduleName, ModuleLifecycleLoggingBean.class);
+        org.broadleafcommerce.common.logging.SupportLogger logger = org.broadleafcommerce.common.logging.SupportLogManager.getLogger(moduleName, org.broadleafcommerce.common.logging.ModuleLifecycleLoggingBean.class);
         logger.lifecycle(lifeCycleEvent, "");
     }
 
-    /**
-     * Retrieve the type of life cycle event for this logging message
-     *
-     * @return life cycle event type
-     */
-    public LifeCycleEvent getLifeCycleEvent() {
+    public org.broadleafcommerce.common.logging.LifeCycleEvent getLifeCycleEvent() {
         return lifeCycleEvent;
     }
 
-    /**
-     * Set the type of life cycle event for this logging message
-     *
-     * @param lifeCycleEvent life cycle event type
-     */
-    public void setLifeCycleEvent(LifeCycleEvent lifeCycleEvent) {
+    public void setLifeCycleEvent(org.broadleafcommerce.common.logging.LifeCycleEvent lifeCycleEvent) {
         this.lifeCycleEvent = lifeCycleEvent;
     }
 
-    /**
-     * The name of the module that this log message applies to
-     *
-     * @return the module name for this logging message
-     */
-    public String getModuleName() {
+    public java.lang.String getModuleName() {
         return moduleName;
     }
 
-    /**
-     * Set the name of the module that this log message applies to
-     *
-     * @param moduleName the module name for this logging message
-     */
-    public void setModuleName(String moduleName) {
+    public void setModuleName(java.lang.String moduleName) {
         this.moduleName = moduleName;
     }
+
+    public static perturbation.location.PerturbationLocation __L3363;
+
+    public static perturbation.location.PerturbationLocation __L3364;
+
+    public static perturbation.location.PerturbationLocation __L3365;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.logging.ModuleLifecycleLoggingBean.__L3363 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/logging/ModuleLifecycleLoggingBean.java:49)", 3363, "Boolean");
+        org.broadleafcommerce.common.logging.ModuleLifecycleLoggingBean.__L3364 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/logging/ModuleLifecycleLoggingBean.java:49)", 3364, "Boolean");
+        org.broadleafcommerce.common.logging.ModuleLifecycleLoggingBean.__L3365 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/logging/ModuleLifecycleLoggingBean.java:49)", 3365, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.logging.ModuleLifecycleLoggingBean.initPerturbationLocation0();
+    }
 }
+

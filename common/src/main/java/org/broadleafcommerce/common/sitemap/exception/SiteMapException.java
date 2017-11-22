@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,43 +15,24 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.sitemap.exception;
 
-/**
- * Sitemap exception
- * 
- * @author Joshua Skorton (jskorton)
- */
-public class SiteMapException extends RuntimeException {
 
-    /**
-     * 
-     */
+public class SiteMapException extends java.lang.RuntimeException {
     public SiteMapException() {
         super();
     }
 
-    /**
-     * @param message
-     * @param cause
-     */
-    public SiteMapException(String message, Throwable cause) {
+    public SiteMapException(java.lang.String message, java.lang.Throwable cause) {
         super(message, cause);
     }
 
-    /**
-     * @param message
-     */
-    public SiteMapException(String message) {
+    public SiteMapException(java.lang.String message) {
         super(message);
     }
 
-    /**
-     * @param cause
-     */
-    public SiteMapException(Throwable cause) {
+    public SiteMapException(java.lang.Throwable cause) {
         super(cause);
     }
-
 }
+

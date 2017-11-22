@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,52 +17,55 @@
  */
 package org.broadleafcommerce.common.security.channel;
 
-import org.springframework.security.access.ConfigAttribute;
-import org.springframework.security.web.FilterInvocation;
-import org.springframework.security.web.access.channel.SecureChannelProcessor;
-import org.springframework.util.Assert;
 
-import java.io.IOException;
-import java.util.Collection;
+public class ProtoSecureChannelProcessor extends org.springframework.security.web.access.channel.SecureChannelProcessor {
+    @java.lang.Override
+    public void decide(org.springframework.security.web.FilterInvocation invocation, java.util.Collection<org.springframework.security.access.ConfigAttribute> config) throws java.io.IOException, javax.servlet.ServletException {
+        org.springframework.util.Assert.isTrue(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.channel.ProtoSecureChannelProcessor.__L4795, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.channel.ProtoSecureChannelProcessor.__L4793, (invocation != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.channel.ProtoSecureChannelProcessor.__L4794, (config != null))))), "Nulls cannot be provided");
+        for (org.springframework.security.access.ConfigAttribute attribute : config) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.channel.ProtoSecureChannelProcessor.__L4796, supports(attribute))) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.channel.ProtoSecureChannelProcessor.__L4799, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.channel.ProtoSecureChannelProcessor.__L4797, ((invocation.getHttpRequest().getHeader("X-Forwarded-Proto")) != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.channel.ProtoSecureChannelProcessor.__L4798, "https".equalsIgnoreCase(invocation.getHttpRequest().getHeader("X-Forwarded-Proto"))))))) {
+                    return ;
+                }else
+                    if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.channel.ProtoSecureChannelProcessor.__L4800, invocation.getHttpRequest().isSecure())) {
+                        return ;
+                    }else {
+                        getEntryPoint().commence(invocation.getRequest(), invocation.getResponse());
+                    }
 
-import javax.servlet.ServletException;
-
-/**
- * <p>Very similar to the {@link SecureChannelProcessor} except that instead of relying on only the HttpServletRequest this
- * also allows
- * inspection of the X-Forwarded-Proto header to determine if the request is secure. This class is required when the
- * application is deployed to an environment where SSL termination happens at a layer above the servlet container
- * (like at a load balancer)</p>
- * 
- * <p>This is intended to be used in conjunction with the {@link ProtoChannelBeanPostProcessor}. See that class for
- * more information on how to configure.</p>
- *
- * <p>This class encapsulates functionality given in {@link SecureChannelProcessor} so it is unnecessary to configure
- * both</p>
- *
- * @author Jeff Fischer
- * @author Phillip Verheyden (phillipuniverse)
- * @see {@link SecureChannelProcessor}
- * @see {@link ProtoChannelBeanPostProcessor}
- */
-public class ProtoSecureChannelProcessor extends SecureChannelProcessor {
-
-    @Override
-    public void decide(FilterInvocation invocation, Collection<ConfigAttribute> config) throws IOException, ServletException {
-        Assert.isTrue((invocation != null) && (config != null), "Nulls cannot be provided");
-
-        for (ConfigAttribute attribute : config) {
-            if (supports(attribute)) {
-                if (invocation.getHttpRequest().getHeader("X-Forwarded-Proto") != null
-                        && "https".equalsIgnoreCase(invocation.getHttpRequest().getHeader("X-Forwarded-Proto"))) {
-                    return;
-                } else if (invocation.getHttpRequest().isSecure()) {
-                    return;
-                } else {
-                    getEntryPoint().commence(invocation.getRequest(), invocation.getResponse());
-                }
             }
         }
     }
 
+    public static perturbation.location.PerturbationLocation __L4793;
+
+    public static perturbation.location.PerturbationLocation __L4794;
+
+    public static perturbation.location.PerturbationLocation __L4795;
+
+    public static perturbation.location.PerturbationLocation __L4796;
+
+    public static perturbation.location.PerturbationLocation __L4797;
+
+    public static perturbation.location.PerturbationLocation __L4798;
+
+    public static perturbation.location.PerturbationLocation __L4799;
+
+    public static perturbation.location.PerturbationLocation __L4800;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.security.channel.ProtoSecureChannelProcessor.__L4793 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/channel/ProtoSecureChannelProcessor.java:52)", 4793, "Boolean");
+        org.broadleafcommerce.common.security.channel.ProtoSecureChannelProcessor.__L4794 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/channel/ProtoSecureChannelProcessor.java:52)", 4794, "Boolean");
+        org.broadleafcommerce.common.security.channel.ProtoSecureChannelProcessor.__L4795 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/channel/ProtoSecureChannelProcessor.java:52)", 4795, "Boolean");
+        org.broadleafcommerce.common.security.channel.ProtoSecureChannelProcessor.__L4796 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/channel/ProtoSecureChannelProcessor.java:55)", 4796, "Boolean");
+        org.broadleafcommerce.common.security.channel.ProtoSecureChannelProcessor.__L4797 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/channel/ProtoSecureChannelProcessor.java:56)", 4797, "Boolean");
+        org.broadleafcommerce.common.security.channel.ProtoSecureChannelProcessor.__L4798 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/channel/ProtoSecureChannelProcessor.java:57)", 4798, "Boolean");
+        org.broadleafcommerce.common.security.channel.ProtoSecureChannelProcessor.__L4799 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/channel/ProtoSecureChannelProcessor.java:56)", 4799, "Boolean");
+        org.broadleafcommerce.common.security.channel.ProtoSecureChannelProcessor.__L4800 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/channel/ProtoSecureChannelProcessor.java:59)", 4800, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.security.channel.ProtoSecureChannelProcessor.initPerturbationLocation0();
+    }
 }
+

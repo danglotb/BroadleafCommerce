@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,22 +17,26 @@
  */
 package org.broadleafcommerce.common.web.resource;
 
-import org.broadleafcommerce.common.extension.ExtensionManager;
-import org.springframework.stereotype.Service;
 
-@Service("blResourceRequestExtensionManager")
-public class ResourceRequestExtensionManager extends ExtensionManager<ResourceRequestExtensionHandler>{
-
+@org.springframework.stereotype.Service("blResourceRequestExtensionManager")
+public class ResourceRequestExtensionManager extends org.broadleafcommerce.common.extension.ExtensionManager<org.broadleafcommerce.common.web.resource.ResourceRequestExtensionHandler> {
     public ResourceRequestExtensionManager() {
-        super(ResourceRequestExtensionHandler.class);
+        super(org.broadleafcommerce.common.web.resource.ResourceRequestExtensionHandler.class);
     }
 
-    /**
-     * The first handler to return a handled status will win
-     */
-    @Override
+    @java.lang.Override
     public boolean continueOnHandled() {
-        return false;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.ResourceRequestExtensionManager.__L7625, false);
     }
 
+    public static perturbation.location.PerturbationLocation __L7625;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.resource.ResourceRequestExtensionManager.__L7625 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/ResourceRequestExtensionManager.java:35)", 7625, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.resource.ResourceRequestExtensionManager.initPerturbationLocation0();
+    }
 }
+

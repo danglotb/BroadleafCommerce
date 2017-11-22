@@ -17,53 +17,16 @@
  */
 package org.broadleafcommerce.common.config;
 
-import org.broadleafcommerce.common.config.EnableBroadleafRootAutoConfiguration.BroadleafRootAutoConfiguration;
-import org.broadleafcommerce.common.config.EnableBroadleafRootAutoConfiguration.BroadleafRootAutoConfigurationOverrides;
-import org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.ImportResource;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-/**
- * <b>STOP. This is probably not the annotation you want currently.</b>
- * <p>
- * The same rules apply here as with {@link EnableBroadleafAutoConfiguration} but this is for only the root-level Broadleaf beans
- *
- * @author Philip Baggett (pbaggett)
- * @author Brandon Hines (bhines)
- * @author Nick Crum (ncrum)
- * @see EnableBroadleafAdminRootAutoConfiguration
- * @see EnableBroadleafSiteRootAutoConfiguration
- * @see EnableBroadleafAutoConfiguration
- * @since 5.2
- */
-@Target({ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Import({
-    BroadleafRootAutoConfiguration.class,
-    BroadleafRootAutoConfigurationOverrides.class
-})
+@java.lang.annotation.Target({ java.lang.annotation.ElementType.TYPE })
+@java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
+@java.lang.annotation.Documented
+@org.springframework.context.annotation.Import({ org.broadleafcommerce.common.config.EnableBroadleafRootAutoConfiguration.BroadleafRootAutoConfiguration.class, org.broadleafcommerce.common.config.EnableBroadleafRootAutoConfiguration.BroadleafRootAutoConfigurationOverrides.class })
 public @interface EnableBroadleafRootAutoConfiguration {
-
-    /**
-     * We are deliberately leaving off the {@link org.springframework.context.annotation.Configuration} annotation since
-     * this inner class is being included in the {@code Import} above, which interprets this as a
-     * {@link org.springframework.context.annotation.Configuration}. We do this to avoid component scanning this inner class.
-     */
-    @ImportResource(locations = {
-            "classpath*:/blc-config/framework/bl-*-applicationContext.xml",
-            "classpath*:/blc-config/early/bl-*-applicationContext.xml",
-            "classpath*:/blc-config/bl-*-applicationContext.xml",
-            "classpath*:/blc-config/late/bl-*-applicationContext.xml"
-    }, reader = FrameworkXmlBeanDefinitionReader.class)
+    @org.springframework.context.annotation.ImportResource(locations = { "classpath*:/blc-config/framework/bl-*-applicationContext.xml", "classpath*:/blc-config/early/bl-*-applicationContext.xml", "classpath*:/blc-config/bl-*-applicationContext.xml", "classpath*:/blc-config/late/bl-*-applicationContext.xml" }, reader = org.broadleafcommerce.common.extensibility.FrameworkXmlBeanDefinitionReader.class)
     class BroadleafRootAutoConfiguration {}
-    
-    @ImportResource("classpath:/override-contexts/autoconfiguration-overrides.xml")
-    class BroadleafRootAutoConfigurationOverrides { }
+
+    @org.springframework.context.annotation.ImportResource("classpath:/override-contexts/autoconfiguration-overrides.xml")
+    class BroadleafRootAutoConfigurationOverrides {}
 }
+

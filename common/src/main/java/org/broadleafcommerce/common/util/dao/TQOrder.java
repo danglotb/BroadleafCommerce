@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,35 +17,33 @@
  */
 package org.broadleafcommerce.common.util.dao;
 
-/**
- * Specify the attributes of a ORDER BY that should appear in the TypedQuery. Generally takes the form of:
- * </p>
- * <pre>
- * {@code
- * TypedQueryBuilder builder = new TypedQueryBuilder(com.MyClass, "item")
-     .addOrder("i.name", true);
- * }
- * </pre>
- * </p>
- *
- * @author Jeff Fischer
- */
+
 public class TQOrder {
+    protected java.lang.String expression;
 
-    protected String expression;
-    protected Boolean ascending = true;
+    protected java.lang.Boolean ascending = ((boolean) (true));
 
-    public TQOrder(String expression, Boolean ascending) {
+    public TQOrder(java.lang.String expression, java.lang.Boolean ascending) {
         this.expression = expression;
         this.ascending = ascending;
     }
 
-    public String toQl() {
-        StringBuilder sb = new StringBuilder();
+    public java.lang.String toQl() {
+        java.lang.StringBuilder sb = new java.lang.StringBuilder();
         sb.append(expression);
         sb.append(" ");
-        sb.append(ascending != null && ascending?"ASC":"DESC");
-
+        sb.append((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.dao.TQOrder.__L5896, (((ascending) != null) && (ascending))) ? "ASC" : "DESC"));
         return sb.toString();
     }
+
+    public static perturbation.location.PerturbationLocation __L5896;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.dao.TQOrder.__L5896 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/TQOrder.java:47)", 5896, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.dao.TQOrder.initPerturbationLocation0();
+    }
 }
+

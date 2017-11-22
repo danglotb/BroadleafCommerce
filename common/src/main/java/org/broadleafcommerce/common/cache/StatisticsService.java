@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,17 +17,16 @@
  */
 package org.broadleafcommerce.common.cache;
 
-/**
- * @author Jeff Fischer
- */
+
 public interface StatisticsService {
-    void addCacheStat(String key, boolean isHit);
+    void addCacheStat(java.lang.String key, boolean isHit);
 
-    Long getLogResolution();
+    java.lang.Long getLogResolution();
 
-    void setLogResolution(Long logResolution);
+    void setLogResolution(java.lang.Long logResolution);
 
     void activateLogging();
 
     void disableLogging();
 }
+

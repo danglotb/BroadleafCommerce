@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,19 +17,14 @@
  */
 package org.broadleafcommerce.common.copy;
 
-import org.broadleafcommerce.common.extension.ExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
 
+public interface MultiTenantCopierExtensionHandler extends org.broadleafcommerce.common.extension.ExtensionHandler {
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType transformCopy(org.broadleafcommerce.common.copy.MultiTenantCopyContext context, java.lang.Object from, java.lang.Object to);
 
-public interface MultiTenantCopierExtensionHandler extends ExtensionHandler {
-    
-    ExtensionResultStatusType transformCopy(MultiTenantCopyContext context, Object from, Object to);
-    
-    ExtensionResultStatusType prepareForSave(MultiTenantCopyContext context, Object from, Object to);
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType prepareForSave(org.broadleafcommerce.common.copy.MultiTenantCopyContext context, java.lang.Object from, java.lang.Object to);
 
-    ExtensionResultStatusType postSave(MultiTenantCopyContext context, Object from, Object to);
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType postSave(org.broadleafcommerce.common.copy.MultiTenantCopyContext context, java.lang.Object from, java.lang.Object to);
 
-    ExtensionResultStatusType shouldClone(MultiTenantCopyContext context, Object from, ExtensionResultHolder<Boolean> result);
-
+    org.broadleafcommerce.common.extension.ExtensionResultStatusType shouldClone(org.broadleafcommerce.common.copy.MultiTenantCopyContext context, java.lang.Object from, org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.Boolean> result);
 }
+

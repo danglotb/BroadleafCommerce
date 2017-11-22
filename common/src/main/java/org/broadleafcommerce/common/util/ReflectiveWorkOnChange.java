@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,68 +17,75 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.broadleafcommerce.common.exception.ExceptionHelper;
-import org.springframework.util.ClassUtils;
-import org.springframework.util.ReflectionUtils;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.Map;
+public class ReflectiveWorkOnChange implements org.broadleafcommerce.common.util.WorkOnChange {
+    private static java.util.Map<java.lang.String, java.lang.reflect.Method> methodCache = new org.broadleafcommerce.common.util.EfficientLRUMap<java.lang.String, java.lang.reflect.Method>(1000);
 
-/**
- * This WorkOnChange implementation is for a narrow case where the work to be done is simply calling a method on a target object
- * and passing to that method the changed collection. Of course, there must be a method with the correct signature on
- * the target object. This implementation also uses caching to optimize repeat searches for the same method and minimize
- * reflection time.
- *
- * @author Jeff Fischer
- */
-public class ReflectiveWorkOnChange implements WorkOnChange {
+    private final java.lang.Object target;
 
-    private static Map<String, Method> methodCache = new EfficientLRUMap<String, Method>(1000);
+    private final java.lang.String methodName;
 
-    private final Object target;
-    private final String methodName;
-
-    public ReflectiveWorkOnChange(Object target, String methodName) {
+    public ReflectiveWorkOnChange(java.lang.Object target, java.lang.String methodName) {
         this.target = target;
         this.methodName = methodName;
     }
 
-    @Override
-    public void doWork(Collection changed) {
-        String key = target.getClass().getName() + "." + methodName + "(" + changed.getClass().getName() + ")";
-        Method method = methodCache.get(key);
-        if (method == null) {
+    @java.lang.Override
+    public void doWork(java.util.Collection changed) {
+        java.lang.String key = (((((target.getClass().getName()) + ".") + (methodName)) + "(") + (changed.getClass().getName())) + ")";
+        java.lang.reflect.Method method = org.broadleafcommerce.common.util.ReflectiveWorkOnChange.methodCache.get(key);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.ReflectiveWorkOnChange.__L6499, (method == null))) {
             method = searchForMethod(target.getClass(), changed);
-            if (method != null) {
-                methodCache.put(key, method);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.ReflectiveWorkOnChange.__L6500, (method != null))) {
+                org.broadleafcommerce.common.util.ReflectiveWorkOnChange.methodCache.put(key, method);
             }
         }
-        if (method == null) {
-            throw new IllegalArgumentException("Unable to find the method (" + methodName + ") on the class (" + target.getClass().getName() + ")");
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.ReflectiveWorkOnChange.__L6501, (method == null))) {
+            throw new java.lang.IllegalArgumentException((((("Unable to find the method (" + (methodName)) + ") on the class (") + (target.getClass().getName())) + ")"));
         }
         try {
             method.invoke(target, changed);
-        } catch (IllegalAccessException e) {
-            throw ExceptionHelper.refineException(e);
-        } catch (InvocationTargetException e) {
-            throw ExceptionHelper.refineException(e);
+        } catch (java.lang.IllegalAccessException e) {
+            throw org.broadleafcommerce.common.exception.ExceptionHelper.refineException(e);
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            throw org.broadleafcommerce.common.exception.ExceptionHelper.refineException(e);
         }
     }
 
-    protected Method searchForMethod(Class<?> targetClass, Object test) {
-        Method method = ReflectionUtils.findMethod(target.getClass(), methodName, test.getClass());
-        if (method == null) {
-            Class[] interfaces = ClassUtils.getAllInterfaces(test);
-            for (Class clazz : interfaces) {
-                method = ReflectionUtils.findMethod(targetClass, methodName, clazz);
-                if (method != null) {
+    protected java.lang.reflect.Method searchForMethod(java.lang.Class<?> targetClass, java.lang.Object test) {
+        java.lang.reflect.Method method = org.springframework.util.ReflectionUtils.findMethod(target.getClass(), methodName, test.getClass());
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.ReflectiveWorkOnChange.__L6502, (method == null))) {
+            java.lang.Class[] interfaces = org.springframework.util.ClassUtils.getAllInterfaces(test);
+            for (java.lang.Class clazz : interfaces) {
+                method = org.springframework.util.ReflectionUtils.findMethod(targetClass, methodName, clazz);
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.ReflectiveWorkOnChange.__L6503, (method != null))) {
                     break;
                 }
             }
         }
         return method;
     }
+
+    public static perturbation.location.PerturbationLocation __L6499;
+
+    public static perturbation.location.PerturbationLocation __L6500;
+
+    public static perturbation.location.PerturbationLocation __L6501;
+
+    public static perturbation.location.PerturbationLocation __L6502;
+
+    public static perturbation.location.PerturbationLocation __L6503;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.ReflectiveWorkOnChange.__L6499 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/ReflectiveWorkOnChange.java:53)", 6499, "Boolean");
+        org.broadleafcommerce.common.util.ReflectiveWorkOnChange.__L6500 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/ReflectiveWorkOnChange.java:55)", 6500, "Boolean");
+        org.broadleafcommerce.common.util.ReflectiveWorkOnChange.__L6501 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/ReflectiveWorkOnChange.java:59)", 6501, "Boolean");
+        org.broadleafcommerce.common.util.ReflectiveWorkOnChange.__L6502 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/ReflectiveWorkOnChange.java:73)", 6502, "Boolean");
+        org.broadleafcommerce.common.util.ReflectiveWorkOnChange.__L6503 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/ReflectiveWorkOnChange.java:77)", 6503, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.ReflectiveWorkOnChange.initPerturbationLocation0();
+    }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,28 +17,20 @@
  */
 package org.broadleafcommerce.common.enumeration.service;
 
-import javax.annotation.Resource;
 
-import org.broadleafcommerce.common.enumeration.dao.DataDrivenEnumerationDao;
-import org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumeration;
-import org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue;
-import org.springframework.stereotype.Service;
+@org.springframework.stereotype.Service("blDataDrivenEnumerationService")
+public class DataDrivenEnumerationServiceImpl implements org.broadleafcommerce.common.enumeration.service.DataDrivenEnumerationService {
+    @javax.annotation.Resource(name = "blDataDrivenEnumerationDao")
+    protected org.broadleafcommerce.common.enumeration.dao.DataDrivenEnumerationDao dao;
 
-
-@Service("blDataDrivenEnumerationService")
-public class DataDrivenEnumerationServiceImpl implements DataDrivenEnumerationService {
-
-    @Resource(name = "blDataDrivenEnumerationDao")
-    protected DataDrivenEnumerationDao dao;
-
-    @Override
-    public DataDrivenEnumeration findEnumByKey(String enumKey) {
+    @java.lang.Override
+    public org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumeration findEnumByKey(java.lang.String enumKey) {
         return dao.readEnumByKey(enumKey);
     }
-    
-    @Override
-    public DataDrivenEnumerationValue findEnumValueByKey(String enumKey, String enumValueKey) {
+
+    @java.lang.Override
+    public org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue findEnumValueByKey(java.lang.String enumKey, java.lang.String enumValueKey) {
         return dao.readEnumValueByKey(enumKey, enumValueKey);
     }
-
 }
+

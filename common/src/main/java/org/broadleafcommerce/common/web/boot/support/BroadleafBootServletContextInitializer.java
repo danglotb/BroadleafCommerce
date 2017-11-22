@@ -15,31 +15,14 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-/**
- * 
- */
 package org.broadleafcommerce.common.web.boot.support;
 
-import org.apache.commons.logging.LogFactory;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
-import org.springframework.web.context.ContextLoaderListener;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-
-/**
- * Used in conjunction with {@link SpringBootBootstrappingServletContextListener}. Since that class
- * establishes its own delegate {@link ContextLoaderListener} that closes the Spring ApplicationContext we want
- * to disable the fact that Spring Boot tries to add a {@link ContextLoaderListener}.
- * 
- * SPRING-UPGRADE-CHECK
- * @author Phillip Verheyden (phillipuniverse)
- */
-public abstract class BroadleafBootServletContextInitializer extends SpringBootServletInitializer {
-
-    @Override
-    public void onStartup(ServletContext servletContext) throws ServletException {
-        this.logger = LogFactory.getLog(getClass());
+public abstract class BroadleafBootServletContextInitializer extends org.springframework.boot.web.support.SpringBootServletInitializer {
+    @java.lang.Override
+    public void onStartup(javax.servlet.ServletContext servletContext) throws javax.servlet.ServletException {
+        this.logger = org.apache.commons.logging.LogFactory.getLog(getClass());
         createRootApplicationContext(servletContext);
     }
 }
+

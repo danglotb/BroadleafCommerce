@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,111 +15,32 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.sitemap.domain;
 
-import org.broadleafcommerce.common.sitemap.service.type.SiteMapChangeFreqType;
-import org.broadleafcommerce.common.sitemap.service.type.SiteMapGeneratorType;
-import org.broadleafcommerce.common.sitemap.service.type.SiteMapPriorityType;
 
-import java.io.Serializable;
+public interface SiteMapGeneratorConfiguration extends java.io.Serializable {
+    public java.lang.Long getId();
 
-/**
- * Sample URL tag generated and controlled by this configuration.
- * 
- * <url>
- *   <loc>http://www.heatclinic.com/hot-sauces</loc>
- *   <lastmod>2009-11-07</lastmod>
- *   <changefreq>weekly</changefreq>
- *   <priority>0.5</priority>
- * </url>
- * 
- * @author bpolster
- */
-public interface SiteMapGeneratorConfiguration extends Serializable {
-    
-    /**
-     * Returns the SiteMapGeneratorConfiguration Id.
-     * 
-     * @return
-     */
-    public Long getId();
+    public void setId(java.lang.Long id);
 
-    /**
-     * Sets the SiteMapGeneratorConfiguration Id.
-     * 
-     * @param id
-     */
-    public void setId(Long id);
+    public java.lang.Boolean isDisabled();
 
-    /**
-     * Returns the "disabled" boolean.
-     * 
-     * @return
-     */
-    public Boolean isDisabled();
+    public void setDisabled(java.lang.Boolean disabled);
 
-    /**
-     * Sets the "disabled" boolean.
-     * 
-     * @param disabled
-     */
-    public void setDisabled(Boolean disabled);
+    public org.broadleafcommerce.common.sitemap.service.type.SiteMapChangeFreqType getSiteMapChangeFreq();
 
-    /**
-     * Returns the list of SiteMapChangeFreqTypes.
-     * 
-     * @return
-     */
-    public SiteMapChangeFreqType getSiteMapChangeFreq();
+    public void setSiteMapChangeFreq(org.broadleafcommerce.common.sitemap.service.type.SiteMapChangeFreqType siteMapChangeFreq);
 
-    /**
-     * Sets the list of SiteMapChangeFreqTypes.
-     * 
-     * @param siteMapChangeFreq
-     */
-    public void setSiteMapChangeFreq(SiteMapChangeFreqType siteMapChangeFreq);
+    public org.broadleafcommerce.common.sitemap.service.type.SiteMapPriorityType getSiteMapPriority();
 
-    /**
-     * Returns the SiteMapPriority.
-     * 
-     * @return
-     */
-    public SiteMapPriorityType getSiteMapPriority();
+    public void setSiteMapPriority(org.broadleafcommerce.common.sitemap.service.type.SiteMapPriorityType siteMapPriority);
 
-    /**
-     * Sets the SiteMapPriority.  Must be a two digit value between 0.0 and 1.0.
-     * 
-     * @param siteMapPriority
-     */
-    public void setSiteMapPriority(SiteMapPriorityType siteMapPriority);
+    public org.broadleafcommerce.common.sitemap.service.type.SiteMapGeneratorType getSiteMapGeneratorType();
 
-    /**
-     * Returns the list of SiteMapGeneratorTypes.
-     * 
-     * @return
-     */
-    public SiteMapGeneratorType getSiteMapGeneratorType();
-    
-    /**
-     * Sets the list of SiteMapGeneratorTypes.
-     * 
-     * @param siteMapGeneratorType
-     */
-    public void setSiteMapGeneratorType(SiteMapGeneratorType siteMapGeneratorType);
+    public void setSiteMapGeneratorType(org.broadleafcommerce.common.sitemap.service.type.SiteMapGeneratorType siteMapGeneratorType);
 
-    /**
-     * Returns the SiteMapConfiguration.
-     * 
-     * @return
-     */
-    public SiteMapConfiguration getSiteMapConfiguration();
+    public org.broadleafcommerce.common.sitemap.domain.SiteMapConfiguration getSiteMapConfiguration();
 
-    /**
-     * Sets the SiteMapConfiguration.
-     * 
-     * @param siteMapConfiguration
-     */
-    public void setSiteMapConfiguration(SiteMapConfiguration siteMapConfiguration);
-
+    public void setSiteMapConfiguration(org.broadleafcommerce.common.sitemap.domain.SiteMapConfiguration siteMapConfiguration);
 }
+

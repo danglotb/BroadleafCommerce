@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,85 +17,75 @@
  */
 package org.broadleafcommerce.common.event;
 
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.ApplicationEvent;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.SimpleApplicationEventMulticaster;
-import org.springframework.core.ResolvableType;
 
-import java.util.concurrent.Executor;
+public class BroadleafApplicationEventMulticaster extends org.springframework.context.event.SimpleApplicationEventMulticaster implements org.springframework.context.ApplicationContextAware {
+    @org.springframework.beans.factory.annotation.Autowired(required = false)
+    @org.springframework.beans.factory.annotation.Qualifier("blApplicationEventMulticastTaskExecutor")
+    private java.util.concurrent.Executor taskExecutor;
 
-/**
- * This class is a simple extension to Spring's SimpleApplicationEventMulticaster.  The difference is 
- * that this allows the EventListener to indicate whether it should be asynchronous or not, assuming that a 
- * TaskExecutor has been configured.
- * 
- * Asynchronous execution should be used with care.  Events are not durable with this implementation. 
- * In addition, this implementation does not broadcast or multicast events to systems outside of the 
- * running JVM, although an event listener could be configured to do just that.
- * 
- * @author Kelly Tisdell
- *
- */
-public class BroadleafApplicationEventMulticaster extends
-        SimpleApplicationEventMulticaster implements ApplicationContextAware {
-	
-    @Autowired(required = false)
-    @Qualifier("blApplicationEventMulticastTaskExecutor")
-    private Executor taskExecutor;
+    protected org.springframework.context.ApplicationContext ctx;
 
-	protected ApplicationContext ctx;
-
-    /**
-     * Take care when specifying that event or application listener should be executed asynchronously.  
-     * If there is no TaskExecutor configured, this 
-     * will execute synchronously, regardless.  If there is a TaskExecutor configured, then if the 
-     * listener is a BroadleafApplicationListener and its 
-     * <code>isAsynchronous()</code> method returns true then the event will fire asynchronously. 
-     * Be aware that the events are not durable in this case.  Events that are executed asynchronously  
-     * should be used with caution, where a loss of event due to error or shutdown of the VM is not a major 
-     * concern.
-     */
-	@Override
-	public void multicastEvent(final ApplicationEvent event) {
-        Executor executor = getTaskExecutor();
-        for (final ApplicationListener<?> listener : getApplicationListeners(event, ResolvableType.forInstance(event))) {
-			boolean isAsynchronous = false;
-			if (executor != null) {
-                if ((BroadleafApplicationListener.class.isAssignableFrom(listener.getClass())
-                            && ((BroadleafApplicationListener<? extends ApplicationEvent>)listener).isAsynchronous())) {
-                    isAsynchronous = true;
-			    }
-			}
-			
-            if (isAsynchronous) {
-				executor.execute(new Runnable() {
-					public void run() {
+    @java.lang.Override
+    public void multicastEvent(final org.springframework.context.ApplicationEvent event) {
+        java.util.concurrent.Executor executor = getTaskExecutor();
+        for (final org.springframework.context.ApplicationListener<?> listener : getApplicationListeners(event, org.springframework.core.ResolvableType.forInstance(event))) {
+            boolean isAsynchronous = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.event.BroadleafApplicationEventMulticaster.__L1228, false);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.event.BroadleafApplicationEventMulticaster.__L1229, (executor != null))) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.event.BroadleafApplicationEventMulticaster.__L1232, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.event.BroadleafApplicationEventMulticaster.__L1230, org.broadleafcommerce.common.event.BroadleafApplicationListener.class.isAssignableFrom(listener.getClass()))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.event.BroadleafApplicationEventMulticaster.__L1231, ((org.broadleafcommerce.common.event.BroadleafApplicationListener<? extends org.springframework.context.ApplicationEvent>) (listener)).isAsynchronous()))))) {
+                    isAsynchronous = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.event.BroadleafApplicationEventMulticaster.__L1233, true);
+                }
+            }
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.event.BroadleafApplicationEventMulticaster.__L1234, isAsynchronous)) {
+                executor.execute(new java.lang.Runnable() {
+                    public void run() {
                         invokeListener(listener, event);
-					}
-				});
-			} else {
-				invokeListener(listener, event);
-			}
-		}
-	}
+                    }
+                });
+            }else {
+                invokeListener(listener, event);
+            }
+        }
+    }
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext)
-			throws BeansException {
-		this.ctx = applicationContext;
-	}
-	
-    public Executor getTaskExecutor() {
+    @java.lang.Override
+    public void setApplicationContext(org.springframework.context.ApplicationContext applicationContext) throws org.springframework.beans.BeansException {
+        this.ctx = applicationContext;
+    }
+
+    public java.util.concurrent.Executor getTaskExecutor() {
         return taskExecutor;
     }
 
-    public void setTaskExecutor(Executor taskExecutor) {
+    public void setTaskExecutor(java.util.concurrent.Executor taskExecutor) {
         this.taskExecutor = taskExecutor;
     }
 
+    public static perturbation.location.PerturbationLocation __L1228;
+
+    public static perturbation.location.PerturbationLocation __L1229;
+
+    public static perturbation.location.PerturbationLocation __L1230;
+
+    public static perturbation.location.PerturbationLocation __L1231;
+
+    public static perturbation.location.PerturbationLocation __L1232;
+
+    public static perturbation.location.PerturbationLocation __L1233;
+
+    public static perturbation.location.PerturbationLocation __L1234;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.event.BroadleafApplicationEventMulticaster.__L1228 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/event/BroadleafApplicationEventMulticaster.java:67)", 1228, "Boolean");
+        org.broadleafcommerce.common.event.BroadleafApplicationEventMulticaster.__L1229 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/event/BroadleafApplicationEventMulticaster.java:68)", 1229, "Boolean");
+        org.broadleafcommerce.common.event.BroadleafApplicationEventMulticaster.__L1230 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/event/BroadleafApplicationEventMulticaster.java:69)", 1230, "Boolean");
+        org.broadleafcommerce.common.event.BroadleafApplicationEventMulticaster.__L1231 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/event/BroadleafApplicationEventMulticaster.java:70)", 1231, "Boolean");
+        org.broadleafcommerce.common.event.BroadleafApplicationEventMulticaster.__L1232 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/event/BroadleafApplicationEventMulticaster.java:69)", 1232, "Boolean");
+        org.broadleafcommerce.common.event.BroadleafApplicationEventMulticaster.__L1233 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/event/BroadleafApplicationEventMulticaster.java:71)", 1233, "Boolean");
+        org.broadleafcommerce.common.event.BroadleafApplicationEventMulticaster.__L1234 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/event/BroadleafApplicationEventMulticaster.java:75)", 1234, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.event.BroadleafApplicationEventMulticaster.initPerturbationLocation0();
+    }
 }
+

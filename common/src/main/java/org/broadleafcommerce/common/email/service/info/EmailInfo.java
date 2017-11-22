@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,141 +17,102 @@
  */
 package org.broadleafcommerce.common.email.service.info;
 
-import org.broadleafcommerce.common.email.service.message.Attachment;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * @author jfischer
- *
- */
-public class EmailInfo implements Serializable {
-
+public class EmailInfo implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String emailType;
-    private String emailTemplate;
-    private String subject;
-    private String fromAddress;
-    private String messageBody;
-    private String encoding = "UTF8";
-    private List<Attachment> attachments = new ArrayList<Attachment>();
+    private java.lang.String emailType;
 
-    private String sendEmailReliableAsync;
-    private String sendAsyncPriority;
+    private java.lang.String emailTemplate;
 
-    /**
-     * @return the emailType
-     */
-    public String getEmailType() {
+    private java.lang.String subject;
+
+    private java.lang.String fromAddress;
+
+    private java.lang.String messageBody;
+
+    private java.lang.String encoding = "UTF8";
+
+    private java.util.List<org.broadleafcommerce.common.email.service.message.Attachment> attachments = new java.util.ArrayList<org.broadleafcommerce.common.email.service.message.Attachment>();
+
+    private java.lang.String sendEmailReliableAsync;
+
+    private java.lang.String sendAsyncPriority;
+
+    public java.lang.String getEmailType() {
         return emailType;
     }
 
-    /**
-     * @param emailType the emailType to set
-     */
-    public void setEmailType(String emailType) {
+    public void setEmailType(java.lang.String emailType) {
         this.emailType = emailType;
     }
 
-    /**
-     * @return the emailTemplate
-     */
-    public String getEmailTemplate() {
+    public java.lang.String getEmailTemplate() {
         return emailTemplate;
     }
 
-    /**
-     * @param emailTemplate the emailTemplate to set
-     */
-    public void setEmailTemplate(String emailTemplate) {
+    public void setEmailTemplate(java.lang.String emailTemplate) {
         this.emailTemplate = emailTemplate;
     }
 
-    /**
-     * @return the subject
-     */
-    public String getSubject() {
+    public java.lang.String getSubject() {
         return subject;
     }
 
-    /**
-     * @param subject the subject to set
-     */
-    public void setSubject(String subject) {
+    public void setSubject(java.lang.String subject) {
         this.subject = subject;
     }
 
-    /**
-     * @return the fromAddress
-     */
-    public String getFromAddress() {
+    public java.lang.String getFromAddress() {
         return fromAddress;
     }
 
-    /**
-     * @param fromAddress the fromAddress to set
-     */
-    public void setFromAddress(String fromAddress) {
+    public void setFromAddress(java.lang.String fromAddress) {
         this.fromAddress = fromAddress;
     }
 
-    /**
-     * @return the sendEmailReliableAsync
-     */
-    public String getSendEmailReliableAsync() {
+    public java.lang.String getSendEmailReliableAsync() {
         return sendEmailReliableAsync;
     }
 
-    /**
-     * @param sendEmailReliableAsync the sendEmailReliableAsync to set
-     */
-    public void setSendEmailReliableAsync(String sendEmailReliableAsync) {
+    public void setSendEmailReliableAsync(java.lang.String sendEmailReliableAsync) {
         this.sendEmailReliableAsync = sendEmailReliableAsync;
     }
 
-    /**
-     * @return the sendAsyncPriority
-     */
-    public String getSendAsyncPriority() {
+    public java.lang.String getSendAsyncPriority() {
         return sendAsyncPriority;
     }
 
-    /**
-     * @param sendAsyncPriority the sendAsyncPriority to set
-     */
-    public void setSendAsyncPriority(String sendAsyncPriority) {
+    public void setSendAsyncPriority(java.lang.String sendAsyncPriority) {
         this.sendAsyncPriority = sendAsyncPriority;
     }
 
-    public String getMessageBody() {
+    public java.lang.String getMessageBody() {
         return messageBody;
     }
 
-    public void setMessageBody(String messageBody) {
+    public void setMessageBody(java.lang.String messageBody) {
         this.messageBody = messageBody;
     }
 
-    public List<Attachment> getAttachments() {
+    public java.util.List<org.broadleafcommerce.common.email.service.message.Attachment> getAttachments() {
         return attachments;
     }
 
-    public void setAttachments(List<Attachment> attachments) {
+    public void setAttachments(java.util.List<org.broadleafcommerce.common.email.service.message.Attachment> attachments) {
         this.attachments = attachments;
     }
 
-    public String getEncoding() {
+    public java.lang.String getEncoding() {
         return encoding;
     }
 
-    public void setEncoding(String encoding) {
+    public void setEncoding(java.lang.String encoding) {
         this.encoding = encoding;
     }
 
-    public synchronized EmailInfo clone() {
-        EmailInfo info = new EmailInfo();
+    public synchronized org.broadleafcommerce.common.email.service.info.EmailInfo clone() {
+        org.broadleafcommerce.common.email.service.info.EmailInfo info = new org.broadleafcommerce.common.email.service.info.EmailInfo();
         info.setAttachments(attachments);
         info.setEmailTemplate(emailTemplate);
         info.setEmailType(emailType);
@@ -161,7 +122,7 @@ public class EmailInfo implements Serializable {
         info.setSendEmailReliableAsync(sendEmailReliableAsync);
         info.setSubject(subject);
         info.setEncoding(encoding);
-
         return info;
     }
 }
+

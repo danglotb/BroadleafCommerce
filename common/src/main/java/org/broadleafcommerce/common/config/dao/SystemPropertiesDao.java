@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,40 +17,20 @@
  */
 package org.broadleafcommerce.common.config.dao;
 
-import org.broadleafcommerce.common.config.domain.SystemProperty;
 
-import java.util.List;
-
-/**
- * This DAO enables access to manage system properties that can be stored in the database.
- * <p/>
- * User: Kelly Tisdell
- * Date: 6/25/12
- */
 public interface SystemPropertiesDao {
+    public org.broadleafcommerce.common.config.domain.SystemProperty saveSystemProperty(org.broadleafcommerce.common.config.domain.SystemProperty systemProperty);
 
-    public SystemProperty saveSystemProperty(SystemProperty systemProperty);
+    public void deleteSystemProperty(org.broadleafcommerce.common.config.domain.SystemProperty systemProperty);
 
-    public void deleteSystemProperty(SystemProperty systemProperty);
+    public java.util.List<org.broadleafcommerce.common.config.domain.SystemProperty> readAllSystemProperties();
 
-    public List<SystemProperty> readAllSystemProperties();
+    public org.broadleafcommerce.common.config.domain.SystemProperty readSystemPropertyByName(java.lang.String name);
 
-    public SystemProperty readSystemPropertyByName(String name);
+    public org.broadleafcommerce.common.config.domain.SystemProperty createNewSystemProperty();
 
-    public SystemProperty createNewSystemProperty();
+    public org.broadleafcommerce.common.config.domain.SystemProperty readById(java.lang.Long id);
 
-    /**
-     * Reads a SystemProperty by its internal database id
-     * 
-     * @param id
-     * @return the {@link SystemProperty}
-     */
-    public SystemProperty readById(Long id);
-
-    /**
-     * Removes the SystemProperty from the null-capable cache.
-     *
-     * @param systemProperty the property instance
-     */
-    public void removeFromCache(SystemProperty systemProperty);
+    public void removeFromCache(org.broadleafcommerce.common.config.domain.SystemProperty systemProperty);
 }
+

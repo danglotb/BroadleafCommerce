@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,25 +15,14 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.payment.service;
 
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
-import org.broadleafcommerce.common.vendor.service.exception.PaymentException;
 
-/**
- * <p>Some gateways allow you to create a form of recurring billing by creating a subscription profile.
- * Note: Some Gateways charge an extra fee to enable this feature</p>
- *
- * @author Elbert Bautista (elbertbautista)
- */
 public interface PaymentGatewaySubscriptionService {
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO createGatewaySubscription(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException;
 
-    public PaymentResponseDTO createGatewaySubscription(PaymentRequestDTO requestDTO) throws PaymentException;
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO updateGatewaySubscription(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException;
 
-    public PaymentResponseDTO updateGatewaySubscription(PaymentRequestDTO requestDTO) throws PaymentException;
-
-    public PaymentResponseDTO cancelGatewaySubscription(PaymentRequestDTO requestDTO) throws PaymentException;
-
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO cancelGatewaySubscription(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException;
 }
+

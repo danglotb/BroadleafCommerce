@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,180 +17,215 @@
  */
 package org.broadleafcommerce.common.extensibility.context.merge;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanCreationException;
-import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.beans.factory.config.ListFactoryBean;
-import org.springframework.beans.factory.config.MapFactoryBean;
-import org.springframework.beans.factory.config.SetFactoryBean;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+public abstract class AbstractRemoveBeanPostProcessor implements org.springframework.beans.factory.config.BeanPostProcessor , org.springframework.context.ApplicationContextAware {
+    protected java.lang.String beanRef;
 
-/**
- * <p>
- * Contains useful processing code for merge bean post processors. The BeanPostProcessor instances can
- * be used to remove collection members from collections declared elsewhere. In effect, this allows
- * an implementer to remove a bean that was declared in a collection (list, set or map) or previously merged
- * via LateStageMergeBeanPostProcessor or EarlyStageMergeBeanPostProcessor.
- * </p>
- * <p>
- * This code demonstrates using one of the concrete implementations, {@link LateStageRemoveBeanPostProcessor}. The
- * basic usage pattern is to specify the id of the member you want to remove (beanRef) and the id
- * of the pre-existing, target collection (targetRef) that should receive the removal. The collection
- * can be represented using ListFactoryBean, SetFactoryBean or MapFactoryBean. For MapFactoryBeans, use either the
- * mapKey or mapKeyRef property instead to reference the map item to remove.
- * </p>
- * <pre>
- * {@code
- * <bean class="org.broadleafcommerce.common.extensibility.context.merge.LateStageRemoveBeanPostProcessor">
- *  <property name="beanRef" value="myBean"/>
- *  <property name="targetRef" value="targetCollection"/>
- * </bean>
- * }
- * </pre>
- *
- * @see LateStageRemoveBeanPostProcessor
- * @see EarlyStageRemoveBeanPostProcessor
- * @author Jeff Fischer
- */
-public abstract class AbstractRemoveBeanPostProcessor implements BeanPostProcessor, ApplicationContextAware {
+    protected java.lang.String targetRef;
 
-    protected String beanRef;
-    protected String targetRef;
-    protected String mapKey;
-    protected String mapKeyRef;
-    protected ApplicationContext applicationContext;
+    protected java.lang.String mapKey;
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    protected java.lang.String mapKeyRef;
+
+    protected org.springframework.context.ApplicationContext applicationContext;
+
+    @java.lang.Override
+    public void setApplicationContext(org.springframework.context.ApplicationContext applicationContext) throws org.springframework.beans.BeansException {
         this.applicationContext = applicationContext;
     }
 
-    @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+    @java.lang.Override
+    public java.lang.Object postProcessAfterInitialization(java.lang.Object bean, java.lang.String beanName) throws org.springframework.beans.BeansException {
         return bean;
     }
 
-    @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        if (beanName.equals(targetRef)) {
-            if (bean instanceof ListFactoryBean || bean instanceof List) {
-                Object beanToRemove = applicationContext.getBean(beanRef);
+    @java.lang.Override
+    public java.lang.Object postProcessBeforeInitialization(java.lang.Object bean, java.lang.String beanName) throws org.springframework.beans.BeansException {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1564, beanName.equals(targetRef))) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1567, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1565, (bean instanceof org.springframework.beans.factory.config.ListFactoryBean))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1566, (bean instanceof java.util.List)))))) {
+                java.lang.Object beanToRemove = applicationContext.getBean(beanRef);
                 try {
-                    List sourceList;
-                    if (bean instanceof ListFactoryBean) {
-                        Field field = ListFactoryBean.class.getDeclaredField("sourceList");
-                        field.setAccessible(true);
-                        sourceList = (List) field.get(bean);
-                    } else {
-                        sourceList = (List) bean;
+                    java.util.List sourceList;
+                    if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1568, (bean instanceof org.springframework.beans.factory.config.ListFactoryBean))) {
+                        java.lang.reflect.Field field = org.springframework.beans.factory.config.ListFactoryBean.class.getDeclaredField("sourceList");
+                        field.setAccessible(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1569, true));
+                        sourceList = ((java.util.List) (field.get(bean)));
+                    }else {
+                        sourceList = ((java.util.List) (bean));
                     }
-                    Iterator itr = sourceList.iterator();
-                    while (itr.hasNext()) {
-                        Object member = itr.next();
-                        if (member.equals(beanToRemove)) {
+                    java.util.Iterator itr = sourceList.iterator();
+                    while (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1570, itr.hasNext())) {
+                        java.lang.Object member = itr.next();
+                        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1571, member.equals(beanToRemove))) {
                             itr.remove();
                         }
-                    }
-                } catch (Exception e) {
-                    throw new BeanCreationException(e.getMessage());
+                    } 
+                } catch (java.lang.Exception e) {
+                    throw new org.springframework.beans.factory.BeanCreationException(e.getMessage());
                 }
-            } else if (bean instanceof SetFactoryBean || bean instanceof Set) {
-                Object beanToRemove = applicationContext.getBean(beanRef);
-                try {
-                    Set sourceSet;
-                    if (bean instanceof SetFactoryBean) {
-                        Field field = SetFactoryBean.class.getDeclaredField("sourceSet");
-                        field.setAccessible(true);
-                        sourceSet = (Set) field.get(bean);
-                    } else {
-                        sourceSet = (Set)bean;
-                    }
-                    List tempList = new ArrayList(sourceSet);
-                    Iterator itr = tempList.iterator();
-                    while (itr.hasNext()) {
-                        Object member = itr.next();
-                        if (member.equals(beanToRemove)) {
-                            itr.remove();
+            }else
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1574, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1572, (bean instanceof org.springframework.beans.factory.config.SetFactoryBean))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1573, (bean instanceof java.util.Set)))))) {
+                    java.lang.Object beanToRemove = applicationContext.getBean(beanRef);
+                    try {
+                        java.util.Set sourceSet;
+                        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1575, (bean instanceof org.springframework.beans.factory.config.SetFactoryBean))) {
+                            java.lang.reflect.Field field = org.springframework.beans.factory.config.SetFactoryBean.class.getDeclaredField("sourceSet");
+                            field.setAccessible(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1576, true));
+                            sourceSet = ((java.util.Set) (field.get(bean)));
+                        }else {
+                            sourceSet = ((java.util.Set) (bean));
                         }
+                        java.util.List tempList = new java.util.ArrayList(sourceSet);
+                        java.util.Iterator itr = tempList.iterator();
+                        while (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1577, itr.hasNext())) {
+                            java.lang.Object member = itr.next();
+                            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1578, member.equals(beanToRemove))) {
+                                itr.remove();
+                            }
+                        } 
+                        sourceSet.clear();
+                        sourceSet.addAll(tempList);
+                    } catch (java.lang.Exception e) {
+                        throw new org.springframework.beans.factory.BeanCreationException(e.getMessage());
                     }
-                    sourceSet.clear();
-                    sourceSet.addAll(tempList);
-                } catch (Exception e) {
-                    throw new BeanCreationException(e.getMessage());
-                }
-            } else if (bean instanceof MapFactoryBean || bean instanceof Map) {
-                try {
-                    Map sourceMap;
-                    if (bean instanceof MapFactoryBean) {
-                        Field field = MapFactoryBean.class.getDeclaredField("sourceMap");
-                        field.setAccessible(true);
-                        sourceMap = (Map) field.get(bean);
-                    } else {
-                        sourceMap = (Map) bean;
-                    }
-                    Object key;
-                    if (mapKey != null) {
-                        key = mapKey;
-                    } else {
-                        key = applicationContext.getBean(mapKeyRef);
-                    }
-                    Map referenceMap = new LinkedHashMap(sourceMap);
-                    for (Object sourceKey : referenceMap.keySet()) {
-                        if (sourceKey.equals(key)) {
-                            sourceMap.remove(key);
+                }else
+                    if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1581, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1579, (bean instanceof org.springframework.beans.factory.config.MapFactoryBean))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1580, (bean instanceof java.util.Map)))))) {
+                        try {
+                            java.util.Map sourceMap;
+                            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1582, (bean instanceof org.springframework.beans.factory.config.MapFactoryBean))) {
+                                java.lang.reflect.Field field = org.springframework.beans.factory.config.MapFactoryBean.class.getDeclaredField("sourceMap");
+                                field.setAccessible(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1583, true));
+                                sourceMap = ((java.util.Map) (field.get(bean)));
+                            }else {
+                                sourceMap = ((java.util.Map) (bean));
+                            }
+                            java.lang.Object key;
+                            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1584, ((mapKey) != null))) {
+                                key = mapKey;
+                            }else {
+                                key = applicationContext.getBean(mapKeyRef);
+                            }
+                            java.util.Map referenceMap = new java.util.LinkedHashMap(sourceMap);
+                            for (java.lang.Object sourceKey : referenceMap.keySet()) {
+                                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1585, sourceKey.equals(key))) {
+                                    sourceMap.remove(key);
+                                }
+                            }
+                        } catch (java.lang.Exception e) {
+                            throw new org.springframework.beans.factory.BeanCreationException(e.getMessage());
                         }
+                    }else {
+                        throw new java.lang.IllegalArgumentException((((("Bean (" + beanName) + ") is specified as a merge target, ") + "but is not") + " of type ListFactoryBean, SetFactoryBean or MapFactoryBean"));
                     }
-                } catch (Exception e) {
-                    throw new BeanCreationException(e.getMessage());
-                }
-            } else {
-                throw new IllegalArgumentException("Bean (" + beanName + ") is specified as a merge target, " +
-                        "but is not" +
-                        " of type ListFactoryBean, SetFactoryBean or MapFactoryBean");
-            }
+
+
         }
-
         return bean;
     }
 
-    public String getBeanRef() {
+    public java.lang.String getBeanRef() {
         return beanRef;
     }
 
-    public void setBeanRef(String beanRef) {
+    public void setBeanRef(java.lang.String beanRef) {
         this.beanRef = beanRef;
     }
 
-    public String getTargetRef() {
+    public java.lang.String getTargetRef() {
         return targetRef;
     }
 
-    public void setTargetRef(String targetRef) {
+    public void setTargetRef(java.lang.String targetRef) {
         this.targetRef = targetRef;
     }
 
-    public String getMapKey() {
+    public java.lang.String getMapKey() {
         return mapKey;
     }
 
-    public void setMapKey(String mapKey) {
+    public void setMapKey(java.lang.String mapKey) {
         this.mapKey = mapKey;
     }
 
-    public String getMapKeyRef() {
+    public java.lang.String getMapKeyRef() {
         return mapKeyRef;
     }
 
-    public void setMapKeyRef(String mapKeyRef) {
+    public void setMapKeyRef(java.lang.String mapKeyRef) {
         this.mapKeyRef = mapKeyRef;
     }
+
+    public static perturbation.location.PerturbationLocation __L1564;
+
+    public static perturbation.location.PerturbationLocation __L1565;
+
+    public static perturbation.location.PerturbationLocation __L1566;
+
+    public static perturbation.location.PerturbationLocation __L1567;
+
+    public static perturbation.location.PerturbationLocation __L1568;
+
+    public static perturbation.location.PerturbationLocation __L1569;
+
+    public static perturbation.location.PerturbationLocation __L1570;
+
+    public static perturbation.location.PerturbationLocation __L1571;
+
+    public static perturbation.location.PerturbationLocation __L1572;
+
+    public static perturbation.location.PerturbationLocation __L1573;
+
+    public static perturbation.location.PerturbationLocation __L1574;
+
+    public static perturbation.location.PerturbationLocation __L1575;
+
+    public static perturbation.location.PerturbationLocation __L1576;
+
+    public static perturbation.location.PerturbationLocation __L1577;
+
+    public static perturbation.location.PerturbationLocation __L1578;
+
+    public static perturbation.location.PerturbationLocation __L1579;
+
+    public static perturbation.location.PerturbationLocation __L1580;
+
+    public static perturbation.location.PerturbationLocation __L1581;
+
+    public static perturbation.location.PerturbationLocation __L1582;
+
+    public static perturbation.location.PerturbationLocation __L1583;
+
+    public static perturbation.location.PerturbationLocation __L1584;
+
+    public static perturbation.location.PerturbationLocation __L1585;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1564 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:84)", 1564, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1565 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:85)", 1565, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1566 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:85)", 1566, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1567 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:85)", 1567, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1568 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:89)", 1568, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1569 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:91)", 1569, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1570 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:97)", 1570, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1571 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:99)", 1571, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1572 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:106)", 1572, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1573 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:106)", 1573, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1574 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:106)", 1574, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1575 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:110)", 1575, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1576 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:112)", 1576, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1577 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:119)", 1577, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1578 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:121)", 1578, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1579 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:130)", 1579, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1580 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:130)", 1580, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1581 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:130)", 1581, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1582 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:133)", 1582, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1583 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:135)", 1583, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1584 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:141)", 1584, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.__L1585 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/AbstractRemoveBeanPostProcessor.java:148)", 1585, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.extensibility.context.merge.AbstractRemoveBeanPostProcessor.initPerturbationLocation0();
+    }
 }
+

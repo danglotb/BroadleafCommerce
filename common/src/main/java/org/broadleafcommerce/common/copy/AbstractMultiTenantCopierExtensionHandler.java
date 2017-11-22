@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,30 +17,26 @@
  */
 package org.broadleafcommerce.common.copy;
 
-import org.broadleafcommerce.common.extension.AbstractExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
 
-public class AbstractMultiTenantCopierExtensionHandler extends AbstractExtensionHandler 
-        implements MultiTenantCopierExtensionHandler {
-
-    @Override
-    public ExtensionResultStatusType transformCopy(MultiTenantCopyContext context, Object from, Object to) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+public class AbstractMultiTenantCopierExtensionHandler extends org.broadleafcommerce.common.extension.AbstractExtensionHandler implements org.broadleafcommerce.common.copy.MultiTenantCopierExtensionHandler {
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType transformCopy(org.broadleafcommerce.common.copy.MultiTenantCopyContext context, java.lang.Object from, java.lang.Object to) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 
-    @Override
-    public ExtensionResultStatusType prepareForSave(MultiTenantCopyContext context, Object from, Object to) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType prepareForSave(org.broadleafcommerce.common.copy.MultiTenantCopyContext context, java.lang.Object from, java.lang.Object to) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 
-    @Override
-    public ExtensionResultStatusType postSave(MultiTenantCopyContext context, Object from, Object to) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType postSave(org.broadleafcommerce.common.copy.MultiTenantCopyContext context, java.lang.Object from, java.lang.Object to) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 
-    @Override
-    public ExtensionResultStatusType shouldClone(MultiTenantCopyContext context, Object from, ExtensionResultHolder<Boolean> result) {
-        return ExtensionResultStatusType.NOT_HANDLED;
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType shouldClone(org.broadleafcommerce.common.copy.MultiTenantCopyContext context, java.lang.Object from, org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.Boolean> result) {
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 }
+

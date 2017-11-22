@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,109 +17,84 @@
  */
 package org.broadleafcommerce.common.exception;
 
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.springframework.context.NoSuchMessageException;
 
-/**
- * An exception whose message can be translated into a message suitable for a user.
- *
- * @author Jeff Fischer
- */
-public abstract class TranslatableException extends Exception {
-
+public abstract class TranslatableException extends java.lang.Exception {
     private static final long serialVersionUID = 1L;
 
     protected int code;
-    protected Object[] messageParams = null;
 
-    /**
-     * Create a new exception instance
-     *
-     * @param code an integer code that represents this exception state
-     * @param message the message that will be posted to stack traces on the console (not necessarily intended for the user)
-     */
-    public TranslatableException(int code, String message) {
+    protected java.lang.Object[] messageParams = null;
+
+    public TranslatableException(int code, java.lang.String message) {
         this(code, message, null);
     }
 
-    /**
-     * Creates a new exception instance
-     * 
-     * @param code an integer code that represents this exception state
-     * @param message the message that will be posted to stack traces on the console (not necessarily intended for the user)
-     * @param messageParams An array of objects that may be used to dymanically populate a message
-     */
-    public TranslatableException(int code, String message, Object[] messageParams) {
+    public TranslatableException(int code, java.lang.String message, java.lang.Object[] messageParams) {
         super(message);
         this.code = code;
         this.messageParams = messageParams;
     }
 
-    /**
-     * Retrieve the error code associated with this exception
-     *
-     * @return the error code
-     */
     public int getCode() {
-        return code;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.exception.TranslatableException.__L1261, code);
     }
 
-    /**
-     * Retrieves the message key that the i18n message will be keyed by.
-     * @return
-     */
-    public String getMessageKey() {
-        return getClass().getSimpleName() + "_" + code;
+    public java.lang.String getMessageKey() {
+        return ((getClass().getSimpleName()) + "_") + (code);
     }
 
-    /**
-     * Retrieves the message parameters, if any, that will be used to populate any dynamic message parameters.
-     * @return
-     */
-    public Object[] getMessageParameters() {
+    public java.lang.Object[] getMessageParameters() {
         return this.messageParams;
     }
 
-    /**
-     * <p>Return the message to show to the user. The framework will first look in the localized property bundles
-     * for any messages that match the supplied error code and exception type. If not found, the regular message
-     * submitted to the constructor will be returned.</p>
-     *
-     * <p>Message bundle properties have the following format:</p>
-     *
-     * <p>
-     * [simple class name of exception]_[integer error code]=[localized message for this exception and code]
-     * </p>
-     *
-     * @return The error message to display to the user
-     */
-    @Override
-    public String getLocalizedMessage() {
-        String response = getMessage();
+    @java.lang.Override
+    public java.lang.String getLocalizedMessage() {
+        java.lang.String response = getMessage();
         try {
-            String exCode = getMessageKey();
-            BroadleafRequestContext context = BroadleafRequestContext.getBroadleafRequestContext();
-            if (context != null && context.getMessageSource() != null) {
+            java.lang.String exCode = getMessageKey();
+            org.broadleafcommerce.common.web.BroadleafRequestContext context = org.broadleafcommerce.common.web.BroadleafRequestContext.getBroadleafRequestContext();
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.TranslatableException.__L1264, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.TranslatableException.__L1262, (context != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.TranslatableException.__L1263, ((context.getMessageSource()) != null)))))) {
                 response = context.getMessageSource().getMessage(exCode, this.messageParams, getMessage(), context.getJavaLocale());
-                if (response.equals(exCode)) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.TranslatableException.__L1265, response.equals(exCode))) {
                     response = getMessage();
                 }
             }
-        } catch (NoSuchMessageException e) {
+        } catch (org.springframework.context.NoSuchMessageException e) {
             response = getMessage();
         }
         return response;
     }
 
-    /**
-     * Cause the message passed to the constructor to show up on stack trace logs
-     *
-     * @return the non-localized version of the exception message
-     */
-    @Override
-    public String toString() {
-        String s = getClass().getName();
-        String message = getMessage();
-        return (message != null) ? (s + ": " + message) : s;
+    @java.lang.Override
+    public java.lang.String toString() {
+        java.lang.String s = getClass().getName();
+        java.lang.String message = getMessage();
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.exception.TranslatableException.__L1266, (message != null)) ? (s + ": ") + message : s;
+    }
+
+    public static perturbation.location.PerturbationLocation __L1261;
+
+    public static perturbation.location.PerturbationLocation __L1262;
+
+    public static perturbation.location.PerturbationLocation __L1263;
+
+    public static perturbation.location.PerturbationLocation __L1264;
+
+    public static perturbation.location.PerturbationLocation __L1265;
+
+    public static perturbation.location.PerturbationLocation __L1266;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.exception.TranslatableException.__L1261 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/TranslatableException.java:64)", 1261, "Numerical");
+        org.broadleafcommerce.common.exception.TranslatableException.__L1262 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/TranslatableException.java:102)", 1262, "Boolean");
+        org.broadleafcommerce.common.exception.TranslatableException.__L1263 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/TranslatableException.java:102)", 1263, "Boolean");
+        org.broadleafcommerce.common.exception.TranslatableException.__L1264 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/TranslatableException.java:102)", 1264, "Boolean");
+        org.broadleafcommerce.common.exception.TranslatableException.__L1265 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/TranslatableException.java:104)", 1265, "Boolean");
+        org.broadleafcommerce.common.exception.TranslatableException.__L1266 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/exception/TranslatableException.java:123)", 1266, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.exception.TranslatableException.initPerturbationLocation0();
     }
 }
+

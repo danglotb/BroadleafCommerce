@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,22 +17,14 @@
  */
 package org.broadleafcommerce.common.web.resource.resolver;
 
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.resource.ContentVersionStrategy;
-import org.springframework.web.servlet.resource.VersionStrategy;
 
-import java.util.HashMap;
-
-import javax.annotation.PostConstruct;
-
-@Component("blVersionResourceResolverStrategyMap")
-public class BLVersionResourceResolverDefaultStrategyMap<T, V> extends HashMap<String, VersionStrategy> {
-
+@org.springframework.stereotype.Component("blVersionResourceResolverStrategyMap")
+public class BLVersionResourceResolverDefaultStrategyMap<T, V> extends java.util.HashMap<java.lang.String, org.springframework.web.servlet.resource.VersionStrategy> {
     private static final long serialVersionUID = -3345223635822341852L;
 
-    @PostConstruct
-    public void initIt() throws Exception {
-        this.put("/**", (VersionStrategy) new ContentVersionStrategy());
+    @javax.annotation.PostConstruct
+    public void initIt() throws java.lang.Exception {
+        this.put("/**", ((org.springframework.web.servlet.resource.VersionStrategy) (new org.springframework.web.servlet.resource.ContentVersionStrategy())));
     }
-
 }
+

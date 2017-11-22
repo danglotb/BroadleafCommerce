@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,25 +17,24 @@
  */
 package org.broadleafcommerce.common.web.exception;
 
-public class HaltFilterChainException extends RuntimeException {
 
+public class HaltFilterChainException extends java.lang.RuntimeException {
     private static final long serialVersionUID = -4138837912315748276L;
 
-    // for serialization purposes
     protected HaltFilterChainException() {
         super();
     }
-    
-    public HaltFilterChainException(String message, Throwable cause) {
+
+    public HaltFilterChainException(java.lang.String message, java.lang.Throwable cause) {
         super(message, cause);
     }
-    
-    public HaltFilterChainException(String message) {
+
+    public HaltFilterChainException(java.lang.String message) {
         super(message);
     }
-    
-    public HaltFilterChainException(Throwable cause) {
+
+    public HaltFilterChainException(java.lang.Throwable cause) {
         super(cause);
     }
-
 }
+

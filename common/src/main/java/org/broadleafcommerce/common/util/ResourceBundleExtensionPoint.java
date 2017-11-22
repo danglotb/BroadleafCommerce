@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,20 +17,17 @@
  */
 package org.broadleafcommerce.common.util;
 
-/**
- * 
- * @deprecated instead, use {@link BroadleafMergeResourceBundleMessageSource}
- */
-@Deprecated
+
+@java.lang.Deprecated
 public class ResourceBundleExtensionPoint {
+    private java.lang.String[] basenameExtensions = new java.lang.String[0];
 
-    private String[] basenameExtensions = new String[0];
-
-    public String[] getBasenameExtensions() {
+    public java.lang.String[] getBasenameExtensions() {
         return basenameExtensions;
     }
 
-    public void setBasenameExtensions(String[] basenameExtensions) {
+    public void setBasenameExtensions(java.lang.String[] basenameExtensions) {
         this.basenameExtensions = basenameExtensions;
     }
 }
+

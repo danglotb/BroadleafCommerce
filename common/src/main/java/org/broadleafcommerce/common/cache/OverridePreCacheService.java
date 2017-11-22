@@ -1,6 +1,6 @@
 /*
  * #%L
- * broadleaf-multitenant-singleschema
+ * BroadleafCommerce Common Libraries
  * %%
  * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
@@ -17,68 +17,18 @@
  */
 package org.broadleafcommerce.common.cache;
 
-import org.broadleafcommerce.common.extension.StandardCacheItem;
 
-import java.io.Serializable;
-import java.util.List;
-
-/**
- * Describes a service capable of maintaining a cache of standard site level overrides. This cache spans multiple
- * entity types. This is a multitenant concept. An override declaration and the actual overridden entity
- * are generally two different things. This cache is responsible for reviewing a list of overrides declarations and caching the
- * referenced overridden entities.
- *
- * @author Jeff Fischer
- */
 public interface OverridePreCacheService {
+    java.util.List<org.broadleafcommerce.common.extension.StandardCacheItem> findElements(java.lang.String... cacheKeys);
 
-    /**
-     * Find any cached items matching the passed keys
-     *
-     * @param cacheKeys the keys to check
-     * @return
-     */
-    List<StandardCacheItem> findElements(String... cacheKeys);
+    boolean isActiveIsolatedSiteForType(java.lang.Long siteId, java.lang.String entityType);
 
-    /**
-     * Assuming the passed in site is a standard site, determine whether or not the standard site has any
-     * isolated values (i.e. not inherited) for the given type. This information is generally useful when making
-     * optimized query determinations for whether or not the standard site should be included in the query.
-     *
-     * @param siteId
-     * @param entityType
-     * @return
-     */
-    boolean isActiveIsolatedSiteForType(Long siteId, String entityType);
+    boolean isActiveForType(java.lang.String type);
 
-    /**
-     * Whether or not the cache is active for the specified type
-     *
-     * @param type the entity type to check
-     * @return
-     */
-    boolean isActiveForType(String type);
+    void groomCacheBySiteOverride(java.lang.String entityType, java.lang.Long cloneId, boolean isRemove);
 
-    /**
-     * Add or remove from the cache based on an override declaration.
-     *
-     * @param entityType
-     * @param cloneId
-     * @param isRemove
-     */
-    void groomCacheBySiteOverride(String entityType, Long cloneId, boolean isRemove);
+    void groomCacheByTargetEntity(java.lang.String entityType, java.io.Serializable id);
 
-    /**
-     * Update an overridden entity value in the cache
-     *
-     * @param entityType
-     * @param id
-     */
-    void groomCacheByTargetEntity(String entityType, Serializable id);
-
-    /**
-     * Refresh the entire cache structure. Presumably, this will clear and rebuild the structure.
-     */
     void refreshCache();
-
 }
+

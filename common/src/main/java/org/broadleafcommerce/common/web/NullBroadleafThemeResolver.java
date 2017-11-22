@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,30 +17,18 @@
  */
 package org.broadleafcommerce.common.web;
 
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.site.domain.Theme;
-import org.broadleafcommerce.common.site.domain.ThemeDTO;
-import org.springframework.web.context.request.ServletWebRequest;
-import org.springframework.web.context.request.WebRequest;
 
-import javax.servlet.http.HttpServletRequest;
+public class NullBroadleafThemeResolver implements org.broadleafcommerce.common.web.BroadleafThemeResolver {
+    private final org.broadleafcommerce.common.site.domain.Theme theme = new org.broadleafcommerce.common.site.domain.ThemeDTO();
 
-/**
- * Returns null for the Site (typical for non-multi-site implementations of
- * Broadleaf Commerce.
- *
- * @author bpolster
- */
-public class NullBroadleafThemeResolver implements BroadleafThemeResolver {
-    private final Theme theme = new ThemeDTO();
-
-    @Override
-    public Theme resolveTheme(HttpServletRequest request, Site site) {
-        return resolveTheme(new ServletWebRequest(request));
+    @java.lang.Override
+    public org.broadleafcommerce.common.site.domain.Theme resolveTheme(javax.servlet.http.HttpServletRequest request, org.broadleafcommerce.common.site.domain.Site site) {
+        return resolveTheme(new org.springframework.web.context.request.ServletWebRequest(request));
     }
-    
-    @Override
-    public Theme resolveTheme(WebRequest request) {
+
+    @java.lang.Override
+    public org.broadleafcommerce.common.site.domain.Theme resolveTheme(org.springframework.web.context.request.WebRequest request) {
         return theme;
     }
 }
+

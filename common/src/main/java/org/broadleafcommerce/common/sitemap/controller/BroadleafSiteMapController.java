@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,58 +15,58 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.sitemap.controller;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.sitemap.service.SiteMapService;
-import org.springframework.core.io.FileSystemResource;
 
-import java.io.File;
-import java.io.IOException;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-/**
- * Controller to generate and retrieve site map files.
- * 
- * @author Joshua Skorton (jskorton)
- */
 public class BroadleafSiteMapController {
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.sitemap.controller.BroadleafSiteMapController.class);
 
-    private static final Log LOG = LogFactory.getLog(BroadleafSiteMapController.class);
+    @javax.annotation.Resource(name = "blSiteMapService")
+    protected org.broadleafcommerce.common.sitemap.service.SiteMapService siteMapService;
 
-    @Resource(name = "blSiteMapService")
-    protected SiteMapService siteMapService;
-
-    /**
-     * Retrieves a site map index file in XML format
-     * 
-     * @param request
-     * @param response
-     * @param model
-     * @param fileName
-     * @return
-     */
-    public FileSystemResource retrieveSiteMapFile(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        File siteMapFile = siteMapService.getSiteMapFile(getRequestURIWithoutContext(request));
-        if (siteMapFile == null || !siteMapFile.exists()) {
-            response.setStatus(404);
+    public org.springframework.core.io.FileSystemResource retrieveSiteMapFile(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws java.io.IOException {
+        java.io.File siteMapFile = siteMapService.getSiteMapFile(getRequestURIWithoutContext(request));
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sitemap.controller.BroadleafSiteMapController.__L5370, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sitemap.controller.BroadleafSiteMapController.__L5367, (siteMapFile == null))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sitemap.controller.BroadleafSiteMapController.__L5369, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sitemap.controller.BroadleafSiteMapController.__L5368, siteMapFile.exists())))))))) {
+            response.setStatus(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.sitemap.controller.BroadleafSiteMapController.__L5371, 404));
             return null;
         }
-        return new FileSystemResource(siteMapFile);
+        return new org.springframework.core.io.FileSystemResource(siteMapFile);
     }
 
-    protected String getRequestURIWithoutContext(HttpServletRequest request) {
-        if (request.getContextPath() != null) {
-            return request.getRequestURI().substring(request.getContextPath().length());
-        } else {
+    protected java.lang.String getRequestURIWithoutContext(javax.servlet.http.HttpServletRequest request) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sitemap.controller.BroadleafSiteMapController.__L5372, ((request.getContextPath()) != null))) {
+            return request.getRequestURI().substring(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.sitemap.controller.BroadleafSiteMapController.__L5373, request.getContextPath().length()));
+        }else {
             return request.getRequestURI();
         }
     }
 
+    public static perturbation.location.PerturbationLocation __L5367;
+
+    public static perturbation.location.PerturbationLocation __L5368;
+
+    public static perturbation.location.PerturbationLocation __L5369;
+
+    public static perturbation.location.PerturbationLocation __L5370;
+
+    public static perturbation.location.PerturbationLocation __L5371;
+
+    public static perturbation.location.PerturbationLocation __L5372;
+
+    public static perturbation.location.PerturbationLocation __L5373;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.sitemap.controller.BroadleafSiteMapController.__L5367 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sitemap/controller/BroadleafSiteMapController.java:57)", 5367, "Boolean");
+        org.broadleafcommerce.common.sitemap.controller.BroadleafSiteMapController.__L5368 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sitemap/controller/BroadleafSiteMapController.java:57)", 5368, "Boolean");
+        org.broadleafcommerce.common.sitemap.controller.BroadleafSiteMapController.__L5369 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sitemap/controller/BroadleafSiteMapController.java:57)", 5369, "Boolean");
+        org.broadleafcommerce.common.sitemap.controller.BroadleafSiteMapController.__L5370 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sitemap/controller/BroadleafSiteMapController.java:57)", 5370, "Boolean");
+        org.broadleafcommerce.common.sitemap.controller.BroadleafSiteMapController.__L5371 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sitemap/controller/BroadleafSiteMapController.java:58)", 5371, "Numerical");
+        org.broadleafcommerce.common.sitemap.controller.BroadleafSiteMapController.__L5372 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sitemap/controller/BroadleafSiteMapController.java:65)", 5372, "Boolean");
+        org.broadleafcommerce.common.sitemap.controller.BroadleafSiteMapController.__L5373 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sitemap/controller/BroadleafSiteMapController.java:66)", 5373, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.sitemap.controller.BroadleafSiteMapController.initPerturbationLocation0();
+    }
 }
+

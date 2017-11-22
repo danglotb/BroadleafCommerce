@@ -17,17 +17,10 @@
  */
 package org.broadleafcommerce.common.persistence.transaction;
 
-import java.io.IOException;
 
-/**
- * Capable of logging sql statements
- *
- * @author Jeff Fischer
- */
 public interface SqlStatementLoggable {
+    void log(java.lang.String statement);
 
-    void log(String statement);
-
-    String decompressLogLine(String compressedLogLine) throws IOException;
-
+    java.lang.String decompressLogLine(java.lang.String compressedLogLine) throws java.io.IOException;
 }
+

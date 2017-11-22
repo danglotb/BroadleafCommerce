@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,44 +17,38 @@
  */
 package org.broadleafcommerce.common.config.domain;
 
-import org.broadleafcommerce.common.audit.Auditable;
-import org.broadleafcommerce.common.config.service.type.ModuleConfigurationType;
 
-import java.io.Serializable;
-import java.util.Date;
+public interface ModuleConfiguration extends java.io.Serializable {
+    public java.lang.Long getId();
 
-public interface ModuleConfiguration extends Serializable {
+    public void setId(java.lang.Long id);
 
-    public Long getId();
+    public java.lang.String getModuleName();
 
-    public void setId(Long id);
+    public void setModuleName(java.lang.String name);
 
-    public String getModuleName();
+    public void setActiveStartDate(java.util.Date startDate);
 
-    public void setModuleName(String name);
+    public java.util.Date getActiveStartDate();
 
-    public void setActiveStartDate(Date startDate);
+    public void setActiveEndDate(java.util.Date startDate);
 
-    public Date getActiveStartDate();
+    public java.util.Date getActiveEndDate();
 
-    public void setActiveEndDate(Date startDate);
+    public void setIsDefault(java.lang.Boolean isDefault);
 
-    public Date getActiveEndDate();
+    public java.lang.Boolean getIsDefault();
 
-    public void setIsDefault(Boolean isDefault);
-
-    public Boolean getIsDefault();
-    
     public boolean isDefault();
 
-    public void setPriority(Integer priority);
+    public void setPriority(java.lang.Integer priority);
 
-    public Integer getPriority();
+    public java.lang.Integer getPriority();
 
-    public ModuleConfigurationType getModuleConfigurationType();
+    public org.broadleafcommerce.common.config.service.type.ModuleConfigurationType getModuleConfigurationType();
 
-    public void setAuditable(Auditable auditable);
+    public void setAuditable(org.broadleafcommerce.common.audit.Auditable auditable);
 
-    public Auditable getAuditable();
-
+    public org.broadleafcommerce.common.audit.Auditable getAuditable();
 }
+

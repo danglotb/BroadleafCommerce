@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Workflow
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,216 +17,248 @@
  */
 package org.broadleafcommerce.common.cache;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.time.SystemTime;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jmx.export.naming.SelfNaming;
-import org.springframework.jmx.support.ObjectNameManager;
-import org.springframework.stereotype.Service;
-import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import javax.management.Attribute;
-import javax.management.AttributeList;
-import javax.management.AttributeNotFoundException;
-import javax.management.DynamicMBean;
-import javax.management.InvalidAttributeValueException;
-import javax.management.MBeanAttributeInfo;
-import javax.management.MBeanException;
-import javax.management.MBeanInfo;
-import javax.management.MBeanOperationInfo;
-import javax.management.MalformedObjectNameException;
-import javax.management.ObjectName;
-import javax.management.ReflectionException;
 
-/**
- * @author Jeff Fischer
- */
-@Service("blStatisticsService")
-public class StatisticsServiceImpl implements DynamicMBean, StatisticsService, SelfNaming {
+@org.springframework.stereotype.Service("blStatisticsService")
+public class StatisticsServiceImpl implements javax.management.DynamicMBean , org.broadleafcommerce.common.cache.StatisticsService , org.springframework.jmx.export.naming.SelfNaming {
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.cache.StatisticsServiceImpl.class);
 
-    private static final Log LOG = LogFactory.getLog(StatisticsServiceImpl.class);
+    @org.springframework.beans.factory.annotation.Value("${cache.stat.log.resolution}")
+    protected java.lang.Long logResolution = ((long) (30000L));
 
-    @Value("${cache.stat.log.resolution}")
-    protected Long logResolution = 30000L;
+    protected java.lang.String appName = "broadleaf";
 
-    protected String appName = "broadleaf";
+    protected org.broadleafcommerce.common.cache.StatisticsServiceLogAdapter adapter;
 
-    protected StatisticsServiceLogAdapter adapter;
+    protected java.util.Map<java.lang.String, org.broadleafcommerce.common.cache.CacheStat> cacheStats = java.util.Collections.synchronizedMap(new java.util.HashMap<java.lang.String, org.broadleafcommerce.common.cache.CacheStat>());
 
-    protected Map<String, CacheStat> cacheStats = Collections.synchronizedMap(new HashMap<String, CacheStat>());
-
-    @Override
-    public void addCacheStat(String key, boolean isHit) {
-        CacheStat myStat = getCacheStat(key);
-        if (isHit) {
+    @java.lang.Override
+    public void addCacheStat(java.lang.String key, boolean isHit) {
+        org.broadleafcommerce.common.cache.CacheStat myStat = getCacheStat(key);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L265, isHit)) {
             myStat.incrementHit();
         }
         myStat.incrementRequest();
-        if (myStat.getLastLogTime() + logResolution < SystemTime.asMillis()) {
-            myStat.setLastLogTime(SystemTime.asMillis());
-            BigDecimal percentage = myStat.getHitRate();
-            if (LOG.isInfoEnabled()) {
-                LOG.info("Cache hit percentage for " + key + " is: " + percentage.toString() + "%");
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L268, ((perturbation.PerturbationEngine.plong(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L266, ((myStat.getLastLogTime()) + (logResolution)))) < (perturbation.PerturbationEngine.plong(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L267, org.broadleafcommerce.common.time.SystemTime.asMillis()))))) {
+            myStat.setLastLogTime(perturbation.PerturbationEngine.plong(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L269, org.broadleafcommerce.common.time.SystemTime.asMillis()));
+            java.math.BigDecimal percentage = myStat.getHitRate();
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L270, org.broadleafcommerce.common.cache.StatisticsServiceImpl.LOG.isInfoEnabled())) {
+                org.broadleafcommerce.common.cache.StatisticsServiceImpl.LOG.info((((("Cache hit percentage for " + key) + " is: ") + (percentage.toString())) + "%"));
             }
         }
     }
 
-    protected CacheStat getCacheStat(String key) {
-        if (!cacheStats.containsKey(key)) {
-            CacheStat stat = new CacheStat();
+    protected org.broadleafcommerce.common.cache.CacheStat getCacheStat(java.lang.String key) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L272, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L271, cacheStats.containsKey(key)))))) {
+            org.broadleafcommerce.common.cache.CacheStat stat = new org.broadleafcommerce.common.cache.CacheStat();
             cacheStats.put(key, stat);
         }
         return cacheStats.get(key);
     }
 
-    @Override
-    public Long getLogResolution() {
+    @java.lang.Override
+    public java.lang.Long getLogResolution() {
         return logResolution;
     }
 
-    @Override
-    public void setLogResolution(Long logResolution) {
+    @java.lang.Override
+    public void setLogResolution(java.lang.Long logResolution) {
         this.logResolution = logResolution;
     }
 
-    @Override
+    @java.lang.Override
     public void activateLogging() {
-        if (getAdapter() != null) {
-            getAdapter().activateLogging(StatisticsServiceImpl.class);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L273, ((getAdapter()) != null))) {
+            getAdapter().activateLogging(org.broadleafcommerce.common.cache.StatisticsServiceImpl.class);
         }
     }
 
-    @Override
+    @java.lang.Override
     public void disableLogging() {
-        if (getAdapter() != null) {
-            getAdapter().disableLogging(StatisticsServiceImpl.class);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L274, ((getAdapter()) != null))) {
+            getAdapter().disableLogging(org.broadleafcommerce.common.cache.StatisticsServiceImpl.class);
         }
     }
 
-    public String getAppName() {
+    public java.lang.String getAppName() {
         return appName;
     }
 
-    public void setAppName(String appName) {
+    public void setAppName(java.lang.String appName) {
         this.appName = appName;
     }
 
-    @Override
-    public Object getAttribute(String attribute) throws AttributeNotFoundException, MBeanException, ReflectionException {
-        if (attribute.equals("LOG_RESOLUTION")) {
+    @java.lang.Override
+    public java.lang.Object getAttribute(java.lang.String attribute) throws javax.management.AttributeNotFoundException, javax.management.MBeanException, javax.management.ReflectionException {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L275, attribute.equals("LOG_RESOLUTION"))) {
             return getLogResolution();
         }
         return getCacheStat(attribute).getHitRate().doubleValue();
     }
 
-    @Override
-    public void setAttribute(Attribute attribute) throws AttributeNotFoundException, InvalidAttributeValueException, MBeanException, ReflectionException {
-        if (attribute.getName().equals("LOG_RESOLUTION")) {
-            setLogResolution((Long) attribute.getValue());
+    @java.lang.Override
+    public void setAttribute(javax.management.Attribute attribute) throws javax.management.AttributeNotFoundException, javax.management.InvalidAttributeValueException, javax.management.MBeanException, javax.management.ReflectionException {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L276, attribute.getName().equals("LOG_RESOLUTION"))) {
+            setLogResolution(((java.lang.Long) (attribute.getValue())));
         }
-        //do nothing - not allowed
     }
 
-    @Override
-    public AttributeList getAttributes(String[] attributes) {
-        AttributeList list = new AttributeList();
-        for (Map.Entry<String, CacheStat> stats : cacheStats.entrySet()) {
-            list.add(new Attribute(stats.getKey(), stats.getValue().getHitRate().doubleValue()));
+    @java.lang.Override
+    public javax.management.AttributeList getAttributes(java.lang.String[] attributes) {
+        javax.management.AttributeList list = new javax.management.AttributeList();
+        for (java.util.Map.Entry<java.lang.String, org.broadleafcommerce.common.cache.CacheStat> stats : cacheStats.entrySet()) {
+            list.add(new javax.management.Attribute(stats.getKey(), stats.getValue().getHitRate().doubleValue()));
         }
         return list;
     }
 
-    @Override
-    public AttributeList setAttributes(AttributeList attributes) {
-        for (Object attr : attributes) {
+    @java.lang.Override
+    public javax.management.AttributeList setAttributes(javax.management.AttributeList attributes) {
+        for (java.lang.Object attr : attributes) {
             try {
-                setAttribute((Attribute) attr);
-            } catch (Exception e) {
-                LOG.error("cannot set attribute: " + ((Attribute) attr).getName(), e);
+                setAttribute(((javax.management.Attribute) (attr)));
+            } catch (java.lang.Exception e) {
+                org.broadleafcommerce.common.cache.StatisticsServiceImpl.LOG.error(("cannot set attribute: " + (((javax.management.Attribute) (attr)).getName())), e);
             }
         }
         return attributes;
     }
 
-    @Override
-    public Object invoke(String actionName, Object[] params, String[] signature) throws MBeanException,
-            ReflectionException {
-        if (actionName.equals("activate")) {
+    @java.lang.Override
+    public java.lang.Object invoke(java.lang.String actionName, java.lang.Object[] params, java.lang.String[] signature) throws javax.management.MBeanException, javax.management.ReflectionException {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L277, actionName.equals("activate"))) {
             activateLogging();
             return null;
-        } else if (actionName.equals("disable")) {
-            disableLogging();
-            return null;
-        }
-        throw new MBeanException(new RuntimeException("Not Supported"));
+        }else
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L278, actionName.equals("disable"))) {
+                disableLogging();
+                return null;
+            }
+
+        throw new javax.management.MBeanException(new java.lang.RuntimeException("Not Supported"));
     }
 
-    @Override
-    public ObjectName getObjectName() throws MalformedObjectNameException {
-        return ObjectNameManager.getInstance("org.broadleafcommerce:name=StatisticsService." + appName);
+    @java.lang.Override
+    public javax.management.ObjectName getObjectName() throws javax.management.MalformedObjectNameException {
+        return org.springframework.jmx.support.ObjectNameManager.getInstance(("org.broadleafcommerce:name=StatisticsService." + (appName)));
     }
 
-    @Override
-    public MBeanInfo getMBeanInfo() {
-        SortedSet<String> names = new TreeSet<String>();
-        for (Map.Entry<String, CacheStat> stats : cacheStats.entrySet()) {
+    @java.lang.Override
+    public javax.management.MBeanInfo getMBeanInfo() {
+        java.util.SortedSet<java.lang.String> names = new java.util.TreeSet<java.lang.String>();
+        for (java.util.Map.Entry<java.lang.String, org.broadleafcommerce.common.cache.CacheStat> stats : cacheStats.entrySet()) {
             names.add(stats.getKey());
         }
-        MBeanAttributeInfo[] attrs = new MBeanAttributeInfo[names.size()];
-        Iterator<String> it = names.iterator();
-        for (int i = 0; i < attrs.length; i++) {
-            String name = it.next();
-            attrs[i] = new MBeanAttributeInfo(
-                    name,
-                    "java.lang.Double",
-                    name,
-                    true,   // isReadable
-                    false,   // isWritable
-                    false); // isIs
+        javax.management.MBeanAttributeInfo[] attrs = new javax.management.MBeanAttributeInfo[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L279, names.size())];
+        java.util.Iterator<java.lang.String> it = names.iterator();
+        for (int i = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L280, 0); perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L283, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L281, i)) < (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L282, attrs.length)))); perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L284, (i++))) {
+            java.lang.String name = it.next();
+            attrs[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L285, i)] = new javax.management.MBeanAttributeInfo(name, "java.lang.Double", name, perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L286, true), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L287, false), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L288, false));
         }
-        attrs = ArrayUtils.add(attrs, new MBeanAttributeInfo(
-                            "LOG_RESOLUTION",
-                            "java.lang.Double",
-                            "LOG_RESOLUTION",
-                            true,   // isReadable
-                            true,   // isWritable
-                            false) // isIs
-        );
-        MBeanOperationInfo[] opers = {
-            new MBeanOperationInfo(
-                    "activate",
-                    "Activate statistic logging",
-                    null,   // no parameters
-                    "void",
-                    MBeanOperationInfo.ACTION),
-            new MBeanOperationInfo(
-                    "disable",
-                    "Disable statistic logging",
-                    null,   // no parameters
-                    "void",
-                    MBeanOperationInfo.ACTION)
-        };
-        return new MBeanInfo(
-            "org.broadleafcommerce:name=StatisticsService." + appName,
-            "Runtime Statistics",
-            attrs,
-            null,  // constructors
-            opers,
-            null); // notifications
+        attrs = org.apache.commons.lang3.ArrayUtils.add(attrs, new javax.management.MBeanAttributeInfo("LOG_RESOLUTION", "java.lang.Double", "LOG_RESOLUTION", perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L289, true), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L290, true), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L291, false)));
+        javax.management.MBeanOperationInfo[] opers = new javax.management.MBeanOperationInfo[]{ new javax.management.MBeanOperationInfo("activate", "Activate statistic logging", null, "void", perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L292, javax.management.MBeanOperationInfo.ACTION)), new javax.management.MBeanOperationInfo("disable", "Disable statistic logging", null, "void", perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L293, javax.management.MBeanOperationInfo.ACTION)) };
+        return new javax.management.MBeanInfo(("org.broadleafcommerce:name=StatisticsService." + (appName)), "Runtime Statistics", attrs, null, opers, null);
     }
 
-    public StatisticsServiceLogAdapter getAdapter() {
+    public org.broadleafcommerce.common.cache.StatisticsServiceLogAdapter getAdapter() {
         return adapter;
     }
 
-    public void setAdapter(StatisticsServiceLogAdapter adapter) {
+    public void setAdapter(org.broadleafcommerce.common.cache.StatisticsServiceLogAdapter adapter) {
         this.adapter = adapter;
     }
+
+    public static perturbation.location.PerturbationLocation __L265;
+
+    public static perturbation.location.PerturbationLocation __L266;
+
+    public static perturbation.location.PerturbationLocation __L267;
+
+    public static perturbation.location.PerturbationLocation __L268;
+
+    public static perturbation.location.PerturbationLocation __L269;
+
+    public static perturbation.location.PerturbationLocation __L270;
+
+    public static perturbation.location.PerturbationLocation __L271;
+
+    public static perturbation.location.PerturbationLocation __L272;
+
+    public static perturbation.location.PerturbationLocation __L273;
+
+    public static perturbation.location.PerturbationLocation __L274;
+
+    public static perturbation.location.PerturbationLocation __L275;
+
+    public static perturbation.location.PerturbationLocation __L276;
+
+    public static perturbation.location.PerturbationLocation __L277;
+
+    public static perturbation.location.PerturbationLocation __L278;
+
+    public static perturbation.location.PerturbationLocation __L279;
+
+    public static perturbation.location.PerturbationLocation __L280;
+
+    public static perturbation.location.PerturbationLocation __L281;
+
+    public static perturbation.location.PerturbationLocation __L282;
+
+    public static perturbation.location.PerturbationLocation __L283;
+
+    public static perturbation.location.PerturbationLocation __L284;
+
+    public static perturbation.location.PerturbationLocation __L285;
+
+    public static perturbation.location.PerturbationLocation __L286;
+
+    public static perturbation.location.PerturbationLocation __L287;
+
+    public static perturbation.location.PerturbationLocation __L288;
+
+    public static perturbation.location.PerturbationLocation __L289;
+
+    public static perturbation.location.PerturbationLocation __L290;
+
+    public static perturbation.location.PerturbationLocation __L291;
+
+    public static perturbation.location.PerturbationLocation __L292;
+
+    public static perturbation.location.PerturbationLocation __L293;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L265 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:68)", 265, "Boolean");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L266 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:72)", 266, "Numerical");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L267 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:72)", 267, "Numerical");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L268 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:72)", 268, "Boolean");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L269 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:73)", 269, "Numerical");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L270 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:75)", 270, "Boolean");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L271 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:82)", 271, "Boolean");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L272 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:82)", 272, "Boolean");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L273 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:101)", 273, "Boolean");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L274 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:108)", 274, "Boolean");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L275 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:123)", 275, "Boolean");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L276 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:131)", 276, "Boolean");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L277 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:161)", 277, "Boolean");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L278 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:164)", 278, "Boolean");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L279 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:182)", 279, "Numerical");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L280 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:184)", 280, "Numerical");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L281 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:184)", 281, "Numerical");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L282 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:184)", 282, "Numerical");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L283 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:184)", 283, "Boolean");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L284 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:184)", 284, "Numerical");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L285 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:186)", 285, "Numerical");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L286 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:190)", 286, "Boolean");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L287 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:191)", 287, "Boolean");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L288 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:192)", 288, "Boolean");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L289 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:198)", 289, "Boolean");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L290 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:199)", 290, "Boolean");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L291 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:200)", 291, "Boolean");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L292 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:208)", 292, "Numerical");
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.__L293 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/StatisticsServiceImpl.java:214)", 293, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.cache.StatisticsServiceImpl.initPerturbationLocation0();
+    }
 }
+

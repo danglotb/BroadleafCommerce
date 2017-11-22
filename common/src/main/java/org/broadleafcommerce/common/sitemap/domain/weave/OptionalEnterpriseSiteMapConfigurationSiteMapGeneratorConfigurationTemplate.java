@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,35 +17,12 @@
  */
 package org.broadleafcommerce.common.sitemap.domain.weave;
 
-import org.broadleafcommerce.common.config.domain.AbstractModuleConfigurationAdminPresentation;
-import org.broadleafcommerce.common.extensibility.jpa.SiteDiscriminatable;
-import org.broadleafcommerce.common.extensibility.jpa.SiteDiscriminatableType;
-import org.broadleafcommerce.common.presentation.AdminPresentationCollection;
-import org.broadleafcommerce.common.sitemap.domain.SiteMapGeneratorConfiguration;
-import org.broadleafcommerce.common.sitemap.domain.SiteMapGeneratorConfigurationImpl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
-
-/**
- * This class is meant as a template to provide overriding of the annotations on fields in 
- * <code>org.broadleafcommerce.common.sitemap.domain.SiteMapConfigurationImpl</code>.  This provides a
- * stop gap measure to allow someone to weave in the appropriate annotations in 4.0.x without forcing a schema change on those 
- * who prefer not to use it.  This should likely be removed in 4.1 for fixed annotations on the entity itself.
- * 
- * @author Jeff Fischer
- *
- */
-@Deprecated
+@java.lang.Deprecated
 public abstract class OptionalEnterpriseSiteMapConfigurationSiteMapGeneratorConfigurationTemplate {
-
-    @OneToMany(mappedBy = "siteMapConfiguration", targetEntity = SiteMapGeneratorConfigurationImpl.class, cascade = { CascadeType.ALL }, orphanRemoval = true)
-    @AdminPresentationCollection(friendlyName = "SiteMapConfigurationImpl_Generator_Configurations",
-            tab = AbstractModuleConfigurationAdminPresentation.TabName.General)
-    @SiteDiscriminatable(type = SiteDiscriminatableType.SITE)
-    protected List<SiteMapGeneratorConfiguration> siteMapGeneratorConfigurations = new ArrayList<SiteMapGeneratorConfiguration>();
-
+    @javax.persistence.OneToMany(mappedBy = "siteMapConfiguration", targetEntity = org.broadleafcommerce.common.sitemap.domain.SiteMapGeneratorConfigurationImpl.class, cascade = { javax.persistence.CascadeType.ALL }, orphanRemoval = true)
+    @org.broadleafcommerce.common.presentation.AdminPresentationCollection(friendlyName = "SiteMapConfigurationImpl_Generator_Configurations", tab = org.broadleafcommerce.common.config.domain.AbstractModuleConfigurationAdminPresentation.TabName.General)
+    @org.broadleafcommerce.common.extensibility.jpa.SiteDiscriminatable(type = org.broadleafcommerce.common.extensibility.jpa.SiteDiscriminatableType.SITE)
+    protected java.util.List<org.broadleafcommerce.common.sitemap.domain.SiteMapGeneratorConfiguration> siteMapGeneratorConfigurations = new java.util.ArrayList<org.broadleafcommerce.common.sitemap.domain.SiteMapGeneratorConfiguration>();
 }
+

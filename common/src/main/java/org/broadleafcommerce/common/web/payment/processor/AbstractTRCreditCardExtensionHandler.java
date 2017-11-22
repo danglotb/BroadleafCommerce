@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,143 +15,165 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.web.payment.processor;
 
-import org.broadleafcommerce.common.extension.AbstractExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.payment.PaymentGatewayRequestType;
-import org.broadleafcommerce.common.payment.PaymentGatewayType;
-import org.broadleafcommerce.common.payment.TransparentRedirectConstants;
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayConfiguration;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayResolver;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayTransparentRedirectService;
-import org.broadleafcommerce.common.vendor.service.exception.PaymentException;
-import java.util.Map;
-import javax.annotation.Resource;
 
-/**
- * <p>An Abstract implementation of the TRCreditCardExtensionHandler.
- * PaymentGateway Handlers will just need to extend this class and implement
- * the declared abstract methods.</p>
- *
- * @author Elbert Bautista (elbertbautista)
- */
-public abstract class AbstractTRCreditCardExtensionHandler extends AbstractExtensionHandler
-        implements TRCreditCardExtensionHandler {
+public abstract class AbstractTRCreditCardExtensionHandler extends org.broadleafcommerce.common.extension.AbstractExtensionHandler implements org.broadleafcommerce.common.web.payment.processor.TRCreditCardExtensionHandler {
+    @javax.annotation.Resource(name = "blPaymentGatewayResolver")
+    protected org.broadleafcommerce.common.payment.service.PaymentGatewayResolver paymentGatewayResolver;
 
-    @Resource(name = "blPaymentGatewayResolver")
-    protected PaymentGatewayResolver paymentGatewayResolver;
-
-    @Override
-    public ExtensionResultStatusType setFormActionKey(StringBuilder key) {
-        if (paymentGatewayResolver.isHandlerCompatible(getHandlerType())) {
-            key.delete(0, key.length());
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType setFormActionKey(java.lang.StringBuilder key) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7373, paymentGatewayResolver.isHandlerCompatible(getHandlerType()))) {
+            key.delete(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7374, 0), perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7375, key.length()));
             key.append(getFormActionURLKey());
-            return ExtensionResultStatusType.HANDLED;
+            return org.broadleafcommerce.common.extension.ExtensionResultStatusType.HANDLED;
         }
-
-        return ExtensionResultStatusType.NOT_HANDLED;
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 
-    @Override
-    public ExtensionResultStatusType setFormHiddenParamsKey(StringBuilder key) {
-        if (paymentGatewayResolver.isHandlerCompatible(getHandlerType())) {
-            key.delete(0, key.length());
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType setFormHiddenParamsKey(java.lang.StringBuilder key) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7376, paymentGatewayResolver.isHandlerCompatible(getHandlerType()))) {
+            key.delete(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7377, 0), perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7378, key.length()));
             key.append(getHiddenParamsKey());
-            return ExtensionResultStatusType.HANDLED;
+            return org.broadleafcommerce.common.extension.ExtensionResultStatusType.HANDLED;
         }
-
-        return ExtensionResultStatusType.NOT_HANDLED;
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 
-    @Override
-    public ExtensionResultStatusType createTransparentRedirectForm(
-            Map<String, Map<String, String>> formParameters,
-            PaymentRequestDTO requestDTO,
-            Map<String, String> configurationSettings) throws PaymentException {
-
-        if (paymentGatewayResolver.isHandlerCompatible(getHandlerType())) {
-            if (formParameters != null && requestDTO != null &&  configurationSettings != null) {
-                //Populate any additional configs on the RequestDTO
-                for (String config:configurationSettings.keySet()){
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType createTransparentRedirectForm(java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>> formParameters, org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO, java.util.Map<java.lang.String, java.lang.String> configurationSettings) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7379, paymentGatewayResolver.isHandlerCompatible(getHandlerType()))) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7384, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7382, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7380, (formParameters != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7381, (requestDTO != null)))))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7383, (configurationSettings != null)))))) {
+                for (java.lang.String config : configurationSettings.keySet()) {
                     requestDTO.additionalField(config, configurationSettings.get(config));
                 }
-
-                PaymentResponseDTO responseDTO;
-
-                if (PaymentGatewayRequestType.CREATE_CUSTOMER_PAYMENT_TR.equals(requestDTO.getGatewayRequestType())) {
+                org.broadleafcommerce.common.payment.dto.PaymentResponseDTO responseDTO;
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7385, org.broadleafcommerce.common.payment.PaymentGatewayRequestType.CREATE_CUSTOMER_PAYMENT_TR.equals(requestDTO.getGatewayRequestType()))) {
                     responseDTO = getTransparentRedirectService().createCustomerPaymentTokenForm(requestDTO);
-                } else if (PaymentGatewayRequestType.UPDATE_CUSTOMER_PAYMENT_TR.equals(requestDTO.getGatewayRequestType())) {
-                    responseDTO = getTransparentRedirectService().updateCustomerPaymentTokenForm(requestDTO);
-                } else if (getConfiguration().isPerformAuthorizeAndCapture()) {
-                    responseDTO = getTransparentRedirectService().createAuthorizeAndCaptureForm(requestDTO);
-                } else {
-                    responseDTO = getTransparentRedirectService().createAuthorizeForm(requestDTO);
-                }
+                }else
+                    if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7386, org.broadleafcommerce.common.payment.PaymentGatewayRequestType.UPDATE_CUSTOMER_PAYMENT_TR.equals(requestDTO.getGatewayRequestType()))) {
+                        responseDTO = getTransparentRedirectService().updateCustomerPaymentTokenForm(requestDTO);
+                    }else
+                        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7387, getConfiguration().isPerformAuthorizeAndCapture())) {
+                            responseDTO = getTransparentRedirectService().createAuthorizeAndCaptureForm(requestDTO);
+                        }else {
+                            responseDTO = getTransparentRedirectService().createAuthorizeForm(requestDTO);
+                        }
+
 
                 overrideCustomerPaymentReturnURLs(requestDTO, responseDTO);
                 populateFormParameters(formParameters, responseDTO);
             }
-
-            return ExtensionResultStatusType.HANDLED_CONTINUE;
+            return org.broadleafcommerce.common.extension.ExtensionResultStatusType.HANDLED_CONTINUE;
         }
-
-        return ExtensionResultStatusType.NOT_HANDLED;
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 
-    public PaymentGatewayType getHandlerType() {
+    public org.broadleafcommerce.common.payment.PaymentGatewayType getHandlerType() {
         return getConfiguration().getGatewayType();
     }
 
-    public abstract String getFormActionURLKey();
+    public abstract java.lang.String getFormActionURLKey();
 
-    public abstract String getHiddenParamsKey();
+    public abstract java.lang.String getHiddenParamsKey();
 
-    public abstract PaymentGatewayConfiguration getConfiguration();
+    public abstract org.broadleafcommerce.common.payment.service.PaymentGatewayConfiguration getConfiguration();
 
-    public abstract PaymentGatewayTransparentRedirectService getTransparentRedirectService();
+    public abstract org.broadleafcommerce.common.payment.service.PaymentGatewayTransparentRedirectService getTransparentRedirectService();
 
-    public abstract void populateFormParameters(Map<String, Map<String, String>> formParameters,
-                                                PaymentResponseDTO responseDTO);
+    public abstract void populateFormParameters(java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>> formParameters, org.broadleafcommerce.common.payment.dto.PaymentResponseDTO responseDTO);
 
-    /**
-     * If the request contains information about an override return URL, use the one specified on the request dto.
-     * e.g. some modules like OMS may use the transparent redirect mechanism to create payment tokens,
-     * if the request is originating from a module, then it may override the return url,
-     * else the request would be coming from a normal flow, like adding a customer payment token from a customer's profile page.
-     */
-    protected void overrideCustomerPaymentReturnURLs(PaymentRequestDTO requestDTO, PaymentResponseDTO responseDTO) {
-        if (requestDTO.getAdditionalFields().containsKey(TransparentRedirectConstants.OVERRIDE_CREATE_TOKEN_RETURN_URL)) {
-            String createReturnKey = getTransparentRedirectService().getCreateCustomerPaymentTokenReturnURLFieldKey(responseDTO);
-            String override = (String)requestDTO.getAdditionalFields().get(TransparentRedirectConstants.OVERRIDE_CREATE_TOKEN_RETURN_URL);
+    protected void overrideCustomerPaymentReturnURLs(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO, org.broadleafcommerce.common.payment.dto.PaymentResponseDTO responseDTO) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7388, requestDTO.getAdditionalFields().containsKey(org.broadleafcommerce.common.payment.TransparentRedirectConstants.OVERRIDE_CREATE_TOKEN_RETURN_URL))) {
+            java.lang.String createReturnKey = getTransparentRedirectService().getCreateCustomerPaymentTokenReturnURLFieldKey(responseDTO);
+            java.lang.String override = ((java.lang.String) (requestDTO.getAdditionalFields().get(org.broadleafcommerce.common.payment.TransparentRedirectConstants.OVERRIDE_CREATE_TOKEN_RETURN_URL)));
             responseDTO.getResponseMap().put(createReturnKey, override);
-            responseDTO.getResponseMap().remove(TransparentRedirectConstants.OVERRIDE_CREATE_TOKEN_RETURN_URL);
+            responseDTO.getResponseMap().remove(org.broadleafcommerce.common.payment.TransparentRedirectConstants.OVERRIDE_CREATE_TOKEN_RETURN_URL);
         }
-
-        if (requestDTO.getAdditionalFields().containsKey(TransparentRedirectConstants.OVERRIDE_CREATE_TOKEN_CANCEL_URL)) {
-            String createCancelKey = getTransparentRedirectService().getCreateCustomerPaymentTokenCancelURLFieldKey(responseDTO);
-            String override = (String)requestDTO.getAdditionalFields().get(TransparentRedirectConstants.OVERRIDE_CREATE_TOKEN_CANCEL_URL);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7389, requestDTO.getAdditionalFields().containsKey(org.broadleafcommerce.common.payment.TransparentRedirectConstants.OVERRIDE_CREATE_TOKEN_CANCEL_URL))) {
+            java.lang.String createCancelKey = getTransparentRedirectService().getCreateCustomerPaymentTokenCancelURLFieldKey(responseDTO);
+            java.lang.String override = ((java.lang.String) (requestDTO.getAdditionalFields().get(org.broadleafcommerce.common.payment.TransparentRedirectConstants.OVERRIDE_CREATE_TOKEN_CANCEL_URL)));
             responseDTO.getResponseMap().put(createCancelKey, override);
-            responseDTO.getResponseMap().remove(TransparentRedirectConstants.OVERRIDE_CREATE_TOKEN_CANCEL_URL);
+            responseDTO.getResponseMap().remove(org.broadleafcommerce.common.payment.TransparentRedirectConstants.OVERRIDE_CREATE_TOKEN_CANCEL_URL);
         }
-
-        if (requestDTO.getAdditionalFields().containsKey(TransparentRedirectConstants.OVERRIDE_UPDATE_TOKEN_RETURN_URL)) {
-            String updateReturnKey = getTransparentRedirectService().getUpdateCustomerPaymentTokenReturnURLFieldKey(responseDTO);
-            String override = (String)requestDTO.getAdditionalFields().get(TransparentRedirectConstants.OVERRIDE_UPDATE_TOKEN_RETURN_URL);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7390, requestDTO.getAdditionalFields().containsKey(org.broadleafcommerce.common.payment.TransparentRedirectConstants.OVERRIDE_UPDATE_TOKEN_RETURN_URL))) {
+            java.lang.String updateReturnKey = getTransparentRedirectService().getUpdateCustomerPaymentTokenReturnURLFieldKey(responseDTO);
+            java.lang.String override = ((java.lang.String) (requestDTO.getAdditionalFields().get(org.broadleafcommerce.common.payment.TransparentRedirectConstants.OVERRIDE_UPDATE_TOKEN_RETURN_URL)));
             responseDTO.getResponseMap().put(updateReturnKey, override);
-            responseDTO.getResponseMap().remove(TransparentRedirectConstants.OVERRIDE_UPDATE_TOKEN_RETURN_URL);
+            responseDTO.getResponseMap().remove(org.broadleafcommerce.common.payment.TransparentRedirectConstants.OVERRIDE_UPDATE_TOKEN_RETURN_URL);
         }
-
-        if (requestDTO.getAdditionalFields().containsKey(TransparentRedirectConstants.OVERRIDE_UPDATE_TOKEN_CANCEL_URL)) {
-            String updateCancelKey = getTransparentRedirectService().getUpdateCustomerPaymentTokenCancelURLFieldKey(responseDTO);
-            String override = (String)requestDTO.getAdditionalFields().get(TransparentRedirectConstants.OVERRIDE_UPDATE_TOKEN_CANCEL_URL);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7391, requestDTO.getAdditionalFields().containsKey(org.broadleafcommerce.common.payment.TransparentRedirectConstants.OVERRIDE_UPDATE_TOKEN_CANCEL_URL))) {
+            java.lang.String updateCancelKey = getTransparentRedirectService().getUpdateCustomerPaymentTokenCancelURLFieldKey(responseDTO);
+            java.lang.String override = ((java.lang.String) (requestDTO.getAdditionalFields().get(org.broadleafcommerce.common.payment.TransparentRedirectConstants.OVERRIDE_UPDATE_TOKEN_CANCEL_URL)));
             responseDTO.getResponseMap().put(updateCancelKey, override);
-            responseDTO.getResponseMap().remove(TransparentRedirectConstants.OVERRIDE_UPDATE_TOKEN_CANCEL_URL);
+            responseDTO.getResponseMap().remove(org.broadleafcommerce.common.payment.TransparentRedirectConstants.OVERRIDE_UPDATE_TOKEN_CANCEL_URL);
         }
-
     }
 
+    public static perturbation.location.PerturbationLocation __L7373;
+
+    public static perturbation.location.PerturbationLocation __L7374;
+
+    public static perturbation.location.PerturbationLocation __L7375;
+
+    public static perturbation.location.PerturbationLocation __L7376;
+
+    public static perturbation.location.PerturbationLocation __L7377;
+
+    public static perturbation.location.PerturbationLocation __L7378;
+
+    public static perturbation.location.PerturbationLocation __L7379;
+
+    public static perturbation.location.PerturbationLocation __L7380;
+
+    public static perturbation.location.PerturbationLocation __L7381;
+
+    public static perturbation.location.PerturbationLocation __L7382;
+
+    public static perturbation.location.PerturbationLocation __L7383;
+
+    public static perturbation.location.PerturbationLocation __L7384;
+
+    public static perturbation.location.PerturbationLocation __L7385;
+
+    public static perturbation.location.PerturbationLocation __L7386;
+
+    public static perturbation.location.PerturbationLocation __L7387;
+
+    public static perturbation.location.PerturbationLocation __L7388;
+
+    public static perturbation.location.PerturbationLocation __L7389;
+
+    public static perturbation.location.PerturbationLocation __L7390;
+
+    public static perturbation.location.PerturbationLocation __L7391;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7373 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/AbstractTRCreditCardExtensionHandler.java:50)", 7373, "Boolean");
+        org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7374 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/AbstractTRCreditCardExtensionHandler.java:51)", 7374, "Numerical");
+        org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7375 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/AbstractTRCreditCardExtensionHandler.java:51)", 7375, "Numerical");
+        org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7376 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/AbstractTRCreditCardExtensionHandler.java:61)", 7376, "Boolean");
+        org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7377 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/AbstractTRCreditCardExtensionHandler.java:62)", 7377, "Numerical");
+        org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7378 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/AbstractTRCreditCardExtensionHandler.java:62)", 7378, "Numerical");
+        org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7379 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/AbstractTRCreditCardExtensionHandler.java:76)", 7379, "Boolean");
+        org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7380 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/AbstractTRCreditCardExtensionHandler.java:77)", 7380, "Boolean");
+        org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7381 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/AbstractTRCreditCardExtensionHandler.java:77)", 7381, "Boolean");
+        org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7382 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/AbstractTRCreditCardExtensionHandler.java:77)", 7382, "Boolean");
+        org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7383 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/AbstractTRCreditCardExtensionHandler.java:77)", 7383, "Boolean");
+        org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7384 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/AbstractTRCreditCardExtensionHandler.java:77)", 7384, "Boolean");
+        org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7385 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/AbstractTRCreditCardExtensionHandler.java:85)", 7385, "Boolean");
+        org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7386 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/AbstractTRCreditCardExtensionHandler.java:87)", 7386, "Boolean");
+        org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7387 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/AbstractTRCreditCardExtensionHandler.java:89)", 7387, "Boolean");
+        org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7388 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/AbstractTRCreditCardExtensionHandler.java:127)", 7388, "Boolean");
+        org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7389 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/AbstractTRCreditCardExtensionHandler.java:134)", 7389, "Boolean");
+        org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7390 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/AbstractTRCreditCardExtensionHandler.java:141)", 7390, "Boolean");
+        org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.__L7391 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/AbstractTRCreditCardExtensionHandler.java:148)", 7391, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.payment.processor.AbstractTRCreditCardExtensionHandler.initPerturbationLocation0();
+    }
 }
+

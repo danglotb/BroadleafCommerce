@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,41 +15,49 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.extensibility.context.merge.handlers;
 
-import org.w3c.dom.Node;
 
-import java.util.List;
-
-/**
- * This handler is responsible for replacing nodes in the source document
- * with the same nodes from the patch document. Note, additional nodes
- * from the patch document that are not present in the source document
- * are simply appended to the source document. This is specialized for the
- * mo:overrideItem element.
- * 
- * @author jfischer
- *
- */
-public class MetadataOverrideNodeReplaceInsert extends NodeReplaceInsert {
-
-    protected boolean checkNode(List<Node> usedNodes, Node[] primaryNodes, Node node) {
-
-        //find matching nodes based on id
-        if (replaceNode(primaryNodes, node, "configurationKey", usedNodes)) {
-            return true;
+public class MetadataOverrideNodeReplaceInsert extends org.broadleafcommerce.common.extensibility.context.merge.handlers.NodeReplaceInsert {
+    protected boolean checkNode(java.util.List<org.w3c.dom.Node> usedNodes, org.w3c.dom.Node[] primaryNodes, org.w3c.dom.Node node) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.handlers.MetadataOverrideNodeReplaceInsert.__L1363, replaceNode(primaryNodes, node, "configurationKey", usedNodes))) {
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.handlers.MetadataOverrideNodeReplaceInsert.__L1364, true);
         }
-        //find matching nodes based on name
-        if (replaceCeilingEntityNode(primaryNodes, node, usedNodes)) {
-            return true;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.handlers.MetadataOverrideNodeReplaceInsert.__L1365, replaceCeilingEntityNode(primaryNodes, node, usedNodes))) {
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.handlers.MetadataOverrideNodeReplaceInsert.__L1366, true);
         }
-        //check if this same node already exists
-        if (exactNodeExists(primaryNodes, node, usedNodes)) {
-            return true;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.handlers.MetadataOverrideNodeReplaceInsert.__L1367, exactNodeExists(primaryNodes, node, usedNodes))) {
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.handlers.MetadataOverrideNodeReplaceInsert.__L1368, true);
         }
-
-        return false;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.handlers.MetadataOverrideNodeReplaceInsert.__L1369, false);
     }
 
+    public static perturbation.location.PerturbationLocation __L1363;
+
+    public static perturbation.location.PerturbationLocation __L1364;
+
+    public static perturbation.location.PerturbationLocation __L1365;
+
+    public static perturbation.location.PerturbationLocation __L1366;
+
+    public static perturbation.location.PerturbationLocation __L1367;
+
+    public static perturbation.location.PerturbationLocation __L1368;
+
+    public static perturbation.location.PerturbationLocation __L1369;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.MetadataOverrideNodeReplaceInsert.__L1363 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/handlers/MetadataOverrideNodeReplaceInsert.java:40)", 1363, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.MetadataOverrideNodeReplaceInsert.__L1364 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/handlers/MetadataOverrideNodeReplaceInsert.java:41)", 1364, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.MetadataOverrideNodeReplaceInsert.__L1365 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/handlers/MetadataOverrideNodeReplaceInsert.java:44)", 1365, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.MetadataOverrideNodeReplaceInsert.__L1366 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/handlers/MetadataOverrideNodeReplaceInsert.java:45)", 1366, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.MetadataOverrideNodeReplaceInsert.__L1367 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/handlers/MetadataOverrideNodeReplaceInsert.java:48)", 1367, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.MetadataOverrideNodeReplaceInsert.__L1368 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/handlers/MetadataOverrideNodeReplaceInsert.java:49)", 1368, "Boolean");
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.MetadataOverrideNodeReplaceInsert.__L1369 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/handlers/MetadataOverrideNodeReplaceInsert.java:52)", 1369, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.extensibility.context.merge.handlers.MetadataOverrideNodeReplaceInsert.initPerturbationLocation0();
+    }
 }
+

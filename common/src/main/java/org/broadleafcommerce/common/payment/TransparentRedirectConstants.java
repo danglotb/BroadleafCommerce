@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,14 +17,14 @@
  */
 package org.broadleafcommerce.common.payment;
 
-/**
- * @author Elbert Bautista (elbertbautista)
- */
+
 public class TransparentRedirectConstants {
+    public static final java.lang.String OVERRIDE_CREATE_TOKEN_RETURN_URL = "OVERRIDE_CREATE_TOKEN_RETURN_URL";
 
-    public static final String OVERRIDE_CREATE_TOKEN_RETURN_URL = "OVERRIDE_CREATE_TOKEN_RETURN_URL";
-    public static final String OVERRIDE_CREATE_TOKEN_CANCEL_URL = "OVERRIDE_CREATE_TOKEN_CANCEL_URL";
-    public static final String OVERRIDE_UPDATE_TOKEN_RETURN_URL = "OVERRIDE_UPDATE_TOKEN_RETURN_URL";
-    public static final String OVERRIDE_UPDATE_TOKEN_CANCEL_URL = "OVERRIDE_UPDATE_TOKEN_CANCEL_URL";
+    public static final java.lang.String OVERRIDE_CREATE_TOKEN_CANCEL_URL = "OVERRIDE_CREATE_TOKEN_CANCEL_URL";
 
+    public static final java.lang.String OVERRIDE_UPDATE_TOKEN_RETURN_URL = "OVERRIDE_UPDATE_TOKEN_RETURN_URL";
+
+    public static final java.lang.String OVERRIDE_UPDATE_TOKEN_CANCEL_URL = "OVERRIDE_UPDATE_TOKEN_CANCEL_URL";
 }
+

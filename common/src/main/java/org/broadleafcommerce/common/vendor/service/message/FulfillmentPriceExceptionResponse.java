@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,20 +17,18 @@
  */
 package org.broadleafcommerce.common.vendor.service.message;
 
-import java.io.Serializable;
 
-public interface FulfillmentPriceExceptionResponse extends Serializable {
-
+public interface FulfillmentPriceExceptionResponse extends java.io.Serializable {
     public boolean isErrorDetected();
 
     public void setErrorDetected(boolean isErrorDetected);
 
-    public String getErrorCode();
+    public java.lang.String getErrorCode();
 
-    public void setErrorCode(String errorCode);
+    public void setErrorCode(java.lang.String errorCode);
 
-    public String getErrorText();
+    public java.lang.String getErrorText();
 
-    public void setErrorText(String errorText);
-
+    public void setErrorText(java.lang.String errorText);
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,103 +17,62 @@
  */
 package org.broadleafcommerce.common.security.channel;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.core.Ordered;
-import org.springframework.security.web.access.channel.ChannelDecisionManagerImpl;
-import org.springframework.security.web.access.channel.ChannelProcessor;
-import org.springframework.security.web.access.channel.InsecureChannelProcessor;
-import org.springframework.security.web.access.channel.SecureChannelProcessor;
 
-import java.lang.reflect.Field;
-import java.util.List;
+public class ProtoChannelBeanPostProcessor implements org.springframework.beans.factory.config.BeanPostProcessor , org.springframework.core.Ordered {
+    org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.security.channel.ProtoChannelBeanPostProcessor.class);
 
-import javax.servlet.ServletRequest;
+    protected java.util.List<org.springframework.security.web.access.channel.ChannelProcessor> channelProcessorOverrides;
 
-/**
- * <p>This class is designed to work in both a load-balanced and non load-balanced environment by replacing the existing
- * default Spring channel processors which do not work in a load balanced environment. Configuration should be done
- * as follows in your applicationContext-security:</p>
- * 
- * <b>Deploying to a load balanced environment with SSL termination at the load balancer as well as an environment
- * with SSL termination at Tomcat/Apache:</b>
- * 
- * <pre>
- * {@code
- *   <bean class="org.broadleafcommerce.common.security.channel.ProtoChannelBeanPostProcessor">
- *       <property name="channelProcessorOverrides">
- *           <list>
- *              <bean class="org.broadleafcommerce.common.security.channel.ProtoInsecureChannelProcessor" />
- *              <bean class="org.broadleafcommerce.common.security.channel.ProtoSecureChannelProcessor" />
- *          </list>
- *      </property>
- *  </bean>
- *  }
- * </pre>
- * 
- * <p>That said, this solution only overrides the Spring Security directives but does not make any attempts to override
- * any invocations to {@link ServletRequest#isSecure}. If your application server supports it, we recommend instead using
- * that approach which will encapsulate any functionality encapsulated within the Proto processors. For more information
- * on configuring your specific servlet container, see
- * <a href="https://github.com/BroadleafCommerce/BroadleafCommerce/issues/424">this issue report</a>
- * </p>
- * 
- * @author Jeff Fischer
- * @author Phillip Verheyden (phillipuniverse)
- * @see {@link ProtoSecureChannelProcessor}
- * @see {@link ProtoInsecureChannelProcessor}
- * @see {@link SecureChannelProcessor}
- * @see {@link InsecureChannelProcessor}
- */
-public class ProtoChannelBeanPostProcessor implements BeanPostProcessor, Ordered {
-
-    Log LOG = LogFactory.getLog(ProtoChannelBeanPostProcessor.class);
-    
-    protected List<ChannelProcessor> channelProcessorOverrides;
-    
-    @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+    @java.lang.Override
+    public java.lang.Object postProcessAfterInitialization(java.lang.Object bean, java.lang.String beanName) throws org.springframework.beans.BeansException {
         return bean;
     }
 
-    @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        if (bean instanceof ChannelDecisionManagerImpl) {
+    @java.lang.Override
+    public java.lang.Object postProcessBeforeInitialization(java.lang.Object bean, java.lang.String beanName) throws org.springframework.beans.BeansException {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.channel.ProtoChannelBeanPostProcessor.__L4778, (bean instanceof org.springframework.security.web.access.channel.ChannelDecisionManagerImpl))) {
             try {
-                ChannelDecisionManagerImpl manager = (ChannelDecisionManagerImpl) bean;
-                Field channelProcessors = manager.getClass().getDeclaredField("channelProcessors");
-                channelProcessors.setAccessible(true);
-                List<ChannelProcessor> list = (List<ChannelProcessor>) channelProcessors.get(manager);
+                org.springframework.security.web.access.channel.ChannelDecisionManagerImpl manager = ((org.springframework.security.web.access.channel.ChannelDecisionManagerImpl) (bean));
+                java.lang.reflect.Field channelProcessors = manager.getClass().getDeclaredField("channelProcessors");
+                channelProcessors.setAccessible(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.channel.ProtoChannelBeanPostProcessor.__L4779, true));
+                java.util.List<org.springframework.security.web.access.channel.ChannelProcessor> list = ((java.util.List<org.springframework.security.web.access.channel.ChannelProcessor>) (channelProcessors.get(manager)));
                 list.clear();
                 manager.setChannelProcessors(channelProcessorOverrides);
-                LOG.info("Replacing the standard Spring Security channel processors with custom processors that look for a " +
-                		"'X-Forwarded-Proto' request header. This allows Spring Security to sit behind a load balancer with SSL termination.");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+                LOG.info(("Replacing the standard Spring Security channel processors with custom processors that look for a " + "'X-Forwarded-Proto' request header. This allows Spring Security to sit behind a load balancer with SSL termination."));
+            } catch (java.lang.Exception e) {
+                throw new java.lang.RuntimeException(e);
             }
         }
         return bean;
     }
 
-    @Override
+    @java.lang.Override
     public int getOrder() {
-        return 9999;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.channel.ProtoChannelBeanPostProcessor.__L4780, 9999);
     }
 
-    /**
-     * @return the channelProcessors
-     */
-    public List<ChannelProcessor> getChannelProcessorOverrides() {
+    public java.util.List<org.springframework.security.web.access.channel.ChannelProcessor> getChannelProcessorOverrides() {
         return channelProcessorOverrides;
     }
-    
-    /**
-     * @param channelProcessors the channelProcessors to set
-     */
-    public void setChannelProcessorOverrides(List<ChannelProcessor> channelProcessorOverrides) {
+
+    public void setChannelProcessorOverrides(java.util.List<org.springframework.security.web.access.channel.ChannelProcessor> channelProcessorOverrides) {
         this.channelProcessorOverrides = channelProcessorOverrides;
     }
-    
+
+    public static perturbation.location.PerturbationLocation __L4778;
+
+    public static perturbation.location.PerturbationLocation __L4779;
+
+    public static perturbation.location.PerturbationLocation __L4780;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.security.channel.ProtoChannelBeanPostProcessor.__L4778 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/channel/ProtoChannelBeanPostProcessor.java:83)", 4778, "Boolean");
+        org.broadleafcommerce.common.security.channel.ProtoChannelBeanPostProcessor.__L4779 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/channel/ProtoChannelBeanPostProcessor.java:87)", 4779, "Boolean");
+        org.broadleafcommerce.common.security.channel.ProtoChannelBeanPostProcessor.__L4780 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/channel/ProtoChannelBeanPostProcessor.java:102)", 4780, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.security.channel.ProtoChannelBeanPostProcessor.initPerturbationLocation0();
+    }
 }
+

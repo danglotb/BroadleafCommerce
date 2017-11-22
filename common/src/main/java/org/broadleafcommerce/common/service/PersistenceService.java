@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,122 +17,31 @@
  */
 package org.broadleafcommerce.common.service;
 
-import org.broadleafcommerce.common.persistence.TargetModeType;
-import org.broadleafcommerce.common.util.dao.EJB3ConfigurationDao;
-import org.springframework.transaction.PlatformTransactionManager;
 
-import java.util.Map;
-
-import javax.annotation.Nullable;
-import javax.persistence.EntityManager;
-
-/**
- * @author Chris Kittrell (ckittrell)
- */
 public interface PersistenceService {
+    boolean validateEntityClassName(java.lang.String entityClassName);
 
-    /**
-     * Determine if a test class name represents a known entity class registered with Hibernate
-     *
-     * @param entityClassName
-     * @return
-     */
-    boolean validateEntityClassName(String entityClassName);
+    javax.persistence.EntityManager identifyEntityManager(java.lang.Class entityClass);
 
-    /**
-     * Identifies the {@link EntityManager} for the given entityClass, using the default targetModeType of {@link TargetModeType#SANDBOX}
-     *
-     * @param entityClass
-     * @return the {@link EntityManager}
-     */
-    EntityManager identifyEntityManager(Class entityClass);
+    javax.persistence.EntityManager identifyEntityManager(java.lang.Class entityClass, org.broadleafcommerce.common.persistence.TargetModeType targetModeType);
 
-    /**
-     * Identifies the {@link EntityManager} for the given entityClass and targetModeType
-     *
-     * @param entityClass
-     * @param targetModeType
-     * @return the {@link EntityManager}
-     */
-    EntityManager identifyEntityManager(Class entityClass, TargetModeType targetModeType);
+    org.springframework.transaction.PlatformTransactionManager identifyTransactionManager(java.lang.String className, org.broadleafcommerce.common.persistence.TargetModeType targetModeType);
 
-    /**
-     * Identifies the {@link PlatformTransactionManager} for the given className and targetModeType
-     *
-     * @param className
-     * @param targetModeType
-     * @return the {@link PlatformTransactionManager}
-     */
-    PlatformTransactionManager identifyTransactionManager(String className, TargetModeType targetModeType);
+    org.broadleafcommerce.common.util.dao.EJB3ConfigurationDao identifyEJB3ConfigurationDao(java.lang.Class entityClass);
 
-    /**
-     * Identifies the {@link EJB3ConfigurationDao} for the given entityClass
-     *
-     * @param entityClass
-     * @return the {@link EJB3ConfigurationDao}
-     */
-    EJB3ConfigurationDao identifyEJB3ConfigurationDao(Class entityClass);
+    javax.persistence.EntityManager identifyDefaultEntityManager(org.broadleafcommerce.common.persistence.TargetModeType targetModeType);
 
-    /**
-     * Identifies the default {@link EntityManager} for the given targetModeType
-     *
-     * NOTE: This assumes that the {@link EntityManager} is based on blPU
-     *
-     * @param targetModeType
-     * @return the {@link EntityManager}
-     */
-    EntityManager identifyDefaultEntityManager(TargetModeType targetModeType);
+    org.springframework.transaction.PlatformTransactionManager identifyDefaultTransactionManager(org.broadleafcommerce.common.persistence.TargetModeType targetModeType);
 
-    /**
-     * Identifies the default {@link PlatformTransactionManager} for the given targetModeType
-     *
-     * NOTE: This assumes that the {@link PlatformTransactionManager} is based on blPU
-     *
-     * @param targetModeType
-     * @return the {@link PlatformTransactionManager}
-     */
-    PlatformTransactionManager identifyDefaultTransactionManager(TargetModeType targetModeType);
+    org.broadleafcommerce.common.util.dao.EJB3ConfigurationDao identifyDefaultEJB3ConfigurationDao(org.broadleafcommerce.common.persistence.TargetModeType targetModeType);
 
-    /**
-     * Identifies the default {@link EJB3ConfigurationDao} for the given targetModeType
-     *
-     * NOTE: This assumes that the {@link EJB3ConfigurationDao} is based on blPU
-     *
-     * @param targetModeType
-     * @return the {@link EJB3ConfigurationDao}
-     */
-    EJB3ConfigurationDao identifyDefaultEJB3ConfigurationDao(TargetModeType targetModeType);
+    javax.persistence.EntityManager getEntityManager(java.util.Map<java.lang.String, java.lang.Object> managerMap);
 
-    /**
-     * Gathers the {@link EntityManager} from the provided managerMap
-     *
-     * @param managerMap
-     * @return the {@link EntityManager}
-     */
-    EntityManager getEntityManager(Map<String, Object> managerMap);
+    org.springframework.transaction.PlatformTransactionManager getTransactionManager(java.util.Map<java.lang.String, java.lang.Object> managerMap);
 
-    /**
-     * Gathers the {@link PlatformTransactionManager} from the provided managerMap
-     *
-     * @param managerMap
-     * @return the {@link PlatformTransactionManager}
-     */
-    PlatformTransactionManager getTransactionManager(Map<String, Object> managerMap);
+    org.broadleafcommerce.common.util.dao.EJB3ConfigurationDao getEJB3ConfigurationDao(java.util.Map<java.lang.String, java.lang.Object> managerMap);
 
-    /**
-     * Gathers the {@link EJB3ConfigurationDao} from the provided managerMap
-     *
-     * @param managerMap
-     * @return the {@link EJB3ConfigurationDao}
-     */
-    EJB3ConfigurationDao getEJB3ConfigurationDao(Map<String, Object> managerMap);
-
-    /**
-     * Retrieves the topmost implementation for the given className by checking each registered {@link EntityManager}. If
-     * this is not found in the entity managers, this returns null
-     *
-     * @param className
-     */
-    @Nullable
-    Class<?> getCeilingImplClassFromEntityManagers(String className);
+    @javax.annotation.Nullable
+    java.lang.Class<?> getCeilingImplClassFromEntityManagers(java.lang.String className);
 }
+

@@ -17,22 +17,8 @@
  */
 package org.broadleafcommerce.common.extensibility.jpa;
 
-import javax.persistence.NamedNativeQueries;
-import javax.persistence.NamedQueries;
 
-/**
- * Interface for classes annotated with {@link NamedQueries} and {@link NamedNativeQueries}.
- * Provides a mechanism for creating generic classes for grouping named queries without having to explicitly declare them
- * at the top of individual {@link javax.persistence.Entity} implementation classes.
- * </p>
- * Declaring a query configuration class for the system to harvest named queries from is as simple as making the class implement
- * this interface, implementing the required method(s), and having spring recognize the class as a bean - either through
- * Configuration class, component scanning or xml declaration.
- *
- * @author Jeff Fischer
- */
 public interface QueryConfiguration {
-
-    String getPersistenceUnit();
-
+    java.lang.String getPersistenceUnit();
 }
+

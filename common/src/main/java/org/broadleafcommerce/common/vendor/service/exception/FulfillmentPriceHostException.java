@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -18,24 +18,23 @@
 package org.broadleafcommerce.common.vendor.service.exception;
 
 
-public class FulfillmentPriceHostException extends FulfillmentPriceException {
-
+public class FulfillmentPriceHostException extends org.broadleafcommerce.common.vendor.service.exception.FulfillmentPriceException {
     private static final long serialVersionUID = 1L;
 
     public FulfillmentPriceHostException() {
         super();
     }
 
-    public FulfillmentPriceHostException(String message, Throwable cause) {
+    public FulfillmentPriceHostException(java.lang.String message, java.lang.Throwable cause) {
         super(message, cause);
     }
 
-    public FulfillmentPriceHostException(String message) {
+    public FulfillmentPriceHostException(java.lang.String message) {
         super(message);
     }
 
-    public FulfillmentPriceHostException(Throwable cause) {
+    public FulfillmentPriceHostException(java.lang.Throwable cause) {
         super(cause);
     }
-
 }
+

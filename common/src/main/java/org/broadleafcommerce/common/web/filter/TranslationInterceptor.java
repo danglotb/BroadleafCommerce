@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,34 +17,23 @@
  */
 package org.broadleafcommerce.common.web.filter;
 
-import org.springframework.ui.ModelMap;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.context.request.WebRequestInterceptor;
 
-import javax.annotation.Resource;
+public class TranslationInterceptor implements org.springframework.web.context.request.WebRequestInterceptor {
+    @javax.annotation.Resource(name = "blTranslationRequestProcessor")
+    protected org.broadleafcommerce.common.web.filter.TranslationRequestProcessor translationRequestProcessor;
 
-/**
- * Interceptor for use with portlets that calls the {@link TranslationRequestProcessor}.
- * 
- * @author bpolster
- */
-public class TranslationInterceptor implements WebRequestInterceptor {
-    
-    @Resource(name = "blTranslationRequestProcessor")
-    protected TranslationRequestProcessor translationRequestProcessor;
-
-    @Override
-    public void preHandle(WebRequest request) throws Exception {
+    @java.lang.Override
+    public void preHandle(org.springframework.web.context.request.WebRequest request) throws java.lang.Exception {
         translationRequestProcessor.process(request);
     }
 
-    @Override
-    public void postHandle(WebRequest request, ModelMap model) throws Exception {
+    @java.lang.Override
+    public void postHandle(org.springframework.web.context.request.WebRequest request, org.springframework.ui.ModelMap model) throws java.lang.Exception {
         translationRequestProcessor.postProcess(request);
     }
 
-    @Override
-    public void afterCompletion(WebRequest request, Exception ex) throws Exception {
-        // unimplemented
+    @java.lang.Override
+    public void afterCompletion(org.springframework.web.context.request.WebRequest request, java.lang.Exception ex) throws java.lang.Exception {
     }
 }
+

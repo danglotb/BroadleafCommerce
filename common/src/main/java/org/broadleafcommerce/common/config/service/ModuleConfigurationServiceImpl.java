@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,53 +17,42 @@
  */
 package org.broadleafcommerce.common.config.service;
 
-import org.broadleafcommerce.common.config.dao.ModuleConfigurationDao;
-import org.broadleafcommerce.common.config.domain.ModuleConfiguration;
-import org.broadleafcommerce.common.config.service.type.ModuleConfigurationType;
-import org.broadleafcommerce.common.util.TransactionUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+@org.springframework.stereotype.Service("blModuleConfigurationService")
+public class ModuleConfigurationServiceImpl implements org.broadleafcommerce.common.config.service.ModuleConfigurationService {
+    @javax.annotation.Resource(name = "blModuleConfigurationDao")
+    protected org.broadleafcommerce.common.config.dao.ModuleConfigurationDao moduleConfigDao;
 
-import javax.annotation.Resource;
-
-@Service("blModuleConfigurationService")
-public class ModuleConfigurationServiceImpl implements ModuleConfigurationService {
-
-    @Resource(name = "blModuleConfigurationDao")
-    protected ModuleConfigurationDao moduleConfigDao;
-
-    @Override
-    public ModuleConfiguration findById(Long id) {
+    @java.lang.Override
+    public org.broadleafcommerce.common.config.domain.ModuleConfiguration findById(java.lang.Long id) {
         return moduleConfigDao.readById(id);
     }
 
-    @Override
-    @Transactional(TransactionUtils.DEFAULT_TRANSACTION_MANAGER)
-    public ModuleConfiguration save(ModuleConfiguration config) {
+    @java.lang.Override
+    @org.springframework.transaction.annotation.Transactional(org.broadleafcommerce.common.util.TransactionUtils.DEFAULT_TRANSACTION_MANAGER)
+    public org.broadleafcommerce.common.config.domain.ModuleConfiguration save(org.broadleafcommerce.common.config.domain.ModuleConfiguration config) {
         return moduleConfigDao.save(config);
     }
 
-    @Override
-    @Transactional(TransactionUtils.DEFAULT_TRANSACTION_MANAGER)
-    public void delete(ModuleConfiguration config) {
+    @java.lang.Override
+    @org.springframework.transaction.annotation.Transactional(org.broadleafcommerce.common.util.TransactionUtils.DEFAULT_TRANSACTION_MANAGER)
+    public void delete(org.broadleafcommerce.common.config.domain.ModuleConfiguration config) {
         moduleConfigDao.delete(config);
     }
 
-    @Override
-    public List<ModuleConfiguration> findActiveConfigurationsByType(ModuleConfigurationType type) {
+    @java.lang.Override
+    public java.util.List<org.broadleafcommerce.common.config.domain.ModuleConfiguration> findActiveConfigurationsByType(org.broadleafcommerce.common.config.service.type.ModuleConfigurationType type) {
         return moduleConfigDao.readActiveByType(type);
     }
 
-    @Override
-    public List<ModuleConfiguration> findAllConfigurationByType(ModuleConfigurationType type) {
+    @java.lang.Override
+    public java.util.List<org.broadleafcommerce.common.config.domain.ModuleConfiguration> findAllConfigurationByType(org.broadleafcommerce.common.config.service.type.ModuleConfigurationType type) {
         return moduleConfigDao.readAllByType(type);
     }
 
-    @Override
-    public List<ModuleConfiguration> findByType(Class<? extends ModuleConfiguration> type) {
+    @java.lang.Override
+    public java.util.List<org.broadleafcommerce.common.config.domain.ModuleConfiguration> findByType(java.lang.Class<? extends org.broadleafcommerce.common.config.domain.ModuleConfiguration> type) {
         return moduleConfigDao.readByType(type);
     }
-
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,107 +17,111 @@
  */
 package org.broadleafcommerce.common.config.dao;
 
-import org.broadleafcommerce.common.config.domain.AbstractModuleConfiguration;
-import org.broadleafcommerce.common.config.domain.ModuleConfiguration;
-import org.broadleafcommerce.common.config.service.type.ModuleConfigurationType;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.persistence.Status;
-import org.broadleafcommerce.common.time.SystemTime;
-import org.hibernate.ejb.QueryHints;
-import org.springframework.stereotype.Repository;
 
-import java.util.Date;
-import java.util.List;
+@org.springframework.stereotype.Repository("blModuleConfigurationDao")
+public class ModuleConfigurationDaoImpl implements org.broadleafcommerce.common.config.dao.ModuleConfigurationDao {
+    @javax.persistence.PersistenceContext(unitName = "blPU")
+    protected javax.persistence.EntityManager em;
 
-import javax.annotation.Resource;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+    @javax.annotation.Resource(name = "blEntityConfiguration")
+    protected org.broadleafcommerce.common.persistence.EntityConfiguration entityConfiguration;
 
-@Repository("blModuleConfigurationDao")
-public class ModuleConfigurationDaoImpl implements ModuleConfigurationDao {
+    protected java.lang.Long currentDateResolution = ((long) (10000L));
 
-    @PersistenceContext(unitName = "blPU")
-    protected EntityManager em;
+    protected java.util.Date cachedDate = org.broadleafcommerce.common.time.SystemTime.asDate();
 
-    @Resource(name = "blEntityConfiguration")
-    protected EntityConfiguration entityConfiguration;
-
-    protected Long currentDateResolution = 10000L;
-    protected Date cachedDate = SystemTime.asDate();
-
-    protected Date getCurrentDateAfterFactoringInDateResolution() {
-        Date returnDate = SystemTime.getCurrentDateWithinTimeResolution(cachedDate, currentDateResolution);
-        if (returnDate != cachedDate) {
-            if (SystemTime.shouldCacheDate()) {
+    protected java.util.Date getCurrentDateAfterFactoringInDateResolution() {
+        java.util.Date returnDate = org.broadleafcommerce.common.time.SystemTime.getCurrentDateWithinTimeResolution(cachedDate, currentDateResolution);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.config.dao.ModuleConfigurationDaoImpl.__L318, (returnDate != (cachedDate)))) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.config.dao.ModuleConfigurationDaoImpl.__L319, org.broadleafcommerce.common.time.SystemTime.shouldCacheDate())) {
                 cachedDate = returnDate;
             }
         }
         return returnDate;
     }
 
-    @Override
-    public ModuleConfiguration readById(Long id) {
-        return em.find(AbstractModuleConfiguration.class, id);
+    @java.lang.Override
+    public org.broadleafcommerce.common.config.domain.ModuleConfiguration readById(java.lang.Long id) {
+        return em.find(org.broadleafcommerce.common.config.domain.AbstractModuleConfiguration.class, id);
     }
 
-    @Override
-    public ModuleConfiguration save(ModuleConfiguration config) {
+    @java.lang.Override
+    public org.broadleafcommerce.common.config.domain.ModuleConfiguration save(org.broadleafcommerce.common.config.domain.ModuleConfiguration config) {
         if (config.getIsDefault()) {
-            Query batchUpdate = em.createNamedQuery("BC_BATCH_UPDATE_MODULE_CONFIG_DEFAULT");
+            javax.persistence.Query batchUpdate = em.createNamedQuery("BC_BATCH_UPDATE_MODULE_CONFIG_DEFAULT");
             batchUpdate.setParameter("configType", config.getModuleConfigurationType().getType());
             batchUpdate.executeUpdate();
         }
         return em.merge(config);
     }
 
-    @Override
-    public void delete(ModuleConfiguration config) {
-        ((Status) config).setArchived('Y');
+    @java.lang.Override
+    public void delete(org.broadleafcommerce.common.config.domain.ModuleConfiguration config) {
+        ((org.broadleafcommerce.common.persistence.Status) (config)).setArchived('Y');
         em.merge(config);
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<ModuleConfiguration> readAllByType(ModuleConfigurationType type) {
-        Query query = em.createNamedQuery("BC_READ_MODULE_CONFIG_BY_TYPE");
+    @java.lang.SuppressWarnings("unchecked")
+    @java.lang.Override
+    public java.util.List<org.broadleafcommerce.common.config.domain.ModuleConfiguration> readAllByType(org.broadleafcommerce.common.config.service.type.ModuleConfigurationType type) {
+        javax.persistence.Query query = em.createNamedQuery("BC_READ_MODULE_CONFIG_BY_TYPE");
         query.setParameter("configType", type.getType());
-        query.setHint(QueryHints.HINT_CACHEABLE, true);
-        query.setHint(QueryHints.HINT_CACHE_REGION, "blConfigurationModuleElements");
+        query.setHint(org.hibernate.ejb.QueryHints.HINT_CACHEABLE, perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.config.dao.ModuleConfigurationDaoImpl.__L320, true));
+        query.setHint(org.hibernate.ejb.QueryHints.HINT_CACHE_REGION, "blConfigurationModuleElements");
         return query.getResultList();
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<ModuleConfiguration> readActiveByType(ModuleConfigurationType type) {
-        Query query = em.createNamedQuery("BC_READ_ACTIVE_MODULE_CONFIG_BY_TYPE");
+    @java.lang.SuppressWarnings("unchecked")
+    @java.lang.Override
+    public java.util.List<org.broadleafcommerce.common.config.domain.ModuleConfiguration> readActiveByType(org.broadleafcommerce.common.config.service.type.ModuleConfigurationType type) {
+        javax.persistence.Query query = em.createNamedQuery("BC_READ_ACTIVE_MODULE_CONFIG_BY_TYPE");
         query.setParameter("configType", type.getType());
-
-        Date myDate = getCurrentDateAfterFactoringInDateResolution();
-
+        java.util.Date myDate = getCurrentDateAfterFactoringInDateResolution();
         query.setParameter("currentDate", myDate);
-        query.setHint(QueryHints.HINT_CACHEABLE, true);
-        query.setHint(QueryHints.HINT_CACHE_REGION, "blConfigurationModuleElements");
+        query.setHint(org.hibernate.ejb.QueryHints.HINT_CACHEABLE, perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.config.dao.ModuleConfigurationDaoImpl.__L321, true));
+        query.setHint(org.hibernate.ejb.QueryHints.HINT_CACHE_REGION, "blConfigurationModuleElements");
         return query.getResultList();
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<ModuleConfiguration> readByType(Class<? extends ModuleConfiguration> type) {
-        //TODO change this to a JPA criteria expression
-        Query query = em.createQuery("SELECT config FROM " + type.getName() + " config");
-        query.setHint(QueryHints.HINT_CACHEABLE, true);
-        query.setHint(QueryHints.HINT_CACHE_REGION, "blConfigurationModuleElements");
+    @java.lang.SuppressWarnings("unchecked")
+    @java.lang.Override
+    public java.util.List<org.broadleafcommerce.common.config.domain.ModuleConfiguration> readByType(java.lang.Class<? extends org.broadleafcommerce.common.config.domain.ModuleConfiguration> type) {
+        javax.persistence.Query query = em.createQuery((("SELECT config FROM " + (type.getName())) + " config"));
+        query.setHint(org.hibernate.ejb.QueryHints.HINT_CACHEABLE, perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.config.dao.ModuleConfigurationDaoImpl.__L322, true));
+        query.setHint(org.hibernate.ejb.QueryHints.HINT_CACHE_REGION, "blConfigurationModuleElements");
         return query.getResultList();
     }
 
-    @Override
-    public Long getCurrentDateResolution() {
+    @java.lang.Override
+    public java.lang.Long getCurrentDateResolution() {
         return currentDateResolution;
     }
 
-    @Override
-    public void setCurrentDateResolution(Long currentDateResolution) {
+    @java.lang.Override
+    public void setCurrentDateResolution(java.lang.Long currentDateResolution) {
         this.currentDateResolution = currentDateResolution;
     }
+
+    public static perturbation.location.PerturbationLocation __L318;
+
+    public static perturbation.location.PerturbationLocation __L319;
+
+    public static perturbation.location.PerturbationLocation __L320;
+
+    public static perturbation.location.PerturbationLocation __L321;
+
+    public static perturbation.location.PerturbationLocation __L322;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.config.dao.ModuleConfigurationDaoImpl.__L318 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/dao/ModuleConfigurationDaoImpl.java:51)", 318, "Boolean");
+        org.broadleafcommerce.common.config.dao.ModuleConfigurationDaoImpl.__L319 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/dao/ModuleConfigurationDaoImpl.java:52)", 319, "Boolean");
+        org.broadleafcommerce.common.config.dao.ModuleConfigurationDaoImpl.__L320 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/dao/ModuleConfigurationDaoImpl.java:85)", 320, "Boolean");
+        org.broadleafcommerce.common.config.dao.ModuleConfigurationDaoImpl.__L321 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/dao/ModuleConfigurationDaoImpl.java:99)", 321, "Boolean");
+        org.broadleafcommerce.common.config.dao.ModuleConfigurationDaoImpl.__L322 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/dao/ModuleConfigurationDaoImpl.java:109)", 322, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.config.dao.ModuleConfigurationDaoImpl.initPerturbationLocation0();
+    }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,27 +17,26 @@
  */
 package org.broadleafcommerce.common.template;
 
-import org.broadleafcommerce.common.extension.ExtensionManager;
-import org.springframework.stereotype.Service;
 
-/**
- * @author Andre Azzolini (apazzolini)
- */
-@Service("blTemplateOverrideExtensionManager")
-public class TemplateOverrideExtensionManager extends ExtensionManager<TemplateOverrideExtensionHandler> {
-    
+@org.springframework.stereotype.Service("blTemplateOverrideExtensionManager")
+public class TemplateOverrideExtensionManager extends org.broadleafcommerce.common.extension.ExtensionManager<org.broadleafcommerce.common.template.TemplateOverrideExtensionHandler> {
     public TemplateOverrideExtensionManager() {
-        super(TemplateOverrideExtensionHandler.class);
+        super(org.broadleafcommerce.common.template.TemplateOverrideExtensionHandler.class);
     }
 
-    /**
-     * By default, this manager will allow other handlers to process the method when a handler returns
-     * HANDLED.
-     */
-    @Override
+    @java.lang.Override
     public boolean continueOnHandled() {
-        return true;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.template.TemplateOverrideExtensionManager.__L5583, true);
     }
 
+    public static perturbation.location.PerturbationLocation __L5583;
 
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.template.TemplateOverrideExtensionManager.__L5583 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/template/TemplateOverrideExtensionManager.java:39)", 5583, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.template.TemplateOverrideExtensionManager.initPerturbationLocation0();
+    }
 }
+

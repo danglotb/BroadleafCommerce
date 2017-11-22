@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,16 +17,8 @@
  */
 package org.broadleafcommerce.common.extensibility.jpa.convert;
 
-import javax.persistence.spi.ClassTransformer;
-import java.util.Properties;
 
-/**
- * 
- * @author jfischer
- *
- */
-public interface BroadleafClassTransformer extends ClassTransformer {
-
-    public void compileJPAProperties(Properties props, Object key) throws Exception;
-        
+public interface BroadleafClassTransformer extends javax.persistence.spi.ClassTransformer {
+    public void compileJPAProperties(java.util.Properties props, java.lang.Object key) throws java.lang.Exception;
 }
+

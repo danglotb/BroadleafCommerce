@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,29 +17,8 @@
  */
 package org.broadleafcommerce.common.i18n.dao;
 
-import org.broadleafcommerce.common.extension.ExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
 
-import javax.persistence.EntityManager;
-
-
-/**
- * @author Andre Azzolini (apazzolini)
- */
-public interface TranslationDaoExtensionHandler extends ExtensionHandler {
-    
-    /**
-     * If there is a different id that should be used for a translation lookup instead of the given entityId,
-     * the handler should place the result in the {@link ExtensionResultHolder} argument.
-     * 
-     * @param erh
-     * @param em
-     * @param clazz
-     * @param entityId
-     * @return the status of the call to the given extension handler
-     */
-    public ExtensionResultStatusType overrideRequestedId(ExtensionResultHolder erh, EntityManager em, 
-            Class<?> clazz, Long entityId);
-
+public interface TranslationDaoExtensionHandler extends org.broadleafcommerce.common.extension.ExtensionHandler {
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType overrideRequestedId(org.broadleafcommerce.common.extension.ExtensionResultHolder erh, javax.persistence.EntityManager em, java.lang.Class<?> clazz, java.lang.Long entityId);
 }
+

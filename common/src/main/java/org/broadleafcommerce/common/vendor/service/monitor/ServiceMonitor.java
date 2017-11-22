@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,73 +17,92 @@
  */
 package org.broadleafcommerce.common.vendor.service.monitor;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.broadleafcommerce.common.vendor.service.monitor.handler.LogStatusHandler;
-import org.broadleafcommerce.common.vendor.service.type.ServiceStatusType;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ServiceMonitor {
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.vendor.service.monitor.ServiceMonitor.class);
 
-    private static final Log LOG = LogFactory.getLog(ServiceMonitor.class);
+    protected java.util.Map<org.broadleafcommerce.common.vendor.service.monitor.ServiceStatusDetectable, org.broadleafcommerce.common.vendor.service.monitor.StatusHandler> serviceHandlers = new java.util.HashMap<org.broadleafcommerce.common.vendor.service.monitor.ServiceStatusDetectable, org.broadleafcommerce.common.vendor.service.monitor.StatusHandler>();
 
-    protected Map<ServiceStatusDetectable, StatusHandler> serviceHandlers = new HashMap<ServiceStatusDetectable, StatusHandler>();
-    protected StatusHandler defaultHandler = new LogStatusHandler();
-    protected Map<ServiceStatusDetectable, ServiceStatusType> statusMap = new HashMap<ServiceStatusDetectable, ServiceStatusType>();
+    protected org.broadleafcommerce.common.vendor.service.monitor.StatusHandler defaultHandler = new org.broadleafcommerce.common.vendor.service.monitor.handler.LogStatusHandler();
+
+    protected java.util.Map<org.broadleafcommerce.common.vendor.service.monitor.ServiceStatusDetectable, org.broadleafcommerce.common.vendor.service.type.ServiceStatusType> statusMap = new java.util.HashMap<org.broadleafcommerce.common.vendor.service.monitor.ServiceStatusDetectable, org.broadleafcommerce.common.vendor.service.type.ServiceStatusType>();
 
     public synchronized void init() {
-        for (ServiceStatusDetectable statusDetectable : serviceHandlers.keySet()) {
+        for (org.broadleafcommerce.common.vendor.service.monitor.ServiceStatusDetectable statusDetectable : serviceHandlers.keySet()) {
             checkService(statusDetectable);
         }
     }
 
-    public Object checkServiceAOP(ProceedingJoinPoint call) throws Throwable {
+    public java.lang.Object checkServiceAOP(org.aspectj.lang.ProceedingJoinPoint call) throws java.lang.Throwable {
         try {
-            checkService((ServiceStatusDetectable) call.getThis());
-        } catch (Throwable e) {
-            LOG.error("Could not check service status", e);
+            checkService(((org.broadleafcommerce.common.vendor.service.monitor.ServiceStatusDetectable) (call.getThis())));
+        } catch (java.lang.Throwable e) {
+            org.broadleafcommerce.common.vendor.service.monitor.ServiceMonitor.LOG.error("Could not check service status", e);
         }
         return call.proceed();
     }
 
-    public void checkService(ServiceStatusDetectable statusDetectable) {
-        ServiceStatusType type = statusDetectable.getServiceStatus();
-        if (!statusMap.containsKey(statusDetectable)) {
+    public void checkService(org.broadleafcommerce.common.vendor.service.monitor.ServiceStatusDetectable statusDetectable) {
+        org.broadleafcommerce.common.vendor.service.type.ServiceStatusType type = statusDetectable.getServiceStatus();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.vendor.service.monitor.ServiceMonitor.__L6940, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.vendor.service.monitor.ServiceMonitor.__L6939, statusMap.containsKey(statusDetectable)))))) {
             statusMap.put(statusDetectable, type);
-            if (type.equals(ServiceStatusType.DOWN)) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.vendor.service.monitor.ServiceMonitor.__L6941, type.equals(org.broadleafcommerce.common.vendor.service.type.ServiceStatusType.DOWN))) {
                 handleStatusChange(statusDetectable, type);
             }
         }
-        if (!statusMap.get(statusDetectable).equals(type)) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.vendor.service.monitor.ServiceMonitor.__L6943, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.vendor.service.monitor.ServiceMonitor.__L6942, statusMap.get(statusDetectable).equals(type)))))) {
             handleStatusChange(statusDetectable, type);
             statusMap.put(statusDetectable, type);
         }
     }
 
-    protected void handleStatusChange(ServiceStatusDetectable serviceStatus, ServiceStatusType serviceStatusType) {
-        if (serviceHandlers.containsKey(serviceStatus)) {
+    protected void handleStatusChange(org.broadleafcommerce.common.vendor.service.monitor.ServiceStatusDetectable serviceStatus, org.broadleafcommerce.common.vendor.service.type.ServiceStatusType serviceStatusType) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.vendor.service.monitor.ServiceMonitor.__L6944, serviceHandlers.containsKey(serviceStatus))) {
             serviceHandlers.get(serviceStatus).handleStatus(serviceStatus.getServiceName(), serviceStatusType);
-        } else {
+        }else {
             defaultHandler.handleStatus(serviceStatus.getServiceName(), serviceStatusType);
         }
     }
 
-    public Map<ServiceStatusDetectable, StatusHandler> getServiceHandlers() {
+    public java.util.Map<org.broadleafcommerce.common.vendor.service.monitor.ServiceStatusDetectable, org.broadleafcommerce.common.vendor.service.monitor.StatusHandler> getServiceHandlers() {
         return serviceHandlers;
     }
 
-    public void setServiceHandlers(Map<ServiceStatusDetectable, StatusHandler> serviceHandlers) {
+    public void setServiceHandlers(java.util.Map<org.broadleafcommerce.common.vendor.service.monitor.ServiceStatusDetectable, org.broadleafcommerce.common.vendor.service.monitor.StatusHandler> serviceHandlers) {
         this.serviceHandlers = serviceHandlers;
     }
 
-    public StatusHandler getDefaultHandler() {
+    public org.broadleafcommerce.common.vendor.service.monitor.StatusHandler getDefaultHandler() {
         return defaultHandler;
     }
 
-    public void setDefaultHandler(StatusHandler defaultHandler) {
+    public void setDefaultHandler(org.broadleafcommerce.common.vendor.service.monitor.StatusHandler defaultHandler) {
         this.defaultHandler = defaultHandler;
     }
+
+    public static perturbation.location.PerturbationLocation __L6939;
+
+    public static perturbation.location.PerturbationLocation __L6940;
+
+    public static perturbation.location.PerturbationLocation __L6941;
+
+    public static perturbation.location.PerturbationLocation __L6942;
+
+    public static perturbation.location.PerturbationLocation __L6943;
+
+    public static perturbation.location.PerturbationLocation __L6944;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.vendor.service.monitor.ServiceMonitor.__L6939 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/vendor/service/monitor/ServiceMonitor.java:54)", 6939, "Boolean");
+        org.broadleafcommerce.common.vendor.service.monitor.ServiceMonitor.__L6940 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/vendor/service/monitor/ServiceMonitor.java:54)", 6940, "Boolean");
+        org.broadleafcommerce.common.vendor.service.monitor.ServiceMonitor.__L6941 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/vendor/service/monitor/ServiceMonitor.java:56)", 6941, "Boolean");
+        org.broadleafcommerce.common.vendor.service.monitor.ServiceMonitor.__L6942 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/vendor/service/monitor/ServiceMonitor.java:60)", 6942, "Boolean");
+        org.broadleafcommerce.common.vendor.service.monitor.ServiceMonitor.__L6943 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/vendor/service/monitor/ServiceMonitor.java:60)", 6943, "Boolean");
+        org.broadleafcommerce.common.vendor.service.monitor.ServiceMonitor.__L6944 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/vendor/service/monitor/ServiceMonitor.java:67)", 6944, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.vendor.service.monitor.ServiceMonitor.initPerturbationLocation0();
+    }
 }
+

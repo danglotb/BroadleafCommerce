@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,65 +17,61 @@
  */
 package org.broadleafcommerce.common.classloader.release;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-/**
- * @author Jeff Fischer
- */
 public class ThreadLocalManager {
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.classloader.release.ThreadLocalManager.class);
 
-    private static final Log LOG = LogFactory.getLog(ThreadLocalManager.class);
-
-    private static final ThreadLocal<ThreadLocalManager> THREAD_LOCAL_MANAGER = new ThreadLocal<ThreadLocalManager>() {
-        @Override
-        protected ThreadLocalManager initialValue() {
-            ThreadLocalManager manager = new ThreadLocalManager();
-            String checkOrphans = System.getProperty("ThreadLocalManager.notify.orphans");
+    private static final java.lang.ThreadLocal<org.broadleafcommerce.common.classloader.release.ThreadLocalManager> THREAD_LOCAL_MANAGER = new java.lang.ThreadLocal<org.broadleafcommerce.common.classloader.release.ThreadLocalManager>() {
+        @java.lang.Override
+        protected org.broadleafcommerce.common.classloader.release.ThreadLocalManager initialValue() {
+            org.broadleafcommerce.common.classloader.release.ThreadLocalManager manager = new org.broadleafcommerce.common.classloader.release.ThreadLocalManager();
+            java.lang.String checkOrphans = java.lang.System.getProperty("ThreadLocalManager.notify.orphans");
             if ("true".equals(checkOrphans)) {
-                manager.marker = new RuntimeException("Thread Local Manager is not empty - the following is the culprit call that setup the thread local but did not clear it.");
+                manager.marker = new java.lang.RuntimeException("Thread Local Manager is not empty - the following is the culprit call that setup the thread local but did not clear it.");
             }
             return manager;
         }
     };
 
-    protected Map<Long, ThreadLocal> threadLocals = new LinkedHashMap<Long, ThreadLocal>();
-    protected RuntimeException marker = null;
+    protected java.util.Map<java.lang.Long, java.lang.ThreadLocal> threadLocals = new java.util.LinkedHashMap<java.lang.Long, java.lang.ThreadLocal>();
 
-    public static void addThreadLocal(ThreadLocal threadLocal) {
-        Long position;
-        synchronized (threadLock) {
-            count++;
-            position = count;
+    protected java.lang.RuntimeException marker = null;
+
+    private static java.lang.Long count = ((long) (0L));
+
+    private static final java.lang.Object threadLock = new java.lang.Object();
+
+    public static void addThreadLocal(java.lang.ThreadLocal threadLocal) {
+        java.lang.Long position;
+        synchronized(org.broadleafcommerce.common.classloader.release.ThreadLocalManager.threadLock) {
+            (org.broadleafcommerce.common.classloader.release.ThreadLocalManager.count)++;
+            position = org.broadleafcommerce.common.classloader.release.ThreadLocalManager.count;
         }
-        THREAD_LOCAL_MANAGER.get().threadLocals.put(position, threadLocal);
+        org.broadleafcommerce.common.classloader.release.ThreadLocalManager.THREAD_LOCAL_MANAGER.get().threadLocals.put(position, threadLocal);
     }
 
-    public static <T> ThreadLocal<T> createThreadLocal(final Class<T> type) {
-        return createThreadLocal(type, true);
+    public static <T> java.lang.ThreadLocal<T> createThreadLocal(final java.lang.Class<T> type) {
+        return org.broadleafcommerce.common.classloader.release.ThreadLocalManager.createThreadLocal(type, perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.classloader.release.ThreadLocalManager.__L294, true));
     }
 
-    public static <T> ThreadLocal<T> createThreadLocal(final Class<T> type, final boolean createInitialValue) {
-        ThreadLocal<T> response = new ThreadLocal<T>() {
-            @Override
+    public static <T> java.lang.ThreadLocal<T> createThreadLocal(final java.lang.Class<T> type, final boolean createInitialValue) {
+        java.lang.ThreadLocal<T> response = new java.lang.ThreadLocal<T>() {
+            @java.lang.Override
             protected T initialValue() {
-                addThreadLocal(this);
-                if (!createInitialValue) {
+                org.broadleafcommerce.common.classloader.release.ThreadLocalManager.addThreadLocal(this);
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.classloader.release.ThreadLocalManager.__L296, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.classloader.release.ThreadLocalManager.__L295, createInitialValue))))) {
                     return null;
                 }
                 try {
                     return type.newInstance();
-                } catch (InstantiationException e) {
-                    throw new RuntimeException(e);
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(e);
+                } catch (java.lang.InstantiationException e) {
+                    throw new java.lang.RuntimeException(e);
+                } catch (java.lang.IllegalAccessException e) {
+                    throw new java.lang.RuntimeException(e);
                 }
             }
 
-            @Override
+            @java.lang.Override
             public void set(T value) {
                 super.get();
                 super.set(value);
@@ -85,38 +81,73 @@ public class ThreadLocalManager {
     }
 
     public static void remove() {
-        for (Map.Entry<Long, ThreadLocal> entry : THREAD_LOCAL_MANAGER.get().threadLocals.entrySet()) {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Removing ThreadLocal #" + entry.getKey() + " from request thread.");
+        for (java.util.Map.Entry<java.lang.Long, java.lang.ThreadLocal> entry : org.broadleafcommerce.common.classloader.release.ThreadLocalManager.THREAD_LOCAL_MANAGER.get().threadLocals.entrySet()) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.classloader.release.ThreadLocalManager.__L297, org.broadleafcommerce.common.classloader.release.ThreadLocalManager.LOG.isDebugEnabled())) {
+                org.broadleafcommerce.common.classloader.release.ThreadLocalManager.LOG.debug((("Removing ThreadLocal #" + (entry.getKey())) + " from request thread."));
             }
             entry.getValue().remove();
         }
-        THREAD_LOCAL_MANAGER.get().threadLocals.clear();
-        THREAD_LOCAL_MANAGER.remove();
+        org.broadleafcommerce.common.classloader.release.ThreadLocalManager.THREAD_LOCAL_MANAGER.get().threadLocals.clear();
+        org.broadleafcommerce.common.classloader.release.ThreadLocalManager.THREAD_LOCAL_MANAGER.remove();
     }
 
-    public static void remove(ThreadLocal threadLocal) {
-        Long removePosition = null;
-        for (Map.Entry<Long, ThreadLocal> entry : THREAD_LOCAL_MANAGER.get().threadLocals.entrySet()) {
-            if (entry.getValue().equals(threadLocal)) {
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("Removing ThreadLocal #" + entry.getKey() + " from request thread.");
+    public static void remove(java.lang.ThreadLocal threadLocal) {
+        java.lang.Long removePosition = null;
+        for (java.util.Map.Entry<java.lang.Long, java.lang.ThreadLocal> entry : org.broadleafcommerce.common.classloader.release.ThreadLocalManager.THREAD_LOCAL_MANAGER.get().threadLocals.entrySet()) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.classloader.release.ThreadLocalManager.__L298, entry.getValue().equals(threadLocal))) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.classloader.release.ThreadLocalManager.__L299, org.broadleafcommerce.common.classloader.release.ThreadLocalManager.LOG.isDebugEnabled())) {
+                    org.broadleafcommerce.common.classloader.release.ThreadLocalManager.LOG.debug((("Removing ThreadLocal #" + (entry.getKey())) + " from request thread."));
                 }
                 entry.getValue().remove();
                 removePosition = entry.getKey();
             }
         }
-        THREAD_LOCAL_MANAGER.get().threadLocals.remove(removePosition);
+        org.broadleafcommerce.common.classloader.release.ThreadLocalManager.THREAD_LOCAL_MANAGER.get().threadLocals.remove(removePosition);
     }
 
-    private static Long count = 0L;
-    private static final Object threadLock = new Object();
-
-    @Override
-    public String toString() {
-        if (!threadLocals.isEmpty() && marker != null) {
+    @java.lang.Override
+    public java.lang.String toString() {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.classloader.release.ThreadLocalManager.__L303, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.classloader.release.ThreadLocalManager.__L301, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.classloader.release.ThreadLocalManager.__L300, threadLocals.isEmpty()))))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.classloader.release.ThreadLocalManager.__L302, ((marker) != null)))))) {
             marker.printStackTrace();
         }
         return super.toString();
     }
+
+    public static perturbation.location.PerturbationLocation __L294;
+
+    public static perturbation.location.PerturbationLocation __L295;
+
+    public static perturbation.location.PerturbationLocation __L296;
+
+    public static perturbation.location.PerturbationLocation __L297;
+
+    public static perturbation.location.PerturbationLocation __L298;
+
+    public static perturbation.location.PerturbationLocation __L299;
+
+    public static perturbation.location.PerturbationLocation __L300;
+
+    public static perturbation.location.PerturbationLocation __L301;
+
+    public static perturbation.location.PerturbationLocation __L302;
+
+    public static perturbation.location.PerturbationLocation __L303;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.classloader.release.ThreadLocalManager.__L294 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/classloader/release/ThreadLocalManager.java:58)", 294, "Boolean");
+        org.broadleafcommerce.common.classloader.release.ThreadLocalManager.__L295 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/classloader/release/ThreadLocalManager.java:66)", 295, "Boolean");
+        org.broadleafcommerce.common.classloader.release.ThreadLocalManager.__L296 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/classloader/release/ThreadLocalManager.java:66)", 296, "Boolean");
+        org.broadleafcommerce.common.classloader.release.ThreadLocalManager.__L297 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/classloader/release/ThreadLocalManager.java:89)", 297, "Boolean");
+        org.broadleafcommerce.common.classloader.release.ThreadLocalManager.__L298 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/classloader/release/ThreadLocalManager.java:101)", 298, "Boolean");
+        org.broadleafcommerce.common.classloader.release.ThreadLocalManager.__L299 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/classloader/release/ThreadLocalManager.java:102)", 299, "Boolean");
+        org.broadleafcommerce.common.classloader.release.ThreadLocalManager.__L300 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/classloader/release/ThreadLocalManager.java:117)", 300, "Boolean");
+        org.broadleafcommerce.common.classloader.release.ThreadLocalManager.__L301 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/classloader/release/ThreadLocalManager.java:117)", 301, "Boolean");
+        org.broadleafcommerce.common.classloader.release.ThreadLocalManager.__L302 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/classloader/release/ThreadLocalManager.java:117)", 302, "Boolean");
+        org.broadleafcommerce.common.classloader.release.ThreadLocalManager.__L303 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/classloader/release/ThreadLocalManager.java:117)", 303, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.classloader.release.ThreadLocalManager.initPerturbationLocation0();
+    }
 }
+

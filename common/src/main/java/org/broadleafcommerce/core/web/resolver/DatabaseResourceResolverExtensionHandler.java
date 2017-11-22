@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Framework
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,33 +17,10 @@
  */
 package org.broadleafcommerce.core.web.resolver;
 
-import org.broadleafcommerce.common.extension.ExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
 
-import java.io.InputStream;
+public interface DatabaseResourceResolverExtensionHandler extends org.broadleafcommerce.common.extension.ExtensionHandler {
+    public static final java.lang.String IS_KEY = "IS_KEY";
 
-
-/**
- * Extension handler for resolving templates from the database.
- * 
- * @author Andre Azzolini (apazzolini), bpolster
- */
-public interface DatabaseResourceResolverExtensionHandler extends ExtensionHandler {
-    
-    public static final String IS_KEY = "IS_KEY";
-    
-    /**
-     * If this method returns any of the handled conditions in {@link ExtensionResultStatusType},
-     * the value keyed by {@link DatabaseResourceResolverExtensionHandler.IS_KEY} in the 
-     * {@link ExtensionResultHolder}'s context map will be an {@link InputStream} of the resolved resource's
-     * contents.
-     * 
-     * @param erh
-     * @param params
-     * @param resourceName
-     * @return whether or not a resource was resolved
-     */
-    public ExtensionResultStatusType resolveResource(ExtensionResultHolder erh, String resourceName);
-
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType resolveResource(org.broadleafcommerce.common.extension.ExtensionResultHolder erh, java.lang.String resourceName);
 }
+

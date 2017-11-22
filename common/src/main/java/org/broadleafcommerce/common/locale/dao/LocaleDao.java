@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,33 +17,14 @@
  */
 package org.broadleafcommerce.common.locale.dao;
 
-import org.broadleafcommerce.common.locale.domain.Locale;
 
-import java.util.List;
-
-/**
- * Created by bpolster.
- */
 public interface LocaleDao {
+    public org.broadleafcommerce.common.locale.domain.Locale findLocaleByCode(java.lang.String localeCode);
 
-    /**
-     * @return The locale for the passed in code
-     */
-    public Locale findLocaleByCode(String localeCode);
+    public org.broadleafcommerce.common.locale.domain.Locale findDefaultLocale();
 
-    /**
-     * Returns the page template with the passed in id.
-     *
-     * @return The default locale
-     */
-    public Locale findDefaultLocale();
+    public java.util.List<org.broadleafcommerce.common.locale.domain.Locale> findAllLocales();
 
-    /**
-     * Returns all supported BLC locales.
-     * @return
-     */
-    public List<Locale> findAllLocales();
-    
-    public Locale save(Locale locale);
-
+    public org.broadleafcommerce.common.locale.domain.Locale save(org.broadleafcommerce.common.locale.domain.Locale locale);
 }
+

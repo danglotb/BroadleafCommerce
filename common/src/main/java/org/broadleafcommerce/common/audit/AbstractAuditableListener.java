@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,110 +17,70 @@
  */
 package org.broadleafcommerce.common.audit;
 
-import org.broadleafcommerce.common.time.SystemTime;
-import org.broadleafcommerce.common.util.BLCFieldUtils;
 
-import java.lang.reflect.Field;
-import java.util.Calendar;
-
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-
-/**
- * Implements behavior shared by auditable listener implementations
- *
- * @author Chris Kittrell (ckittrell)
- */
 public abstract class AbstractAuditableListener {
+    public abstract void setAuditCreationAndUpdateData(java.lang.Object entity) throws java.lang.Exception;
 
-    /**
-     * Method that will be invoked in a registered listener to set the entity's creation data.
-     *  In most cases, calling {@link AbstractAuditableListener#setAuditCreationData(Object, Object)} should suffice.
-     *
-     * @param entity
-     * @return
-     */
-    public abstract void setAuditCreationAndUpdateData(Object entity) throws Exception;
+    public abstract void setAuditUpdateData(java.lang.Object entity) throws java.lang.Exception;
 
-    /**
-     * Method that will be invoked in a registered listener to set the entity's update data.
-     *  In most cases, calling {@link AbstractAuditableListener#setAuditUpdateData(Object, Object)} should suffice.
-     *
-     * @param entity
-     * @return
-     */
-    public abstract void setAuditUpdateData(Object entity) throws Exception;
+    protected abstract void setAuditValueAgent(java.lang.reflect.Field field, java.lang.Object entity) throws java.lang.IllegalAccessException, java.lang.IllegalArgumentException;
 
-    /**
-     * Method that sets the user-related data.
-     *
-     * @param field
-     * @param entity
-     * @return
-     */
-    protected abstract void setAuditValueAgent(Field field, Object entity) throws IllegalArgumentException, IllegalAccessException;
-
-    /**
-     * Sets the value of the dateCreated, createdBy, and dateUpdated fields.
-     *
-     * @param entity
-     * @param auditableObject
-     * @return
-     */
-    protected void setAuditCreationData(Object entity, Object auditableObject) throws Exception {
+    protected void setAuditCreationData(java.lang.Object entity, java.lang.Object auditableObject) throws java.lang.Exception {
         setAuditData(entity, auditableObject, "dateCreated", "createdBy");
     }
 
-    /**
-     * Sets the value of the dateUpdated and updatedBy fields.
-     *
-     * @param entity
-     * @param auditableObject
-     * @return
-     */
-    protected void setAuditUpdateData(Object entity, Object auditableObject) throws Exception {
+    protected void setAuditUpdateData(java.lang.Object entity, java.lang.Object auditableObject) throws java.lang.Exception {
         setAuditData(entity, auditableObject, "dateUpdated", "updatedBy");
     }
 
-    protected void setAuditData(Object entity, Object auditableObject, String dateField, String userField) throws Exception {
-        if (entity.getClass().isAnnotationPresent(Entity.class)) {
-            Field field = BLCFieldUtils.getSingleField(entity.getClass(), getAuditableFieldName());
-            field.setAccessible(true);
-            if (field.isAnnotationPresent(Embedded.class)) {
-                Object auditable = field.get(entity);
-                if (auditable == null) {
+    protected void setAuditData(java.lang.Object entity, java.lang.Object auditableObject, java.lang.String dateField, java.lang.String userField) throws java.lang.Exception {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.audit.AbstractAuditableListener.__L1, entity.getClass().isAnnotationPresent(javax.persistence.Entity.class))) {
+            java.lang.reflect.Field field = org.broadleafcommerce.common.util.BLCFieldUtils.getSingleField(entity.getClass(), getAuditableFieldName());
+            field.setAccessible(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.audit.AbstractAuditableListener.__L2, true));
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.audit.AbstractAuditableListener.__L3, field.isAnnotationPresent(javax.persistence.Embedded.class))) {
+                java.lang.Object auditable = field.get(entity);
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.audit.AbstractAuditableListener.__L4, (auditable == null))) {
                     field.set(entity, auditableObject);
                     auditable = field.get(entity);
                 }
-                Field temporalField = auditable.getClass().getDeclaredField(dateField);
-                Field agentField = auditable.getClass().getDeclaredField(userField);
+                java.lang.reflect.Field temporalField = auditable.getClass().getDeclaredField(dateField);
+                java.lang.reflect.Field agentField = auditable.getClass().getDeclaredField(userField);
                 setAuditValueTemporal(temporalField, auditable);
                 setAuditValueAgent(agentField, auditable);
             }
         }
     }
 
-    /**
-     * Used to set the timestamp for dateCreated and dateUpdated.
-     *
-     * @param field
-     * @param entity
-     * @return
-     */
-    protected void setAuditValueTemporal(Field field, Object entity) throws IllegalArgumentException, IllegalAccessException {
-        Calendar cal = SystemTime.asCalendar();
-        field.setAccessible(true);
+    protected void setAuditValueTemporal(java.lang.reflect.Field field, java.lang.Object entity) throws java.lang.IllegalAccessException, java.lang.IllegalArgumentException {
+        java.util.Calendar cal = org.broadleafcommerce.common.time.SystemTime.asCalendar();
+        field.setAccessible(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.audit.AbstractAuditableListener.__L5, true));
         field.set(entity, cal.getTime());
     }
 
-    /**
-     * Gathers the auditable field name.
-     *  The major purpose of this method is to provide a hook point for extensions to declare a different field name.
-     *
-     * @return the name of the auditable field
-     */
-    protected String getAuditableFieldName() {
+    protected java.lang.String getAuditableFieldName() {
         return "auditable";
     }
-    
+
+    public static perturbation.location.PerturbationLocation __L1;
+
+    public static perturbation.location.PerturbationLocation __L2;
+
+    public static perturbation.location.PerturbationLocation __L3;
+
+    public static perturbation.location.PerturbationLocation __L4;
+
+    public static perturbation.location.PerturbationLocation __L5;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.audit.AbstractAuditableListener.__L1 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/audit/AbstractAuditableListener.java:86)", 1, "Boolean");
+        org.broadleafcommerce.common.audit.AbstractAuditableListener.__L2 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/audit/AbstractAuditableListener.java:88)", 2, "Boolean");
+        org.broadleafcommerce.common.audit.AbstractAuditableListener.__L3 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/audit/AbstractAuditableListener.java:89)", 3, "Boolean");
+        org.broadleafcommerce.common.audit.AbstractAuditableListener.__L4 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/audit/AbstractAuditableListener.java:91)", 4, "Boolean");
+        org.broadleafcommerce.common.audit.AbstractAuditableListener.__L5 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/audit/AbstractAuditableListener.java:112)", 5, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.audit.AbstractAuditableListener.initPerturbationLocation0();
+    }
 }
+

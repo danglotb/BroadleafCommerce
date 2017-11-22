@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,101 +17,105 @@
  */
 package org.broadleafcommerce.common.web;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
-import org.broadleafcommerce.common.currency.domain.BroadleafRequestedCurrencyDto;
-import org.broadleafcommerce.common.currency.service.BroadleafCurrencyService;
-import org.broadleafcommerce.common.locale.domain.Locale;
-import org.broadleafcommerce.common.util.BLCRequestUtils;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.ServletWebRequest;
-import org.springframework.web.context.request.WebRequest;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+@org.springframework.stereotype.Component("blCurrencyResolver")
+public class BroadleafCurrencyResolverImpl implements org.broadleafcommerce.common.web.BroadleafCurrencyResolver {
+    private final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.class);
 
-/**
- * Author: jerryocanas
- * Date: 9/6/12
- */
+    public static java.lang.String CURRENCY_CODE_PARAM = "blCurrencyCode";
 
-/**
- * Responsible for returning the currency to use for the current request.
- */
-@Component("blCurrencyResolver")
-public class BroadleafCurrencyResolverImpl implements BroadleafCurrencyResolver {
+    public static java.lang.String CURRENCY_VAR = "blCurrency";
 
-    private final Log LOG = LogFactory.getLog(BroadleafCurrencyResolverImpl.class);
+    @javax.annotation.Resource(name = "blCurrencyService")
+    private org.broadleafcommerce.common.currency.service.BroadleafCurrencyService broadleafCurrencyService;
 
-    /**
-     * Parameter/Attribute name for the current currency code
-     */
-    public static String CURRENCY_CODE_PARAM = "blCurrencyCode";
-
-    /**
-     * Parameter/Attribute name for the current currency
-     */
-    public static String CURRENCY_VAR = "blCurrency";
-
-    @Resource(name = "blCurrencyService")
-    private BroadleafCurrencyService broadleafCurrencyService;
-
-    /**
-     * Responsible for returning the currency to use for the current request.
-     */
-    @Override
-    public BroadleafRequestedCurrencyDto resolveCurrency(HttpServletRequest request) {
-        return resolveCurrency(new ServletWebRequest(request));
+    @java.lang.Override
+    public org.broadleafcommerce.common.currency.domain.BroadleafRequestedCurrencyDto resolveCurrency(javax.servlet.http.HttpServletRequest request) {
+        return resolveCurrency(new org.springframework.web.context.request.ServletWebRequest(request));
     }
 
-    @Override
-    public BroadleafRequestedCurrencyDto resolveCurrency(WebRequest request) {
-        BroadleafCurrency desiredCurrency = null;
-
-        // 1) Check request for currency
-        desiredCurrency = (BroadleafCurrency) request.getAttribute(CURRENCY_VAR, WebRequest.SCOPE_REQUEST);
-
-        // 2) Check for a request parameter
-        if (desiredCurrency == null && BLCRequestUtils.getURLorHeaderParameter(request, CURRENCY_CODE_PARAM) != null) {
-            String currencyCode = BLCRequestUtils.getURLorHeaderParameter(request, CURRENCY_CODE_PARAM);
+    @java.lang.Override
+    public org.broadleafcommerce.common.currency.domain.BroadleafRequestedCurrencyDto resolveCurrency(org.springframework.web.context.request.WebRequest request) {
+        org.broadleafcommerce.common.currency.domain.BroadleafCurrency desiredCurrency = null;
+        desiredCurrency = ((org.broadleafcommerce.common.currency.domain.BroadleafCurrency) (request.getAttribute(org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.CURRENCY_VAR, perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7716, org.springframework.web.context.request.WebRequest.SCOPE_REQUEST))));
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7719, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7717, (desiredCurrency == null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7718, ((org.broadleafcommerce.common.util.BLCRequestUtils.getURLorHeaderParameter(request, org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.CURRENCY_CODE_PARAM)) != null)))))) {
+            java.lang.String currencyCode = org.broadleafcommerce.common.util.BLCRequestUtils.getURLorHeaderParameter(request, org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.CURRENCY_CODE_PARAM);
             desiredCurrency = broadleafCurrencyService.findCurrencyByCode(currencyCode);
-            if (LOG.isTraceEnabled()) {
-                LOG.trace("Attempt to find currency by param " + currencyCode + " resulted in " + desiredCurrency);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7720, LOG.isTraceEnabled())) {
+                LOG.trace(((("Attempt to find currency by param " + currencyCode) + " resulted in ") + desiredCurrency));
             }
         }
-
-        // 3) Check session for currency
-        if (desiredCurrency == null && BLCRequestUtils.isOKtoUseSession(request)) {
-            desiredCurrency = (BroadleafCurrency) request.getAttribute(CURRENCY_VAR, WebRequest.SCOPE_GLOBAL_SESSION);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7723, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7721, (desiredCurrency == null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7722, org.broadleafcommerce.common.util.BLCRequestUtils.isOKtoUseSession(request)))))) {
+            desiredCurrency = ((org.broadleafcommerce.common.currency.domain.BroadleafCurrency) (request.getAttribute(org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.CURRENCY_VAR, perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7724, org.springframework.web.context.request.WebRequest.SCOPE_GLOBAL_SESSION))));
         }
-
-        // 4) Check locale for currency
-        if (desiredCurrency == null) {
-            Locale locale = (Locale) request.getAttribute(BroadleafLocaleResolverImpl.LOCALE_VAR, WebRequest.SCOPE_REQUEST);
-            if (locale != null) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7725, (desiredCurrency == null))) {
+            org.broadleafcommerce.common.locale.domain.Locale locale = ((org.broadleafcommerce.common.locale.domain.Locale) (request.getAttribute(org.broadleafcommerce.common.web.BroadleafLocaleResolverImpl.LOCALE_VAR, perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7726, org.springframework.web.context.request.WebRequest.SCOPE_REQUEST))));
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7727, (locale != null))) {
                 desiredCurrency = locale.getDefaultCurrency();
             }
         }
-
-        // 5) Lookup default currency from DB
-        BroadleafCurrency defaultCurrency = broadleafCurrencyService.findDefaultBroadleafCurrency();
-        if (desiredCurrency == null) {
+        org.broadleafcommerce.common.currency.domain.BroadleafCurrency defaultCurrency = broadleafCurrencyService.findDefaultBroadleafCurrency();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7728, (desiredCurrency == null))) {
             desiredCurrency = defaultCurrency;
         }
-
-        // For an out-of-box installation, only one currency is supported, so even though we have a 
-        // desired currency, we may not have any prices that support it. 
-        BroadleafCurrency currencyToUse = defaultCurrency;
-
-        if (BLCRequestUtils.isOKtoUseSession(request)) {
-            request.setAttribute(CURRENCY_VAR, currencyToUse, WebRequest.SCOPE_GLOBAL_SESSION);
+        org.broadleafcommerce.common.currency.domain.BroadleafCurrency currencyToUse = defaultCurrency;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7729, org.broadleafcommerce.common.util.BLCRequestUtils.isOKtoUseSession(request))) {
+            request.setAttribute(org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.CURRENCY_VAR, currencyToUse, perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7730, org.springframework.web.context.request.WebRequest.SCOPE_GLOBAL_SESSION));
         }
-
-        BroadleafRequestedCurrencyDto dto = new BroadleafRequestedCurrencyDto(currencyToUse, desiredCurrency);
+        org.broadleafcommerce.common.currency.domain.BroadleafRequestedCurrencyDto dto = new org.broadleafcommerce.common.currency.domain.BroadleafRequestedCurrencyDto(currencyToUse, desiredCurrency);
         return dto;
     }
 
+    public static perturbation.location.PerturbationLocation __L7716;
 
+    public static perturbation.location.PerturbationLocation __L7717;
 
+    public static perturbation.location.PerturbationLocation __L7718;
+
+    public static perturbation.location.PerturbationLocation __L7719;
+
+    public static perturbation.location.PerturbationLocation __L7720;
+
+    public static perturbation.location.PerturbationLocation __L7721;
+
+    public static perturbation.location.PerturbationLocation __L7722;
+
+    public static perturbation.location.PerturbationLocation __L7723;
+
+    public static perturbation.location.PerturbationLocation __L7724;
+
+    public static perturbation.location.PerturbationLocation __L7725;
+
+    public static perturbation.location.PerturbationLocation __L7726;
+
+    public static perturbation.location.PerturbationLocation __L7727;
+
+    public static perturbation.location.PerturbationLocation __L7728;
+
+    public static perturbation.location.PerturbationLocation __L7729;
+
+    public static perturbation.location.PerturbationLocation __L7730;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7716 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BroadleafCurrencyResolverImpl.java:73)", 7716, "Numerical");
+        org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7717 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BroadleafCurrencyResolverImpl.java:76)", 7717, "Boolean");
+        org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7718 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BroadleafCurrencyResolverImpl.java:76)", 7718, "Boolean");
+        org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7719 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BroadleafCurrencyResolverImpl.java:76)", 7719, "Boolean");
+        org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7720 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BroadleafCurrencyResolverImpl.java:79)", 7720, "Boolean");
+        org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7721 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BroadleafCurrencyResolverImpl.java:85)", 7721, "Boolean");
+        org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7722 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BroadleafCurrencyResolverImpl.java:85)", 7722, "Boolean");
+        org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7723 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BroadleafCurrencyResolverImpl.java:85)", 7723, "Boolean");
+        org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7724 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BroadleafCurrencyResolverImpl.java:86)", 7724, "Numerical");
+        org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7725 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BroadleafCurrencyResolverImpl.java:90)", 7725, "Boolean");
+        org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7726 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BroadleafCurrencyResolverImpl.java:91)", 7726, "Numerical");
+        org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7727 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BroadleafCurrencyResolverImpl.java:92)", 7727, "Boolean");
+        org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7728 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BroadleafCurrencyResolverImpl.java:99)", 7728, "Boolean");
+        org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7729 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BroadleafCurrencyResolverImpl.java:107)", 7729, "Boolean");
+        org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.__L7730 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/BroadleafCurrencyResolverImpl.java:108)", 7730, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.BroadleafCurrencyResolverImpl.initPerturbationLocation0();
+    }
 }
+

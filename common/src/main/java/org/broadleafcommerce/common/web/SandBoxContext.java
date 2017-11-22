@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -18,50 +18,42 @@
 package org.broadleafcommerce.common.web;
 
 
-import org.broadleafcommerce.common.classloader.release.ThreadLocalManager;
-
 public class SandBoxContext {
-    
-    private static final ThreadLocal<SandBoxContext> SANDBOXCONTEXT = ThreadLocalManager.createThreadLocal(SandBoxContext.class);
-    
-    public static SandBoxContext getSandBoxContext() {
-        return SANDBOXCONTEXT.get();
-    }
-    
-    public static void setSandBoxContext(SandBoxContext sandBoxContext) {
-        SANDBOXCONTEXT.set(sandBoxContext);
+    private static final java.lang.ThreadLocal<org.broadleafcommerce.common.web.SandBoxContext> SANDBOXCONTEXT = org.broadleafcommerce.common.classloader.release.ThreadLocalManager.createThreadLocal(org.broadleafcommerce.common.web.SandBoxContext.class);
+
+    protected java.lang.Long sandBoxId;
+
+    protected java.lang.Boolean previewMode = ((boolean) (false));
+
+    public static org.broadleafcommerce.common.web.SandBoxContext getSandBoxContext() {
+        return org.broadleafcommerce.common.web.SandBoxContext.SANDBOXCONTEXT.get();
     }
 
-    protected Long sandBoxId;
-    protected Boolean previewMode = false;
+    public static void setSandBoxContext(org.broadleafcommerce.common.web.SandBoxContext sandBoxContext) {
+        org.broadleafcommerce.common.web.SandBoxContext.SANDBOXCONTEXT.set(sandBoxContext);
+    }
 
-    /**
-     * @return the sandBoxName
-     */
-    public Long getSandBoxId() {
+    public java.lang.Long getSandBoxId() {
         return sandBoxId;
     }
-    
-    /**
-     * @param sandBoxId the sandBoxName to set
-     */
-    public void setSandBoxId(Long sandBoxId) {
+
+    public void setSandBoxId(java.lang.Long sandBoxId) {
         this.sandBoxId = sandBoxId;
     }
 
-    public Boolean getPreviewMode() {
+    public java.lang.Boolean getPreviewMode() {
         return previewMode;
     }
 
-    public void setPreviewMode(Boolean previewMode) {
+    public void setPreviewMode(java.lang.Boolean previewMode) {
         this.previewMode = previewMode;
     }
 
-    public SandBoxContext clone() {
-        SandBoxContext myContext = new SandBoxContext();
+    public org.broadleafcommerce.common.web.SandBoxContext clone() {
+        org.broadleafcommerce.common.web.SandBoxContext myContext = new org.broadleafcommerce.common.web.SandBoxContext();
         myContext.setSandBoxId(getSandBoxId());
         myContext.setPreviewMode(getPreviewMode());
-
         return myContext;
     }
 }
+

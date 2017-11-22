@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,43 +17,25 @@
  */
 package org.broadleafcommerce.common.enumeration.dao;
 
-import javax.annotation.Resource;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
-import org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumeration;
-import org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.broadleafcommerce.common.util.dao.TypedQueryBuilder;
-import org.springframework.stereotype.Repository;
+@org.springframework.stereotype.Repository("blDataDrivenEnumerationDao")
+public class DataDrivenEnumerationDaoImpl implements org.broadleafcommerce.common.enumeration.dao.DataDrivenEnumerationDao {
+    @javax.persistence.PersistenceContext(unitName = "blPU")
+    protected javax.persistence.EntityManager em;
 
+    @javax.annotation.Resource(name = "blEntityConfiguration")
+    protected org.broadleafcommerce.common.persistence.EntityConfiguration entityConfiguration;
 
-@Repository("blDataDrivenEnumerationDao")
-public class DataDrivenEnumerationDaoImpl implements DataDrivenEnumerationDao {
-
-    @PersistenceContext(unitName = "blPU")
-    protected EntityManager em;
-
-    @Resource(name = "blEntityConfiguration")
-    protected EntityConfiguration entityConfiguration;
-    
-    @Override
-    public DataDrivenEnumeration readEnumByKey(String enumKey) {
-        TypedQuery<DataDrivenEnumeration> query = new TypedQueryBuilder<DataDrivenEnumeration>(DataDrivenEnumeration.class, "dde")
-            .addRestriction("dde.key", "=", enumKey)
-            .toQuery(em);
-        return query.getSingleResult();
-    }
-    
-    @Override
-    public DataDrivenEnumerationValue readEnumValueByKey(String enumKey, String enumValueKey) {
-        TypedQuery<DataDrivenEnumerationValue> query = 
-                new TypedQueryBuilder<DataDrivenEnumerationValue>(DataDrivenEnumerationValue.class, "ddev")
-            .addRestriction("ddev.type.key", "=", enumKey)
-            .addRestriction("ddev.key", "=", enumValueKey)
-            .toQuery(em);
+    @java.lang.Override
+    public org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumeration readEnumByKey(java.lang.String enumKey) {
+        javax.persistence.TypedQuery<org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumeration> query = new org.broadleafcommerce.common.util.dao.TypedQueryBuilder<org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumeration>(org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumeration.class, "dde").addRestriction("dde.key", "=", enumKey).toQuery(em);
         return query.getSingleResult();
     }
 
+    @java.lang.Override
+    public org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue readEnumValueByKey(java.lang.String enumKey, java.lang.String enumValueKey) {
+        javax.persistence.TypedQuery<org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue> query = new org.broadleafcommerce.common.util.dao.TypedQueryBuilder<org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue>(org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue.class, "ddev").addRestriction("ddev.type.key", "=", enumKey).addRestriction("ddev.key", "=", enumValueKey).toQuery(em);
+        return query.getSingleResult();
+    }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,21 +17,12 @@
  */
 package org.broadleafcommerce.common.email.service;
 
-import org.broadleafcommerce.common.email.domain.EmailTarget;
-import org.broadleafcommerce.common.email.service.info.EmailInfo;
 
-import java.util.Map;
-
-/**
- * @author jfischer
- *
- */
 public interface EmailService {
+    public boolean sendTemplateEmail(java.lang.String emailAddress, org.broadleafcommerce.common.email.service.info.EmailInfo emailInfo, java.util.Map<java.lang.String, java.lang.Object> props);
 
-    public boolean sendTemplateEmail(String emailAddress, EmailInfo emailInfo,  Map<String,Object> props);
+    public boolean sendTemplateEmail(org.broadleafcommerce.common.email.domain.EmailTarget emailTarget, org.broadleafcommerce.common.email.service.info.EmailInfo emailInfo, java.util.Map<java.lang.String, java.lang.Object> props);
 
-    public boolean sendTemplateEmail(EmailTarget emailTarget, EmailInfo emailInfo, Map<String,Object> props);
-
-    public boolean sendBasicEmail(EmailInfo emailInfo, EmailTarget emailTarget, Map<String,Object> props);
-
+    public boolean sendBasicEmail(org.broadleafcommerce.common.email.service.info.EmailInfo emailInfo, org.broadleafcommerce.common.email.domain.EmailTarget emailTarget, java.util.Map<java.lang.String, java.lang.Object> props);
 }
+

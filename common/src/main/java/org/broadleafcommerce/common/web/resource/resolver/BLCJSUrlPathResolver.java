@@ -1,8 +1,8 @@
 /*
  * #%L
- * broadleaf-theme
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -18,78 +18,70 @@
 package org.broadleafcommerce.common.web.resource.resolver;
 
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.springframework.core.Ordered;
-import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
-import org.springframework.web.servlet.resource.AbstractResourceResolver;
-import org.springframework.web.servlet.resource.ResourceResolver;
-import org.springframework.web.servlet.resource.ResourceResolverChain;
+@org.springframework.stereotype.Component("blBLCJSUrlPathResolver")
+public class BLCJSUrlPathResolver extends org.springframework.web.servlet.resource.AbstractResourceResolver implements org.springframework.core.Ordered {
+    protected static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.web.resource.resolver.BLCJSUrlPathResolver.class);
 
-import java.util.List;
+    private static final java.lang.String BLC_JS_NAME = "BLC.js";
 
-import javax.servlet.http.HttpServletRequest;
+    private int order = org.broadleafcommerce.common.web.resource.resolver.BroadleafResourceResolverOrder.BLC_JS_PATH_RESOLVER;
 
-/**
- * A {@link ResourceResolver} that replaces the //BLC-SERVLET-CONTEXT and //BLC-SITE-BASEURL" 
- * tokens before serving the BLC.js file.
- * 
- * This component modifies the path and works in conjunction with the {@link BLCJSResourceResolver}
- * which loads the modified file.
- * 
- * The processes were split to allow for caching of the resource but not the URL path.
- * 
- * @since 4.0
- * 
- * @author Reggie Cole
- * @author Brian Polster
- * @since Broadleaf 4.0
- */
-@Component("blBLCJSUrlPathResolver")
-public class BLCJSUrlPathResolver extends AbstractResourceResolver implements Ordered {
-
-    protected static final Log LOG = LogFactory.getLog(BLCJSUrlPathResolver.class);
-
-    private static final String BLC_JS_NAME = "BLC.js";
-
-    private int order = BroadleafResourceResolverOrder.BLC_JS_PATH_RESOLVER;
-
-    @Override
-    protected String resolveUrlPathInternal(String resourceUrlPath, List<? extends Resource> locations,
-            ResourceResolverChain chain) {
-        if (resourceUrlPath.contains(BLC_JS_NAME)) {
-            Site site = BroadleafRequestContext.getBroadleafRequestContext().getNonPersistentSite();
-            if (site != null && site.getId() != null) {
-                return addVersion(resourceUrlPath, "-"+site.getId());
-            } else {
+    @java.lang.Override
+    protected java.lang.String resolveUrlPathInternal(java.lang.String resourceUrlPath, java.util.List<? extends org.springframework.core.io.Resource> locations, org.springframework.web.servlet.resource.ResourceResolverChain chain) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BLCJSUrlPathResolver.__L7462, resourceUrlPath.contains(org.broadleafcommerce.common.web.resource.resolver.BLCJSUrlPathResolver.BLC_JS_NAME))) {
+            org.broadleafcommerce.common.site.domain.Site site = org.broadleafcommerce.common.web.BroadleafRequestContext.getBroadleafRequestContext().getNonPersistentSite();
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BLCJSUrlPathResolver.__L7465, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BLCJSUrlPathResolver.__L7463, (site != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BLCJSUrlPathResolver.__L7464, ((site.getId()) != null)))))) {
+                return addVersion(resourceUrlPath, ("-" + (site.getId())));
+            }else {
                 return resourceUrlPath;
-            }                       
+            }
         }
         return chain.resolveUrlPath(resourceUrlPath, locations);
     }
-    
-    @Override
-    protected Resource resolveResourceInternal(HttpServletRequest request, String requestPath,
-            List<? extends Resource> locations, ResourceResolverChain chain) {
+
+    @java.lang.Override
+    protected org.springframework.core.io.Resource resolveResourceInternal(javax.servlet.http.HttpServletRequest request, java.lang.String requestPath, java.util.List<? extends org.springframework.core.io.Resource> locations, org.springframework.web.servlet.resource.ResourceResolverChain chain) {
         return chain.resolveResource(request, requestPath, locations);
     }
 
-    protected String addVersion(String requestPath, String version) {
-        String baseFilename = StringUtils.stripFilenameExtension(requestPath);
-        String extension = StringUtils.getFilenameExtension(requestPath);
-        return baseFilename + version + "." + extension;
+    protected java.lang.String addVersion(java.lang.String requestPath, java.lang.String version) {
+        java.lang.String baseFilename = org.springframework.util.StringUtils.stripFilenameExtension(requestPath);
+        java.lang.String extension = org.springframework.util.StringUtils.getFilenameExtension(requestPath);
+        return ((baseFilename + version) + ".") + extension;
     }
 
-    @Override
+    @java.lang.Override
     public int getOrder() {
-        return order;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.resource.resolver.BLCJSUrlPathResolver.__L7466, order);
     }
 
     public void setOrder(int order) {
-        this.order = order;
+        this.order = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.resource.resolver.BLCJSUrlPathResolver.__L7467, order);
+    }
+
+    public static perturbation.location.PerturbationLocation __L7462;
+
+    public static perturbation.location.PerturbationLocation __L7463;
+
+    public static perturbation.location.PerturbationLocation __L7464;
+
+    public static perturbation.location.PerturbationLocation __L7465;
+
+    public static perturbation.location.PerturbationLocation __L7466;
+
+    public static perturbation.location.PerturbationLocation __L7467;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.resource.resolver.BLCJSUrlPathResolver.__L7462 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BLCJSUrlPathResolver.java:64)", 7462, "Boolean");
+        org.broadleafcommerce.common.web.resource.resolver.BLCJSUrlPathResolver.__L7463 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BLCJSUrlPathResolver.java:66)", 7463, "Boolean");
+        org.broadleafcommerce.common.web.resource.resolver.BLCJSUrlPathResolver.__L7464 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BLCJSUrlPathResolver.java:66)", 7464, "Boolean");
+        org.broadleafcommerce.common.web.resource.resolver.BLCJSUrlPathResolver.__L7465 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BLCJSUrlPathResolver.java:66)", 7465, "Boolean");
+        org.broadleafcommerce.common.web.resource.resolver.BLCJSUrlPathResolver.__L7466 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BLCJSUrlPathResolver.java:89)", 7466, "Numerical");
+        org.broadleafcommerce.common.web.resource.resolver.BLCJSUrlPathResolver.__L7467 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BLCJSUrlPathResolver.java:93)", 7467, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.resource.resolver.BLCJSUrlPathResolver.initPerturbationLocation0();
     }
 }
+

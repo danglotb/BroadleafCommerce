@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,32 +17,26 @@
  */
 package org.broadleafcommerce.common.cache.engine;
 
-import java.lang.reflect.Method;
 
-/**
- * 
- * @author jfischer
- *
- */
 public class HydrationItemDescriptor {
-    
-    private String factoryMethod;
-    private Method[] mutators;
-    
-    public String getFactoryMethod() {
+    private java.lang.String factoryMethod;
+
+    private java.lang.reflect.Method[] mutators;
+
+    public java.lang.String getFactoryMethod() {
         return factoryMethod;
     }
-    
-    public void setFactoryMethod(String factoryMethod) {
+
+    public void setFactoryMethod(java.lang.String factoryMethod) {
         this.factoryMethod = factoryMethod;
     }
-    
-    public Method[] getMutators() {
+
+    public java.lang.reflect.Method[] getMutators() {
         return mutators;
     }
-    
-    public void setMutators(Method[] mutators) {
+
+    public void setMutators(java.lang.reflect.Method[] mutators) {
         this.mutators = mutators;
     }
-
 }
+

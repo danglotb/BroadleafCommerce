@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,21 +17,21 @@
  */
 package org.broadleafcommerce.common.email.service.message;
 
-import java.io.Serializable;
 
-public class Attachment implements Serializable {
-
+public class Attachment implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String filename;
-    private byte[] data;
-    private String mimeType;
+    private java.lang.String filename;
 
-    public String getFilename() {
+    private byte[] data;
+
+    private java.lang.String mimeType;
+
+    public java.lang.String getFilename() {
         return filename;
     }
 
-    public void setFilename(String filename) {
+    public void setFilename(java.lang.String filename) {
         this.filename = filename;
     }
 
@@ -43,12 +43,12 @@ public class Attachment implements Serializable {
         this.data = data;
     }
 
-    public String getMimeType() {
+    public java.lang.String getMimeType() {
         return mimeType;
     }
 
-    public void setMimeType(String mimeType) {
+    public void setMimeType(java.lang.String mimeType) {
         this.mimeType = mimeType;
     }
-
 }
+

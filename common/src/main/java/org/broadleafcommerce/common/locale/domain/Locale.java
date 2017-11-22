@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,48 +17,28 @@
  */
 package org.broadleafcommerce.common.locale.domain;
 
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
 
-import java.io.Serializable;
+public interface Locale extends java.io.Serializable {
+    java.lang.String getLocaleCode();
 
-/**
- * Created by jfischer
- */
-public interface Locale extends Serializable {
+    void setLocaleCode(java.lang.String localeCode);
 
-    String getLocaleCode();
-
-    void setLocaleCode(String localeCode);
-    
     public java.util.Locale getJavaLocale();
 
-    public String getFriendlyName();
+    public java.lang.String getFriendlyName();
 
-    public void setFriendlyName(String friendlyName);
+    public void setFriendlyName(java.lang.String friendlyName);
 
-    public void setDefaultFlag(Boolean defaultFlag);
+    public void setDefaultFlag(java.lang.Boolean defaultFlag);
 
-    public Boolean getDefaultFlag();
+    public java.lang.Boolean getDefaultFlag();
 
-    public BroadleafCurrency getDefaultCurrency();
+    public org.broadleafcommerce.common.currency.domain.BroadleafCurrency getDefaultCurrency();
 
-    public void setDefaultCurrency(BroadleafCurrency currency);
+    public void setDefaultCurrency(org.broadleafcommerce.common.currency.domain.BroadleafCurrency currency);
 
-    /**
-     * If true then the country portion of the locale will be used when building the search index.
-     * If null or false then only the language will be used.
-     * 
-     * For example, if false, a locale of en_US will only index the results based
-     * on the root of "en".
-     * 
-     * @return
-     */
-    public Boolean getUseCountryInSearchIndex();
-    
-    /**
-     * Sets whether or not to use the country portion of the locale in the search index.
-     * @param useInSearchIndex
-     */
-    public void setUseCountryInSearchIndex(Boolean useInSearchIndex);
+    public java.lang.Boolean getUseCountryInSearchIndex();
 
+    public void setUseCountryInSearchIndex(java.lang.Boolean useInSearchIndex);
 }
+

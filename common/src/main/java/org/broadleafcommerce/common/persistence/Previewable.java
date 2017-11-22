@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,30 +17,10 @@
  */
 package org.broadleafcommerce.common.persistence;
 
-/**
- * Interface that exposes properties useful for determining if an entity is intended for preview only,
- * as opposed to standard production entities
- *
- * @author Jeff Fischer
- */
+
 public interface Previewable {
+    java.lang.Boolean getPreview();
 
-    /**
-     * Whether or not this entity is considered a preview entity for testing. You can utilize this field
-     * to drive unique behavior for preview entities in your own implementation code. Additionally, this
-     * field is utilized by the Enterprise version.
-     *
-     * @return whether or not this is a test entity
-     */
-    Boolean getPreview();
-
-    /**
-     * Whether or not this entity is considered a preview entity for testing. You can utilize this field
-     * to drive unique behavior for preview entities in your own implementation code. Additionally, this
-     * field is utilized by the Enterprise version.
-     *
-     * @param preview whether or not this is a test entity
-     */
-    void setPreview(Boolean preview);
-
+    void setPreview(java.lang.Boolean preview);
 }
+

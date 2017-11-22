@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,34 +17,31 @@
  */
 package org.broadleafcommerce.common.web;
 
-import org.broadleafcommerce.common.exception.SiteNotFoundException;
-import org.broadleafcommerce.common.site.domain.Site;
-import org.springframework.web.context.request.ServletWebRequest;
-import org.springframework.web.context.request.WebRequest;
 
-import javax.servlet.http.HttpServletRequest;
-
-/**
- * Returns null for the Site (typical for non-multi-site implementations of
- * Broadleaf Commerce.
- *
- * @author bpolster
- */
-public class NullBroadleafSiteResolver implements BroadleafSiteResolver {
-
-    @Override
-    public Site resolveSite(HttpServletRequest request) {
-        return resolveSite(new ServletWebRequest(request));
-    }
-    
-    @Override
-    public Site resolveSite(WebRequest request) {
-        return resolveSite(request, false);
+public class NullBroadleafSiteResolver implements org.broadleafcommerce.common.web.BroadleafSiteResolver {
+    @java.lang.Override
+    public org.broadleafcommerce.common.site.domain.Site resolveSite(javax.servlet.http.HttpServletRequest request) {
+        return resolveSite(new org.springframework.web.context.request.ServletWebRequest(request));
     }
 
-    @Override
-    public Site resolveSite(WebRequest request, boolean allowNullSite) throws SiteNotFoundException {
+    @java.lang.Override
+    public org.broadleafcommerce.common.site.domain.Site resolveSite(org.springframework.web.context.request.WebRequest request) {
+        return resolveSite(request, perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.NullBroadleafSiteResolver.__L8008, false));
+    }
+
+    @java.lang.Override
+    public org.broadleafcommerce.common.site.domain.Site resolveSite(org.springframework.web.context.request.WebRequest request, boolean allowNullSite) throws org.broadleafcommerce.common.exception.SiteNotFoundException {
         return null;
     }
-    
+
+    public static perturbation.location.PerturbationLocation __L8008;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.NullBroadleafSiteResolver.__L8008 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/NullBroadleafSiteResolver.java:42)", 8008, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.NullBroadleafSiteResolver.initPerturbationLocation0();
+    }
 }
+

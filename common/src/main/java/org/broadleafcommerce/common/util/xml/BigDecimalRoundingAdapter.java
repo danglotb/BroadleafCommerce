@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,23 +17,26 @@
  */
 package org.broadleafcommerce.common.util.xml;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
-/**
- *  This class allows us to round Big Decimals to 2 decimal places, generally for
- *  marshalling purposes.  This is to be used with <code>javax.xml.bind.annotation.adapters.XmlJavaTypeAdapters</code>.
- */
-public class BigDecimalRoundingAdapter extends XmlAdapter<String, BigDecimal> {
-
-    @Override
-    public BigDecimal unmarshal(String s) throws Exception {
-        return new BigDecimal(s);
+public class BigDecimalRoundingAdapter extends javax.xml.bind.annotation.adapters.XmlAdapter<java.lang.String, java.math.BigDecimal> {
+    @java.lang.Override
+    public java.math.BigDecimal unmarshal(java.lang.String s) throws java.lang.Exception {
+        return new java.math.BigDecimal(s);
     }
 
-    @Override
-    public String marshal(BigDecimal bigDecimal) throws Exception {
-        return bigDecimal.setScale(2, RoundingMode.UP).toString();
+    @java.lang.Override
+    public java.lang.String marshal(java.math.BigDecimal bigDecimal) throws java.lang.Exception {
+        return bigDecimal.setScale(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.xml.BigDecimalRoundingAdapter.__L6075, 2), java.math.RoundingMode.UP).toString();
+    }
+
+    public static perturbation.location.PerturbationLocation __L6075;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.xml.BigDecimalRoundingAdapter.__L6075 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/xml/BigDecimalRoundingAdapter.java:37)", 6075, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.xml.BigDecimalRoundingAdapter.initPerturbationLocation0();
     }
 }
+

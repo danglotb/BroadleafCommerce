@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,145 +17,140 @@
  */
 package org.broadleafcommerce.common.email.service;
 
-import java.util.HashMap;
-import java.util.Map;
 
-import javax.annotation.Resource;
+@org.springframework.stereotype.Service("blEmailService")
+public class EmailServiceImpl implements org.broadleafcommerce.common.email.service.EmailService {
+    @javax.annotation.Resource(name = "blEmailTrackingManager")
+    protected org.broadleafcommerce.common.email.service.EmailTrackingManager emailTrackingManager;
 
-import org.broadleafcommerce.common.email.dao.EmailReportingDao;
-import org.broadleafcommerce.common.email.domain.EmailTarget;
-import org.broadleafcommerce.common.email.service.exception.EmailException;
-import org.broadleafcommerce.common.email.service.info.EmailInfo;
-import org.broadleafcommerce.common.email.service.info.NullEmailInfo;
-import org.broadleafcommerce.common.email.service.info.ServerInfo;
-import org.broadleafcommerce.common.email.service.message.EmailPropertyType;
-import org.broadleafcommerce.common.email.service.message.EmailServiceProducer;
-import org.broadleafcommerce.common.email.service.message.MessageCreator;
-import org.springframework.stereotype.Service;
+    @javax.annotation.Resource(name = "blServerInfo")
+    protected org.broadleafcommerce.common.email.service.info.ServerInfo serverInfo;
 
-/**
- * @author jfischer
- */
-@Service("blEmailService")
-public class EmailServiceImpl implements EmailService {
+    protected org.broadleafcommerce.common.email.service.message.EmailServiceProducer emailServiceProducer;
 
-    @Resource(name = "blEmailTrackingManager")
-    protected EmailTrackingManager emailTrackingManager;
+    @javax.annotation.Resource(name = "blMessageCreator")
+    protected org.broadleafcommerce.common.email.service.message.MessageCreator messageCreator;
 
-    @Resource(name = "blServerInfo")
-    protected ServerInfo serverInfo;
+    @javax.annotation.Resource(name = "blEmailReportingDao")
+    protected org.broadleafcommerce.common.email.dao.EmailReportingDao emailReportingDao;
 
-    protected EmailServiceProducer emailServiceProducer;
-
-    @Resource(name = "blMessageCreator")
-    protected MessageCreator messageCreator;
-
-    @Resource(name = "blEmailReportingDao")
-    protected EmailReportingDao emailReportingDao;
-
-    public boolean sendTemplateEmail(EmailTarget emailTarget, EmailInfo emailInfo, Map<String, Object> props) {
-        if (props == null) {
-            props = new HashMap<String, Object>();
+    public boolean sendTemplateEmail(org.broadleafcommerce.common.email.domain.EmailTarget emailTarget, org.broadleafcommerce.common.email.service.info.EmailInfo emailInfo, java.util.Map<java.lang.String, java.lang.Object> props) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1182, (props == null))) {
+            props = new java.util.HashMap<java.lang.String, java.lang.Object>();
         }
-        if (emailInfo == null) {
-            emailInfo = new EmailInfo();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1183, (emailInfo == null))) {
+            emailInfo = new org.broadleafcommerce.common.email.service.info.EmailInfo();
         }
-
-        props.put(EmailPropertyType.INFO.getType(), emailInfo);
-        props.put(EmailPropertyType.USER.getType(), emailTarget);
-        Long emailId = emailTrackingManager.createTrackedEmail(emailTarget.getEmailAddress(), emailInfo.getEmailType(), null);
+        props.put(org.broadleafcommerce.common.email.service.message.EmailPropertyType.INFO.getType(), emailInfo);
+        props.put(org.broadleafcommerce.common.email.service.message.EmailPropertyType.USER.getType(), emailTarget);
+        java.lang.Long emailId = emailTrackingManager.createTrackedEmail(emailTarget.getEmailAddress(), emailInfo.getEmailType(), null);
         props.put("emailTrackingId", emailId);
-
-        return sendBasicEmail(emailInfo, emailTarget, props);
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1184, sendBasicEmail(emailInfo, emailTarget, props));
     }
 
-    public boolean sendTemplateEmail(String emailAddress, EmailInfo emailInfo, Map<String, Object> props) {
-        if (!(emailInfo instanceof NullEmailInfo)) {
-            EmailTarget emailTarget = emailReportingDao.createTarget();
+    public boolean sendTemplateEmail(java.lang.String emailAddress, org.broadleafcommerce.common.email.service.info.EmailInfo emailInfo, java.util.Map<java.lang.String, java.lang.Object> props) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1186, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1185, (emailInfo instanceof org.broadleafcommerce.common.email.service.info.NullEmailInfo)))))) {
+            org.broadleafcommerce.common.email.domain.EmailTarget emailTarget = emailReportingDao.createTarget();
             emailTarget.setEmailAddress(emailAddress);
-            return sendTemplateEmail(emailTarget, emailInfo, props);
-        } else {
-            return true;
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1187, sendTemplateEmail(emailTarget, emailInfo, props));
+        }else {
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1188, true);
         }
     }
 
-    public boolean sendBasicEmail(EmailInfo emailInfo, EmailTarget emailTarget, Map<String, Object> props) {
-        if (props == null) {
-            props = new HashMap<String, Object>();
+    public boolean sendBasicEmail(org.broadleafcommerce.common.email.service.info.EmailInfo emailInfo, org.broadleafcommerce.common.email.domain.EmailTarget emailTarget, java.util.Map<java.lang.String, java.lang.Object> props) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1189, (props == null))) {
+            props = new java.util.HashMap<java.lang.String, java.lang.Object>();
         }
-        if (emailInfo == null) {
-            emailInfo = new EmailInfo();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1190, (emailInfo == null))) {
+            emailInfo = new org.broadleafcommerce.common.email.service.info.EmailInfo();
         }
-
-        props.put(EmailPropertyType.INFO.getType(), emailInfo);
-        props.put(EmailPropertyType.USER.getType(), emailTarget);
-
-        if (Boolean.parseBoolean(emailInfo.getSendEmailReliableAsync())) {
-            if (emailServiceProducer == null) {
-                throw new EmailException("The property sendEmailReliableAsync on EmailInfo is true, but the EmailService does not have an instance of JMSEmailServiceProducer set.");
+        props.put(org.broadleafcommerce.common.email.service.message.EmailPropertyType.INFO.getType(), emailInfo);
+        props.put(org.broadleafcommerce.common.email.service.message.EmailPropertyType.USER.getType(), emailTarget);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1191, java.lang.Boolean.parseBoolean(emailInfo.getSendEmailReliableAsync()))) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1192, ((emailServiceProducer) == null))) {
+                throw new org.broadleafcommerce.common.email.service.exception.EmailException("The property sendEmailReliableAsync on EmailInfo is true, but the EmailService does not have an instance of JMSEmailServiceProducer set.");
             }
             emailServiceProducer.send(props);
-        } else {
+        }else {
             messageCreator.sendMessage(props);
         }
-
-        return true;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1193, true);
     }
 
-    /**
-     * @return the emailTrackingManager
-     */
-    public EmailTrackingManager getEmailTrackingManager() {
+    public org.broadleafcommerce.common.email.service.EmailTrackingManager getEmailTrackingManager() {
         return emailTrackingManager;
     }
 
-    /**
-     * @param emailTrackingManager the emailTrackingManager to set
-     */
-    public void setEmailTrackingManager(EmailTrackingManager emailTrackingManager) {
+    public void setEmailTrackingManager(org.broadleafcommerce.common.email.service.EmailTrackingManager emailTrackingManager) {
         this.emailTrackingManager = emailTrackingManager;
     }
 
-    /**
-     * @return the serverInfo
-     */
-    public ServerInfo getServerInfo() {
+    public org.broadleafcommerce.common.email.service.info.ServerInfo getServerInfo() {
         return serverInfo;
     }
 
-    /**
-     * @param serverInfo the serverInfo to set
-     */
-    public void setServerInfo(ServerInfo serverInfo) {
+    public void setServerInfo(org.broadleafcommerce.common.email.service.info.ServerInfo serverInfo) {
         this.serverInfo = serverInfo;
     }
 
-    /**
-     * @return the emailServiceProducer
-     */
-    public EmailServiceProducer getEmailServiceProducer() {
+    public org.broadleafcommerce.common.email.service.message.EmailServiceProducer getEmailServiceProducer() {
         return emailServiceProducer;
     }
 
-    /**
-     * @param emailServiceProducer the emailServiceProducer to set
-     */
-    public void setEmailServiceProducer(EmailServiceProducer emailServiceProducer) {
+    public void setEmailServiceProducer(org.broadleafcommerce.common.email.service.message.EmailServiceProducer emailServiceProducer) {
         this.emailServiceProducer = emailServiceProducer;
     }
 
-    /**
-     * @return the messageCreator
-     */
-    public MessageCreator getMessageCreator() {
+    public org.broadleafcommerce.common.email.service.message.MessageCreator getMessageCreator() {
         return messageCreator;
     }
 
-    /**
-     * @param messageCreator the messageCreator to set
-     */
-    public void setMessageCreator(MessageCreator messageCreator) {
+    public void setMessageCreator(org.broadleafcommerce.common.email.service.message.MessageCreator messageCreator) {
         this.messageCreator = messageCreator;
     }
 
+    public static perturbation.location.PerturbationLocation __L1182;
+
+    public static perturbation.location.PerturbationLocation __L1183;
+
+    public static perturbation.location.PerturbationLocation __L1184;
+
+    public static perturbation.location.PerturbationLocation __L1185;
+
+    public static perturbation.location.PerturbationLocation __L1186;
+
+    public static perturbation.location.PerturbationLocation __L1187;
+
+    public static perturbation.location.PerturbationLocation __L1188;
+
+    public static perturbation.location.PerturbationLocation __L1189;
+
+    public static perturbation.location.PerturbationLocation __L1190;
+
+    public static perturbation.location.PerturbationLocation __L1191;
+
+    public static perturbation.location.PerturbationLocation __L1192;
+
+    public static perturbation.location.PerturbationLocation __L1193;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1182 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/EmailServiceImpl.java:57)", 1182, "Boolean");
+        org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1183 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/EmailServiceImpl.java:60)", 1183, "Boolean");
+        org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1184 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/EmailServiceImpl.java:69)", 1184, "Boolean");
+        org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1185 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/EmailServiceImpl.java:73)", 1185, "Boolean");
+        org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1186 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/EmailServiceImpl.java:73)", 1186, "Boolean");
+        org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1187 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/EmailServiceImpl.java:76)", 1187, "Boolean");
+        org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1188 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/EmailServiceImpl.java:78)", 1188, "Boolean");
+        org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1189 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/EmailServiceImpl.java:83)", 1189, "Boolean");
+        org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1190 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/EmailServiceImpl.java:86)", 1190, "Boolean");
+        org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1191 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/EmailServiceImpl.java:93)", 1191, "Boolean");
+        org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1192 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/EmailServiceImpl.java:94)", 1192, "Boolean");
+        org.broadleafcommerce.common.email.service.EmailServiceImpl.__L1193 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/email/service/EmailServiceImpl.java:102)", 1193, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.email.service.EmailServiceImpl.initPerturbationLocation0();
+    }
 }
+

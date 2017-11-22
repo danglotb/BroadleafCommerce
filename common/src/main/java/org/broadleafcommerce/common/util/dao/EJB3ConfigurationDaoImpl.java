@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Open Admin Platform
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,32 +17,21 @@
  */
 package org.broadleafcommerce.common.util.dao;
 
-import org.hibernate.ejb.Ejb3Configuration;
 
-import java.util.HashMap;
+public class EJB3ConfigurationDaoImpl implements org.broadleafcommerce.common.util.dao.EJB3ConfigurationDao {
+    private org.hibernate.ejb.Ejb3Configuration configuration = null;
 
-import javax.persistence.spi.PersistenceUnitInfo;
+    protected javax.persistence.spi.PersistenceUnitInfo persistenceUnitInfo;
 
-/**
- * 
- * @author jfischer
- *
- */
-public class EJB3ConfigurationDaoImpl implements EJB3ConfigurationDao {
-
-    private Ejb3Configuration configuration = null;
-
-    protected PersistenceUnitInfo persistenceUnitInfo;
-
-    public Ejb3Configuration getConfiguration() {
+    public org.hibernate.ejb.Ejb3Configuration getConfiguration() {
         synchronized(this) {
-            if (configuration == null) {
-                Ejb3Configuration temp = new Ejb3Configuration();
-                String previousValue = persistenceUnitInfo.getProperties().getProperty("hibernate.hbm2ddl.auto");
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.dao.EJB3ConfigurationDaoImpl.__L5894, ((configuration) == null))) {
+                org.hibernate.ejb.Ejb3Configuration temp = new org.hibernate.ejb.Ejb3Configuration();
+                java.lang.String previousValue = persistenceUnitInfo.getProperties().getProperty("hibernate.hbm2ddl.auto");
                 persistenceUnitInfo.getProperties().setProperty("hibernate.hbm2ddl.auto", "none");
-                configuration = temp.configure(persistenceUnitInfo, new HashMap());
+                configuration = temp.configure(persistenceUnitInfo, new java.util.HashMap());
                 configuration.getHibernateConfiguration().buildSessionFactory();
-                if (previousValue != null) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.dao.EJB3ConfigurationDaoImpl.__L5895, (previousValue != null))) {
                     persistenceUnitInfo.getProperties().setProperty("hibernate.hbm2ddl.auto", previousValue);
                 }
             }
@@ -50,12 +39,25 @@ public class EJB3ConfigurationDaoImpl implements EJB3ConfigurationDao {
         return configuration;
     }
 
-    public PersistenceUnitInfo getPersistenceUnitInfo() {
+    public javax.persistence.spi.PersistenceUnitInfo getPersistenceUnitInfo() {
         return persistenceUnitInfo;
     }
 
-    public void setPersistenceUnitInfo(PersistenceUnitInfo persistenceUnitInfo) {
+    public void setPersistenceUnitInfo(javax.persistence.spi.PersistenceUnitInfo persistenceUnitInfo) {
         this.persistenceUnitInfo = persistenceUnitInfo;
     }
-    
+
+    public static perturbation.location.PerturbationLocation __L5894;
+
+    public static perturbation.location.PerturbationLocation __L5895;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.dao.EJB3ConfigurationDaoImpl.__L5894 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/EJB3ConfigurationDaoImpl.java:39)", 5894, "Boolean");
+        org.broadleafcommerce.common.util.dao.EJB3ConfigurationDaoImpl.__L5895 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/dao/EJB3ConfigurationDaoImpl.java:45)", 5895, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.dao.EJB3ConfigurationDaoImpl.initPerturbationLocation0();
+    }
 }
+

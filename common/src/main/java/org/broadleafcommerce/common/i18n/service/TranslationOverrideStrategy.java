@@ -17,55 +17,12 @@
  */
 package org.broadleafcommerce.common.i18n.service;
 
-import org.broadleafcommerce.common.i18n.domain.TranslatedEntity;
-import org.springframework.core.Ordered;
 
-/**
- * Provides translations at both the standard site catalog and template catalog level, whichever is appropriate. This is
- * only meaningful in a multitenant scenario.
- *
- * @author Jeff Fischer
- */
-public interface TranslationOverrideStrategy extends Ordered {
+public interface TranslationOverrideStrategy extends org.springframework.core.Ordered {
+    org.broadleafcommerce.common.i18n.service.LocalePair getLocaleBasedOverride(java.lang.String property, org.broadleafcommerce.common.i18n.domain.TranslatedEntity entityType, java.lang.String entityId, java.lang.String localeCode, java.lang.String localeCountryCode, java.lang.String basicCacheKey);
 
-    /**
-     * Retrieve the standard site override translation, if applicable
-     *
-     * @param property
-     * @param entityType
-     * @param entityId
-     * @param localeCode
-     * @param localeCountryCode
-     * @param basicCacheKey
-     * @return
-     */
-    LocalePair getLocaleBasedOverride(String property, TranslatedEntity entityType, String entityId,
-                                      String localeCode, String localeCountryCode, String basicCacheKey);
+    org.broadleafcommerce.common.i18n.service.LocalePair getLocaleBasedTemplateValue(java.lang.String templateCacheKey, java.lang.String property, org.broadleafcommerce.common.i18n.domain.TranslatedEntity entityType, java.lang.String entityId, java.lang.String localeCode, java.lang.String localeCountryCode, java.lang.String specificPropertyKey, java.lang.String generalPropertyKey);
 
-    /**
-     * Retrieve the template level translation, if applicable
-     *
-     * @param templateCacheKey
-     * @param property
-     * @param entityType
-     * @param entityId
-     * @param localeCode
-     * @param localeCountryCode
-     * @param specificPropertyKey
-     * @param generalPropertyKey
-     * @return
-     */
-    LocalePair getLocaleBasedTemplateValue(String templateCacheKey, String property, TranslatedEntity entityType,
-                                           String entityId, String localeCode, String localeCountryCode, String specificPropertyKey,
-                                           String generalPropertyKey);
-
-    /**
-     * Whether or not a template version should be searched for. If false, then the system will return null for the
-     * translation, should an override not be found.
-     *
-     * @param standardCacheKey
-     * @param templateCacheKey
-     * @return
-     */
-    boolean validateTemplateProcessing(String standardCacheKey, String templateCacheKey);
+    boolean validateTemplateProcessing(java.lang.String standardCacheKey, java.lang.String templateCacheKey);
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,91 +17,90 @@
  */
 package org.broadleafcommerce.common.security.handler;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.exception.ServiceException;
-import org.broadleafcommerce.common.security.service.ExploitProtectionService;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
-import org.springframework.web.filter.GenericFilterBean;
 
-import java.io.IOException;
-import java.util.List;
+@java.lang.Deprecated
+public class CsrfFilter extends org.springframework.web.filter.GenericFilterBean {
+    protected static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.security.handler.CsrfFilter.class);
 
-import javax.annotation.Resource;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+    @javax.annotation.Resource(name = "blExploitProtectionService")
+    protected org.broadleafcommerce.common.security.service.ExploitProtectionService exploitProtectionService;
 
-/**
- * Checks the validity of the CSRF token on every POST request.
- * You can inject excluded Request URI patterns to bypass this filter.
- * This filter uses the AntPathRequestMatcher which compares a pre-defined ant-style pattern against the URL
- * ({@code servletPath + pathInfo}) of an {@code HttpServletRequest}.
- * This allows you to use wildcard matching as well, for example {@code /**} or {@code **}
- *
- * @see AntPathRequestMatcher
- * @deprecated Use {@link SecurityFilter} instead
- * @author Andre Azzolini (apazzolini)
- */
-@Deprecated
-public class CsrfFilter extends GenericFilterBean {
-    protected static final Log LOG = LogFactory.getLog(CsrfFilter.class);
-    
-    @Resource(name="blExploitProtectionService")
-    protected ExploitProtectionService exploitProtectionService;
+    protected java.util.List<java.lang.String> excludedRequestPatterns;
 
-    protected List<String> excludedRequestPatterns;
-
-    @Override
-    public void doFilter(ServletRequest baseRequest, ServletResponse baseResponse, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) baseRequest;
-        HttpServletResponse response = (HttpServletResponse) baseResponse;
-
-        boolean excludedRequestFound = false;
-        if (excludedRequestPatterns != null && excludedRequestPatterns.size() > 0) {
-            for (String pattern : excludedRequestPatterns) {
-                RequestMatcher matcher = new AntPathRequestMatcher(pattern);
-                if (matcher.matches(request)){
-                    excludedRequestFound = true;
+    @java.lang.Override
+    public void doFilter(javax.servlet.ServletRequest baseRequest, javax.servlet.ServletResponse baseResponse, javax.servlet.FilterChain chain) throws java.io.IOException, javax.servlet.ServletException {
+        javax.servlet.http.HttpServletRequest request = ((javax.servlet.http.HttpServletRequest) (baseRequest));
+        javax.servlet.http.HttpServletResponse response = ((javax.servlet.http.HttpServletResponse) (baseResponse));
+        boolean excludedRequestFound = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.handler.CsrfFilter.__L4801, false);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.handler.CsrfFilter.__L4806, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.handler.CsrfFilter.__L4802, ((excludedRequestPatterns) != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.handler.CsrfFilter.__L4805, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.handler.CsrfFilter.__L4803, excludedRequestPatterns.size())) > (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.handler.CsrfFilter.__L4804, 0)))))))) {
+            for (java.lang.String pattern : excludedRequestPatterns) {
+                org.springframework.security.web.util.matcher.RequestMatcher matcher = new org.springframework.security.web.util.matcher.AntPathRequestMatcher(pattern);
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.handler.CsrfFilter.__L4807, matcher.matches(request))) {
+                    excludedRequestFound = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.handler.CsrfFilter.__L4808, true);
                     break;
                 }
             }
         }
-
-        // We only validate CSRF tokens on POST
-        if (request.getMethod().equals("POST") && !excludedRequestFound) {
-            String requestToken = request.getParameter(exploitProtectionService.getCsrfTokenParameter());
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.handler.CsrfFilter.__L4812, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.handler.CsrfFilter.__L4809, request.getMethod().equals("POST"))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.handler.CsrfFilter.__L4811, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.handler.CsrfFilter.__L4810, excludedRequestFound)))))))) {
+            java.lang.String requestToken = request.getParameter(exploitProtectionService.getCsrfTokenParameter());
             try {
                 exploitProtectionService.compareToken(requestToken);
-            } catch (ServiceException e) {
-                throw new ServletException(e);
+            } catch (org.broadleafcommerce.common.exception.ServiceException e) {
+                throw new javax.servlet.ServletException(e);
             }
         }
-        
         chain.doFilter(request, response);
     }
 
-    public List<String> getExcludedRequestPatterns() {
+    public java.util.List<java.lang.String> getExcludedRequestPatterns() {
         return excludedRequestPatterns;
     }
 
-    /**
-     * This allows you to declaratively set a list of excluded Request Patterns
-     *
-     * <bean id="blCsrfFilter" class="org.broadleafcommerce.common.security.handler.CsrfFilter" >
-     *     <property name="excludedRequestPatterns">
-     *         <list>
-     *             <value>/exclude-me/**</value>
-     *         </list>
-     *     </property>
-     * </bean>
-     *
-     **/
-    public void setExcludedRequestPatterns(List<String> excludedRequestPatterns) {
+    public void setExcludedRequestPatterns(java.util.List<java.lang.String> excludedRequestPatterns) {
         this.excludedRequestPatterns = excludedRequestPatterns;
     }
+
+    public static perturbation.location.PerturbationLocation __L4801;
+
+    public static perturbation.location.PerturbationLocation __L4802;
+
+    public static perturbation.location.PerturbationLocation __L4803;
+
+    public static perturbation.location.PerturbationLocation __L4804;
+
+    public static perturbation.location.PerturbationLocation __L4805;
+
+    public static perturbation.location.PerturbationLocation __L4806;
+
+    public static perturbation.location.PerturbationLocation __L4807;
+
+    public static perturbation.location.PerturbationLocation __L4808;
+
+    public static perturbation.location.PerturbationLocation __L4809;
+
+    public static perturbation.location.PerturbationLocation __L4810;
+
+    public static perturbation.location.PerturbationLocation __L4811;
+
+    public static perturbation.location.PerturbationLocation __L4812;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.security.handler.CsrfFilter.__L4801 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/handler/CsrfFilter.java:64)", 4801, "Boolean");
+        org.broadleafcommerce.common.security.handler.CsrfFilter.__L4802 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/handler/CsrfFilter.java:65)", 4802, "Boolean");
+        org.broadleafcommerce.common.security.handler.CsrfFilter.__L4803 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/handler/CsrfFilter.java:65)", 4803, "Numerical");
+        org.broadleafcommerce.common.security.handler.CsrfFilter.__L4804 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/handler/CsrfFilter.java:65)", 4804, "Numerical");
+        org.broadleafcommerce.common.security.handler.CsrfFilter.__L4805 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/handler/CsrfFilter.java:65)", 4805, "Boolean");
+        org.broadleafcommerce.common.security.handler.CsrfFilter.__L4806 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/handler/CsrfFilter.java:65)", 4806, "Boolean");
+        org.broadleafcommerce.common.security.handler.CsrfFilter.__L4807 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/handler/CsrfFilter.java:68)", 4807, "Boolean");
+        org.broadleafcommerce.common.security.handler.CsrfFilter.__L4808 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/handler/CsrfFilter.java:69)", 4808, "Boolean");
+        org.broadleafcommerce.common.security.handler.CsrfFilter.__L4809 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/handler/CsrfFilter.java:76)", 4809, "Boolean");
+        org.broadleafcommerce.common.security.handler.CsrfFilter.__L4810 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/handler/CsrfFilter.java:76)", 4810, "Boolean");
+        org.broadleafcommerce.common.security.handler.CsrfFilter.__L4811 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/handler/CsrfFilter.java:76)", 4811, "Boolean");
+        org.broadleafcommerce.common.security.handler.CsrfFilter.__L4812 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/handler/CsrfFilter.java:76)", 4812, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.security.handler.CsrfFilter.initPerturbationLocation0();
+    }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,41 +17,36 @@
  */
 package org.broadleafcommerce.common.extension;
 
-import java.io.Serializable;
 
-/**
- * Represents a member of a query result list for a multitenant sparsely populated cache scenario (see {@link org.broadleafcommerce.common.extension.SparselyPopulatedQueryExtensionHandler}).
- * Denotes whether the item is a normal/active item in a standard site, or if it's a deleted/archived item in a standard site.
- *
- * @author Jeff Fischer
- */
-public class StandardCacheItem implements Serializable {
+public class StandardCacheItem implements java.io.Serializable {
+    private java.lang.String key;
 
-    private String key;
-    private Object cacheItem;
-    private ItemStatus itemStatus;
+    private java.lang.Object cacheItem;
 
-    public Object getCacheItem() {
+    private org.broadleafcommerce.common.extension.ItemStatus itemStatus;
+
+    public java.lang.Object getCacheItem() {
         return cacheItem;
     }
 
-    public void setCacheItem(Object cacheItem) {
+    public void setCacheItem(java.lang.Object cacheItem) {
         this.cacheItem = cacheItem;
     }
 
-    public ItemStatus getItemStatus() {
+    public org.broadleafcommerce.common.extension.ItemStatus getItemStatus() {
         return itemStatus;
     }
 
-    public void setItemStatus(ItemStatus itemStatus) {
+    public void setItemStatus(org.broadleafcommerce.common.extension.ItemStatus itemStatus) {
         this.itemStatus = itemStatus;
     }
 
-    public String getKey() {
+    public java.lang.String getKey() {
         return key;
     }
 
-    public void setKey(String key) {
+    public void setKey(java.lang.String key) {
         this.key = key;
     }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,100 +17,112 @@
  */
 package org.broadleafcommerce.common.resource;
 
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.core.io.AbstractResource;
-import org.springframework.security.util.InMemoryResource;
-import org.springframework.util.Assert;
-import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.util.Arrays;
-
-/**
- * An in memory generated resource. This class also overrides some parent Spring AbstractResource methods to ensure
- * compatibility with the {@link ResourceHttpRequestHandler}.
- * 
- * Note that this class <i>intentionally</i> does not subclass Spring's {@link InMemoryResource} and instead has copied
- * the fields here because {@link InMemoryResource} does not provide a default constructor. This causes issues when
- * deserializing an instance from disk (such as in a caching scenario that overflows from memory to disk).
- * 
- * @author Andre Azzolini (apazzolini)
- */
-public class GeneratedResource extends AbstractResource implements Serializable {
-    
+public class GeneratedResource extends org.springframework.core.io.AbstractResource implements java.io.Serializable {
     private static final long serialVersionUID = 7044543270746433688L;
 
     protected long timeGenerated;
-    protected String hashRepresentation;
-    
-    protected final byte[] source;
-    protected final String description;
 
-    /**
-     * <b>Note: This constructor should not be explicitly used</b> 
-     * 
-     * To properly allow for serialization, we must provide this no-arg constructor that will 
-     * create a "dummy" GeneratedResource. The appropriate fields will be set during deserialization.
-     */
-    public GeneratedResource()  {
-        this(new byte[]{}, null);
+    protected java.lang.String hashRepresentation;
+
+    protected final byte[] source;
+
+    protected final java.lang.String description;
+
+    public GeneratedResource() {
+        this(new byte[]{  }, null);
     }
 
-    public GeneratedResource(byte[] source, String description) {
-        Assert.notNull(source);
+    public GeneratedResource(byte[] source, java.lang.String description) {
+        org.springframework.util.Assert.notNull(source);
         this.source = source;
         this.description = description;
-        timeGenerated = System.currentTimeMillis();
-    }
-    
-    @Override
-    public String getFilename() {
-        return getDescription();
-    }
-    
-    @Override
-	public long lastModified() throws IOException {
-        return timeGenerated;
-    }
-    
-    public String getHashRepresentation() {
-        return StringUtils.isBlank(hashRepresentation) ? String.valueOf(timeGenerated) : hashRepresentation;
+        timeGenerated = java.lang.System.currentTimeMillis();
     }
 
-    public void setHashRepresentation(String hashRepresentation) {
+    @java.lang.Override
+    public java.lang.String getFilename() {
+        return getDescription();
+    }
+
+    @java.lang.Override
+    public long lastModified() throws java.io.IOException {
+        return perturbation.PerturbationEngine.plong(org.broadleafcommerce.common.resource.GeneratedResource.__L4604, timeGenerated);
+    }
+
+    public java.lang.String getHashRepresentation() {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.resource.GeneratedResource.__L4605, org.apache.commons.lang3.StringUtils.isBlank(hashRepresentation)) ? java.lang.String.valueOf(perturbation.PerturbationEngine.plong(org.broadleafcommerce.common.resource.GeneratedResource.__L4606, timeGenerated)) : hashRepresentation;
+    }
+
+    public void setHashRepresentation(java.lang.String hashRepresentation) {
         this.hashRepresentation = hashRepresentation;
     }
-    
-    @Override
-    public String getDescription() {
+
+    @java.lang.Override
+    public java.lang.String getDescription() {
         return description;
     }
 
-    @Override
-    public InputStream getInputStream() throws IOException {
-        return new ByteArrayInputStream(source);
+    @java.lang.Override
+    public java.io.InputStream getInputStream() throws java.io.IOException {
+        return new java.io.ByteArrayInputStream(source);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
-        return 1;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.resource.GeneratedResource.__L4607, 1);
     }
 
     public byte[] getBytes() {
         return source;
     }
 
-    @Override
-    public boolean equals(Object res) {
-        if (res == null) return false;
-        if (!getClass().isAssignableFrom(res.getClass())) {
-            return false;
-        }
+    @java.lang.Override
+    public boolean equals(java.lang.Object res) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.resource.GeneratedResource.__L4608, (res == null)))
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.resource.GeneratedResource.__L4609, false);
 
-        return Arrays.equals(source, ((GeneratedResource)res).source);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.resource.GeneratedResource.__L4611, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.resource.GeneratedResource.__L4610, getClass().isAssignableFrom(res.getClass())))))) {
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.resource.GeneratedResource.__L4612, false);
+        }
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.resource.GeneratedResource.__L4613, java.util.Arrays.equals(source, ((org.broadleafcommerce.common.resource.GeneratedResource) (res)).source));
     }
 
+    public static perturbation.location.PerturbationLocation __L4604;
+
+    public static perturbation.location.PerturbationLocation __L4605;
+
+    public static perturbation.location.PerturbationLocation __L4606;
+
+    public static perturbation.location.PerturbationLocation __L4607;
+
+    public static perturbation.location.PerturbationLocation __L4608;
+
+    public static perturbation.location.PerturbationLocation __L4609;
+
+    public static perturbation.location.PerturbationLocation __L4610;
+
+    public static perturbation.location.PerturbationLocation __L4611;
+
+    public static perturbation.location.PerturbationLocation __L4612;
+
+    public static perturbation.location.PerturbationLocation __L4613;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.resource.GeneratedResource.__L4604 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/resource/GeneratedResource.java:76)", 4604, "Numerical");
+        org.broadleafcommerce.common.resource.GeneratedResource.__L4605 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/resource/GeneratedResource.java:80)", 4605, "Boolean");
+        org.broadleafcommerce.common.resource.GeneratedResource.__L4606 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/resource/GeneratedResource.java:80)", 4606, "Numerical");
+        org.broadleafcommerce.common.resource.GeneratedResource.__L4607 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/resource/GeneratedResource.java:99)", 4607, "Numerical");
+        org.broadleafcommerce.common.resource.GeneratedResource.__L4608 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/resource/GeneratedResource.java:108)", 4608, "Boolean");
+        org.broadleafcommerce.common.resource.GeneratedResource.__L4609 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/resource/GeneratedResource.java:108)", 4609, "Boolean");
+        org.broadleafcommerce.common.resource.GeneratedResource.__L4610 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/resource/GeneratedResource.java:109)", 4610, "Boolean");
+        org.broadleafcommerce.common.resource.GeneratedResource.__L4611 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/resource/GeneratedResource.java:109)", 4611, "Boolean");
+        org.broadleafcommerce.common.resource.GeneratedResource.__L4612 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/resource/GeneratedResource.java:110)", 4612, "Boolean");
+        org.broadleafcommerce.common.resource.GeneratedResource.__L4613 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/resource/GeneratedResource.java:113)", 4613, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.resource.GeneratedResource.initPerturbationLocation0();
+    }
 }
+

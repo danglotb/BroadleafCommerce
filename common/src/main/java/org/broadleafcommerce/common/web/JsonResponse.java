@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,49 +17,29 @@
  */
 package org.broadleafcommerce.common.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
-
-
-/**
- * Used when a controller typically returns a String that represents a view path but would like to return a
- * JSON response in other scenarios, such as an error case.
- * 
- * Example Usage:
- * 
- * return new JsonResponse(response)
- *     .with("status", "ok")
- *     .with("shouldRefresh", true)
- *     .done();
- * 
- * @author Andre Azzolini (apazzolini)
- */
 public class JsonResponse {
-    
-    protected Map<String, Object> map = new HashMap<String, Object>();
-    protected HttpServletResponse response;
-    
-    public JsonResponse(HttpServletResponse response) {
+    protected java.util.Map<java.lang.String, java.lang.Object> map = new java.util.HashMap<java.lang.String, java.lang.Object>();
+
+    protected javax.servlet.http.HttpServletResponse response;
+
+    public JsonResponse(javax.servlet.http.HttpServletResponse response) {
         this.response = response;
     }
-    
-    public JsonResponse with(String key, Object value) {
+
+    public org.broadleafcommerce.common.web.JsonResponse with(java.lang.String key, java.lang.Object value) {
         map.put(key, value);
         return this;
     }
-    
-    public String done() {
+
+    public java.lang.String done() {
         response.setHeader("Content-Type", "application/json");
         try {
-            new ObjectMapper().writeValue(response.getWriter(), map);
-        } catch (Exception e) {
-            throw new RuntimeException("Could not serialize JSON", e);
+            new com.fasterxml.jackson.databind.ObjectMapper().writeValue(response.getWriter(), map);
+        } catch (java.lang.Exception e) {
+            throw new java.lang.RuntimeException("Could not serialize JSON", e);
         }
         return null;
     }
-
 }
+

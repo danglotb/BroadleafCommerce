@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,33 +17,26 @@
  */
 package org.broadleafcommerce.common.enumeration.domain;
 
-import org.broadleafcommerce.common.copy.MultiTenantCloneable;
 
-import java.io.Serializable;
+public interface DataDrivenEnumerationValue extends java.io.Serializable , org.broadleafcommerce.common.copy.MultiTenantCloneable<org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue> {
+    public java.lang.String getDisplay();
 
-/**
- * @author Jeff Fischer
- */
-public interface DataDrivenEnumerationValue extends Serializable, MultiTenantCloneable<DataDrivenEnumerationValue> {
-    
-    public String getDisplay();
+    public void setDisplay(java.lang.String display);
 
-    public void setDisplay(String display);
+    public java.lang.Boolean getHidden();
 
-    public Boolean getHidden();
+    public void setHidden(java.lang.Boolean hidden);
 
-    public void setHidden(Boolean hidden);
+    public java.lang.Long getId();
 
-    public Long getId();
+    public void setId(java.lang.Long id);
 
-    public void setId(Long id);
+    public java.lang.String getKey();
 
-    public String getKey();
+    public void setKey(java.lang.String key);
 
-    public void setKey(String key);
+    public org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumeration getType();
 
-    public DataDrivenEnumeration getType();
-
-    public void setType(DataDrivenEnumeration type);
-
+    public void setType(org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumeration type);
 }
+

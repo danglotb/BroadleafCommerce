@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,24 +17,17 @@
  */
 package org.broadleafcommerce.common.cache.engine;
 
-import java.io.Serializable;
-import java.util.Hashtable;
 
-/**
- * 
- * @author jfischer
- *
- */
-@Deprecated
-public class HydratedCacheElement extends Hashtable<String, Object> {
-
+@java.lang.Deprecated
+public class HydratedCacheElement extends java.util.Hashtable<java.lang.String, java.lang.Object> {
     private static final long serialVersionUID = 1L;
 
-    public Object getCacheElementItem(String elementItemName, Serializable parentKey) {
-        return get(elementItemName + "_" + parentKey);
+    public java.lang.Object getCacheElementItem(java.lang.String elementItemName, java.io.Serializable parentKey) {
+        return get(((elementItemName + "_") + parentKey));
     }
-    
-    public Object putCacheElementItem(String elementItemName, Serializable parentKey, Object value) {
-        return put(elementItemName +"_"+parentKey, value);
+
+    public java.lang.Object putCacheElementItem(java.lang.String elementItemName, java.io.Serializable parentKey, java.lang.Object value) {
+        return put(((elementItemName + "_") + parentKey), value);
     }
 }
+

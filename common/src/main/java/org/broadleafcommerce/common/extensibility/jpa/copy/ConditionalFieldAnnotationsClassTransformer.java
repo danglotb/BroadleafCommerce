@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,168 +17,151 @@
  */
 package org.broadleafcommerce.common.extensibility.jpa.copy;
 
-import org.broadleafcommerce.common.extensibility.jpa.convert.BroadleafClassTransformer;
-import org.broadleafcommerce.common.logging.SupportLogManager;
-import org.broadleafcommerce.common.logging.SupportLogger;
-import org.broadleafcommerce.common.weave.ConditionalFieldAnnotationCopyTransformMemberDTO;
-import org.broadleafcommerce.common.weave.ConditionalFieldAnnotationCopyTransformersManager;
 
-import java.io.ByteArrayInputStream;
-import java.lang.instrument.IllegalClassFormatException;
-import java.security.ProtectionDomain;
-import java.util.ArrayList;
-import java.util.Properties;
+public class ConditionalFieldAnnotationsClassTransformer extends org.broadleafcommerce.common.extensibility.jpa.copy.AbstractClassTransformer implements org.broadleafcommerce.common.extensibility.jpa.convert.BroadleafClassTransformer {
+    @javax.annotation.Resource(name = "blConditionalFieldAnnotationsTransformersManager")
+    protected org.broadleafcommerce.common.weave.ConditionalFieldAnnotationCopyTransformersManager manager;
 
-import javax.annotation.Resource;
+    protected org.broadleafcommerce.common.logging.SupportLogger logger;
 
-import javassist.ClassPool;
-import javassist.CtClass;
-import javassist.CtField;
-import javassist.LoaderClassPath;
-import javassist.bytecode.AnnotationsAttribute;
-import javassist.bytecode.ConstPool;
-import javassist.bytecode.annotation.Annotation;
+    protected java.lang.String moduleName;
 
-/**
- * The purpose of this class is to allow the conditional addition or removal of annotations to a target entity based on template class.
- * 
- * This does not add new fields or methods, nor does it remove fields or methods.  Rather, this class copies annotations from a 
- * template class' field(s) to a target class' fields.  It removes annotations from the target that are not on the template.
- * 
- * As a result, this class takes the annotations from fields of a template class and adds them to fields in a target class. 
- * If the template contains fields that are not on the target, then unexpected behavior such as NullPointerExceptions may occur.
- * 
- * @author Kelly Tisdell
- *
- */
-public class ConditionalFieldAnnotationsClassTransformer extends AbstractClassTransformer implements BroadleafClassTransformer {
-
-    @Resource(name = "blConditionalFieldAnnotationsTransformersManager")
-    protected ConditionalFieldAnnotationCopyTransformersManager manager;
-
-    protected SupportLogger logger;
-    protected String moduleName;
-
-    public ConditionalFieldAnnotationsClassTransformer(String moduleName) {
+    public ConditionalFieldAnnotationsClassTransformer(java.lang.String moduleName) {
         this.moduleName = moduleName;
-        logger = SupportLogManager.getLogger(moduleName, this.getClass());
+        logger = org.broadleafcommerce.common.logging.SupportLogManager.getLogger(moduleName, this.getClass());
     }
 
-    /**
-     * Will return null if the Spring property value defined in {@link #propertyName} resolves to false, or if
-     * an exception occurs while trying to determine the value for the property.
-     *
-     * @param loader
-     * @param className
-     * @param classBeingRedefined
-     * @param protectionDomain
-     * @param classfileBuffer
-     * @return
-     * @throws IllegalClassFormatException
-     */
-    @Override
-    public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
-
-        // Lambdas and anonymous methods in Java 8 do not have a class name defined and so no transformation should be done
-        if (className == null) {
+    @java.lang.Override
+    public byte[] transform(java.lang.ClassLoader loader, java.lang.String className, java.lang.Class<?> classBeingRedefined, java.security.ProtectionDomain protectionDomain, byte[] classfileBuffer) throws java.lang.instrument.IllegalClassFormatException {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1983, (className == null))) {
             return null;
         }
-
-        String convertedClassName = className.replace('/', '.');
-
-        ConditionalFieldAnnotationCopyTransformMemberDTO dto = manager.getTransformMember(convertedClassName);
-        if (dto == null || dto.getTemplateNames() == null || dto.getTemplateNames().length < 1) {
+        java.lang.String convertedClassName = className.replace('/', '.');
+        org.broadleafcommerce.common.weave.ConditionalFieldAnnotationCopyTransformMemberDTO dto = manager.getTransformMember(convertedClassName);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1990, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1986, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1984, (dto == null))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1985, ((dto.getTemplateNames()) == null)))))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1989, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1987, dto.getTemplateNames().length)) < (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1988, 1)))))))) {
             return null;
         }
-
-        //Be careful with Apache library usage in this class (e.g. ArrayUtils). Usage will likely cause a ClassCircularityError
-        //under JRebel. Favor not including outside libraries and unnecessary classes.
-        CtClass clazz = null;
+        javassist.CtClass clazz = null;
         try {
-            String[] xformVals = dto.getTemplateNames();
-
-            // Load the destination class and defrost it so it is eligible for modifications
-            ClassPool classPool = ClassPool.getDefault();
-            clazz = classPool.makeClass(new ByteArrayInputStream(classfileBuffer), false);
+            java.lang.String[] xformVals = dto.getTemplateNames();
+            javassist.ClassPool classPool = javassist.ClassPool.getDefault();
+            clazz = classPool.makeClass(new java.io.ByteArrayInputStream(classfileBuffer), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1991, false));
             clazz.defrost();
-
-            for (String xformVal : xformVals) {
-                // Load the source class
-                String trimmed = xformVal.trim();
-                classPool.appendClassPath(new LoaderClassPath(Class.forName(trimmed).getClassLoader()));
-                CtClass template = classPool.get(trimmed);
-
-                CtField[] fieldsToCopy = template.getDeclaredFields();
-                //Iterate over all of the fields in the template.
-                //If the template field contains annotations, replace the target's annotations with the 
-                //template annotations.  Otherwise, remove all annotations from the target.
-                for (CtField field : fieldsToCopy) {
-                    ConstPool constPool = clazz.getClassFile().getConstPool();
-                    CtField fieldFromMainClass = clazz.getField(field.getName());
-
-                    AnnotationsAttribute copied = null;
-
-                    for (Object o : field.getFieldInfo().getAttributes()) {
-                        if (o instanceof AnnotationsAttribute) {
-                            AnnotationsAttribute templateAnnotations = (AnnotationsAttribute) o;
-                            //have to make a copy of the annotations from the target
-                            copied = (AnnotationsAttribute) templateAnnotations.copy(constPool, null);
+            for (java.lang.String xformVal : xformVals) {
+                java.lang.String trimmed = xformVal.trim();
+                classPool.appendClassPath(new javassist.LoaderClassPath(java.lang.Class.forName(trimmed).getClassLoader()));
+                javassist.CtClass template = classPool.get(trimmed);
+                javassist.CtField[] fieldsToCopy = template.getDeclaredFields();
+                for (javassist.CtField field : fieldsToCopy) {
+                    javassist.bytecode.ConstPool constPool = clazz.getClassFile().getConstPool();
+                    javassist.CtField fieldFromMainClass = clazz.getField(field.getName());
+                    javassist.bytecode.AnnotationsAttribute copied = null;
+                    for (java.lang.Object o : field.getFieldInfo().getAttributes()) {
+                        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1992, (o instanceof javassist.bytecode.AnnotationsAttribute))) {
+                            javassist.bytecode.AnnotationsAttribute templateAnnotations = ((javassist.bytecode.AnnotationsAttribute) (o));
+                            copied = ((javassist.bytecode.AnnotationsAttribute) (templateAnnotations.copy(constPool, null)));
                             break;
                         }
                     }
-
-                    //add all the copied annotations into the target class's field.
-                    for (Object attribute : fieldFromMainClass.getFieldInfo().getAttributes()) {
-                        if (attribute instanceof AnnotationsAttribute) {
-                            Annotation[] annotations = null;
-
-                            if (copied != null) {
-                                //If we found annotations to copy, then use all of them
-                                ArrayList<Annotation> annotationsList = new ArrayList<Annotation>();
-                                for (Annotation annotation : copied.getAnnotations()) {
+                    for (java.lang.Object attribute : fieldFromMainClass.getFieldInfo().getAttributes()) {
+                        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1993, (attribute instanceof javassist.bytecode.AnnotationsAttribute))) {
+                            javassist.bytecode.annotation.Annotation[] annotations = null;
+                            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1994, (copied != null))) {
+                                java.util.ArrayList<javassist.bytecode.annotation.Annotation> annotationsList = new java.util.ArrayList<javassist.bytecode.annotation.Annotation>();
+                                for (javassist.bytecode.annotation.Annotation annotation : copied.getAnnotations()) {
                                     annotationsList.add(annotation);
                                 }
-
-                                annotations = new Annotation[annotationsList.size()];
-                                int count = 0;
-                                for (Annotation annotation : annotationsList) {
-                                    annotations[count] = annotation;
-                                    count++;
+                                annotations = new javassist.bytecode.annotation.Annotation[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1995, annotationsList.size())];
+                                int count = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1996, 0);
+                                for (javassist.bytecode.annotation.Annotation annotation : annotationsList) {
+                                    annotations[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1997, count)] = annotation;
+                                    perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1998, (count++));
                                 }
-
-                                ((AnnotationsAttribute) attribute).setAnnotations(annotations);
-                            } else {
-                                //If no annotations were found on the template, then remove them entirely from the target.
-                                ((AnnotationsAttribute) attribute).setAnnotations(new Annotation[] {});
+                                ((javassist.bytecode.AnnotationsAttribute) (attribute)).setAnnotations(annotations);
+                            }else {
+                                ((javassist.bytecode.AnnotationsAttribute) (attribute)).setAnnotations(new javassist.bytecode.annotation.Annotation[]{  });
                             }
-
                             break;
                         }
                     }
-
                 }
             }
-
             return clazz.toBytecode();
-        } catch (ClassCircularityError error) {
+        } catch (java.lang.ClassCircularityError error) {
             error.printStackTrace();
             throw error;
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to transform class", e);
+        } catch (java.lang.Exception e) {
+            throw new java.lang.RuntimeException("Unable to transform class", e);
         } finally {
-            if (clazz != null) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1999, (clazz != null))) {
                 try {
                     clazz.detach();
-                } catch (Exception e) {
-                    //do nothing
+                } catch (java.lang.Exception e) {
                 }
             }
         }
     }
 
-    @Override
-    public void compileJPAProperties(Properties props, Object key) throws Exception {
-        //Nothing to do here...
+    @java.lang.Override
+    public void compileJPAProperties(java.util.Properties props, java.lang.Object key) throws java.lang.Exception {
     }
 
+    public static perturbation.location.PerturbationLocation __L1983;
+
+    public static perturbation.location.PerturbationLocation __L1984;
+
+    public static perturbation.location.PerturbationLocation __L1985;
+
+    public static perturbation.location.PerturbationLocation __L1986;
+
+    public static perturbation.location.PerturbationLocation __L1987;
+
+    public static perturbation.location.PerturbationLocation __L1988;
+
+    public static perturbation.location.PerturbationLocation __L1989;
+
+    public static perturbation.location.PerturbationLocation __L1990;
+
+    public static perturbation.location.PerturbationLocation __L1991;
+
+    public static perturbation.location.PerturbationLocation __L1992;
+
+    public static perturbation.location.PerturbationLocation __L1993;
+
+    public static perturbation.location.PerturbationLocation __L1994;
+
+    public static perturbation.location.PerturbationLocation __L1995;
+
+    public static perturbation.location.PerturbationLocation __L1996;
+
+    public static perturbation.location.PerturbationLocation __L1997;
+
+    public static perturbation.location.PerturbationLocation __L1998;
+
+    public static perturbation.location.PerturbationLocation __L1999;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1983 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/ConditionalFieldAnnotationsClassTransformer.java:83)", 1983, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1984 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/ConditionalFieldAnnotationsClassTransformer.java:90)", 1984, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1985 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/ConditionalFieldAnnotationsClassTransformer.java:90)", 1985, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1986 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/ConditionalFieldAnnotationsClassTransformer.java:90)", 1986, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1987 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/ConditionalFieldAnnotationsClassTransformer.java:90)", 1987, "Numerical");
+        org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1988 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/ConditionalFieldAnnotationsClassTransformer.java:90)", 1988, "Numerical");
+        org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1989 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/ConditionalFieldAnnotationsClassTransformer.java:90)", 1989, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1990 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/ConditionalFieldAnnotationsClassTransformer.java:90)", 1990, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1991 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/ConditionalFieldAnnotationsClassTransformer.java:102)", 1991, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1992 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/ConditionalFieldAnnotationsClassTransformer.java:122)", 1992, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1993 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/ConditionalFieldAnnotationsClassTransformer.java:132)", 1993, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1994 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/ConditionalFieldAnnotationsClassTransformer.java:135)", 1994, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1995 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/ConditionalFieldAnnotationsClassTransformer.java:142)", 1995, "Numerical");
+        org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1996 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/ConditionalFieldAnnotationsClassTransformer.java:143)", 1996, "Numerical");
+        org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1997 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/ConditionalFieldAnnotationsClassTransformer.java:145)", 1997, "Numerical");
+        org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1998 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/ConditionalFieldAnnotationsClassTransformer.java:146)", 1998, "Numerical");
+        org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.__L1999 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/ConditionalFieldAnnotationsClassTransformer.java:169)", 1999, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.extensibility.jpa.copy.ConditionalFieldAnnotationsClassTransformer.initPerturbationLocation0();
+    }
 }
+

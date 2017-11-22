@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,30 +17,22 @@
  */
 package org.broadleafcommerce.common.email.service.message;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.email.service.info.EmailInfo;
-import org.springframework.mail.MailException;
-import org.springframework.mail.javamail.JavaMailSender;
 
-import java.util.Map;
+public class NullMessageCreator extends org.broadleafcommerce.common.email.service.message.MessageCreator {
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.email.service.message.NullMessageCreator.class);
 
-public class NullMessageCreator extends MessageCreator {
-    
-    private static final Log LOG = LogFactory.getLog(NullMessageCreator.class);
-    
-    public NullMessageCreator(JavaMailSender mailSender) {
-        super(mailSender);  
+    public NullMessageCreator(org.springframework.mail.javamail.JavaMailSender mailSender) {
+        super(mailSender);
     }
-    
-    @Override
-    public String buildMessageBody(EmailInfo info, Map<String,Object> props) {
+
+    @java.lang.Override
+    public java.lang.String buildMessageBody(org.broadleafcommerce.common.email.service.info.EmailInfo info, java.util.Map<java.lang.String, java.lang.Object> props) {
         return info.getEmailTemplate();
     }
-    
-    @Override
-    public void sendMessage(final Map<String,Object> props) throws MailException {
-        LOG.warn("NullMessageCreator is defined -- specify a real message creator to send emails");
+
+    @java.lang.Override
+    public void sendMessage(final java.util.Map<java.lang.String, java.lang.Object> props) throws org.springframework.mail.MailException {
+        org.broadleafcommerce.common.email.service.message.NullMessageCreator.LOG.warn("NullMessageCreator is defined -- specify a real message creator to send emails");
     }
-    
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,283 +17,333 @@
  */
 package org.broadleafcommerce.common.site.domain;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.i18n.service.DynamicTranslationProvider;
-import org.broadleafcommerce.common.persistence.ArchiveStatus;
-import org.broadleafcommerce.common.persistence.Status;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
-import org.broadleafcommerce.common.presentation.RequiredOverride;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.site.service.type.SiteResolutionType;
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Index;
-import org.hibernate.annotations.Parameter;
-import org.hibernate.annotations.SQLDelete;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-
-/**
- * Created by bpolster.
- */
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "BLC_SITE")
-@Cache(usage= CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region="blSiteElements")
-@DirectCopyTransform({
-        @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_SITEMARKER),
-        @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.AUDITABLE_ONLY),
-        @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTI_PHASE_ADD)
-})
-public class SiteImpl implements Site, SiteAdminPresentation, AdminMainEntity {
-
+@javax.persistence.Entity
+@javax.persistence.Inheritance(strategy = javax.persistence.InheritanceType.JOINED)
+@javax.persistence.Table(name = "BLC_SITE")
+@org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "blSiteElements")
+@org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform({ @org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember(templateTokens = org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes.MULTITENANT_SITEMARKER), @org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember(templateTokens = org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes.AUDITABLE_ONLY), @org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember(templateTokens = org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes.MULTI_PHASE_ADD) })
+public class SiteImpl implements org.broadleafcommerce.common.admin.domain.AdminMainEntity , org.broadleafcommerce.common.site.domain.Site , org.broadleafcommerce.common.site.domain.SiteAdminPresentation {
     private static final long serialVersionUID = 1L;
-    private static final Log LOG = LogFactory.getLog(SiteImpl.class);
 
-    @Id
-    @GeneratedValue(generator = "SiteId")
-    @GenericGenerator(
-        name="SiteId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
-        parameters = {
-            @Parameter(name="segment_value", value="SiteImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.common.site.domain.SiteImpl")
-        }
-    )
-    @Column(name = "SITE_ID")
-    protected Long id;
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.site.domain.SiteImpl.class);
 
-    @Column (name = "NAME")
-    @AdminPresentation(friendlyName = "SiteImpl_Site_Name", order = 1000,
-            gridOrder = 1, prominent = true, requiredOverride = RequiredOverride.REQUIRED, translatable = true, group = GroupName.General)
-    protected String name;
+    @javax.persistence.Id
+    @javax.persistence.GeneratedValue(generator = "SiteId")
+    @org.hibernate.annotations.GenericGenerator(name = "SiteId", strategy = "org.broadleafcommerce.common.persistence.IdOverrideTableGenerator", parameters = { @org.hibernate.annotations.Parameter(name = "segment_value", value = "SiteImpl"), @org.hibernate.annotations.Parameter(name = "entity_name", value = "org.broadleafcommerce.common.site.domain.SiteImpl") })
+    @javax.persistence.Column(name = "SITE_ID")
+    protected java.lang.Long id;
 
-    @Column (name = "SITE_IDENTIFIER_TYPE")
-    @AdminPresentation(friendlyName = "SiteImpl_Site_Identifier_Type", order = 2000,
-            gridOrder = 2, prominent = true,
-            broadleafEnumeration = "org.broadleafcommerce.common.site.service.type.SiteResolutionType", requiredOverride=RequiredOverride.REQUIRED,
-            fieldType = SupportedFieldType.BROADLEAF_ENUMERATION, group = GroupName.General)
-    protected String siteIdentifierType;
+    @javax.persistence.Column(name = "NAME")
+    @org.broadleafcommerce.common.presentation.AdminPresentation(friendlyName = "SiteImpl_Site_Name", order = 1000, gridOrder = 1, prominent = true, requiredOverride = org.broadleafcommerce.common.presentation.RequiredOverride.REQUIRED, translatable = true, group = org.broadleafcommerce.common.site.domain.SiteAdminPresentation.GroupName.General)
+    protected java.lang.String name;
 
-    @Column (name = "SITE_IDENTIFIER_VALUE")
-    @AdminPresentation(friendlyName = "SiteImpl_Site_Identifier_Value", order = 3000,
-            gridOrder = 3, prominent = true, requiredOverride=RequiredOverride.REQUIRED, group = GroupName.General)
-    @Index(name = "BLC_SITE_ID_VAL_INDEX", columnNames = { "SITE_IDENTIFIER_VALUE" })
-    protected String siteIdentifierValue;
+    @javax.persistence.Column(name = "SITE_IDENTIFIER_TYPE")
+    @org.broadleafcommerce.common.presentation.AdminPresentation(friendlyName = "SiteImpl_Site_Identifier_Type", order = 2000, gridOrder = 2, prominent = true, broadleafEnumeration = "org.broadleafcommerce.common.site.service.type.SiteResolutionType", requiredOverride = org.broadleafcommerce.common.presentation.RequiredOverride.REQUIRED, fieldType = org.broadleafcommerce.common.presentation.client.SupportedFieldType.BROADLEAF_ENUMERATION, group = org.broadleafcommerce.common.site.domain.SiteAdminPresentation.GroupName.General)
+    protected java.lang.String siteIdentifierType;
 
-    @Column(name = "DEACTIVATED")
-    @AdminPresentation(friendlyName = "SiteImpl_Deactivated", order = 4000,
-            gridOrder = 4, excluded = false,
-            defaultValue = "false", group = GroupName.General)
-    protected Boolean deactivated = false;
-    
-    @ManyToMany(targetEntity = CatalogImpl.class, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinTable(name = "BLC_SITE_CATALOG", joinColumns = @JoinColumn(name = "SITE_ID"), inverseJoinColumns = @JoinColumn(name = "CATALOG_ID"))
-    @BatchSize(size = 50)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blSiteElements")
-    @AdminPresentation(excluded = true)
-    protected List<Catalog> catalogs = new ArrayList<Catalog>();
+    @javax.persistence.Column(name = "SITE_IDENTIFIER_VALUE")
+    @org.broadleafcommerce.common.presentation.AdminPresentation(friendlyName = "SiteImpl_Site_Identifier_Value", order = 3000, gridOrder = 3, prominent = true, requiredOverride = org.broadleafcommerce.common.presentation.RequiredOverride.REQUIRED, group = org.broadleafcommerce.common.site.domain.SiteAdminPresentation.GroupName.General)
+    @org.hibernate.annotations.Index(name = "BLC_SITE_ID_VAL_INDEX", columnNames = { "SITE_IDENTIFIER_VALUE" })
+    protected java.lang.String siteIdentifierValue;
 
-    /**************************************************/
-    /**
-     * Adding additional properties to this class or dynamically weaving in properties will have to contribute to the extension
-     * manager for {@link SiteServiceImpl}, {@link SiteServiceExtensionHandler}.
-     */
-    /**************************************************/
+    @javax.persistence.Column(name = "DEACTIVATED")
+    @org.broadleafcommerce.common.presentation.AdminPresentation(friendlyName = "SiteImpl_Deactivated", order = 4000, gridOrder = 4, excluded = false, defaultValue = "false", group = org.broadleafcommerce.common.site.domain.SiteAdminPresentation.GroupName.General)
+    protected java.lang.Boolean deactivated = ((boolean) (false));
 
-    @Embedded
-    protected ArchiveStatus archiveStatus = new ArchiveStatus();
-    
-    @Override
-    public Long getId() {
+    @javax.persistence.ManyToMany(targetEntity = org.broadleafcommerce.common.site.domain.CatalogImpl.class, cascade = { javax.persistence.CascadeType.PERSIST, javax.persistence.CascadeType.DETACH, javax.persistence.CascadeType.MERGE, javax.persistence.CascadeType.REFRESH })
+    @javax.persistence.JoinTable(name = "BLC_SITE_CATALOG", joinColumns = @javax.persistence.JoinColumn(name = "SITE_ID"), inverseJoinColumns = @javax.persistence.JoinColumn(name = "CATALOG_ID"))
+    @org.hibernate.annotations.BatchSize(size = 50)
+    @org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE, region = "blSiteElements")
+    @org.broadleafcommerce.common.presentation.AdminPresentation(excluded = true)
+    protected java.util.List<org.broadleafcommerce.common.site.domain.Catalog> catalogs = new java.util.ArrayList<org.broadleafcommerce.common.site.domain.Catalog>();
+
+    @javax.persistence.Embedded
+    protected org.broadleafcommerce.common.persistence.ArchiveStatus archiveStatus = new org.broadleafcommerce.common.persistence.ArchiveStatus();
+
+    @java.lang.Override
+    public java.lang.Long getId() {
         return id;
     }
 
-    @Override
-    public void setId(Long id) {
+    @java.lang.Override
+    public void setId(java.lang.Long id) {
         this.id = id;
     }
 
-    @Override
-    public String getName() {
-        return DynamicTranslationProvider.getValue(this, "name", name);
+    @java.lang.Override
+    public java.lang.String getName() {
+        return org.broadleafcommerce.common.i18n.service.DynamicTranslationProvider.getValue(this, "name", name);
     }
 
-    @Override
-    public void setName(String name) {
+    @java.lang.Override
+    public void setName(java.lang.String name) {
         this.name = name;
     }
 
-    @Override
-    public String getSiteIdentifierType() {
+    @java.lang.Override
+    public java.lang.String getSiteIdentifierType() {
         return siteIdentifierType;
     }
 
-    @Override
-    public void setSiteIdentifierType(String siteIdentifierType) {
+    @java.lang.Override
+    public void setSiteIdentifierType(java.lang.String siteIdentifierType) {
         this.siteIdentifierType = siteIdentifierType;
     }
 
-    @Override
-    public String getSiteIdentifierValue() {
+    @java.lang.Override
+    public java.lang.String getSiteIdentifierValue() {
         return siteIdentifierValue;
     }
 
-    @Override
-    public void setSiteIdentifierValue(String siteIdentifierValue) {
+    @java.lang.Override
+    public void setSiteIdentifierValue(java.lang.String siteIdentifierValue) {
         this.siteIdentifierValue = siteIdentifierValue;
     }
 
-    @Override
-    public SiteResolutionType getSiteResolutionType() {
-        return siteIdentifierType == null ? null : SiteResolutionType.getInstance(siteIdentifierType);
+    @java.lang.Override
+    public org.broadleafcommerce.common.site.service.type.SiteResolutionType getSiteResolutionType() {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5252, ((siteIdentifierType) == null)) ? null : org.broadleafcommerce.common.site.service.type.SiteResolutionType.getInstance(siteIdentifierType);
     }
 
-    @Override
-    public void setSiteResolutionType(SiteResolutionType siteResolutionType) {
-        this.siteIdentifierType = siteResolutionType == null ? null : siteResolutionType.getType();
+    @java.lang.Override
+    public void setSiteResolutionType(org.broadleafcommerce.common.site.service.type.SiteResolutionType siteResolutionType) {
+        this.siteIdentifierType = (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5253, (siteResolutionType == null))) ? null : siteResolutionType.getType();
     }
 
-    @Override
-    public List<Catalog> getCatalogs() {
+    @java.lang.Override
+    public java.util.List<org.broadleafcommerce.common.site.domain.Catalog> getCatalogs() {
         return catalogs;
     }
 
-    @Override
-    public void setCatalogs(List<Catalog> catalogs) {
+    @java.lang.Override
+    public void setCatalogs(java.util.List<org.broadleafcommerce.common.site.domain.Catalog> catalogs) {
         this.catalogs = catalogs;
     }
-    
-    @Override
-    public Character getArchived() {
-       ArchiveStatus temp;
-       if (archiveStatus == null) {
-           temp = new ArchiveStatus();
-       } else {
-           temp = archiveStatus;
-       }
-       return temp.getArchived();
+
+    @java.lang.Override
+    public java.lang.Character getArchived() {
+        org.broadleafcommerce.common.persistence.ArchiveStatus temp;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5254, ((archiveStatus) == null))) {
+            temp = new org.broadleafcommerce.common.persistence.ArchiveStatus();
+        }else {
+            temp = archiveStatus;
+        }
+        return temp.getArchived();
     }
 
-    @Override
-    public void setArchived(Character archived) {
-       if (archiveStatus == null) {
-           archiveStatus = new ArchiveStatus();
-       }
-       archiveStatus.setArchived(archived);
+    @java.lang.Override
+    public void setArchived(java.lang.Character archived) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5255, ((archiveStatus) == null))) {
+            archiveStatus = new org.broadleafcommerce.common.persistence.ArchiveStatus();
+        }
+        archiveStatus.setArchived(archived);
     }
-    
-    @Override
-    public ArchiveStatus getArchiveStatus() {
+
+    @java.lang.Override
+    public org.broadleafcommerce.common.persistence.ArchiveStatus getArchiveStatus() {
         return archiveStatus;
     }
 
-    @Override
+    @java.lang.Override
     public boolean isActive() {
-        if (LOG.isDebugEnabled()) {
-            if (isDeactivated()) {
-                LOG.debug("site, " + id + ", inactive due to deactivated property");
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5256, org.broadleafcommerce.common.site.domain.SiteImpl.LOG.isDebugEnabled())) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5257, isDeactivated())) {
+                org.broadleafcommerce.common.site.domain.SiteImpl.LOG.debug((("site, " + (id)) + ", inactive due to deactivated property"));
             }
-            if ('Y'==getArchived()) {
-                LOG.debug("site, " + id + ", inactive due to archived status");
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5258, ('Y' == (getArchived())))) {
+                org.broadleafcommerce.common.site.domain.SiteImpl.LOG.debug((("site, " + (id)) + ", inactive due to archived status"));
             }
         }
-        return !isDeactivated() && 'Y'!=getArchived();
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5262, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5260, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5259, isDeactivated()))))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5261, ('Y' != (getArchived()))))));
     }
 
-    @Override
+    @java.lang.Override
     public boolean isDeactivated() {
-        if (deactivated == null) {
-            return false;
-        } else {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5263, ((deactivated) == null))) {
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5264, false);
+        }else {
             return deactivated;
         }
     }
 
-    @Override
+    @java.lang.Override
     public void setDeactivated(boolean deactivated) {
-        this.deactivated = deactivated;
-    }
-    
-    @Override
-    public boolean isTemplateSite() {
-        return false;
+        this.deactivated = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5265, deactivated);
     }
 
-    public void checkCloneable(Site site) throws CloneNotSupportedException, SecurityException, NoSuchMethodException {
-        Method cloneMethod = site.getClass().getMethod("clone", new Class[]{});
-        if (cloneMethod.getDeclaringClass().getName().startsWith("org.broadleafcommerce") && !site.getClass().getName().startsWith("org.broadleafcommerce")) {
-            //subclass is not implementing the clone method
-            throw new CloneNotSupportedException("Custom extensions and implementations should implement clone.");
+    @java.lang.Override
+    public boolean isTemplateSite() {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5266, false);
+    }
+
+    public void checkCloneable(org.broadleafcommerce.common.site.domain.Site site) throws java.lang.CloneNotSupportedException, java.lang.NoSuchMethodException, java.lang.SecurityException {
+        java.lang.reflect.Method cloneMethod = site.getClass().getMethod("clone", new java.lang.Class[]{  });
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5270, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5267, cloneMethod.getDeclaringClass().getName().startsWith("org.broadleafcommerce"))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5269, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5268, site.getClass().getName().startsWith("org.broadleafcommerce"))))))))) {
+            throw new java.lang.CloneNotSupportedException("Custom extensions and implementations should implement clone.");
         }
     }
 
-    @Override
-    public Site clone() {
-        Site clone;
+    @java.lang.Override
+    public org.broadleafcommerce.common.site.domain.Site clone() {
+        org.broadleafcommerce.common.site.domain.Site clone;
         try {
-            clone = (Site) Class.forName(this.getClass().getName()).newInstance();
+            clone = ((org.broadleafcommerce.common.site.domain.Site) (java.lang.Class.forName(this.getClass().getName()).newInstance()));
             try {
                 checkCloneable(clone);
-            } catch (CloneNotSupportedException e) {
-                LOG.warn("Clone implementation missing in inheritance hierarchy outside of Broadleaf: " + clone.getClass().getName(), e);
+            } catch (java.lang.CloneNotSupportedException e) {
+                org.broadleafcommerce.common.site.domain.SiteImpl.LOG.warn(("Clone implementation missing in inheritance hierarchy outside of Broadleaf: " + (clone.getClass().getName())), e);
             }
             clone.setId(id);
             clone.setName(name);
-            clone.setDeactivated(isDeactivated());
+            clone.setDeactivated(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5271, isDeactivated()));
             clone.setSiteResolutionType(getSiteResolutionType());
             clone.setSiteIdentifierValue(getSiteIdentifierValue());
-            ((Status) clone).setArchived(getArchived());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            ((org.broadleafcommerce.common.persistence.Status) (clone)).setArchived(getArchived());
+        } catch (java.lang.Exception e) {
+            throw new java.lang.RuntimeException(e);
         }
-
         return clone;
     }
 
-    @Override
-    public String getMainEntityName() {
+    @java.lang.Override
+    public java.lang.String getMainEntityName() {
         return getName();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof SiteImpl)) return false;
+    @java.lang.Override
+    public boolean equals(java.lang.Object o) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5272, ((this) == o)))
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5273, true);
 
-        SiteImpl site = (SiteImpl) o;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5275, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5274, (o instanceof org.broadleafcommerce.common.site.domain.SiteImpl))))))
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5276, false);
 
-        if (id != null && site.id != null && id.equals(site.id)) return true;
+        org.broadleafcommerce.common.site.domain.SiteImpl site = ((org.broadleafcommerce.common.site.domain.SiteImpl) (o));
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5281, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5279, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5277, ((id) != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5278, ((site.id) != null)))))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5280, id.equals(site.id))))))
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5282, true);
 
-        return false;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5283, false);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.site.domain.SiteImpl.__L5287, (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.site.domain.SiteImpl.__L5284, ((id) != null)) ? perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.site.domain.SiteImpl.__L5285, id.hashCode()) : perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.site.domain.SiteImpl.__L5286, 0)));
+    }
+
+    public static perturbation.location.PerturbationLocation __L5252;
+
+    public static perturbation.location.PerturbationLocation __L5253;
+
+    public static perturbation.location.PerturbationLocation __L5254;
+
+    public static perturbation.location.PerturbationLocation __L5255;
+
+    public static perturbation.location.PerturbationLocation __L5256;
+
+    public static perturbation.location.PerturbationLocation __L5257;
+
+    public static perturbation.location.PerturbationLocation __L5258;
+
+    public static perturbation.location.PerturbationLocation __L5259;
+
+    public static perturbation.location.PerturbationLocation __L5260;
+
+    public static perturbation.location.PerturbationLocation __L5261;
+
+    public static perturbation.location.PerturbationLocation __L5262;
+
+    public static perturbation.location.PerturbationLocation __L5263;
+
+    public static perturbation.location.PerturbationLocation __L5264;
+
+    public static perturbation.location.PerturbationLocation __L5265;
+
+    public static perturbation.location.PerturbationLocation __L5266;
+
+    public static perturbation.location.PerturbationLocation __L5267;
+
+    public static perturbation.location.PerturbationLocation __L5268;
+
+    public static perturbation.location.PerturbationLocation __L5269;
+
+    public static perturbation.location.PerturbationLocation __L5270;
+
+    public static perturbation.location.PerturbationLocation __L5271;
+
+    public static perturbation.location.PerturbationLocation __L5272;
+
+    public static perturbation.location.PerturbationLocation __L5273;
+
+    public static perturbation.location.PerturbationLocation __L5274;
+
+    public static perturbation.location.PerturbationLocation __L5275;
+
+    public static perturbation.location.PerturbationLocation __L5276;
+
+    public static perturbation.location.PerturbationLocation __L5277;
+
+    public static perturbation.location.PerturbationLocation __L5278;
+
+    public static perturbation.location.PerturbationLocation __L5279;
+
+    public static perturbation.location.PerturbationLocation __L5280;
+
+    public static perturbation.location.PerturbationLocation __L5281;
+
+    public static perturbation.location.PerturbationLocation __L5282;
+
+    public static perturbation.location.PerturbationLocation __L5283;
+
+    public static perturbation.location.PerturbationLocation __L5284;
+
+    public static perturbation.location.PerturbationLocation __L5285;
+
+    public static perturbation.location.PerturbationLocation __L5286;
+
+    public static perturbation.location.PerturbationLocation __L5287;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5252 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:172)", 5252, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5253 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:177)", 5253, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5254 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:193)", 5254, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5255 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:203)", 5255, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5256 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:216)", 5256, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5257 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:217)", 5257, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5258 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:220)", 5258, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5259 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:224)", 5259, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5260 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:224)", 5260, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5261 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:224)", 5261, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5262 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:224)", 5262, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5263 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:229)", 5263, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5264 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:230)", 5264, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5265 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:238)", 5265, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5266 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:243)", 5266, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5267 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:248)", 5267, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5268 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:248)", 5268, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5269 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:248)", 5269, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5270 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:248)", 5270, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5271 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:266)", 5271, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5272 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:284)", 5272, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5273 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:284)", 5273, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5274 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:285)", 5274, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5275 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:285)", 5275, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5276 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:285)", 5276, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5277 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:289)", 5277, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5278 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:289)", 5278, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5279 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:289)", 5279, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5280 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:289)", 5280, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5281 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:289)", 5281, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5282 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:289)", 5282, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5283 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:291)", 5283, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5284 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:296)", 5284, "Boolean");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5285 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:296)", 5285, "Numerical");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5286 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:296)", 5286, "Numerical");
+        org.broadleafcommerce.common.site.domain.SiteImpl.__L5287 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/site/domain/SiteImpl.java:296)", 5287, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.site.domain.SiteImpl.initPerturbationLocation0();
     }
 }
 

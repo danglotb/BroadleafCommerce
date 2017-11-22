@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -18,24 +18,23 @@
 package org.broadleafcommerce.common.vendor.service.exception;
 
 
-public class TaxHostException extends TaxException {
-
+public class TaxHostException extends org.broadleafcommerce.common.vendor.service.exception.TaxException {
     private static final long serialVersionUID = 1L;
 
     public TaxHostException() {
         super();
     }
 
-    public TaxHostException(String message, Throwable cause) {
+    public TaxHostException(java.lang.String message, java.lang.Throwable cause) {
         super(message, cause);
     }
 
-    public TaxHostException(String message) {
+    public TaxHostException(java.lang.String message) {
         super(message);
     }
 
-    public TaxHostException(Throwable cause) {
+    public TaxHostException(java.lang.Throwable cause) {
         super(cause);
     }
-
 }
+

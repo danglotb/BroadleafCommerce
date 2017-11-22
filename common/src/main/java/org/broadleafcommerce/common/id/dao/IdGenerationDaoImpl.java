@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Profile
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,70 +17,54 @@
  */
 package org.broadleafcommerce.common.id.dao;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.id.domain.IdGeneration;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
 
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+@org.springframework.stereotype.Repository("blIdGenerationDao")
+public class IdGenerationDaoImpl implements org.broadleafcommerce.common.id.dao.IdGenerationDao {
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.class);
 
-import javax.annotation.Resource;
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.OptimisticLockException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+    protected java.lang.Long defaultBatchSize = ((long) (100L));
 
-@Repository("blIdGenerationDao")
-public class IdGenerationDaoImpl implements IdGenerationDao {
+    protected java.lang.Long defaultBatchStart = ((long) (1L));
 
-    private static final Log LOG = LogFactory.getLog(IdGenerationDaoImpl.class);
+    @javax.persistence.PersistenceContext(unitName = "blPU")
+    protected javax.persistence.EntityManager em;
 
-    protected Long defaultBatchSize = 100L;
-    protected Long defaultBatchStart = 1L;
+    @javax.annotation.Resource(name = "blEntityConfiguration")
+    protected org.broadleafcommerce.common.persistence.EntityConfiguration entityConfiguration;
 
-    @PersistenceContext(unitName = "blPU")
-    protected EntityManager em;
-
-    @Resource(name="blEntityConfiguration")
-    protected EntityConfiguration entityConfiguration;
-
-    @Override
-    @Transactional("blTransactionManager")
-    public IdGeneration findNextId(String idType) throws OptimisticLockException, Exception {
+    @java.lang.Override
+    @org.springframework.transaction.annotation.Transactional("blTransactionManager")
+    public org.broadleafcommerce.common.id.domain.IdGeneration findNextId(java.lang.String idType) throws java.lang.Exception, javax.persistence.OptimisticLockException {
         return findNextId(idType, null);
     }
 
-    @Override
-    @Transactional(value = "blTransactionManager", propagation = Propagation.REQUIRES_NEW)
-    public IdGeneration findNextId(String idType, Long batchSize) throws OptimisticLockException, Exception {
-        IdGeneration response;
-        Query query = em.createNamedQuery("BC_FIND_NEXT_ID");
+    @java.lang.Override
+    @org.springframework.transaction.annotation.Transactional(value = "blTransactionManager", propagation = org.springframework.transaction.annotation.Propagation.REQUIRES_NEW)
+    public org.broadleafcommerce.common.id.domain.IdGeneration findNextId(java.lang.String idType, java.lang.Long batchSize) throws java.lang.Exception, javax.persistence.OptimisticLockException {
+        org.broadleafcommerce.common.id.domain.IdGeneration response;
+        javax.persistence.Query query = em.createNamedQuery("BC_FIND_NEXT_ID");
         query.setParameter("idType", idType);
         try {
-            IdGeneration idGeneration =  (IdGeneration) query.getSingleResult();
-            response =  (IdGeneration) entityConfiguration.createEntityInstance("org.broadleafcommerce.profile.core.domain.IdGeneration");
+            org.broadleafcommerce.common.id.domain.IdGeneration idGeneration = ((org.broadleafcommerce.common.id.domain.IdGeneration) (query.getSingleResult()));
+            response = ((org.broadleafcommerce.common.id.domain.IdGeneration) (entityConfiguration.createEntityInstance("org.broadleafcommerce.profile.core.domain.IdGeneration")));
             response.setBatchSize(idGeneration.getBatchSize());
             response.setBatchStart(idGeneration.getBatchStart());
-            Long originalBatchStart = idGeneration.getBatchStart();
-            idGeneration.setBatchStart(originalBatchStart + idGeneration.getBatchSize());
-            if (idGeneration.getBegin() != null) {
+            java.lang.Long originalBatchStart = idGeneration.getBatchStart();
+            idGeneration.setBatchStart(perturbation.PerturbationEngine.plong(org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3146, (originalBatchStart + (idGeneration.getBatchSize()))));
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3147, ((idGeneration.getBegin()) != null))) {
                 response.setBegin(idGeneration.getBegin());
-                if (idGeneration.getBatchStart() < idGeneration.getBegin()) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3148, ((idGeneration.getBatchStart()) < (idGeneration.getBegin())))) {
                     idGeneration.setBatchStart(idGeneration.getBegin());
                     response.setBatchStart(idGeneration.getBatchStart());
                 }
             }
-            if (idGeneration.getEnd() != null) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3149, ((idGeneration.getEnd()) != null))) {
                 response.setEnd(idGeneration.getEnd());
-                if (idGeneration.getBatchStart() > idGeneration.getEnd()) {
-                    response.setBatchSize(idGeneration.getEnd() - originalBatchStart + 1);
-                    if (idGeneration.getBegin() != null) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3150, ((idGeneration.getBatchStart()) > (idGeneration.getEnd())))) {
+                    response.setBatchSize(perturbation.PerturbationEngine.plong(org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3153, ((perturbation.PerturbationEngine.plong(org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3151, ((idGeneration.getEnd()) - originalBatchStart))) + (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3152, 1)))));
+                    if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3154, ((idGeneration.getBegin()) != null))) {
                         idGeneration.setBatchStart(idGeneration.getBegin());
-                    } else {
+                    }else {
                         idGeneration.setBatchStart(getDefaultBatchStart());
                     }
                 }
@@ -88,45 +72,86 @@ public class IdGenerationDaoImpl implements IdGenerationDao {
             response.setType(idGeneration.getType());
             em.merge(idGeneration);
             em.flush();
-        } catch (NoResultException nre) {
-            // No result not found.
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("No row found in idGenerator table for " + idType + " creating row.");
+        } catch (javax.persistence.NoResultException nre) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3155, org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.LOG.isDebugEnabled())) {
+                org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.LOG.debug((("No row found in idGenerator table for " + idType) + " creating row."));
             }
-            response =  (IdGeneration) entityConfiguration.createEntityInstance("org.broadleafcommerce.profile.core.domain.IdGeneration");
+            response = ((org.broadleafcommerce.common.id.domain.IdGeneration) (entityConfiguration.createEntityInstance("org.broadleafcommerce.profile.core.domain.IdGeneration")));
             response.setType(idType);
             response.setBegin(null);
             response.setEnd(null);
             response.setBatchStart(getDefaultBatchStart());
-            response.setBatchSize(batchSize==null?getDefaultBatchSize():batchSize);
+            response.setBatchSize((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3156, (batchSize == null)) ? getDefaultBatchSize() : batchSize));
             try {
                 em.persist(response);
                 em.flush();
-            } catch (EntityExistsException e) {
-                if (LOG.isWarnEnabled()) {
-                    LOG.warn("Error inserting row id generation for idType " + idType + ".  Requerying table.");
+            } catch (javax.persistence.EntityExistsException e) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3157, org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.LOG.isWarnEnabled())) {
+                    org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.LOG.warn((("Error inserting row id generation for idType " + idType) + ".  Requerying table."));
                 }
             }
             return findNextId(idType);
         }
-        
         return response;
     }
 
-    public Long getDefaultBatchSize() {
+    public java.lang.Long getDefaultBatchSize() {
         return defaultBatchSize;
     }
 
-    public void setDefaultBatchSize(Long defaultBatchSize) {
+    public void setDefaultBatchSize(java.lang.Long defaultBatchSize) {
         this.defaultBatchSize = defaultBatchSize;
     }
 
-    public Long getDefaultBatchStart() {
+    public java.lang.Long getDefaultBatchStart() {
         return defaultBatchStart;
     }
 
-    public void setDefaultBatchStart(Long defaultBatchStart) {
+    public void setDefaultBatchStart(java.lang.Long defaultBatchStart) {
         this.defaultBatchStart = defaultBatchStart;
     }
 
+    public static perturbation.location.PerturbationLocation __L3146;
+
+    public static perturbation.location.PerturbationLocation __L3147;
+
+    public static perturbation.location.PerturbationLocation __L3148;
+
+    public static perturbation.location.PerturbationLocation __L3149;
+
+    public static perturbation.location.PerturbationLocation __L3150;
+
+    public static perturbation.location.PerturbationLocation __L3151;
+
+    public static perturbation.location.PerturbationLocation __L3152;
+
+    public static perturbation.location.PerturbationLocation __L3153;
+
+    public static perturbation.location.PerturbationLocation __L3154;
+
+    public static perturbation.location.PerturbationLocation __L3155;
+
+    public static perturbation.location.PerturbationLocation __L3156;
+
+    public static perturbation.location.PerturbationLocation __L3157;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3146 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/id/dao/IdGenerationDaoImpl.java:69)", 3146, "Numerical");
+        org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3147 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/id/dao/IdGenerationDaoImpl.java:70)", 3147, "Boolean");
+        org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3148 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/id/dao/IdGenerationDaoImpl.java:72)", 3148, "Boolean");
+        org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3149 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/id/dao/IdGenerationDaoImpl.java:77)", 3149, "Boolean");
+        org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3150 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/id/dao/IdGenerationDaoImpl.java:79)", 3150, "Boolean");
+        org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3151 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/id/dao/IdGenerationDaoImpl.java:80)", 3151, "Numerical");
+        org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3152 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/id/dao/IdGenerationDaoImpl.java:80)", 3152, "Numerical");
+        org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3153 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/id/dao/IdGenerationDaoImpl.java:80)", 3153, "Numerical");
+        org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3154 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/id/dao/IdGenerationDaoImpl.java:81)", 3154, "Boolean");
+        org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3155 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/id/dao/IdGenerationDaoImpl.java:93)", 3155, "Boolean");
+        org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3156 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/id/dao/IdGenerationDaoImpl.java:101)", 3156, "Boolean");
+        org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.__L3157 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/id/dao/IdGenerationDaoImpl.java:106)", 3157, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.id.dao.IdGenerationDaoImpl.initPerturbationLocation0();
+    }
 }
+

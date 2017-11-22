@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,36 +17,16 @@
  */
 package org.broadleafcommerce.common.currency.dao;
 
-import org.broadleafcommerce.common.currency.domain.BroadleafCurrency;
 
-import java.util.List;
-
-/**
- * Author: jerryocanas
- * Date: 9/6/12
- */
 public interface BroadleafCurrencyDao {
+    public org.broadleafcommerce.common.currency.domain.BroadleafCurrency findDefaultBroadleafCurrency();
 
-    /**
-     * Returns the default Broadleaf currency
-     * @return The default currency
-     */
-    public BroadleafCurrency findDefaultBroadleafCurrency();
+    public org.broadleafcommerce.common.currency.domain.BroadleafCurrency findCurrencyByCode(java.lang.String currencyCode);
 
-    /**
-     * Returns a Broadleaf currency found by a code
-     * @return The currency
-     */
-    public BroadleafCurrency findCurrencyByCode(String currencyCode);
+    public java.util.List<org.broadleafcommerce.common.currency.domain.BroadleafCurrency> getAllCurrencies();
 
-    /**
-     * Returns a list of all the Broadleaf Currencies
-     * @return List of currencies
-     */
-    public List<BroadleafCurrency> getAllCurrencies();
+    public org.broadleafcommerce.common.currency.domain.BroadleafCurrency save(org.broadleafcommerce.common.currency.domain.BroadleafCurrency currency);
 
-    public BroadleafCurrency save(BroadleafCurrency currency);
-    
-    public BroadleafCurrency create();    
-
+    public org.broadleafcommerce.common.currency.domain.BroadleafCurrency create();
 }
+

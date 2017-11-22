@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,116 +17,82 @@
  */
 package org.broadleafcommerce.common.web.payment.controller;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
-import org.broadleafcommerce.common.payment.service.CustomerPaymentGatewayService;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayConfiguration;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayWebResponsePrintService;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayWebResponseService;
-import org.broadleafcommerce.common.vendor.service.exception.PaymentException;
-import org.broadleafcommerce.common.web.controller.BroadleafAbstractController;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.ui.Model;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
-/**
- * <p>Abstract controller that provides convenience methods and resource declarations to facilitate payment gateway
- * communication between the implementing module and the Spring injected customer profile engine. This class provides
- * flows to enable Credit Card tokenization in a PCI-Compliant manner (e.g. through a mechanism like Transparent Redirect)
- * with the ability to save it to a customer's profile.
- * </p>
- *
- * <p>If used in conjunction with the core framework, Broadleaf provides all the necessary spring resources, such as
- * "blCustomerPaymentGatewayService" that are needed for this class. If you are using the common jars without the framework
- * dependency, you will either have to implement the blCustomerPaymentGatewayService yourself in order to
- * save the token to your implementing customer profile system.</p>
- *
- * @author Elbert Bautista (elbertbautista)
- */
-public abstract class CustomerPaymentGatewayAbstractController extends BroadleafAbstractController {
+public abstract class CustomerPaymentGatewayAbstractController extends org.broadleafcommerce.common.web.controller.BroadleafAbstractController {
+    protected static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.class);
 
-    protected static final Log LOG = LogFactory.getLog(CustomerPaymentGatewayAbstractController.class);
+    @javax.annotation.Resource(name = "blPaymentGatewayWebResponsePrintService")
+    protected org.broadleafcommerce.common.payment.service.PaymentGatewayWebResponsePrintService webResponsePrintService;
 
-    @Resource(name = "blPaymentGatewayWebResponsePrintService")
-    protected PaymentGatewayWebResponsePrintService webResponsePrintService;
+    @org.springframework.beans.factory.annotation.Autowired(required = false)
+    @org.springframework.beans.factory.annotation.Qualifier("blCustomerPaymentGatewayService")
+    protected org.broadleafcommerce.common.payment.service.CustomerPaymentGatewayService customerPaymentGatewayService;
 
-    @Autowired(required=false)
-    @Qualifier("blCustomerPaymentGatewayService")
-    protected CustomerPaymentGatewayService customerPaymentGatewayService;
-
-    public Long applyCustomerTokenToProfile(PaymentResponseDTO responseDTO) throws IllegalArgumentException {
-        if (LOG.isErrorEnabled()) {
-            if (customerPaymentGatewayService == null) {
-                LOG.trace("applyCustomerTokenToProfile: CustomerPaymentGatewayService is null. Please check your configuration.");
+    public java.lang.Long applyCustomerTokenToProfile(org.broadleafcommerce.common.payment.dto.PaymentResponseDTO responseDTO) throws java.lang.IllegalArgumentException {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.__L7276, org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.LOG.isErrorEnabled())) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.__L7277, ((customerPaymentGatewayService) == null))) {
+                org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.LOG.trace("applyCustomerTokenToProfile: CustomerPaymentGatewayService is null. Please check your configuration.");
             }
         }
-
-        if (customerPaymentGatewayService != null) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.__L7278, ((customerPaymentGatewayService) != null))) {
             return customerPaymentGatewayService.createCustomerPaymentFromResponseDTO(responseDTO, getConfiguration());
         }
-
         return null;
     }
 
-    // ***********************************************
-    // Customer Payment Result Processing
-    // ***********************************************
-    /**
-     * <p>This method is intended to initiate the creation of a saved payment token.</p>
-     *
-     * <p>This assumes that the implementing gateway's {@link org.broadleafcommerce.common.payment.service.PaymentGatewayWebResponseService}
-     * knows how to parse an incoming {@link javax.servlet.http.HttpServletRequest} into a
-     * {@link org.broadleafcommerce.common.payment.dto.PaymentResponseDTO} which will then be used by the
-     * customer profile engine to save a token to the user's account (e.g. wallet).</p>
-     *
-     * @param model - Spring MVC model
-     * @param request - the HTTPServletRequest (originating either from a Payment Gateway or from the implementing checkout engine)
-     * @param redirectAttributes - Spring MVC redirect attributes
-     * @return the resulting view
-     * @throws org.broadleafcommerce.common.vendor.service.exception.PaymentException
-     */
-    public String createCustomerPayment(Model model, HttpServletRequest request,
-                                        final RedirectAttributes redirectAttributes) throws PaymentException {
-
+    public java.lang.String createCustomerPayment(org.springframework.ui.Model model, javax.servlet.http.HttpServletRequest request, final org.springframework.web.servlet.mvc.support.RedirectAttributes redirectAttributes) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException {
         try {
-            PaymentResponseDTO responseDTO = getWebResponseService().translateWebResponse(request);
-            if (LOG.isTraceEnabled()) {
-                LOG.trace("HTTPRequest translated to Raw Response: " +  responseDTO.getRawResponse());
+            org.broadleafcommerce.common.payment.dto.PaymentResponseDTO responseDTO = getWebResponseService().translateWebResponse(request);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.__L7279, org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.LOG.isTraceEnabled())) {
+                org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.LOG.trace(("HTTPRequest translated to Raw Response: " + (responseDTO.getRawResponse())));
             }
-
-            Long customerPaymentId = applyCustomerTokenToProfile(responseDTO);
-
-            if (customerPaymentId != null) {
-                return getCustomerPaymentViewRedirect(String.valueOf(customerPaymentId));
+            java.lang.Long customerPaymentId = applyCustomerTokenToProfile(responseDTO);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.__L7280, (customerPaymentId != null))) {
+                return getCustomerPaymentViewRedirect(java.lang.String.valueOf(customerPaymentId));
             }
-
-        } catch (Exception e) {
-            if (LOG.isErrorEnabled()) {
-                LOG.error("HTTPRequest - " + webResponsePrintService.printRequest(request));
-
-                LOG.error("An exception was caught either from processing the response or saving the resulting " +
-                        "payment token to the customer's profile - delegating to the payment module to handle any other " +
-                        "exception processing. The error caught was: " + e);
+        } catch (java.lang.Exception e) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.__L7281, org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.LOG.isErrorEnabled())) {
+                org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.LOG.error(("HTTPRequest - " + (webResponsePrintService.printRequest(request))));
+                org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.LOG.error((("An exception was caught either from processing the response or saving the resulting " + ("payment token to the customer's profile - delegating to the payment module to handle any other " + "exception processing. The error caught was: ")) + e));
             }
             handleProcessingException(e, redirectAttributes);
         }
-
         return getCustomerPaymentErrorRedirect();
     }
 
-    public abstract PaymentGatewayWebResponseService getWebResponseService();
+    public abstract org.broadleafcommerce.common.payment.service.PaymentGatewayWebResponseService getWebResponseService();
 
-    public abstract PaymentGatewayConfiguration getConfiguration();
+    public abstract org.broadleafcommerce.common.payment.service.PaymentGatewayConfiguration getConfiguration();
 
-    public abstract String getCustomerPaymentViewRedirect(String customerPaymentId);
+    public abstract java.lang.String getCustomerPaymentViewRedirect(java.lang.String customerPaymentId);
 
-    public abstract String getCustomerPaymentErrorRedirect();
+    public abstract java.lang.String getCustomerPaymentErrorRedirect();
 
-    public abstract void handleProcessingException(Exception e, final RedirectAttributes redirectAttributes)
-            throws PaymentException;
+    public abstract void handleProcessingException(java.lang.Exception e, final org.springframework.web.servlet.mvc.support.RedirectAttributes redirectAttributes) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException;
 
+    public static perturbation.location.PerturbationLocation __L7276;
+
+    public static perturbation.location.PerturbationLocation __L7277;
+
+    public static perturbation.location.PerturbationLocation __L7278;
+
+    public static perturbation.location.PerturbationLocation __L7279;
+
+    public static perturbation.location.PerturbationLocation __L7280;
+
+    public static perturbation.location.PerturbationLocation __L7281;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.__L7276 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/controller/CustomerPaymentGatewayAbstractController.java:62)", 7276, "Boolean");
+        org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.__L7277 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/controller/CustomerPaymentGatewayAbstractController.java:63)", 7277, "Boolean");
+        org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.__L7278 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/controller/CustomerPaymentGatewayAbstractController.java:68)", 7278, "Boolean");
+        org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.__L7279 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/controller/CustomerPaymentGatewayAbstractController.java:97)", 7279, "Boolean");
+        org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.__L7280 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/controller/CustomerPaymentGatewayAbstractController.java:103)", 7280, "Boolean");
+        org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.__L7281 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/controller/CustomerPaymentGatewayAbstractController.java:108)", 7281, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.payment.controller.CustomerPaymentGatewayAbstractController.initPerturbationLocation0();
+    }
 }
+

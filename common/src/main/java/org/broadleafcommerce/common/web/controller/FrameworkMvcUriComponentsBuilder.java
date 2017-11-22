@@ -15,837 +15,668 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-/*
- * Copyright 2002-2017 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.broadleafcommerce.common.web.controller;
 
-import org.aopalliance.intercept.MethodInterceptor;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.web.controller.annotation.FrameworkMapping;
-import org.springframework.aop.framework.ProxyFactory;
-import org.springframework.aop.target.EmptyTargetSource;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.springframework.beans.factory.NoUniqueBeanDefinitionException;
-import org.springframework.cglib.core.SpringNamingPolicy;
-import org.springframework.cglib.proxy.Callback;
-import org.springframework.cglib.proxy.Enhancer;
-import org.springframework.cglib.proxy.Factory;
-import org.springframework.cglib.proxy.MethodProxy;
-import org.springframework.core.DefaultParameterNameDiscoverer;
-import org.springframework.core.MethodIntrospector;
-import org.springframework.core.MethodParameter;
-import org.springframework.core.ParameterNameDiscoverer;
-import org.springframework.core.annotation.SynthesizingMethodParameter;
-import org.springframework.objenesis.ObjenesisException;
-import org.springframework.objenesis.SpringObjenesis;
-import org.springframework.util.AntPathMatcher;
-import org.springframework.util.Assert;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.PathMatcher;
-import org.springframework.util.ReflectionUtils;
-import org.springframework.util.ReflectionUtils.MethodFilter;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.method.annotation.RequestParamMethodArgumentResolver;
-import org.springframework.web.method.support.CompositeUriComponentsContributor;
-import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-import org.springframework.web.servlet.mvc.method.annotation.PathVariableMethodArgumentResolver;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-
-/**
- * This class has been copied from spring-webmvc:4.3.7-RELEASE in order to provide URI building functionality for
- * {@link FrameworkMapping} annotations. Since this class isn't extensible due to heavy usage of {@code private}
- * we had to copy and modify the whole class. Spring version updates should seek to take in changes from {@link MvcUriComponentsBuilder}
- * into this class.
- *
- * Creates instances of {@link org.springframework.web.util.UriComponentsBuilder}
- * by pointing to Spring MVC controllers and {@code @RequestMapping} methods.
- *
- * <p>The static {@code fromXxx(...)} methods prepare links relative to the
- * current request as determined by a call to
- * {@link org.springframework.web.servlet.support.ServletUriComponentsBuilder#fromCurrentServletMapping()}.
- *
- * <p>The static {@code fromXxx(UriComponentsBuilder,...)} methods can be given
- * the baseUrl when operating outside the context of a request.
- *
- * <p>You can also create an MvcUriComponentsBuilder instance with a baseUrl
- * via {@link #relativeTo(org.springframework.web.util.UriComponentsBuilder)}
- * and then use the non-static {@code withXxx(...)} method variants.
- *
- * @author Oliver Gierke
- * @author Rossen Stoyanchev
- * @author Sam Brannen
- * @author Philip Baggett (pbaggett)
- * @see MvcUriComponentsBuilder
- * @since 5.2
- */
 public class FrameworkMvcUriComponentsBuilder {
+    private static class ControllerMethodInvocationInterceptor implements org.aopalliance.intercept.MethodInterceptor , org.springframework.cglib.proxy.MethodInterceptor {
+        private static final java.lang.reflect.Method getControllerMethod = org.springframework.util.ReflectionUtils.findMethod(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodInvocationInfo.class, "getControllerMethod");
 
-    /**
-     * Well-known name for the {@link CompositeUriComponentsContributor} object in the bean factory.
-     */
-    public static final String MVC_URI_COMPONENTS_CONTRIBUTOR_BEAN_NAME = "mvcUriComponentsContributor";
+        private static final java.lang.reflect.Method getArgumentValues = org.springframework.util.ReflectionUtils.findMethod(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodInvocationInfo.class, "getArgumentValues");
+
+        private static final java.lang.reflect.Method getControllerType = org.springframework.util.ReflectionUtils.findMethod(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodInvocationInfo.class, "getControllerType");
+
+        private java.lang.reflect.Method controllerMethod;
+
+        private java.lang.Object[] argumentValues;
+
+        private java.lang.Class<?> controllerType;
+
+        ControllerMethodInvocationInterceptor(java.lang.Class<?> controllerType) {
+            this.controllerType = controllerType;
+        }
+
+        @java.lang.Override
+        public java.lang.Object intercept(java.lang.Object obj, java.lang.reflect.Method method, java.lang.Object[] args, org.springframework.cglib.proxy.MethodProxy proxy) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.ControllerMethodInvocationInterceptor.__L7086, org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.ControllerMethodInvocationInterceptor.getControllerMethod.equals(method))) {
+                return this.controllerMethod;
+            }else
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.ControllerMethodInvocationInterceptor.__L7087, org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.ControllerMethodInvocationInterceptor.getArgumentValues.equals(method))) {
+                    return this.argumentValues;
+                }else
+                    if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.ControllerMethodInvocationInterceptor.__L7088, org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.ControllerMethodInvocationInterceptor.getControllerType.equals(method))) {
+                        return this.controllerType;
+                    }else
+                        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.ControllerMethodInvocationInterceptor.__L7089, org.springframework.util.ReflectionUtils.isObjectMethod(method))) {
+                            return org.springframework.util.ReflectionUtils.invokeMethod(method, obj, args);
+                        }else {
+                            this.controllerMethod = method;
+                            this.argumentValues = args;
+                            java.lang.Class<?> returnType = method.getReturnType();
+                            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.ControllerMethodInvocationInterceptor.__L7090, ((void.class) == returnType)) ? null : returnType.cast(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.initProxy(returnType, this));
+                        }
 
 
-    private static final Log logger = LogFactory.getLog(FrameworkMvcUriComponentsBuilder.class);
 
-    private static final SpringObjenesis objenesis = new SpringObjenesis();
+        }
 
-    private static final PathMatcher pathMatcher = new AntPathMatcher();
+        @java.lang.Override
+        public java.lang.Object invoke(org.aopalliance.intercept.MethodInvocation inv) throws java.lang.Throwable {
+            return intercept(inv.getThis(), inv.getMethod(), inv.getArguments(), null);
+        }
 
-    private static final ParameterNameDiscoverer parameterNameDiscoverer = new DefaultParameterNameDiscoverer();
+        public static perturbation.location.PerturbationLocation __L7086;
 
-    private static final CompositeUriComponentsContributor defaultUriComponentsContributor;
+        public static perturbation.location.PerturbationLocation __L7087;
 
-    static {
-        defaultUriComponentsContributor = new CompositeUriComponentsContributor(
-                new PathVariableMethodArgumentResolver(), new RequestParamMethodArgumentResolver(false));
+        public static perturbation.location.PerturbationLocation __L7088;
+
+        public static perturbation.location.PerturbationLocation __L7089;
+
+        public static perturbation.location.PerturbationLocation __L7090;
+
+        private static void initPerturbationLocation0() {
+            org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.ControllerMethodInvocationInterceptor.__L7086 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:752)", 7086, "Boolean");
+            org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.ControllerMethodInvocationInterceptor.__L7087 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:755)", 7087, "Boolean");
+            org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.ControllerMethodInvocationInterceptor.__L7088 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:758)", 7088, "Boolean");
+            org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.ControllerMethodInvocationInterceptor.__L7089 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:761)", 7089, "Boolean");
+            org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.ControllerMethodInvocationInterceptor.__L7090 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:768)", 7090, "Boolean");
+        }
+
+        static {
+            org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.ControllerMethodInvocationInterceptor.initPerturbationLocation0();
+        }
     }
 
-    private final UriComponentsBuilder baseUrl;
+    public interface MethodInvocationInfo {
+        java.lang.reflect.Method getControllerMethod();
 
+        java.lang.Object[] getArgumentValues();
 
-    /**
-     * Default constructor. Protected to prevent direct instantiation.
-     * @see #fromController(Class)
-     * @see #fromMethodName(Class, String, Object...)
-     * @see #fromMethodCall(Object)
-     * @see #fromMappingName(String)
-     * @see #fromMethod(Class, Method, Object...)
-     */
-    protected FrameworkMvcUriComponentsBuilder(UriComponentsBuilder baseUrl) {
-        Assert.notNull(baseUrl, "'baseUrl' is required");
+        java.lang.Class<?> getControllerType();
+    }
+
+    public static class MethodArgumentBuilder {
+        private final java.lang.Class<?> controllerType;
+
+        private final java.lang.reflect.Method method;
+
+        private final java.lang.Object[] argumentValues;
+
+        private final org.springframework.web.util.UriComponentsBuilder baseUrl;
+
+        public MethodArgumentBuilder(java.lang.Class<?> controllerType, java.lang.reflect.Method method) {
+            this(null, controllerType, method);
+        }
+
+        public MethodArgumentBuilder(org.springframework.web.util.UriComponentsBuilder baseUrl, java.lang.Class<?> controllerType, java.lang.reflect.Method method) {
+            org.springframework.util.Assert.notNull(controllerType, "'controllerType' is required");
+            org.springframework.util.Assert.notNull(method, "'method' is required");
+            this.baseUrl = (baseUrl != null) ? baseUrl : org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodArgumentBuilder.initBaseUrl();
+            this.controllerType = controllerType;
+            this.method = method;
+            this.argumentValues = new java.lang.Object[method.getParameterTypes().length];
+            for (int i = 0; i < (this.argumentValues.length); perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodArgumentBuilder.__L7091, (i++))) {
+                this.argumentValues[i] = null;
+            }
+        }
+
+        @java.lang.Deprecated
+        public MethodArgumentBuilder(java.lang.reflect.Method method) {
+            this(method.getDeclaringClass(), method);
+        }
+
+        private static org.springframework.web.util.UriComponentsBuilder initBaseUrl() {
+            org.springframework.web.util.UriComponentsBuilder builder = org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentServletMapping();
+            return org.springframework.web.util.UriComponentsBuilder.fromPath(builder.build().getPath());
+        }
+
+        public org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodArgumentBuilder arg(int index, java.lang.Object value) {
+            this.argumentValues[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodArgumentBuilder.__L7092, index)] = value;
+            return this;
+        }
+
+        public java.lang.String build() {
+            return org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.fromMethodInternal(this.baseUrl, this.controllerType, this.method, this.argumentValues).build(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodArgumentBuilder.__L7093, false)).encode().toUriString();
+        }
+
+        public java.lang.String buildAndExpand(java.lang.Object... uriVars) {
+            return org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.fromMethodInternal(this.baseUrl, this.controllerType, this.method, this.argumentValues).build(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodArgumentBuilder.__L7094, false)).expand(uriVars).encode().toString();
+        }
+
+        public static perturbation.location.PerturbationLocation __L7091;
+
+        public static perturbation.location.PerturbationLocation __L7092;
+
+        public static perturbation.location.PerturbationLocation __L7093;
+
+        public static perturbation.location.PerturbationLocation __L7094;
+
+        private static void initPerturbationLocation0() {
+            org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodArgumentBuilder.__L7091 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:816)", 7091, "Numerical");
+            org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodArgumentBuilder.__L7092 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:836)", 7092, "Numerical");
+            org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodArgumentBuilder.__L7093 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:842)", 7093, "Boolean");
+            org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodArgumentBuilder.__L7094 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:847)", 7094, "Boolean");
+        }
+
+        static {
+            org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodArgumentBuilder.initPerturbationLocation0();
+        }
+    }
+
+    public static final java.lang.String MVC_URI_COMPONENTS_CONTRIBUTOR_BEAN_NAME = "mvcUriComponentsContributor";
+
+    private static final org.apache.commons.logging.Log logger = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.class);
+
+    private static final org.springframework.objenesis.SpringObjenesis objenesis = new org.springframework.objenesis.SpringObjenesis();
+
+    private static final org.springframework.util.PathMatcher pathMatcher = new org.springframework.util.AntPathMatcher();
+
+    private static final org.springframework.core.ParameterNameDiscoverer parameterNameDiscoverer = new org.springframework.core.DefaultParameterNameDiscoverer();
+
+    private static final org.springframework.web.method.support.CompositeUriComponentsContributor defaultUriComponentsContributor;
+
+    private final org.springframework.web.util.UriComponentsBuilder baseUrl;
+
+    protected FrameworkMvcUriComponentsBuilder(org.springframework.web.util.UriComponentsBuilder baseUrl) {
+        org.springframework.util.Assert.notNull(baseUrl, "'baseUrl' is required");
         this.baseUrl = baseUrl;
     }
 
-
-    /**
-     * Create an instance of this class with a base URL. After that calls to one
-     * of the instance based {@code withXxx(...}} methods will create URLs relative
-     * to the given base URL.
-     */
-    public static FrameworkMvcUriComponentsBuilder relativeTo(UriComponentsBuilder baseUrl) {
-        return new FrameworkMvcUriComponentsBuilder(baseUrl);
+    public static org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder relativeTo(org.springframework.web.util.UriComponentsBuilder baseUrl) {
+        return new org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder(baseUrl);
     }
 
-
-    /**
-     * Create a {@link UriComponentsBuilder} from the mapping of a controller class
-     * and current request information including Servlet mapping. If the controller
-     * contains multiple mappings, only the first one is used.
-     * @param controllerType the controller to build a URI for
-     * @return a UriComponentsBuilder instance (never {@code null})
-     */
-    public static UriComponentsBuilder fromController(Class<?> controllerType) {
-        return fromController(null, controllerType);
+    public static org.springframework.web.util.UriComponentsBuilder fromController(java.lang.Class<?> controllerType) {
+        return org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.fromController(null, controllerType);
     }
 
-    /**
-     * An alternative to {@link #fromController(Class)} that accepts a
-     * {@code UriComponentsBuilder} representing the base URL. This is useful
-     * when using MvcUriComponentsBuilder outside the context of processing a
-     * request or to apply a custom baseUrl not matching the current request.
-     * @param builder the builder for the base URL; the builder will be cloned
-     * and therefore not modified and may be re-used for further calls.
-     * @param controllerType the controller to build a URI for
-     * @return a UriComponentsBuilder instance (never {@code null})
-     */
-    public static UriComponentsBuilder fromController(UriComponentsBuilder builder,
-                                                      Class<?> controllerType) {
-
-        builder = getBaseUrlToUse(builder);
-        String mapping = getTypeRequestMapping(controllerType);
+    public static org.springframework.web.util.UriComponentsBuilder fromController(org.springframework.web.util.UriComponentsBuilder builder, java.lang.Class<?> controllerType) {
+        builder = org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.getBaseUrlToUse(builder);
+        java.lang.String mapping = org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.getTypeRequestMapping(controllerType);
         return builder.path(mapping);
     }
 
-    /**
-     * Create a {@link UriComponentsBuilder} from the mapping of a controller
-     * method and an array of method argument values. This method delegates
-     * to {@link #fromMethod(Class, Method, Object...)}.
-     * @param controllerType the controller
-     * @param methodName the method name
-     * @param args the argument values
-     * @return a UriComponentsBuilder instance, never {@code null}
-     * @throws IllegalArgumentException if there is no matching or
-     * if there is more than one matching method
-     */
-    public static UriComponentsBuilder fromMethodName(Class<?> controllerType,
-                                                      String methodName, Object... args) {
-
-        Method method = getMethod(controllerType, methodName, args);
-        return fromMethodInternal(null, controllerType, method, args);
+    public static org.springframework.web.util.UriComponentsBuilder fromMethodName(java.lang.Class<?> controllerType, java.lang.String methodName, java.lang.Object... args) {
+        java.lang.reflect.Method method = org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.getMethod(controllerType, methodName, args);
+        return org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.fromMethodInternal(null, controllerType, method, args);
     }
 
-    /**
-     * An alternative to {@link #fromMethodName(Class, String, Object...)} that
-     * accepts a {@code UriComponentsBuilder} representing the base URL. This is
-     * useful when using MvcUriComponentsBuilder outside the context of processing
-     * a request or to apply a custom baseUrl not matching the current request.
-     * @param builder the builder for the base URL; the builder will be cloned
-     * and therefore not modified and may be re-used for further calls.
-     * @param controllerType the controller
-     * @param methodName the method name
-     * @param args the argument values
-     * @return a UriComponentsBuilder instance, never {@code null}
-     * @throws IllegalArgumentException if there is no matching or
-     * if there is more than one matching method
-     */
-    public static UriComponentsBuilder fromMethodName(UriComponentsBuilder builder,
-                                                      Class<?> controllerType, String methodName, Object... args) {
-
-        Method method = getMethod(controllerType, methodName, args);
-        return fromMethodInternal(builder, controllerType, method, args);
+    public static org.springframework.web.util.UriComponentsBuilder fromMethodName(org.springframework.web.util.UriComponentsBuilder builder, java.lang.Class<?> controllerType, java.lang.String methodName, java.lang.Object... args) {
+        java.lang.reflect.Method method = org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.getMethod(controllerType, methodName, args);
+        return org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.fromMethodInternal(builder, controllerType, method, args);
     }
 
-    /**
-     * Create a {@link UriComponentsBuilder} by invoking a "mock" controller method.
-     * The controller method and the supplied argument values are then used to
-     * delegate to {@link #fromMethod(Class, Method, Object...)}.
-     * <p>For example, given this controller:
-     * <pre class="code">
-     * &#064;RequestMapping("/people/{id}/addresses")
-     * class AddressController {
-     *
-     *   &#064;RequestMapping("/{country}")
-     *   public HttpEntity<Void> getAddressesForCountry(&#064;PathVariable String country) { ... }
-     *
-     *   &#064;RequestMapping(value="/", method=RequestMethod.POST)
-     *   public void addAddress(Address address) { ... }
-     * }
-     * </pre>
-     * A UriComponentsBuilder can be created:
-     * <pre class="code">
-     * // Inline style with static import of "MvcUriComponentsBuilder.on"
-     *
-     * MvcUriComponentsBuilder.fromMethodCall(
-     * 		on(AddressController.class).getAddressesForCountry("US")).buildAndExpand(1);
-     *
-     * // Longer form useful for repeated invocation (and void controller methods)
-     *
-     * AddressController controller = MvcUriComponentsBuilder.on(AddressController.class);
-     * controller.addAddress(null);
-     * builder = MvcUriComponentsBuilder.fromMethodCall(controller);
-     * controller.getAddressesForCountry("US")
-     * builder = MvcUriComponentsBuilder.fromMethodCall(controller);
-     * </pre>
-     * @param info either the value returned from a "mock" controller
-     * invocation or the "mock" controller itself after an invocation
-     * @return a UriComponents instance
-     */
-    public static UriComponentsBuilder fromMethodCall(Object info) {
-        Assert.isInstanceOf(MethodInvocationInfo.class, info, "MethodInvocationInfo required");
-        MethodInvocationInfo invocationInfo = (MethodInvocationInfo) info;
-        Class<?> controllerType = invocationInfo.getControllerType();
-        Method method = invocationInfo.getControllerMethod();
-        Object[] arguments = invocationInfo.getArgumentValues();
-        return fromMethodInternal(null, controllerType, method, arguments);
+    public static org.springframework.web.util.UriComponentsBuilder fromMethodCall(java.lang.Object info) {
+        org.springframework.util.Assert.isInstanceOf(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodInvocationInfo.class, info, "MethodInvocationInfo required");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodInvocationInfo invocationInfo = ((org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodInvocationInfo) (info));
+        java.lang.Class<?> controllerType = invocationInfo.getControllerType();
+        java.lang.reflect.Method method = invocationInfo.getControllerMethod();
+        java.lang.Object[] arguments = invocationInfo.getArgumentValues();
+        return org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.fromMethodInternal(null, controllerType, method, arguments);
     }
 
-    /**
-     * An alternative to {@link #fromMethodCall(Object)} that accepts a
-     * {@code UriComponentsBuilder} representing the base URL. This is useful
-     * when using MvcUriComponentsBuilder outside the context of processing a
-     * request or to apply a custom baseUrl not matching the current request.
-     * @param builder the builder for the base URL; the builder will be cloned
-     * and therefore not modified and may be re-used for further calls.
-     * @param info either the value returned from a "mock" controller
-     * invocation or the "mock" controller itself after an invocation
-     * @return a UriComponents instance
-     */
-    public static UriComponentsBuilder fromMethodCall(UriComponentsBuilder builder, Object info) {
-        Assert.isInstanceOf(MethodInvocationInfo.class, info, "MethodInvocationInfo required");
-        MethodInvocationInfo invocationInfo = (MethodInvocationInfo) info;
-        Class<?> controllerType = invocationInfo.getControllerType();
-        Method method = invocationInfo.getControllerMethod();
-        Object[] arguments = invocationInfo.getArgumentValues();
-        return fromMethodInternal(builder, controllerType, method, arguments);
+    public static org.springframework.web.util.UriComponentsBuilder fromMethodCall(org.springframework.web.util.UriComponentsBuilder builder, java.lang.Object info) {
+        org.springframework.util.Assert.isInstanceOf(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodInvocationInfo.class, info, "MethodInvocationInfo required");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodInvocationInfo invocationInfo = ((org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodInvocationInfo) (info));
+        java.lang.Class<?> controllerType = invocationInfo.getControllerType();
+        java.lang.reflect.Method method = invocationInfo.getControllerMethod();
+        java.lang.Object[] arguments = invocationInfo.getArgumentValues();
+        return org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.fromMethodInternal(builder, controllerType, method, arguments);
     }
 
-    /**
-     * Create a URL from the name of a Spring MVC controller method's request mapping.
-     * <p>The configured
-     * {@link org.springframework.web.servlet.handler.HandlerMethodMappingNamingStrategy
-     * HandlerMethodMappingNamingStrategy} determines the names of controller
-     * method request mappings at startup. By default all mappings are assigned
-     * a name based on the capital letters of the class name, followed by "#" as
-     * separator, and then the method name. For example "PC#getPerson"
-     * for a class named PersonController with method getPerson. In case the
-     * naming convention does not produce unique results, an explicit name may
-     * be assigned through the name attribute of the {@code @RequestMapping}
-     * annotation.
-     * <p>This is aimed primarily for use in view rendering technologies and EL
-     * expressions. The Spring URL tag library registers this method as a function
-     * called "mvcUrl".
-     * <p>For example, given this controller:
-     * <pre class="code">
-     * &#064;RequestMapping("/people")
-     * class PersonController {
-     *
-     *   &#064;RequestMapping("/{id}")
-     *   public HttpEntity<Void> getPerson(&#064;PathVariable String id) { ... }
-     *
-     * }
-     * </pre>
-     *
-     * A JSP can prepare a URL to the controller method as follows:
-     *
-     * <pre class="code">
-     * <%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
-     *
-     * &lt;a href="${s:mvcUrl('PC#getPerson').arg(0,"123").build()}"&gt;Get Person&lt;/a&gt;
-     * </pre>
-     * <p>Note that it's not necessary to specify all arguments. Only the ones
-     * required to prepare the URL, mainly {@code @RequestParam} and {@code @PathVariable}).
-     * @param mappingName the mapping name
-     * @return a builder to prepare the URI String
-     * @throws IllegalArgumentException if the mapping name is not found or
-     * if there is no unique match
-     * @since 4.1
-     */
-    public static MethodArgumentBuilder fromMappingName(String mappingName) {
-        return fromMappingName(null, mappingName);
+    public static org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodArgumentBuilder fromMappingName(java.lang.String mappingName) {
+        return org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.fromMappingName(null, mappingName);
     }
 
-    /**
-     * An alternative to {@link #fromMappingName(String)} that accepts a
-     * {@code UriComponentsBuilder} representing the base URL. This is useful
-     * when using MvcUriComponentsBuilder outside the context of processing a
-     * request or to apply a custom baseUrl not matching the current request.
-     * @param builder the builder for the base URL; the builder will be cloned
-     * and therefore not modified and may be re-used for further calls.
-     * @param name the mapping name
-     * @return a builder to prepare the URI String
-     * @throws IllegalArgumentException if the mapping name is not found or
-     * if there is no unique match
-     * @since 4.2
-     */
-    public static MethodArgumentBuilder fromMappingName(UriComponentsBuilder builder, String name) {
-        RequestMappingInfoHandlerMapping handlerMapping = getRequestMappingInfoHandlerMapping();
-        List<HandlerMethod> handlerMethods = handlerMapping.getHandlerMethodsForMappingName(name);
-        if (handlerMethods == null) {
-            throw new IllegalArgumentException("Mapping mappingName not found: " + name);
+    public static org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodArgumentBuilder fromMappingName(org.springframework.web.util.UriComponentsBuilder builder, java.lang.String name) {
+        org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping handlerMapping = org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.getRequestMappingInfoHandlerMapping();
+        java.util.List<org.springframework.web.method.HandlerMethod> handlerMethods = handlerMapping.getHandlerMethodsForMappingName(name);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7095, (handlerMethods == null))) {
+            throw new java.lang.IllegalArgumentException(("Mapping mappingName not found: " + name));
         }
-        if (handlerMethods.size() != 1) {
-            throw new IllegalArgumentException("No unique match for mapping mappingName " +
-                    name + ": " + handlerMethods);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7098, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7096, handlerMethods.size())) != (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7097, 1))))) {
+            throw new java.lang.IllegalArgumentException(((("No unique match for mapping mappingName " + name) + ": ") + handlerMethods));
         }
-        HandlerMethod handlerMethod = handlerMethods.get(0);
-        Class<?> controllerType = handlerMethod.getBeanType();
-        Method method = handlerMethod.getMethod();
-        return new MethodArgumentBuilder(builder, controllerType, method);
+        org.springframework.web.method.HandlerMethod handlerMethod = handlerMethods.get(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7099, 0));
+        java.lang.Class<?> controllerType = handlerMethod.getBeanType();
+        java.lang.reflect.Method method = handlerMethod.getMethod();
+        return new org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodArgumentBuilder(builder, controllerType, method);
     }
 
-    /**
-     * Create a {@link UriComponentsBuilder} from the mapping of a controller method
-     * and an array of method argument values. The array of values  must match the
-     * signature of the controller method. Values for {@code @RequestParam} and
-     * {@code @PathVariable} are used for building the URI (via implementations of
-     * {@link org.springframework.web.method.support.UriComponentsContributor
-     * UriComponentsContributor}) while remaining argument values are ignored and
-     * can be {@code null}.
-     * @param controllerType the controller type
-     * @param method the controller method
-     * @param args argument values for the controller method
-     * @return a UriComponentsBuilder instance, never {@code null}
-     * @since 4.2
-     */
-    public static UriComponentsBuilder fromMethod(Class<?> controllerType, Method method, Object... args) {
-        return fromMethodInternal(null, controllerType, method, args);
+    public static org.springframework.web.util.UriComponentsBuilder fromMethod(java.lang.Class<?> controllerType, java.lang.reflect.Method method, java.lang.Object... args) {
+        return org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.fromMethodInternal(null, controllerType, method, args);
     }
 
-    /**
-     * An alternative to {@link #fromMethod(Class, Method, Object...)}
-     * that accepts a {@code UriComponentsBuilder} representing the base URL.
-     * This is useful when using MvcUriComponentsBuilder outside the context of
-     * processing a request or to apply a custom baseUrl not matching the
-     * current request.
-     * @param baseUrl the builder for the base URL; the builder will be cloned
-     * and therefore not modified and may be re-used for further calls.
-     * @param controllerType the controller type
-     * @param method the controller method
-     * @param args argument values for the controller method
-     * @return a UriComponentsBuilder instance (never {@code null})
-     * @since 4.2
-     */
-    public static UriComponentsBuilder fromMethod(UriComponentsBuilder baseUrl,
-                                                  Class<?> controllerType, Method method, Object... args) {
-
-        return fromMethodInternal(baseUrl,
-                (controllerType != null ? controllerType : method.getDeclaringClass()), method, args);
+    public static org.springframework.web.util.UriComponentsBuilder fromMethod(org.springframework.web.util.UriComponentsBuilder baseUrl, java.lang.Class<?> controllerType, java.lang.reflect.Method method, java.lang.Object... args) {
+        return org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.fromMethodInternal(baseUrl, (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7100, (controllerType != null)) ? controllerType : method.getDeclaringClass()), method, args);
     }
 
-    /**
-     * @see #fromMethod(Class, Method, Object...)
-     * @see #fromMethod(UriComponentsBuilder, Class, Method, Object...)
-     * @deprecated as of 4.2, this is deprecated in favor of the overloaded
-     * method that also accepts a controllerType argument
-     */
-    @Deprecated
-    public static UriComponentsBuilder fromMethod(Method method, Object... args) {
-        return fromMethodInternal(null, method.getDeclaringClass(), method, args);
+    @java.lang.Deprecated
+    public static org.springframework.web.util.UriComponentsBuilder fromMethod(java.lang.reflect.Method method, java.lang.Object... args) {
+        return org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.fromMethodInternal(null, method.getDeclaringClass(), method, args);
     }
 
-    private static UriComponentsBuilder fromMethodInternal(UriComponentsBuilder baseUrl,
-                                                           Class<?> controllerType, Method method, Object... args) {
-
-        baseUrl = getBaseUrlToUse(baseUrl);
-        String typePath = getTypeRequestMapping(controllerType);
-        String methodPath = getMethodRequestMapping(method);
-        String path = pathMatcher.combine(typePath, methodPath);
+    private static org.springframework.web.util.UriComponentsBuilder fromMethodInternal(org.springframework.web.util.UriComponentsBuilder baseUrl, java.lang.Class<?> controllerType, java.lang.reflect.Method method, java.lang.Object... args) {
+        baseUrl = org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.getBaseUrlToUse(baseUrl);
+        java.lang.String typePath = org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.getTypeRequestMapping(controllerType);
+        java.lang.String methodPath = org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.getMethodRequestMapping(method);
+        java.lang.String path = org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.pathMatcher.combine(typePath, methodPath);
         baseUrl.path(path);
-        UriComponents uriComponents = applyContributors(baseUrl, method, args);
-        return UriComponentsBuilder.newInstance().uriComponents(uriComponents);
+        org.springframework.web.util.UriComponents uriComponents = org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.applyContributors(baseUrl, method, args);
+        return org.springframework.web.util.UriComponentsBuilder.newInstance().uriComponents(uriComponents);
     }
 
-    private static UriComponentsBuilder getBaseUrlToUse(UriComponentsBuilder baseUrl) {
-        if (baseUrl != null) {
+    private static org.springframework.web.util.UriComponentsBuilder getBaseUrlToUse(org.springframework.web.util.UriComponentsBuilder baseUrl) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7101, (baseUrl != null))) {
             return baseUrl.cloneBuilder();
-        }
-        else {
-            return ServletUriComponentsBuilder.fromCurrentServletMapping();
+        }else {
+            return org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentServletMapping();
         }
     }
 
-    private static String getTypeRequestMapping(Class<?> controllerType) {
-        Assert.notNull(controllerType, "'controllerType' must not be null");
-
-        String[] paths;
-
-        FrameworkMapping frameworkMapping = controllerType.getAnnotation(FrameworkMapping.class);
-        RequestMapping requestMapping = controllerType.getAnnotation(RequestMapping.class);
-
-        if (frameworkMapping != null) {
+    private static java.lang.String getTypeRequestMapping(java.lang.Class<?> controllerType) {
+        org.springframework.util.Assert.notNull(controllerType, "'controllerType' must not be null");
+        java.lang.String[] paths;
+        org.broadleafcommerce.common.web.controller.annotation.FrameworkMapping frameworkMapping = controllerType.getAnnotation(org.broadleafcommerce.common.web.controller.annotation.FrameworkMapping.class);
+        org.springframework.web.bind.annotation.RequestMapping requestMapping = controllerType.getAnnotation(org.springframework.web.bind.annotation.RequestMapping.class);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7102, (frameworkMapping != null))) {
             paths = frameworkMapping.path();
+        }else
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7103, (requestMapping != null))) {
+                paths = requestMapping.path();
+            }else {
+                return "/";
+            }
 
-        } else if (requestMapping != null) {
-            paths = requestMapping.path();
-
-        } else {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7107, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7104, org.springframework.util.ObjectUtils.isEmpty(paths))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7106, org.springframework.util.StringUtils.isEmpty(paths[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7105, 0)])))))) {
             return "/";
         }
-
-        if (ObjectUtils.isEmpty(paths) || StringUtils.isEmpty(paths[0])) {
-            return "/";
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7112, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7110, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7108, paths.length)) > (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7109, 1))))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7111, org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.logger.isWarnEnabled()))))) {
+            org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.logger.warn((("Multiple paths on controller " + (controllerType.getName())) + ", using first one"));
         }
-        if (paths.length > 1 && logger.isWarnEnabled()) {
-            logger.warn("Multiple paths on controller " + controllerType.getName() + ", using first one");
-        }
-        return paths[0];
+        return paths[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7113, 0)];
     }
 
-    private static String getMethodRequestMapping(Method method) {
-        Assert.notNull(method, "'method' must not be null");
-
-        String[] paths;
-
-        FrameworkMapping frameworkMapping = method.getAnnotation(FrameworkMapping.class);
-        RequestMapping requestMapping = method.getAnnotation(RequestMapping.class);
-
-        if (frameworkMapping != null) {
+    private static java.lang.String getMethodRequestMapping(java.lang.reflect.Method method) {
+        org.springframework.util.Assert.notNull(method, "'method' must not be null");
+        java.lang.String[] paths;
+        org.broadleafcommerce.common.web.controller.annotation.FrameworkMapping frameworkMapping = method.getAnnotation(org.broadleafcommerce.common.web.controller.annotation.FrameworkMapping.class);
+        org.springframework.web.bind.annotation.RequestMapping requestMapping = method.getAnnotation(org.springframework.web.bind.annotation.RequestMapping.class);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7114, (frameworkMapping != null))) {
             paths = frameworkMapping.path();
+        }else
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7115, (requestMapping != null))) {
+                paths = requestMapping.path();
+            }else {
+                throw new java.lang.IllegalArgumentException(("No @RequestMapping or @FrameworkMapping on: " + (method.toGenericString())));
+            }
 
-        } else if (requestMapping != null) {
-            paths = requestMapping.path();
-
-        } else {
-            throw new IllegalArgumentException("No @RequestMapping or @FrameworkMapping on: " + method.toGenericString());
-        }
-
-        if (ObjectUtils.isEmpty(paths) || StringUtils.isEmpty(paths[0])) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7119, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7116, org.springframework.util.ObjectUtils.isEmpty(paths))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7118, org.springframework.util.StringUtils.isEmpty(paths[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7117, 0)])))))) {
             return "/";
         }
-        if (paths.length > 1 && logger.isWarnEnabled()) {
-            logger.warn("Multiple paths on method " + method.toGenericString() + ", using first one");
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7124, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7122, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7120, paths.length)) > (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7121, 1))))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7123, org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.logger.isWarnEnabled()))))) {
+            org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.logger.warn((("Multiple paths on method " + (method.toGenericString())) + ", using first one"));
         }
-        return paths[0];
+        return paths[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7125, 0)];
     }
 
-    private static Method getMethod(Class<?> controllerType, final String methodName, final Object... args) {
-        MethodFilter selector = new MethodFilter() {
-            @Override
-            public boolean matches(Method method) {
-                String name = method.getName();
-                int argLength = method.getParameterTypes().length;
-                return (name.equals(methodName) && argLength == args.length);
+    private static java.lang.reflect.Method getMethod(java.lang.Class<?> controllerType, final java.lang.String methodName, final java.lang.Object... args) {
+        org.springframework.util.ReflectionUtils.MethodFilter selector = new org.springframework.util.ReflectionUtils.MethodFilter() {
+            @java.lang.Override
+            public boolean matches(java.lang.reflect.Method method) {
+                java.lang.String name = method.getName();
+                int argLength = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7126, method.getParameterTypes().length);
+                return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7131, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7127, name.equals(methodName))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7130, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7128, argLength)) == (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7129, args.length)))))));
             }
         };
-        Set<Method> methods = MethodIntrospector.selectMethods(controllerType, selector);
-        if (methods.size() == 1) {
+        java.util.Set<java.lang.reflect.Method> methods = org.springframework.core.MethodIntrospector.selectMethods(controllerType, selector);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7134, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7132, methods.size())) == (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7133, 1))))) {
             return methods.iterator().next();
-        }
-        else if (methods.size() > 1) {
-            throw new IllegalArgumentException(String.format(
-                    "Found two methods named '%s' accepting arguments %s in controller %s: [%s]",
-                    methodName, Arrays.asList(args), controllerType.getName(), methods));
-        }
-        else {
-            throw new IllegalArgumentException("No method named '" + methodName + "' with " + args.length +
-                    " arguments found in controller " + controllerType.getName());
-        }
+        }else
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7137, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7135, methods.size())) > (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7136, 1))))) {
+                throw new java.lang.IllegalArgumentException(java.lang.String.format("Found two methods named '%s' accepting arguments %s in controller %s: [%s]", methodName, java.util.Arrays.asList(args), controllerType.getName(), methods));
+            }else {
+                throw new java.lang.IllegalArgumentException(((((("No method named '" + methodName) + "' with ") + (args.length)) + " arguments found in controller ") + (controllerType.getName())));
+            }
+
     }
 
-    private static UriComponents applyContributors(UriComponentsBuilder builder, Method method, Object... args) {
-        CompositeUriComponentsContributor contributor = getConfiguredUriComponentsContributor();
-        if (contributor == null) {
-            logger.debug("Using default CompositeUriComponentsContributor");
-            contributor = defaultUriComponentsContributor;
+    private static org.springframework.web.util.UriComponents applyContributors(org.springframework.web.util.UriComponentsBuilder builder, java.lang.reflect.Method method, java.lang.Object... args) {
+        org.springframework.web.method.support.CompositeUriComponentsContributor contributor = org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.getConfiguredUriComponentsContributor();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7138, (contributor == null))) {
+            org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.logger.debug("Using default CompositeUriComponentsContributor");
+            contributor = org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.defaultUriComponentsContributor;
         }
-
-        int paramCount = method.getParameterTypes().length;
-        int argCount = args.length;
-        if (paramCount != argCount) {
-            throw new IllegalArgumentException("Number of method parameters " + paramCount +
-                    " does not match number of argument values " + argCount);
+        int paramCount = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7139, method.getParameterTypes().length);
+        int argCount = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7140, args.length);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7143, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7141, paramCount)) != (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7142, argCount))))) {
+            throw new java.lang.IllegalArgumentException(((("Number of method parameters " + paramCount) + " does not match number of argument values ") + argCount));
         }
-
-        final Map<String, Object> uriVars = new HashMap<>();
-        for (int i = 0; i < paramCount; i++) {
-            MethodParameter param = new SynthesizingMethodParameter(method, i);
-            param.initParameterNameDiscovery(parameterNameDiscoverer);
-            contributor.contributeMethodArgument(param, args[i], builder, uriVars);
+        final java.util.Map<java.lang.String, java.lang.Object> uriVars = new java.util.HashMap<>();
+        for (int i = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7144, 0); perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7147, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7145, i)) < (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7146, paramCount)))); perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7148, (i++))) {
+            org.springframework.core.MethodParameter param = new org.springframework.core.annotation.SynthesizingMethodParameter(method, perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7149, i));
+            param.initParameterNameDiscovery(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.parameterNameDiscoverer);
+            contributor.contributeMethodArgument(param, args[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7150, i)], builder, uriVars);
         }
-
-        // We may not have all URI var values, expand only what we have
-        return builder.build().expand(new UriComponents.UriTemplateVariables() {
-            @Override
-            public Object getValue(String name) {
-                return uriVars.containsKey(name) ? uriVars.get(name) : UriComponents.UriTemplateVariables.SKIP_VALUE;
+        return builder.build().expand(new org.springframework.web.util.UriComponents.UriTemplateVariables() {
+            @java.lang.Override
+            public java.lang.Object getValue(java.lang.String name) {
+                return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7151, uriVars.containsKey(name)) ? uriVars.get(name) : org.springframework.web.util.UriComponents.UriTemplateVariables.SKIP_VALUE;
             }
         });
     }
 
-    private static CompositeUriComponentsContributor getConfiguredUriComponentsContributor() {
-        WebApplicationContext wac = getWebApplicationContext();
-        if (wac == null) {
+    private static org.springframework.web.method.support.CompositeUriComponentsContributor getConfiguredUriComponentsContributor() {
+        org.springframework.web.context.WebApplicationContext wac = org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.getWebApplicationContext();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7152, (wac == null))) {
             return null;
         }
         try {
-            return wac.getBean(MVC_URI_COMPONENTS_CONTRIBUTOR_BEAN_NAME, CompositeUriComponentsContributor.class);
-        }
-        catch (NoSuchBeanDefinitionException ex) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("No CompositeUriComponentsContributor bean with name '" +
-                        MVC_URI_COMPONENTS_CONTRIBUTOR_BEAN_NAME + "'");
+            return wac.getBean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MVC_URI_COMPONENTS_CONTRIBUTOR_BEAN_NAME, org.springframework.web.method.support.CompositeUriComponentsContributor.class);
+        } catch (org.springframework.beans.factory.NoSuchBeanDefinitionException ex) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7153, org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.logger.isDebugEnabled())) {
+                org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.logger.debug((("No CompositeUriComponentsContributor bean with name '" + (org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MVC_URI_COMPONENTS_CONTRIBUTOR_BEAN_NAME)) + "'"));
             }
             return null;
         }
     }
 
-    private static RequestMappingInfoHandlerMapping getRequestMappingInfoHandlerMapping() {
-        WebApplicationContext wac = getWebApplicationContext();
-        Assert.notNull(wac, "Cannot lookup handler method mappings without WebApplicationContext");
+    private static org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping getRequestMappingInfoHandlerMapping() {
+        org.springframework.web.context.WebApplicationContext wac = org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.getWebApplicationContext();
+        org.springframework.util.Assert.notNull(wac, "Cannot lookup handler method mappings without WebApplicationContext");
         try {
-            return wac.getBean(RequestMappingInfoHandlerMapping.class);
-        }
-        catch (NoUniqueBeanDefinitionException ex) {
-            throw new IllegalStateException("More than one RequestMappingInfoHandlerMapping beans found", ex);
-        }
-        catch (NoSuchBeanDefinitionException ex) {
-            throw new IllegalStateException("No RequestMappingInfoHandlerMapping bean", ex);
+            return wac.getBean(org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.class);
+        } catch (org.springframework.beans.factory.NoUniqueBeanDefinitionException ex) {
+            throw new java.lang.IllegalStateException("More than one RequestMappingInfoHandlerMapping beans found", ex);
+        } catch (org.springframework.beans.factory.NoSuchBeanDefinitionException ex) {
+            throw new java.lang.IllegalStateException("No RequestMappingInfoHandlerMapping bean", ex);
         }
     }
 
-    private static WebApplicationContext getWebApplicationContext() {
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        if (requestAttributes == null) {
-            logger.debug("No request bound to the current thread: not in a DispatcherServlet request?");
+    private static org.springframework.web.context.WebApplicationContext getWebApplicationContext() {
+        org.springframework.web.context.request.RequestAttributes requestAttributes = org.springframework.web.context.request.RequestContextHolder.getRequestAttributes();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7154, (requestAttributes == null))) {
+            org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.logger.debug("No request bound to the current thread: not in a DispatcherServlet request?");
             return null;
         }
-
-        HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
-        WebApplicationContext wac = (WebApplicationContext)
-                request.getAttribute(DispatcherServlet.WEB_APPLICATION_CONTEXT_ATTRIBUTE);
-        if (wac == null) {
-            logger.debug("No WebApplicationContext found: not in a DispatcherServlet request?");
+        javax.servlet.http.HttpServletRequest request = ((org.springframework.web.context.request.ServletRequestAttributes) (requestAttributes)).getRequest();
+        org.springframework.web.context.WebApplicationContext wac = ((org.springframework.web.context.WebApplicationContext) (request.getAttribute(org.springframework.web.servlet.DispatcherServlet.WEB_APPLICATION_CONTEXT_ATTRIBUTE)));
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7155, (wac == null))) {
+            org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.logger.debug("No WebApplicationContext found: not in a DispatcherServlet request?");
             return null;
         }
         return wac;
     }
 
-    /**
-     * Return a "mock" controller instance. When an {@code @RequestMapping} method
-     * on the controller is invoked, the supplied argument values are remembered
-     * and the result can then be used to create a {@code UriComponentsBuilder}
-     * via {@link #fromMethodCall(Object)}.
-     * <p>Note that this is a shorthand version of {@link #controller(Class)} intended
-     * for inline use (with a static import), for example:
-     * <pre class="code">
-     * MvcUriComponentsBuilder.fromMethodCall(on(FooController.class).getFoo(1)).build();
-     * </pre>
-     * @param controllerType the target controller
-     */
-    public static <T> T on(Class<T> controllerType) {
-        return controller(controllerType);
+    public static <T> T on(java.lang.Class<T> controllerType) {
+        return org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.controller(controllerType);
     }
 
-    /**
-     * Return a "mock" controller instance. When an {@code @RequestMapping} method
-     * on the controller is invoked, the supplied argument values are remembered
-     * and the result can then be used to create {@code UriComponentsBuilder} via
-     * {@link #fromMethodCall(Object)}.
-     * <p>This is a longer version of {@link #on(Class)}. It is needed with controller
-     * methods returning void as well for repeated invocations.
-     * <pre class="code">
-     * FooController fooController = controller(FooController.class);
-     *
-     * fooController.saveFoo(1, null);
-     * builder = MvcUriComponentsBuilder.fromMethodCall(fooController);
-     *
-     * fooController.saveFoo(2, null);
-     * builder = MvcUriComponentsBuilder.fromMethodCall(fooController);
-     * </pre>
-     * @param controllerType the target controller
-     */
-    public static <T> T controller(Class<T> controllerType) {
-        Assert.notNull(controllerType, "'controllerType' must not be null");
-        return initProxy(controllerType, new ControllerMethodInvocationInterceptor(controllerType));
+    public static <T> T controller(java.lang.Class<T> controllerType) {
+        org.springframework.util.Assert.notNull(controllerType, "'controllerType' must not be null");
+        return org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.initProxy(controllerType, new org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.ControllerMethodInvocationInterceptor(controllerType));
     }
 
-    @SuppressWarnings("unchecked")
-    private static <T> T initProxy(Class<?> type, ControllerMethodInvocationInterceptor interceptor) {
-        if (type.isInterface()) {
-            ProxyFactory factory = new ProxyFactory(EmptyTargetSource.INSTANCE);
+    @java.lang.SuppressWarnings("unchecked")
+    private static <T> T initProxy(java.lang.Class<?> type, org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.ControllerMethodInvocationInterceptor interceptor) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7156, type.isInterface())) {
+            org.springframework.aop.framework.ProxyFactory factory = new org.springframework.aop.framework.ProxyFactory(org.springframework.aop.target.EmptyTargetSource.INSTANCE);
             factory.addInterface(type);
-            factory.addInterface(MethodInvocationInfo.class);
+            factory.addInterface(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodInvocationInfo.class);
             factory.addAdvice(interceptor);
-            return (T) factory.getProxy();
-        }
-
-        else {
-            Enhancer enhancer = new Enhancer();
+            return ((T) (factory.getProxy()));
+        }else {
+            org.springframework.cglib.proxy.Enhancer enhancer = new org.springframework.cglib.proxy.Enhancer();
             enhancer.setSuperclass(type);
-            enhancer.setInterfaces(new Class<?>[] {MethodInvocationInfo.class});
-            enhancer.setNamingPolicy(SpringNamingPolicy.INSTANCE);
+            enhancer.setInterfaces(new java.lang.Class<?>[]{ org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodInvocationInfo.class });
+            enhancer.setNamingPolicy(org.springframework.cglib.core.SpringNamingPolicy.INSTANCE);
             enhancer.setCallbackType(org.springframework.cglib.proxy.MethodInterceptor.class);
-
-            Class<?> proxyClass = enhancer.createClass();
-            Object proxy = null;
-
-            if (objenesis.isWorthTrying()) {
+            java.lang.Class<?> proxyClass = enhancer.createClass();
+            java.lang.Object proxy = null;
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7157, org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.objenesis.isWorthTrying())) {
                 try {
-                    proxy = objenesis.newInstance(proxyClass, enhancer.getUseCache());
-                }
-                catch (ObjenesisException ex) {
-                    logger.debug("Unable to instantiate controller proxy using Objenesis, " +
-                            "falling back to regular construction", ex);
+                    proxy = org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.objenesis.newInstance(proxyClass, perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7158, enhancer.getUseCache()));
+                } catch (org.springframework.objenesis.ObjenesisException ex) {
+                    org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.logger.debug(("Unable to instantiate controller proxy using Objenesis, " + "falling back to regular construction"), ex);
                 }
             }
-
-            if (proxy == null) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7159, (proxy == null))) {
                 try {
                     proxy = proxyClass.newInstance();
-                }
-                catch (Throwable ex) {
-                    throw new IllegalStateException("Unable to instantiate controller proxy using Objenesis, " +
-                            "and regular controller instantiation via default constructor fails as well", ex);
+                } catch (java.lang.Throwable ex) {
+                    throw new java.lang.IllegalStateException(("Unable to instantiate controller proxy using Objenesis, " + "and regular controller instantiation via default constructor fails as well"), ex);
                 }
             }
-
-            ((Factory) proxy).setCallbacks(new Callback[] {interceptor});
-            return (T) proxy;
+            ((org.springframework.cglib.proxy.Factory) (proxy)).setCallbacks(new org.springframework.cglib.proxy.Callback[]{ interceptor });
+            return ((T) (proxy));
         }
     }
 
-    /**
-     * An alternative to {@link #fromController(Class)} for use with an instance
-     * of this class created via a call to {@link #relativeTo}.
-     * @since 4.2
-     */
-    public UriComponentsBuilder withController(Class<?> controllerType) {
-        return fromController(this.baseUrl, controllerType);
+    public org.springframework.web.util.UriComponentsBuilder withController(java.lang.Class<?> controllerType) {
+        return org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.fromController(this.baseUrl, controllerType);
     }
 
-    /**
-     * An alternative to {@link #fromMethodName(Class, String, Object...)}} for
-     * use with an instance of this class created via {@link #relativeTo}.
-     * @since 4.2
-     */
-    public UriComponentsBuilder withMethodName(Class<?> controllerType, String methodName, Object... args) {
-        return fromMethodName(this.baseUrl, controllerType, methodName, args);
+    public org.springframework.web.util.UriComponentsBuilder withMethodName(java.lang.Class<?> controllerType, java.lang.String methodName, java.lang.Object... args) {
+        return org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.fromMethodName(this.baseUrl, controllerType, methodName, args);
     }
 
-    /**
-     * An alternative to {@link #fromMethodCall(Object)} for use with an instance
-     * of this class created via {@link #relativeTo}.
-     * @since 4.2
-     */
-    public UriComponentsBuilder withMethodCall(Object invocationInfo) {
-        return fromMethodCall(this.baseUrl, invocationInfo);
+    public org.springframework.web.util.UriComponentsBuilder withMethodCall(java.lang.Object invocationInfo) {
+        return org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.fromMethodCall(this.baseUrl, invocationInfo);
     }
 
-    /**
-     * An alternative to {@link #fromMappingName(String)} for use with an instance
-     * of this class created via {@link #relativeTo}.
-     * @since 4.2
-     */
-    public MethodArgumentBuilder withMappingName(String mappingName) {
-        return fromMappingName(this.baseUrl, mappingName);
+    public org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.MethodArgumentBuilder withMappingName(java.lang.String mappingName) {
+        return org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.fromMappingName(this.baseUrl, mappingName);
     }
 
-    /**
-     * An alternative to {@link #fromMethod(Class, Method, Object...)}
-     * for use with an instance of this class created via {@link #relativeTo}.
-     * @since 4.2
-     */
-    public UriComponentsBuilder withMethod(Class<?> controllerType, Method method, Object... args) {
-        return fromMethod(this.baseUrl, controllerType, method, args);
+    public org.springframework.web.util.UriComponentsBuilder withMethod(java.lang.Class<?> controllerType, java.lang.reflect.Method method, java.lang.Object... args) {
+        return org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.fromMethod(this.baseUrl, controllerType, method, args);
     }
 
+    public static perturbation.location.PerturbationLocation __L7095;
 
-    private static class ControllerMethodInvocationInterceptor
-            implements org.springframework.cglib.proxy.MethodInterceptor, MethodInterceptor {
+    public static perturbation.location.PerturbationLocation __L7096;
 
-        private static final Method getControllerMethod =
-                ReflectionUtils.findMethod(MethodInvocationInfo.class, "getControllerMethod");
+    public static perturbation.location.PerturbationLocation __L7097;
 
-        private static final Method getArgumentValues =
-                ReflectionUtils.findMethod(MethodInvocationInfo.class, "getArgumentValues");
+    public static perturbation.location.PerturbationLocation __L7098;
 
-        private static final Method getControllerType =
-                ReflectionUtils.findMethod(MethodInvocationInfo.class, "getControllerType");
+    public static perturbation.location.PerturbationLocation __L7099;
 
-        private Method controllerMethod;
+    public static perturbation.location.PerturbationLocation __L7100;
 
-        private Object[] argumentValues;
+    public static perturbation.location.PerturbationLocation __L7101;
 
-        private Class<?> controllerType;
+    public static perturbation.location.PerturbationLocation __L7102;
 
-        ControllerMethodInvocationInterceptor(Class<?> controllerType) {
-            this.controllerType = controllerType;
-        }
+    public static perturbation.location.PerturbationLocation __L7103;
 
-        @Override
-        public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) {
-            if (getControllerMethod.equals(method)) {
-                return this.controllerMethod;
-            }
-            else if (getArgumentValues.equals(method)) {
-                return this.argumentValues;
-            }
-            else if (getControllerType.equals(method)) {
-                return this.controllerType;
-            }
-            else if (ReflectionUtils.isObjectMethod(method)) {
-                return ReflectionUtils.invokeMethod(method, obj, args);
-            }
-            else {
-                this.controllerMethod = method;
-                this.argumentValues = args;
-                Class<?> returnType = method.getReturnType();
-                return (void.class == returnType ? null : returnType.cast(initProxy(returnType, this)));
-            }
-        }
+    public static perturbation.location.PerturbationLocation __L7104;
 
-        @Override
-        public Object invoke(org.aopalliance.intercept.MethodInvocation inv) throws Throwable {
-            return intercept(inv.getThis(), inv.getMethod(), inv.getArguments(), null);
-        }
+    public static perturbation.location.PerturbationLocation __L7105;
+
+    public static perturbation.location.PerturbationLocation __L7106;
+
+    public static perturbation.location.PerturbationLocation __L7107;
+
+    public static perturbation.location.PerturbationLocation __L7108;
+
+    public static perturbation.location.PerturbationLocation __L7109;
+
+    public static perturbation.location.PerturbationLocation __L7110;
+
+    public static perturbation.location.PerturbationLocation __L7111;
+
+    public static perturbation.location.PerturbationLocation __L7112;
+
+    public static perturbation.location.PerturbationLocation __L7113;
+
+    public static perturbation.location.PerturbationLocation __L7114;
+
+    public static perturbation.location.PerturbationLocation __L7115;
+
+    public static perturbation.location.PerturbationLocation __L7116;
+
+    public static perturbation.location.PerturbationLocation __L7117;
+
+    public static perturbation.location.PerturbationLocation __L7118;
+
+    public static perturbation.location.PerturbationLocation __L7119;
+
+    public static perturbation.location.PerturbationLocation __L7120;
+
+    public static perturbation.location.PerturbationLocation __L7121;
+
+    public static perturbation.location.PerturbationLocation __L7122;
+
+    public static perturbation.location.PerturbationLocation __L7123;
+
+    public static perturbation.location.PerturbationLocation __L7124;
+
+    public static perturbation.location.PerturbationLocation __L7125;
+
+    public static perturbation.location.PerturbationLocation __L7126;
+
+    public static perturbation.location.PerturbationLocation __L7127;
+
+    public static perturbation.location.PerturbationLocation __L7128;
+
+    public static perturbation.location.PerturbationLocation __L7129;
+
+    public static perturbation.location.PerturbationLocation __L7130;
+
+    public static perturbation.location.PerturbationLocation __L7131;
+
+    public static perturbation.location.PerturbationLocation __L7132;
+
+    public static perturbation.location.PerturbationLocation __L7133;
+
+    public static perturbation.location.PerturbationLocation __L7134;
+
+    public static perturbation.location.PerturbationLocation __L7135;
+
+    public static perturbation.location.PerturbationLocation __L7136;
+
+    public static perturbation.location.PerturbationLocation __L7137;
+
+    public static perturbation.location.PerturbationLocation __L7138;
+
+    public static perturbation.location.PerturbationLocation __L7139;
+
+    public static perturbation.location.PerturbationLocation __L7140;
+
+    public static perturbation.location.PerturbationLocation __L7141;
+
+    public static perturbation.location.PerturbationLocation __L7142;
+
+    public static perturbation.location.PerturbationLocation __L7143;
+
+    public static perturbation.location.PerturbationLocation __L7144;
+
+    public static perturbation.location.PerturbationLocation __L7145;
+
+    public static perturbation.location.PerturbationLocation __L7146;
+
+    public static perturbation.location.PerturbationLocation __L7147;
+
+    public static perturbation.location.PerturbationLocation __L7148;
+
+    public static perturbation.location.PerturbationLocation __L7149;
+
+    public static perturbation.location.PerturbationLocation __L7150;
+
+    public static perturbation.location.PerturbationLocation __L7151;
+
+    public static perturbation.location.PerturbationLocation __L7152;
+
+    public static perturbation.location.PerturbationLocation __L7153;
+
+    public static perturbation.location.PerturbationLocation __L7154;
+
+    public static perturbation.location.PerturbationLocation __L7155;
+
+    public static perturbation.location.PerturbationLocation __L7156;
+
+    public static perturbation.location.PerturbationLocation __L7157;
+
+    public static perturbation.location.PerturbationLocation __L7158;
+
+    public static perturbation.location.PerturbationLocation __L7159;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7095 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:358)", 7095, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7096 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:361)", 7096, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7097 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:361)", 7097, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7098 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:361)", 7098, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7099 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:365)", 7099, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7100 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:407)", 7100, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7101 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:434)", 7101, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7102 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:450)", 7102, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7103 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:453)", 7103, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7104 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:460)", 7104, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7105 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:460)", 7105, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7106 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:460)", 7106, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7107 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:460)", 7107, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7108 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:463)", 7108, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7109 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:463)", 7109, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7110 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:463)", 7110, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7111 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:463)", 7111, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7112 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:463)", 7112, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7113 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:466)", 7113, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7114 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:477)", 7114, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7115 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:480)", 7115, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7116 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:487)", 7116, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7117 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:487)", 7117, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7118 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:487)", 7118, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7119 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:487)", 7119, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7120 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:490)", 7120, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7121 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:490)", 7121, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7122 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:490)", 7122, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7123 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:490)", 7123, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7124 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:490)", 7124, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7125 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:493)", 7125, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7126 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:501)", 7126, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7127 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:502)", 7127, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7128 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:502)", 7128, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7129 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:502)", 7129, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7130 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:502)", 7130, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7131 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:502)", 7131, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7132 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:506)", 7132, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7133 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:506)", 7133, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7134 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:506)", 7134, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7135 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:509)", 7135, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7136 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:509)", 7136, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7137 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:509)", 7137, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7138 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:522)", 7138, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7139 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:527)", 7139, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7140 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:528)", 7140, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7141 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:529)", 7141, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7142 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:529)", 7142, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7143 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:529)", 7143, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7144 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:535)", 7144, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7145 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:535)", 7145, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7146 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:535)", 7146, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7147 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:535)", 7147, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7148 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:535)", 7148, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7149 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:536)", 7149, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7150 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:538)", 7150, "Numerical");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7151 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:545)", 7151, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7152 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:552)", 7152, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7153 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:559)", 7153, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7154 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:583)", 7154, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7155 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:591)", 7155, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7156 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:639)", 7156, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7157 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:657)", 7157, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7158 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:659)", 7158, "Boolean");
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.__L7159 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/FrameworkMvcUriComponentsBuilder.java:667)", 7159, "Boolean");
     }
 
-
-    public interface MethodInvocationInfo {
-
-        Method getControllerMethod();
-
-        Object[] getArgumentValues();
-
-        Class<?> getControllerType();
+    static {
+        defaultUriComponentsContributor = new org.springframework.web.method.support.CompositeUriComponentsContributor(new org.springframework.web.servlet.mvc.method.annotation.PathVariableMethodArgumentResolver(), new org.springframework.web.method.annotation.RequestParamMethodArgumentResolver(false));
     }
 
-
-    public static class MethodArgumentBuilder {
-
-        private final Class<?> controllerType;
-
-        private final Method method;
-
-        private final Object[] argumentValues;
-
-        private final UriComponentsBuilder baseUrl;
-
-        /**
-         * @since 4.2
-         */
-        public MethodArgumentBuilder(Class<?> controllerType, Method method) {
-            this(null, controllerType, method);
-        }
-
-        /**
-         * @since 4.2
-         */
-        public MethodArgumentBuilder(UriComponentsBuilder baseUrl, Class<?> controllerType, Method method) {
-            Assert.notNull(controllerType, "'controllerType' is required");
-            Assert.notNull(method, "'method' is required");
-            this.baseUrl = (baseUrl != null ? baseUrl : initBaseUrl());
-            this.controllerType = controllerType;
-            this.method = method;
-            this.argumentValues = new Object[method.getParameterTypes().length];
-            for (int i = 0; i < this.argumentValues.length; i++) {
-                this.argumentValues[i] = null;
-            }
-        }
-
-        /**
-         * @deprecated as of 4.2, this is deprecated in favor of alternative constructors
-         * that accept a controllerType argument
-         */
-        @Deprecated
-        public MethodArgumentBuilder(Method method) {
-            this(method.getDeclaringClass(), method);
-        }
-
-        private static UriComponentsBuilder initBaseUrl() {
-            UriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();
-            return UriComponentsBuilder.fromPath(builder.build().getPath());
-        }
-
-        public MethodArgumentBuilder arg(int index, Object value) {
-            this.argumentValues[index] = value;
-            return this;
-        }
-
-        public String build() {
-            return fromMethodInternal(this.baseUrl, this.controllerType, this.method,
-                    this.argumentValues).build(false).encode().toUriString();
-        }
-
-        public String buildAndExpand(Object... uriVars) {
-            return fromMethodInternal(this.baseUrl, this.controllerType, this.method,
-                    this.argumentValues).build(false).expand(uriVars).encode().toString();
-        }
+    static {
+        org.broadleafcommerce.common.web.controller.FrameworkMvcUriComponentsBuilder.initPerturbationLocation0();
     }
-
 }
+

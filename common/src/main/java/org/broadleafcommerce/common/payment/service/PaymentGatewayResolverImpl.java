@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,27 +17,27 @@
  */
 package org.broadleafcommerce.common.payment.service;
 
-import org.broadleafcommerce.common.payment.PaymentGatewayType;
-import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.WebRequest;
 
-/**
- * Default Resolver implementation. Extensions and modules can override this to provide
- * more exotic scenarios on which PaymentGateway should be used.
- *
- * @author Elbert Bautista (elbertbautista)
- */
-@Service("blPaymentGatewayResolver")
-public class PaymentGatewayResolverImpl implements PaymentGatewayResolver {
-
-    @Override
-    public boolean isHandlerCompatible(PaymentGatewayType handlerType) {
-        return true;
+@org.springframework.stereotype.Service("blPaymentGatewayResolver")
+public class PaymentGatewayResolverImpl implements org.broadleafcommerce.common.payment.service.PaymentGatewayResolver {
+    @java.lang.Override
+    public boolean isHandlerCompatible(org.broadleafcommerce.common.payment.PaymentGatewayType handlerType) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.payment.service.PaymentGatewayResolverImpl.__L3845, true);
     }
 
-    @Override
-    public PaymentGatewayType resolvePaymentGateway(WebRequest request) {
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.PaymentGatewayType resolvePaymentGateway(org.springframework.web.context.request.WebRequest request) {
         return null;
     }
 
+    public static perturbation.location.PerturbationLocation __L3845;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.payment.service.PaymentGatewayResolverImpl.__L3845 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/payment/service/PaymentGatewayResolverImpl.java:35)", 3845, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.payment.service.PaymentGatewayResolverImpl.initPerturbationLocation0();
+    }
 }
+

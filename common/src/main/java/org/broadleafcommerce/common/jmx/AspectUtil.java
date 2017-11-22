@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,21 +17,34 @@
  */
 package org.broadleafcommerce.common.jmx;
 
-import org.springframework.aop.framework.Advised;
-import org.springframework.aop.support.AopUtils;
 
 public class AspectUtil {
-
-    public static Object exposeRootBean(Object managedBean) {
+    public static java.lang.Object exposeRootBean(java.lang.Object managedBean) {
         try {
-            if (AopUtils.isAopProxy(managedBean) && managedBean instanceof Advised) {
-                Advised advised = (Advised) managedBean;
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.jmx.AspectUtil.__L3274, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.jmx.AspectUtil.__L3272, org.springframework.aop.support.AopUtils.isAopProxy(managedBean))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.jmx.AspectUtil.__L3273, (managedBean instanceof org.springframework.aop.framework.Advised)))))) {
+                org.springframework.aop.framework.Advised advised = ((org.springframework.aop.framework.Advised) (managedBean));
                 managedBean = advised.getTargetSource().getTarget();
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (java.lang.Exception e) {
+            throw new java.lang.RuntimeException(e);
         }
         return managedBean;
     }
 
+    public static perturbation.location.PerturbationLocation __L3272;
+
+    public static perturbation.location.PerturbationLocation __L3273;
+
+    public static perturbation.location.PerturbationLocation __L3274;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.jmx.AspectUtil.__L3272 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/jmx/AspectUtil.java:27)", 3272, "Boolean");
+        org.broadleafcommerce.common.jmx.AspectUtil.__L3273 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/jmx/AspectUtil.java:27)", 3273, "Boolean");
+        org.broadleafcommerce.common.jmx.AspectUtil.__L3274 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/jmx/AspectUtil.java:27)", 3274, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.jmx.AspectUtil.initPerturbationLocation0();
+    }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,141 +17,165 @@
  */
 package org.broadleafcommerce.common.cache.engine;
 
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheException;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Ehcache;
-import net.sf.ehcache.Element;
-import net.sf.ehcache.config.CacheConfiguration;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.hibernate.cache.spi.CacheKey;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+public class BigMemoryHydratedCacheManagerImpl extends org.broadleafcommerce.common.cache.engine.AbstractHydratedCacheManager {
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.class);
 
-/**
- * 
- * @author jfischer
- *
- */
-public class BigMemoryHydratedCacheManagerImpl extends AbstractHydratedCacheManager {
+    private static final org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl MANAGER = new org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl();
 
-    private static final Log LOG = LogFactory.getLog(BigMemoryHydratedCacheManagerImpl.class);
-    private static final BigMemoryHydratedCacheManagerImpl MANAGER = new BigMemoryHydratedCacheManagerImpl();
+    private java.util.Map<java.lang.String, java.util.List<java.lang.String>> cacheMemberNamesByEntity = java.util.Collections.synchronizedMap(new java.util.HashMap<java.lang.String, java.util.List<java.lang.String>>(100));
 
-    public static BigMemoryHydratedCacheManagerImpl getInstance() {
-        return MANAGER;
+    private java.util.List<java.lang.String> removeKeys = java.util.Collections.synchronizedList(new java.util.ArrayList<java.lang.String>(100));
+
+    private net.sf.ehcache.Cache offHeap = null;
+
+    public static org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl getInstance() {
+        return org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.MANAGER;
     }
 
-    private Map<String, List<String>> cacheMemberNamesByEntity = Collections.synchronizedMap(new HashMap<String, List<String>>(100));
-    private List<String> removeKeys = Collections.synchronizedList(new ArrayList<String>(100));
-    private Cache offHeap = null;
-
-    private BigMemoryHydratedCacheManagerImpl()  {
-        //CacheManager.getInstance() and CacheManager.create() cannot be called in this constructor because it will create two cache manager instances
+    private BigMemoryHydratedCacheManagerImpl() {
     }
-    
-    private synchronized Cache getHeap() {
-        if (offHeap == null) {
-            if (CacheManager.getInstance().cacheExists("hydrated-offheap-cache")) {
-                offHeap = CacheManager.getInstance().getCache("hydrated-offheap-cache");
-            } else {
-                CacheConfiguration config = new CacheConfiguration("hydrated-offheap-cache", 500).eternal(true).overflowToOffHeap(true).maxMemoryOffHeap("1400M");
-                Cache cache = new Cache(config);
-                CacheManager.create().addCache(cache);
+
+    private synchronized net.sf.ehcache.Cache getHeap() {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L124, ((offHeap) == null))) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L125, net.sf.ehcache.CacheManager.getInstance().cacheExists("hydrated-offheap-cache"))) {
+                offHeap = net.sf.ehcache.CacheManager.getInstance().getCache("hydrated-offheap-cache");
+            }else {
+                net.sf.ehcache.config.CacheConfiguration config = new net.sf.ehcache.config.CacheConfiguration("hydrated-offheap-cache", perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L126, 500)).eternal(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L127, true)).overflowToOffHeap(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L128, true)).maxMemoryOffHeap("1400M");
+                net.sf.ehcache.Cache cache = new net.sf.ehcache.Cache(config);
+                net.sf.ehcache.CacheManager.create().addCache(cache);
                 offHeap = cache;
             }
         }
         return offHeap;
     }
 
-    @Override
-    public Object getHydratedCacheElementItem(String cacheRegion, String cacheName, Serializable elementKey, String elementItemName) {
-        Element element;
-        String myKey = cacheRegion + '_' + cacheName + '_' + elementItemName + '_' + elementKey;
-        if (removeKeys.contains(myKey)) {
+    @java.lang.Override
+    public java.lang.Object getHydratedCacheElementItem(java.lang.String cacheRegion, java.lang.String cacheName, java.io.Serializable elementKey, java.lang.String elementItemName) {
+        net.sf.ehcache.Element element;
+        java.lang.String myKey = (((((cacheRegion + '_') + cacheName) + '_') + elementItemName) + '_') + elementKey;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L129, removeKeys.contains(myKey))) {
             return null;
         }
-        Object response = null;
+        java.lang.Object response = null;
         element = getHeap().get(myKey);
-        if (element != null) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L130, (element != null))) {
             response = element.getObjectValue();
         }
         return response;
     }
 
-    @Override
-    public void addHydratedCacheElementItem(String cacheRegion, String cacheName, Serializable elementKey, String elementItemName, Object elementValue) {
-        String heapKey = cacheRegion + '_' + cacheName + '_' + elementItemName + '_' + elementKey;
-        String nameKey = cacheRegion + '_' + cacheName + '_' + elementKey;
+    @java.lang.Override
+    public void addHydratedCacheElementItem(java.lang.String cacheRegion, java.lang.String cacheName, java.io.Serializable elementKey, java.lang.String elementItemName, java.lang.Object elementValue) {
+        java.lang.String heapKey = (((((cacheRegion + '_') + cacheName) + '_') + elementItemName) + '_') + elementKey;
+        java.lang.String nameKey = (((cacheRegion + '_') + cacheName) + '_') + elementKey;
         removeKeys.remove(nameKey);
-        Element element = new Element(heapKey, elementValue);
-        if (!cacheMemberNamesByEntity.containsKey(nameKey)) {
-            List<String> myMembers = new ArrayList<String>(50);
+        net.sf.ehcache.Element element = new net.sf.ehcache.Element(heapKey, elementValue);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L132, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L131, cacheMemberNamesByEntity.containsKey(nameKey)))))) {
+            java.util.List<java.lang.String> myMembers = new java.util.ArrayList<java.lang.String>(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L133, 50));
             myMembers.add(elementItemName);
             cacheMemberNamesByEntity.put(nameKey, myMembers);
-        } else {
-            List<String> myMembers = cacheMemberNamesByEntity.get(nameKey);
+        }else {
+            java.util.List<java.lang.String> myMembers = cacheMemberNamesByEntity.get(nameKey);
             myMembers.add(elementItemName);
         }
         getHeap().put(element);
     }
 
-    protected void removeCache(String cacheRegion, Serializable key) {
-        String cacheName = cacheRegion;
-        if (key instanceof CacheKey) {
-            cacheName = ((CacheKey) key).getEntityOrRoleName();
-            key = ((CacheKey) key).getKey();
+    protected void removeCache(java.lang.String cacheRegion, java.io.Serializable key) {
+        java.lang.String cacheName = cacheRegion;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L134, (key instanceof org.hibernate.cache.spi.CacheKey))) {
+            cacheName = ((org.hibernate.cache.spi.CacheKey) (key)).getEntityOrRoleName();
+            key = ((org.hibernate.cache.spi.CacheKey) (key)).getKey();
         }
-        String nameKey = cacheRegion + '_' + cacheName + '_' + key;
-        if (cacheMemberNamesByEntity.containsKey(nameKey)) {
-            String[] members = new String[cacheMemberNamesByEntity.get(nameKey).size()];
+        java.lang.String nameKey = (((cacheRegion + '_') + cacheName) + '_') + key;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L135, cacheMemberNamesByEntity.containsKey(nameKey))) {
+            java.lang.String[] members = new java.lang.String[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L136, cacheMemberNamesByEntity.get(nameKey).size())];
             members = cacheMemberNamesByEntity.get(nameKey).toArray(members);
-            for (String myMember : members) {
-                String itemKey = cacheRegion + '_' + myMember + '_' + key;
+            for (java.lang.String myMember : members) {
+                java.lang.String itemKey = (((cacheRegion + '_') + myMember) + '_') + key;
                 removeKeys.add(itemKey);
             }
             cacheMemberNamesByEntity.remove(nameKey);
         }
     }
-    
-    protected void removeAll(String cacheName) {
-        //do nothing
+
+    protected void removeAll(java.lang.String cacheName) {
     }
 
-    @Override
-    public void notifyElementEvicted(Ehcache arg0, Element arg1) {
+    @java.lang.Override
+    public void notifyElementEvicted(net.sf.ehcache.Ehcache arg0, net.sf.ehcache.Element arg1) {
         removeCache(arg0.getName(), arg1.getKey());
     }
 
-    @Override
-    public void notifyElementExpired(Ehcache arg0, Element arg1) {
+    @java.lang.Override
+    public void notifyElementExpired(net.sf.ehcache.Ehcache arg0, net.sf.ehcache.Element arg1) {
         removeCache(arg0.getName(), arg1.getKey());
     }
 
-    @Override
-    public void notifyElementPut(Ehcache arg0, Element arg1) throws CacheException {
-        //do nothing
+    @java.lang.Override
+    public void notifyElementPut(net.sf.ehcache.Ehcache arg0, net.sf.ehcache.Element arg1) throws net.sf.ehcache.CacheException {
     }
 
-    @Override
-    public void notifyElementRemoved(Ehcache arg0, Element arg1) throws CacheException {
+    @java.lang.Override
+    public void notifyElementRemoved(net.sf.ehcache.Ehcache arg0, net.sf.ehcache.Element arg1) throws net.sf.ehcache.CacheException {
         removeCache(arg0.getName(), arg1.getKey());
     }
 
-    @Override
-    public void notifyElementUpdated(Ehcache arg0, Element arg1) throws CacheException {
+    @java.lang.Override
+    public void notifyElementUpdated(net.sf.ehcache.Ehcache arg0, net.sf.ehcache.Element arg1) throws net.sf.ehcache.CacheException {
         removeCache(arg0.getName(), arg1.getKey());
     }
 
-    @Override
-    public void notifyRemoveAll(Ehcache arg0) {
+    @java.lang.Override
+    public void notifyRemoveAll(net.sf.ehcache.Ehcache arg0) {
         removeAll(arg0.getName());
     }
 
+    public static perturbation.location.PerturbationLocation __L124;
+
+    public static perturbation.location.PerturbationLocation __L125;
+
+    public static perturbation.location.PerturbationLocation __L126;
+
+    public static perturbation.location.PerturbationLocation __L127;
+
+    public static perturbation.location.PerturbationLocation __L128;
+
+    public static perturbation.location.PerturbationLocation __L129;
+
+    public static perturbation.location.PerturbationLocation __L130;
+
+    public static perturbation.location.PerturbationLocation __L131;
+
+    public static perturbation.location.PerturbationLocation __L132;
+
+    public static perturbation.location.PerturbationLocation __L133;
+
+    public static perturbation.location.PerturbationLocation __L134;
+
+    public static perturbation.location.PerturbationLocation __L135;
+
+    public static perturbation.location.PerturbationLocation __L136;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L124 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/BigMemoryHydratedCacheManagerImpl.java:60)", 124, "Boolean");
+        org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L125 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/BigMemoryHydratedCacheManagerImpl.java:61)", 125, "Boolean");
+        org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L126 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/BigMemoryHydratedCacheManagerImpl.java:64)", 126, "Numerical");
+        org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L127 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/BigMemoryHydratedCacheManagerImpl.java:64)", 127, "Boolean");
+        org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L128 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/BigMemoryHydratedCacheManagerImpl.java:64)", 128, "Boolean");
+        org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L129 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/BigMemoryHydratedCacheManagerImpl.java:77)", 129, "Boolean");
+        org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L130 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/BigMemoryHydratedCacheManagerImpl.java:82)", 130, "Boolean");
+        org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L131 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/BigMemoryHydratedCacheManagerImpl.java:94)", 131, "Boolean");
+        org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L132 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/BigMemoryHydratedCacheManagerImpl.java:94)", 132, "Boolean");
+        org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L133 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/BigMemoryHydratedCacheManagerImpl.java:95)", 133, "Numerical");
+        org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L134 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/BigMemoryHydratedCacheManagerImpl.java:107)", 134, "Boolean");
+        org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L135 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/BigMemoryHydratedCacheManagerImpl.java:112)", 135, "Boolean");
+        org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.__L136 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/engine/BigMemoryHydratedCacheManagerImpl.java:113)", 136, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.cache.engine.BigMemoryHydratedCacheManagerImpl.initPerturbationLocation0();
+    }
 }
+

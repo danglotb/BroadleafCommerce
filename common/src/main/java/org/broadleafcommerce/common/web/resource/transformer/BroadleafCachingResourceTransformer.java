@@ -1,8 +1,8 @@
 /*
  * #%L
- * broadleaf-theme
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,75 +17,63 @@
  */
 package org.broadleafcommerce.common.web.resource.transformer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.web.resource.resolver.BroadleafResourceTransformerOrder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
-import org.springframework.core.Ordered;
-import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.resource.CachingResourceResolver;
-import org.springframework.web.servlet.resource.CachingResourceTransformer;
-import org.springframework.web.servlet.resource.ResourceTransformerChain;
 
-import java.io.IOException;
+@org.springframework.stereotype.Component("blCachingResourceTransformer")
+public class BroadleafCachingResourceTransformer extends org.springframework.web.servlet.resource.CachingResourceTransformer implements org.springframework.core.Ordered {
+    protected static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.web.resource.transformer.BroadleafCachingResourceTransformer.class);
 
-import javax.servlet.http.HttpServletRequest;
+    private int order = org.broadleafcommerce.common.web.resource.resolver.BroadleafResourceTransformerOrder.BLC_CACHE_RESOURCE_TRANSFORMER;
 
-/**
- * Wraps Spring's {@link CachingResourceResolver} but adds in support to disable with 
- * environment properties.
- * 
- *  {@code }
- * 
- * @author Brian Polster
- * @since Broadleaf 4.0
- */
-@Component("blCachingResourceTransformer")
-public class BroadleafCachingResourceTransformer extends CachingResourceTransformer implements Ordered {
-
-    protected static final Log LOG = LogFactory.getLog(BroadleafCachingResourceTransformer.class);
-    private int order = BroadleafResourceTransformerOrder.BLC_CACHE_RESOURCE_TRANSFORMER;
-    
     @javax.annotation.Resource(name = "blSpringCacheManager")
-    private CacheManager cacheManager;
-    
-    private static final String DEFAULT_CACHE_NAME = "blResourceTransformerCacheElements";
+    private org.springframework.cache.CacheManager cacheManager;
 
-    @Value("${resource.transformer.caching.enabled:true}")
+    private static final java.lang.String DEFAULT_CACHE_NAME = "blResourceTransformerCacheElements";
+
+    @org.springframework.beans.factory.annotation.Value("${resource.transformer.caching.enabled:true}")
     protected boolean resourceTransformerCachingEnabled;
 
-    @Autowired
-    public BroadleafCachingResourceTransformer(@Qualifier("blSpringCacheManager") CacheManager cacheManager) {
-        super(cacheManager, DEFAULT_CACHE_NAME);
+    @org.springframework.beans.factory.annotation.Autowired
+    public BroadleafCachingResourceTransformer(@org.springframework.beans.factory.annotation.Qualifier("blSpringCacheManager")
+    org.springframework.cache.CacheManager cacheManager) {
+        super(cacheManager, org.broadleafcommerce.common.web.resource.transformer.BroadleafCachingResourceTransformer.DEFAULT_CACHE_NAME);
     }
 
-    // Allows for an implementor to override the default cache settings.
-    public BroadleafCachingResourceTransformer(Cache cache) {
+    public BroadleafCachingResourceTransformer(org.springframework.cache.Cache cache) {
         super(cache);
     }
 
-    @Override
-    public Resource transform(HttpServletRequest request, Resource resource, ResourceTransformerChain transformerChain)
-            throws IOException {
-        if (resourceTransformerCachingEnabled) {
+    @java.lang.Override
+    public org.springframework.core.io.Resource transform(javax.servlet.http.HttpServletRequest request, org.springframework.core.io.Resource resource, org.springframework.web.servlet.resource.ResourceTransformerChain transformerChain) throws java.io.IOException {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.transformer.BroadleafCachingResourceTransformer.__L7536, resourceTransformerCachingEnabled)) {
             return super.transform(request, resource, transformerChain);
-        } else {
+        }else {
             return transformerChain.transform(request, resource);
         }
     }
 
-    @Override
+    @java.lang.Override
     public int getOrder() {
-        return order;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.resource.transformer.BroadleafCachingResourceTransformer.__L7537, order);
     }
 
     public void setOrder(int order) {
-        this.order = order;
+        this.order = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.resource.transformer.BroadleafCachingResourceTransformer.__L7538, order);
     }
 
+    public static perturbation.location.PerturbationLocation __L7536;
+
+    public static perturbation.location.PerturbationLocation __L7537;
+
+    public static perturbation.location.PerturbationLocation __L7538;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.resource.transformer.BroadleafCachingResourceTransformer.__L7536 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/transformer/BroadleafCachingResourceTransformer.java:75)", 7536, "Boolean");
+        org.broadleafcommerce.common.web.resource.transformer.BroadleafCachingResourceTransformer.__L7537 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/transformer/BroadleafCachingResourceTransformer.java:84)", 7537, "Numerical");
+        org.broadleafcommerce.common.web.resource.transformer.BroadleafCachingResourceTransformer.__L7538 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/transformer/BroadleafCachingResourceTransformer.java:88)", 7538, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.resource.transformer.BroadleafCachingResourceTransformer.initPerturbationLocation0();
+    }
 }
+

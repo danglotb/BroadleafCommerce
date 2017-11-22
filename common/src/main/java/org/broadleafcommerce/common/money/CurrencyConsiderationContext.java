@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,34 +17,26 @@
  */
 package org.broadleafcommerce.common.money;
 
-import org.broadleafcommerce.common.classloader.release.ThreadLocalManager;
 
-import java.util.HashMap;
-
-/**
- * 
- * @author jfischer
- *
- */
 public class CurrencyConsiderationContext {
-    
-    private static final ThreadLocal<CurrencyDeterminationService> currencyDeterminationService = ThreadLocalManager.createThreadLocal(CurrencyDeterminationService.class);
+    private static final java.lang.ThreadLocal<org.broadleafcommerce.common.money.CurrencyDeterminationService> currencyDeterminationService = org.broadleafcommerce.common.classloader.release.ThreadLocalManager.createThreadLocal(org.broadleafcommerce.common.money.CurrencyDeterminationService.class);
 
-    private static final ThreadLocal<HashMap> currencyConsiderationContext = ThreadLocalManager.createThreadLocal(HashMap.class);
+    private static final java.lang.ThreadLocal<java.util.HashMap> currencyConsiderationContext = org.broadleafcommerce.common.classloader.release.ThreadLocalManager.createThreadLocal(java.util.HashMap.class);
 
-    public static HashMap getCurrencyConsiderationContext() {
-        return CurrencyConsiderationContext.currencyConsiderationContext.get();
+    public static java.util.HashMap getCurrencyConsiderationContext() {
+        return org.broadleafcommerce.common.money.CurrencyConsiderationContext.currencyConsiderationContext.get();
     }
-    
-    public static void setCurrencyConsiderationContext(HashMap currencyConsiderationContext) {
-        CurrencyConsiderationContext.currencyConsiderationContext.set(currencyConsiderationContext);
+
+    public static void setCurrencyConsiderationContext(java.util.HashMap currencyConsiderationContext) {
+        org.broadleafcommerce.common.money.CurrencyConsiderationContext.currencyConsiderationContext.set(currencyConsiderationContext);
     }
-    
-    public static CurrencyDeterminationService getCurrencyDeterminationService() {
-        return CurrencyConsiderationContext.currencyDeterminationService.get();
+
+    public static org.broadleafcommerce.common.money.CurrencyDeterminationService getCurrencyDeterminationService() {
+        return org.broadleafcommerce.common.money.CurrencyConsiderationContext.currencyDeterminationService.get();
     }
-    
-    public static void setCurrencyDeterminationService(CurrencyDeterminationService currencyDeterminationService) {
-        CurrencyConsiderationContext.currencyDeterminationService.set(currencyDeterminationService);
+
+    public static void setCurrencyDeterminationService(org.broadleafcommerce.common.money.CurrencyDeterminationService currencyDeterminationService) {
+        org.broadleafcommerce.common.money.CurrencyConsiderationContext.currencyDeterminationService.set(currencyDeterminationService);
     }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,24 +17,21 @@
  */
 package org.broadleafcommerce.common.exception;
 
-/**
- * @author Jeff Fischer
- */
-public class SiteNotFoundException extends RuntimeException {
 
+public class SiteNotFoundException extends java.lang.RuntimeException {
     public SiteNotFoundException() {
-        //do nothing
     }
 
-    public SiteNotFoundException(Throwable cause) {
+    public SiteNotFoundException(java.lang.Throwable cause) {
         super(cause);
     }
 
-    public SiteNotFoundException(String message) {
+    public SiteNotFoundException(java.lang.String message) {
         super(message);
     }
 
-    public SiteNotFoundException(String message, Throwable cause) {
+    public SiteNotFoundException(java.lang.String message, java.lang.Throwable cause) {
         super(message, cause);
     }
 }
+

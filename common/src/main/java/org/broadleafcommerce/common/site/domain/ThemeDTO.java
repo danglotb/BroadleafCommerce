@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,47 +17,44 @@
  */
 package org.broadleafcommerce.common.site.domain;
 
-/**
- * Stores the path to the theme.
- * Created by bpolster.
- */
-public class ThemeDTO implements Theme {
 
-    public String path = "";
-    public String name = "";
-    public Long id;
-    
+public class ThemeDTO implements org.broadleafcommerce.common.site.domain.Theme {
+    public java.lang.String path = "";
+
+    public java.lang.String name = "";
+
+    public java.lang.Long id;
+
     public ThemeDTO() {
-        // empty constructor
     }
-    
-    public ThemeDTO(String name, String path) {
+
+    public ThemeDTO(java.lang.String name, java.lang.String path) {
         this.name = name;
         this.path = path;
     }
 
-    public String getPath() {
+    public java.lang.String getPath() {
         return path;
     }
 
-    public void setPath(String path) {
+    public void setPath(java.lang.String path) {
         this.path = path;
     }
 
-    public String getName() {
+    public java.lang.String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(java.lang.String name) {
         this.name = name;
     }
 
-    public Long getId() {
+    public java.lang.Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(java.lang.Long id) {
         this.id = id;
     }
-
 }
+

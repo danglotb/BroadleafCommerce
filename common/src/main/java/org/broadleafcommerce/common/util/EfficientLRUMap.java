@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,97 +17,74 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.apache.commons.collections4.map.LRUMap;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
+public class EfficientLRUMap<K, V> implements java.util.Map<K, V> {
+    private java.util.Map<K, V> concurrentMap;
 
-/**
- * This class provides an LRUMap structure that defaults to a more efficient ConcurrentHashMap if the
- * size has not yet been reached.
- * 
- * In Broadleaf, there are many instances where an LRUMap could be used to guard against implementations
- * where Map sizes grow in unexpected ways.    However, the large majority of cases would fit well within the
- * max bounds of the LRUMap.
- * 
- * This class provides an approach that provides the benefits of a LRUMap for memory protection while
- * allowing concurrent access under normal circumstances.
- * 
- * For the first [n] entries, the underlying implementation will be a ConcurrentHashMap.   On the "n+1"th 
- * entry, this implementation will switch its underlying implementation to a synchronized LRUMap. 
- * 
- * @author bpolster
- * 
- */
-public class EfficientLRUMap<K, V> implements Map<K, V> {
+    private java.util.Map<K, V> lruMap;
 
-    private Map<K, V> concurrentMap;
-    private Map<K, V> lruMap;
     private int maxEntries;
+
     private boolean usingLRUMap = false;
-    
+
     public EfficientLRUMap(int maxEntries) {
         this.maxEntries = maxEntries;
-        concurrentMap = new ConcurrentHashMap<K, V>();
+        concurrentMap = new java.util.concurrent.ConcurrentHashMap<K, V>();
     }
 
-    @Override
+    @java.lang.Override
     public int size() {
-        if (usingLRUMap) {
-            return lruMap.size();
-        } else {
-            return concurrentMap.size();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6317, usingLRUMap)) {
+            return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.EfficientLRUMap.__L6318, lruMap.size());
+        }else {
+            return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.EfficientLRUMap.__L6319, concurrentMap.size());
         }
     }
 
-    @Override
+    @java.lang.Override
     public boolean isEmpty() {
-        if (usingLRUMap) {
-            return lruMap.isEmpty();
-        } else {
-            return concurrentMap.isEmpty();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6320, usingLRUMap)) {
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6321, lruMap.isEmpty());
+        }else {
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6322, concurrentMap.isEmpty());
         }
     }
 
-    @Override
-    public boolean containsKey(Object key) {
-        if (usingLRUMap) {
-            return lruMap.containsKey(key);
-        } else {
-            return concurrentMap.containsKey(key);
+    @java.lang.Override
+    public boolean containsKey(java.lang.Object key) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6323, usingLRUMap)) {
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6324, lruMap.containsKey(key));
+        }else {
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6325, concurrentMap.containsKey(key));
         }
     }
 
-    @Override
-    public boolean containsValue(Object value) {
-        if (usingLRUMap) {
-            return lruMap.containsValue(value);
-        } else {
-            return concurrentMap.containsValue(value);
+    @java.lang.Override
+    public boolean containsValue(java.lang.Object value) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6326, usingLRUMap)) {
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6327, lruMap.containsValue(value));
+        }else {
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6328, concurrentMap.containsValue(value));
         }
     }
 
-    @Override
-    public V get(Object key) {
-        if (usingLRUMap) {
+    @java.lang.Override
+    public V get(java.lang.Object key) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6329, usingLRUMap)) {
             return lruMap.get(key);
-        } else {
+        }else {
             return concurrentMap.get(key);
         }
     }
 
-    @Override
+    @java.lang.Override
     public V put(K key, V value) {
-        if (usingLRUMap) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6330, usingLRUMap)) {
             return lruMap.put(key, value);
-        } else {
+        }else {
             V returnVal = concurrentMap.put(key, value);
-            if (switchToLRUMap()) {
-                // The switch could have happened on another thread.
-                if (!lruMap.containsKey(key)) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6331, switchToLRUMap())) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6333, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6332, lruMap.containsKey(key)))))) {
                     lruMap.put(key, value);
                 }
             }
@@ -116,91 +93,194 @@ public class EfficientLRUMap<K, V> implements Map<K, V> {
     }
 
     protected synchronized boolean switchToLRUMap() {
-        if (!usingLRUMap) {
-            if (size() > maxEntries) {
-                lruMap = Collections.synchronizedMap(new LRUMap<K, V>(maxEntries));
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6335, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6334, usingLRUMap))))) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6338, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.EfficientLRUMap.__L6336, size())) > (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.EfficientLRUMap.__L6337, maxEntries))))) {
+                lruMap = java.util.Collections.synchronizedMap(new org.apache.commons.collections4.map.LRUMap<K, V>(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.EfficientLRUMap.__L6339, maxEntries)));
                 lruMap.putAll(concurrentMap);
-                usingLRUMap = true;
+                usingLRUMap = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6340, true);
                 concurrentMap.clear();
             }
         }
-        return usingLRUMap; // this could be set by another thread        
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6341, usingLRUMap);
     }
 
-    @Override
-    public V remove(Object key) {
-        if (usingLRUMap) {
-            // This could put us back below the threshold for LRU vs. Concurrent but we won't optimize to that
-            // level as we are likely to thrash going back and forth.    Once an LRU, always an LRU unless clear
-            // is called.
+    @java.lang.Override
+    public V remove(java.lang.Object key) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6342, usingLRUMap)) {
             return lruMap.remove(key);
-        } else {
+        }else {
             return concurrentMap.remove(key);
         }
     }
 
-    @Override
-    public void putAll(Map<? extends K, ? extends V> m) {
-        if (usingLRUMap) {
+    @java.lang.Override
+    public void putAll(java.util.Map<? extends K, ? extends V> m) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6343, usingLRUMap)) {
             lruMap.putAll(m);
-        } else {
+        }else {
             concurrentMap.putAll(m);
-            if (switchToLRUMap()) {
-                // The switch could have happened on another thread.                
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6344, switchToLRUMap())) {
                 lruMap.putAll(m);
             }
         }
     }
 
-    @Override
+    @java.lang.Override
     public void clear() {
-        if (usingLRUMap) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6345, usingLRUMap)) {
             resetInternalMap();
-        } else {
+        }else {
             concurrentMap.clear();
         }
     }
 
-    /**
-     * We are clearing the map, so we can switch back to a {@link ConcurrentHashMap}
-     */
     protected synchronized void resetInternalMap() {
-        usingLRUMap = false;
+        usingLRUMap = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6346, false);
         lruMap.clear();
     }
 
-    @Override
-    public Set<K> keySet() {
-        if (usingLRUMap) {
+    @java.lang.Override
+    public java.util.Set<K> keySet() {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6347, usingLRUMap)) {
             return lruMap.keySet();
-        } else {
+        }else {
             return concurrentMap.keySet();
         }
     }
 
-    @Override
-    public Collection<V> values() {
-        if (usingLRUMap) {
+    @java.lang.Override
+    public java.util.Collection<V> values() {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6348, usingLRUMap)) {
             return lruMap.values();
-        } else {
+        }else {
             return concurrentMap.values();
         }
     }
 
-    @Override
-    public Set<java.util.Map.Entry<K, V>> entrySet() {
-        if (usingLRUMap) {
+    @java.lang.Override
+    public java.util.Set<java.util.Map.Entry<K, V>> entrySet() {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6349, usingLRUMap)) {
             return lruMap.entrySet();
-        } else {
+        }else {
             return concurrentMap.entrySet();
         }
     }
-    
-    protected Class getUnderlyingMapClass() {
-        if (usingLRUMap) {
+
+    protected java.lang.Class getUnderlyingMapClass() {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.EfficientLRUMap.__L6350, usingLRUMap)) {
             return lruMap.getClass();
-        } else {
+        }else {
             return concurrentMap.getClass();
         }
     }
+
+    public static perturbation.location.PerturbationLocation __L6317;
+
+    public static perturbation.location.PerturbationLocation __L6318;
+
+    public static perturbation.location.PerturbationLocation __L6319;
+
+    public static perturbation.location.PerturbationLocation __L6320;
+
+    public static perturbation.location.PerturbationLocation __L6321;
+
+    public static perturbation.location.PerturbationLocation __L6322;
+
+    public static perturbation.location.PerturbationLocation __L6323;
+
+    public static perturbation.location.PerturbationLocation __L6324;
+
+    public static perturbation.location.PerturbationLocation __L6325;
+
+    public static perturbation.location.PerturbationLocation __L6326;
+
+    public static perturbation.location.PerturbationLocation __L6327;
+
+    public static perturbation.location.PerturbationLocation __L6328;
+
+    public static perturbation.location.PerturbationLocation __L6329;
+
+    public static perturbation.location.PerturbationLocation __L6330;
+
+    public static perturbation.location.PerturbationLocation __L6331;
+
+    public static perturbation.location.PerturbationLocation __L6332;
+
+    public static perturbation.location.PerturbationLocation __L6333;
+
+    public static perturbation.location.PerturbationLocation __L6334;
+
+    public static perturbation.location.PerturbationLocation __L6335;
+
+    public static perturbation.location.PerturbationLocation __L6336;
+
+    public static perturbation.location.PerturbationLocation __L6337;
+
+    public static perturbation.location.PerturbationLocation __L6338;
+
+    public static perturbation.location.PerturbationLocation __L6339;
+
+    public static perturbation.location.PerturbationLocation __L6340;
+
+    public static perturbation.location.PerturbationLocation __L6341;
+
+    public static perturbation.location.PerturbationLocation __L6342;
+
+    public static perturbation.location.PerturbationLocation __L6343;
+
+    public static perturbation.location.PerturbationLocation __L6344;
+
+    public static perturbation.location.PerturbationLocation __L6345;
+
+    public static perturbation.location.PerturbationLocation __L6346;
+
+    public static perturbation.location.PerturbationLocation __L6347;
+
+    public static perturbation.location.PerturbationLocation __L6348;
+
+    public static perturbation.location.PerturbationLocation __L6349;
+
+    public static perturbation.location.PerturbationLocation __L6350;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6317 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:59)", 6317, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6318 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:60)", 6318, "Numerical");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6319 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:62)", 6319, "Numerical");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6320 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:68)", 6320, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6321 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:69)", 6321, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6322 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:71)", 6322, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6323 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:77)", 6323, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6324 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:78)", 6324, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6325 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:80)", 6325, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6326 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:86)", 6326, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6327 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:87)", 6327, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6328 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:89)", 6328, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6329 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:95)", 6329, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6330 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:104)", 6330, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6331 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:108)", 6331, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6332 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:110)", 6332, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6333 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:110)", 6333, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6334 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:119)", 6334, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6335 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:119)", 6335, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6336 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:120)", 6336, "Numerical");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6337 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:120)", 6337, "Numerical");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6338 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:120)", 6338, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6339 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:121)", 6339, "Numerical");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6340 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:123)", 6340, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6341 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:127)", 6341, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6342 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:132)", 6342, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6343 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:144)", 6343, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6344 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:148)", 6344, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6345 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:157)", 6345, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6346 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:168)", 6346, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6347 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:174)", 6347, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6348 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:183)", 6348, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6349 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:192)", 6349, "Boolean");
+        org.broadleafcommerce.common.util.EfficientLRUMap.__L6350 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/EfficientLRUMap.java:200)", 6350, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.EfficientLRUMap.initPerturbationLocation0();
+    }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,26 +17,22 @@
  */
 package org.broadleafcommerce.common.payment.dto;
 
-import java.util.HashMap;
-import java.util.Map;
 
-/**
- * @author Elbert Bautista (elbertbautista)
- */
 public class GiftCardDTO<T> {
-
     protected T parent;
 
-    protected Map<String, Object> additionalFields;
-    protected String giftCardNum;
-    protected String giftCardMasked;
+    protected java.util.Map<java.lang.String, java.lang.Object> additionalFields;
+
+    protected java.lang.String giftCardNum;
+
+    protected java.lang.String giftCardMasked;
 
     public GiftCardDTO() {
-        this.additionalFields = new HashMap<String, Object>();
+        this.additionalFields = new java.util.HashMap<java.lang.String, java.lang.Object>();
     }
 
     public GiftCardDTO(T parent) {
-        this.additionalFields = new HashMap<String, Object>();
+        this.additionalFields = new java.util.HashMap<java.lang.String, java.lang.Object>();
         this.parent = parent;
     }
 
@@ -44,18 +40,19 @@ public class GiftCardDTO<T> {
         return parent;
     }
 
-    public GiftCardDTO<T> additionalFields(String key, Object value) {
+    public org.broadleafcommerce.common.payment.dto.GiftCardDTO<T> additionalFields(java.lang.String key, java.lang.Object value) {
         additionalFields.put(key, value);
         return this;
     }
 
-    public GiftCardDTO<T> giftCardNum(String giftCardNum) {
+    public org.broadleafcommerce.common.payment.dto.GiftCardDTO<T> giftCardNum(java.lang.String giftCardNum) {
         this.giftCardNum = giftCardNum;
         return this;
     }
 
-    public GiftCardDTO<T> giftCardMasked(String giftCardMasked) {
+    public org.broadleafcommerce.common.payment.dto.GiftCardDTO<T> giftCardMasked(java.lang.String giftCardMasked) {
         this.giftCardMasked = giftCardMasked;
         return this;
     }
 }
+

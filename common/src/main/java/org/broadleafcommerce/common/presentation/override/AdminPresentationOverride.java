@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,37 +17,13 @@
  */
 package org.broadleafcommerce.common.presentation.override;
 
-import org.broadleafcommerce.common.presentation.AdminPresentation;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-/**
- *
- * @author pverheyden
- * @deprecated use {@link AdminPresentationMergeOverrides} instead
- */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-@Deprecated
+@java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
+@java.lang.annotation.Target(java.lang.annotation.ElementType.TYPE)
+@java.lang.Deprecated
 public @interface AdminPresentationOverride {
-    
-    /**
-     * The name of the property whose {@link AdminPresentation} annotation should be overwritten
-     * 
-     * @return the name of the property that should be overwritten
-     */
-    String name();
-    
-    /**
-     * The {@link AdminPresentation} to overwrite the property with. This is a comprehensive override,
-     * meaning whatever was declared on the target property previously will be completely replaced
-     * with what is defined in this {@link AdminPresentation}.
-     * 
-     * @return the {@link AdminPresentation} being mapped to the attribute
-     */
-    AdminPresentation value() default @AdminPresentation();
+    java.lang.String name();
 
+    org.broadleafcommerce.common.presentation.AdminPresentation value() default @org.broadleafcommerce.common.presentation.AdminPresentation;
 }
+

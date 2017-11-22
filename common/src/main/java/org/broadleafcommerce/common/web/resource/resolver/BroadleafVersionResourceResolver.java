@@ -1,8 +1,8 @@
 /*
  * #%L
- * broadleaf-theme
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,93 +17,108 @@
  */
 package org.broadleafcommerce.common.web.resource.resolver;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.resource.service.ResourceBundlingService;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.Ordered;
-import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.resource.ResourceResolverChain;
-import org.springframework.web.servlet.resource.VersionResourceResolver;
-import org.springframework.web.servlet.resource.VersionStrategy;
 
-import java.util.List;
-import java.util.Map;
+@org.springframework.stereotype.Component("blVersionResourceResolver")
+public class BroadleafVersionResourceResolver extends org.springframework.web.servlet.resource.VersionResourceResolver implements org.springframework.core.Ordered {
+    protected static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.class);
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
+    private int order = org.broadleafcommerce.common.web.resource.resolver.BroadleafResourceResolverOrder.BLC_VERSION_RESOURCE_RESOLVER;
 
-/**
- * Wraps Spring's {@link VersionResourceResolver} but adds in support to disable with 
- * environment properties.
- * 
- * Before delegating to {@link VersionResourceResolver}, first checks to see if the request is for 
- * a Broadleaf bundle.   If so, skips versioning since bundles are already versioned.
- * 
- *  {@code }
- * 
- * @author Brian Polster
- * @since Broadleaf 4.0
- */
-@Component("blVersionResourceResolver")
-public class BroadleafVersionResourceResolver extends VersionResourceResolver implements Ordered {
-
-    protected static final Log LOG = LogFactory.getLog(BroadleafVersionResourceResolver.class);
-
-    private int order = BroadleafResourceResolverOrder.BLC_VERSION_RESOURCE_RESOLVER;
-
-    @Value("${resource.versioning.enabled:true}")
+    @org.springframework.beans.factory.annotation.Value("${resource.versioning.enabled:true}")
     protected boolean resourceVersioningEnabled;
 
     @javax.annotation.Resource(name = "blResourceBundlingService")
-    protected ResourceBundlingService bundlingService;
+    protected org.broadleafcommerce.common.resource.service.ResourceBundlingService bundlingService;
 
     @javax.annotation.Resource(name = "blVersionResourceResolverStrategyMap")
-    protected Map<String, VersionStrategy> versionStrategyMap;
+    protected java.util.Map<java.lang.String, org.springframework.web.servlet.resource.VersionStrategy> versionStrategyMap;
 
-    @Override
-    protected Resource resolveResourceInternal(HttpServletRequest request, String requestPath,
-            List<? extends Resource> locations, ResourceResolverChain chain) {
-        if (resourceVersioningEnabled && !bundlingService.checkForRegisteredBundleFile(requestPath)) {
+    @java.lang.Override
+    protected org.springframework.core.io.Resource resolveResourceInternal(javax.servlet.http.HttpServletRequest request, java.lang.String requestPath, java.util.List<? extends org.springframework.core.io.Resource> locations, org.springframework.web.servlet.resource.ResourceResolverChain chain) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7510, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7507, resourceVersioningEnabled)) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7509, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7508, bundlingService.checkForRegisteredBundleFile(requestPath))))))))) {
             return super.resolveResourceInternal(request, requestPath, locations, chain);
-        } else {
+        }else {
             return chain.resolveResource(request, requestPath, locations);
         }
     }
 
-    @Override
-    protected String resolveUrlPathInternal(String resourceUrlPath,
-            List<? extends Resource> locations, ResourceResolverChain chain) {
-        if (resourceVersioningEnabled && !bundlingService.checkForRegisteredBundleFile(resourceUrlPath)) {
-            String result = super.resolveUrlPathInternal(resourceUrlPath, locations, chain);
-
-            // Spring's default version handler will return null if it doesn't have a strategy
-            // for that resource - that seems incorrect.   Overriding here.
-            if (result == null) {
+    @java.lang.Override
+    protected java.lang.String resolveUrlPathInternal(java.lang.String resourceUrlPath, java.util.List<? extends org.springframework.core.io.Resource> locations, org.springframework.web.servlet.resource.ResourceResolverChain chain) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7514, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7511, resourceVersioningEnabled)) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7513, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7512, bundlingService.checkForRegisteredBundleFile(resourceUrlPath))))))))) {
+            java.lang.String result = super.resolveUrlPathInternal(resourceUrlPath, locations, chain);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7515, (result == null))) {
                 return chain.resolveUrlPath(resourceUrlPath, locations);
-            } else {
+            }else {
                 return result;
             }
-        } else {
+        }else {
             return chain.resolveUrlPath(resourceUrlPath, locations);
         }
     }
 
-    @Override
+    @java.lang.Override
     public int getOrder() {
-        return order;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7516, order);
     }
 
     public void setOrder(int order) {
-        this.order = order;
+        this.order = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7517, order);
     }
 
-    @PostConstruct
-    public void initIt() throws Exception {
-        if (getStrategyMap() == null || getStrategyMap().isEmpty()) {
+    @javax.annotation.PostConstruct
+    public void initIt() throws java.lang.Exception {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7520, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7518, ((getStrategyMap()) == null))) || (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7519, getStrategyMap().isEmpty()))))) {
             setStrategyMap(versionStrategyMap);
         }
     }
 
+    public static perturbation.location.PerturbationLocation __L7507;
+
+    public static perturbation.location.PerturbationLocation __L7508;
+
+    public static perturbation.location.PerturbationLocation __L7509;
+
+    public static perturbation.location.PerturbationLocation __L7510;
+
+    public static perturbation.location.PerturbationLocation __L7511;
+
+    public static perturbation.location.PerturbationLocation __L7512;
+
+    public static perturbation.location.PerturbationLocation __L7513;
+
+    public static perturbation.location.PerturbationLocation __L7514;
+
+    public static perturbation.location.PerturbationLocation __L7515;
+
+    public static perturbation.location.PerturbationLocation __L7516;
+
+    public static perturbation.location.PerturbationLocation __L7517;
+
+    public static perturbation.location.PerturbationLocation __L7518;
+
+    public static perturbation.location.PerturbationLocation __L7519;
+
+    public static perturbation.location.PerturbationLocation __L7520;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7507 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BroadleafVersionResourceResolver.java:68)", 7507, "Boolean");
+        org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7508 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BroadleafVersionResourceResolver.java:68)", 7508, "Boolean");
+        org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7509 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BroadleafVersionResourceResolver.java:68)", 7509, "Boolean");
+        org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7510 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BroadleafVersionResourceResolver.java:68)", 7510, "Boolean");
+        org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7511 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BroadleafVersionResourceResolver.java:78)", 7511, "Boolean");
+        org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7512 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BroadleafVersionResourceResolver.java:78)", 7512, "Boolean");
+        org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7513 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BroadleafVersionResourceResolver.java:78)", 7513, "Boolean");
+        org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7514 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BroadleafVersionResourceResolver.java:78)", 7514, "Boolean");
+        org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7515 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BroadleafVersionResourceResolver.java:83)", 7515, "Boolean");
+        org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7516 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BroadleafVersionResourceResolver.java:95)", 7516, "Numerical");
+        org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7517 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BroadleafVersionResourceResolver.java:99)", 7517, "Numerical");
+        org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7518 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BroadleafVersionResourceResolver.java:104)", 7518, "Boolean");
+        org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7519 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BroadleafVersionResourceResolver.java:104)", 7519, "Boolean");
+        org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.__L7520 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/resource/resolver/BroadleafVersionResourceResolver.java:104)", 7520, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.resource.resolver.BroadleafVersionResourceResolver.initPerturbationLocation0();
+    }
 }
+

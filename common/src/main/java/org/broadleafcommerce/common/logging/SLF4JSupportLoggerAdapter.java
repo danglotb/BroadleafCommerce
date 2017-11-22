@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,133 +17,125 @@
  */
 package org.broadleafcommerce.common.logging;
 
-import org.broadleafcommerce.common.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
-import org.slf4j.MarkerFactory;
 
-/**
- * <p>An SLF4J implementation of SupportLoggerAdapter that will delegate to the
- * configured SLF4J logging framework.</p>
- *
- * @author Elbert Bautista (elbertbautista)
- */
-public class SLF4JSupportLoggerAdapter extends AbstractSupportLoggerAdapter implements SupportLoggerAdapter {
+public class SLF4JSupportLoggerAdapter extends org.broadleafcommerce.common.logging.AbstractSupportLoggerAdapter implements org.broadleafcommerce.common.logging.SupportLoggerAdapter {
+    private static final org.slf4j.Logger LOGGER = org.slf4j.LoggerFactory.getLogger(org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.class);
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SLF4JSupportLoggerAdapter.class);
-    public static final String DEFAULT_LEVEL_KEY = "SLF4JSupportLoggerAdapter.defaultLevel";
+    public static final java.lang.String DEFAULT_LEVEL_KEY = "SLF4JSupportLoggerAdapter.defaultLevel";
 
-    private String name;
+    private java.lang.String name;
 
-    @Override
-    public void support(String message) {
-        mapSupportLevel(StringUtil.sanitize(message), null);
+    @java.lang.Override
+    public void support(java.lang.String message) {
+        mapSupportLevel(org.broadleafcommerce.common.util.StringUtil.sanitize(message), null);
     }
 
-    @Override
-    public void support(String message, Throwable t) {
-        mapSupportLevel(StringUtil.sanitize(message), t);
+    @java.lang.Override
+    public void support(java.lang.String message, java.lang.Throwable t) {
+        mapSupportLevel(org.broadleafcommerce.common.util.StringUtil.sanitize(message), t);
     }
 
-    @Override
-    public void lifecycle(LifeCycleEvent lifeCycleEvent, String message) {
-        mapSupportLevel(StringUtil.sanitize(message), null);
+    @java.lang.Override
+    public void lifecycle(org.broadleafcommerce.common.logging.LifeCycleEvent lifeCycleEvent, java.lang.String message) {
+        mapSupportLevel(org.broadleafcommerce.common.util.StringUtil.sanitize(message), null);
     }
 
-    @Override
-    public void debug(String message) {
-        LOGGER.debug(StringUtil.sanitize(message));
+    @java.lang.Override
+    public void debug(java.lang.String message) {
+        org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.LOGGER.debug(org.broadleafcommerce.common.util.StringUtil.sanitize(message));
     }
 
-    @Override
-    public void debug(String message, Throwable t) {
-        LOGGER.debug(StringUtil.sanitize(message), t);
+    @java.lang.Override
+    public void debug(java.lang.String message, java.lang.Throwable t) {
+        org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.LOGGER.debug(org.broadleafcommerce.common.util.StringUtil.sanitize(message), t);
     }
 
-    @Override
-    public void error(String message) {
-        LOGGER.error(StringUtil.sanitize(message));
+    @java.lang.Override
+    public void error(java.lang.String message) {
+        org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.LOGGER.error(org.broadleafcommerce.common.util.StringUtil.sanitize(message));
     }
 
-    @Override
-    public void error(String message, Throwable t) {
-        LOGGER.error(StringUtil.sanitize(message), t);
+    @java.lang.Override
+    public void error(java.lang.String message, java.lang.Throwable t) {
+        org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.LOGGER.error(org.broadleafcommerce.common.util.StringUtil.sanitize(message), t);
     }
 
-    /**
-     * Mapping FATAL to ERROR as the SLF4J API does not contain a fatal level
-     * @param message
-     */
-    @Override
-    public void fatal(String message) {
-        LOGGER.error(StringUtil.sanitize(message));
+    @java.lang.Override
+    public void fatal(java.lang.String message) {
+        org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.LOGGER.error(org.broadleafcommerce.common.util.StringUtil.sanitize(message));
     }
 
-    /**
-     * Mapping FATAL to ERROR as the SLF4J API does not contain a fatal level
-     * @param message
-     * @param t
-     */
-    @Override
-    public void fatal(String message, Throwable t) {
-        LOGGER.error(StringUtil.sanitize(message), t);
+    @java.lang.Override
+    public void fatal(java.lang.String message, java.lang.Throwable t) {
+        org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.LOGGER.error(org.broadleafcommerce.common.util.StringUtil.sanitize(message), t);
     }
 
-    @Override
-    public void info(String message) {
-        LOGGER.info(StringUtil.sanitize(message));
+    @java.lang.Override
+    public void info(java.lang.String message) {
+        org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.LOGGER.info(org.broadleafcommerce.common.util.StringUtil.sanitize(message));
     }
 
-    @Override
-    public void info(String message, Throwable t) {
-        LOGGER.info(StringUtil.sanitize(message), t);
+    @java.lang.Override
+    public void info(java.lang.String message, java.lang.Throwable t) {
+        org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.LOGGER.info(org.broadleafcommerce.common.util.StringUtil.sanitize(message), t);
     }
 
-    @Override
-    public void warn(String message) {
-        LOGGER.warn(StringUtil.sanitize(message));
+    @java.lang.Override
+    public void warn(java.lang.String message) {
+        org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.LOGGER.warn(org.broadleafcommerce.common.util.StringUtil.sanitize(message));
     }
 
-    @Override
-    public void warn(String message, Throwable t) {
-        LOGGER.warn(StringUtil.sanitize(message), t);
+    @java.lang.Override
+    public void warn(java.lang.String message, java.lang.Throwable t) {
+        org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.LOGGER.warn(org.broadleafcommerce.common.util.StringUtil.sanitize(message), t);
     }
 
-    protected void mapSupportLevel(String message, Throwable t) {
-        Marker supportMarker = MarkerFactory.getMarker(SUPPORT);
-
-        switch (getSupportLevel()) {
-            case LOG_LEVEL_ERROR:
-                LOGGER.error(supportMarker, message, t);
+    protected void mapSupportLevel(java.lang.String message, java.lang.Throwable t) {
+        org.slf4j.Marker supportMarker = org.slf4j.MarkerFactory.getMarker(org.broadleafcommerce.common.logging.AbstractSupportLoggerAdapter.SUPPORT);
+        switch (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.__L3425, getSupportLevel())) {
+            case org.broadleafcommerce.common.logging.AbstractSupportLoggerAdapter.LOG_LEVEL_ERROR :
+                org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.LOGGER.error(supportMarker, message, t);
                 break;
-            case LOG_LEVEL_INFO:
-                LOGGER.info(supportMarker, message, t);
+            case org.broadleafcommerce.common.logging.AbstractSupportLoggerAdapter.LOG_LEVEL_INFO :
+                org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.LOGGER.info(supportMarker, message, t);
                 break;
-            case LOG_LEVEL_DEBUG:
-                LOGGER.debug(supportMarker, message, t);
+            case org.broadleafcommerce.common.logging.AbstractSupportLoggerAdapter.LOG_LEVEL_DEBUG :
+                org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.LOGGER.debug(supportMarker, message, t);
                 break;
-            case LOG_LEVEL_TRACE:
-                LOGGER.trace(supportMarker, message, t);
+            case org.broadleafcommerce.common.logging.AbstractSupportLoggerAdapter.LOG_LEVEL_TRACE :
+                org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.LOGGER.trace(supportMarker, message, t);
                 break;
-            default:
-                LOGGER.warn(supportMarker, message, t);
+            default :
+                org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.LOGGER.warn(supportMarker, message, t);
         }
-
     }
 
     public int getSupportLevel() {
-        String systemProperty = System.getProperty(DEFAULT_LEVEL_KEY, LOG_LEVEL_WARN+"");
-        return Integer.valueOf(systemProperty);
+        java.lang.String systemProperty = java.lang.System.getProperty(org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.DEFAULT_LEVEL_KEY, ((org.broadleafcommerce.common.logging.AbstractSupportLoggerAdapter.LOG_LEVEL_WARN) + ""));
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.__L3426, java.lang.Integer.valueOf(systemProperty));
     }
 
-    @Override
-    public String getName() {
+    @java.lang.Override
+    public java.lang.String getName() {
         return name;
     }
 
-    @Override
-    public void setName(String name) {
+    @java.lang.Override
+    public void setName(java.lang.String name) {
         this.name = name;
     }
+
+    public static perturbation.location.PerturbationLocation __L3425;
+
+    public static perturbation.location.PerturbationLocation __L3426;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.__L3425 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/logging/SLF4JSupportLoggerAdapter.java:116)", 3425, "Numerical");
+        org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.__L3426 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/logging/SLF4JSupportLoggerAdapter.java:137)", 3426, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.logging.SLF4JSupportLoggerAdapter.initPerturbationLocation0();
+    }
 }
+

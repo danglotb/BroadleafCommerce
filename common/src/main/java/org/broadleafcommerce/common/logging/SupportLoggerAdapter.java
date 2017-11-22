@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,59 +17,36 @@
  */
 package org.broadleafcommerce.common.logging;
 
-/**
- * @author Elbert Bautista (elbertbautista)
- */
+
 public interface SupportLoggerAdapter {
+    public java.lang.String getName();
 
-    public String getName();
+    public void setName(java.lang.String name);
 
-    public void setName(String name);
+    public void support(java.lang.String message);
 
-    /**
-     * emit a SUPPORT level message
-     * @param message
-     */
-    public void support(String message);
+    public void support(java.lang.String message, java.lang.Throwable t);
 
-    /**
-     * emit a SUPPORT level message with throwable
-     * @param message
-     * @param t
-     */
-    public void support(String message, Throwable t);
+    public void lifecycle(org.broadleafcommerce.common.logging.LifeCycleEvent lifeCycleEvent, java.lang.String message);
 
-    /**
-     * emit a SUPPORT lifecycle message
-     * @param lifeCycleEvent
-     * @param message
-     */
-    public void lifecycle(LifeCycleEvent lifeCycleEvent, String message);
+    public void debug(java.lang.String message);
 
-    /**
-     * In order to be backwards compatible. The support logger should also support
-     * the debug, error, fatal, info, and warn levels as well.
-     * @param message
-     */
+    public void debug(java.lang.String message, java.lang.Throwable t);
 
-    public void debug(String message);
+    public void error(java.lang.String message);
 
-    public void debug(String message, Throwable t);
+    public void error(java.lang.String message, java.lang.Throwable t);
 
-    public void error(String message);
+    public void fatal(java.lang.String message);
 
-    public void error(String message, Throwable t);
+    public void fatal(java.lang.String message, java.lang.Throwable t);
 
-    public void fatal(String message);
+    public void info(java.lang.String message);
 
-    public void fatal(String message, Throwable t);
+    public void info(java.lang.String message, java.lang.Throwable t);
 
-    public void info(String message);
+    public void warn(java.lang.String message);
 
-    public void info(String message, Throwable t);
-
-    public void warn(String message);
-
-    public void warn(String message, Throwable t);
-
+    public void warn(java.lang.String message, java.lang.Throwable t);
 }
+

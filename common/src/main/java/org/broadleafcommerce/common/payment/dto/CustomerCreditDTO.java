@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,26 +17,22 @@
  */
 package org.broadleafcommerce.common.payment.dto;
 
-import java.util.HashMap;
-import java.util.Map;
 
-/**
- * @author Elbert Bautista (elbertbautista)
- */
 public class CustomerCreditDTO<T> {
-
     protected T parent;
 
-    protected Map<String, Object> additionalFields;
-    protected String customerCreditAccountNum;
-    protected String customerCreditAccountMasked;
+    protected java.util.Map<java.lang.String, java.lang.Object> additionalFields;
+
+    protected java.lang.String customerCreditAccountNum;
+
+    protected java.lang.String customerCreditAccountMasked;
 
     public CustomerCreditDTO() {
-        this.additionalFields = new HashMap<String, Object>();
+        this.additionalFields = new java.util.HashMap<java.lang.String, java.lang.Object>();
     }
 
     public CustomerCreditDTO(T parent) {
-        this.additionalFields = new HashMap<String, Object>();
+        this.additionalFields = new java.util.HashMap<java.lang.String, java.lang.Object>();
         this.parent = parent;
     }
 
@@ -44,18 +40,19 @@ public class CustomerCreditDTO<T> {
         return parent;
     }
 
-    public CustomerCreditDTO<T> additionalFields(String key, Object value) {
+    public org.broadleafcommerce.common.payment.dto.CustomerCreditDTO<T> additionalFields(java.lang.String key, java.lang.Object value) {
         additionalFields.put(key, value);
         return this;
     }
 
-    public CustomerCreditDTO<T> customerCreditAccountNum(String customerCreditAccountNum) {
+    public org.broadleafcommerce.common.payment.dto.CustomerCreditDTO<T> customerCreditAccountNum(java.lang.String customerCreditAccountNum) {
         this.customerCreditAccountNum = customerCreditAccountNum;
         return this;
     }
 
-    public CustomerCreditDTO<T> customerCreditAccountMasked(String customerCreditAccountMasked) {
+    public org.broadleafcommerce.common.payment.dto.CustomerCreditDTO<T> customerCreditAccountMasked(java.lang.String customerCreditAccountMasked) {
         this.customerCreditAccountMasked = customerCreditAccountMasked;
         return this;
     }
 }
+

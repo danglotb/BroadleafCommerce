@@ -17,26 +17,36 @@
  */
 package org.broadleafcommerce.common.condition;
 
-import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.module.BroadleafModuleRegistration.BroadleafModuleEnum;
-import org.broadleafcommerce.common.module.ModulePresentUtil;
-import org.springframework.context.annotation.Condition;
-import org.springframework.context.annotation.ConditionContext;
-import org.springframework.core.type.AnnotatedTypeMetadata;
 
-import java.util.Map;
+public class OnMissingBroadleafModuleCondition implements org.springframework.context.annotation.Condition {
+    @java.lang.Override
+    public boolean matches(org.springframework.context.annotation.ConditionContext context, org.springframework.core.type.AnnotatedTypeMetadata metadata) {
+        java.util.Map<java.lang.String, java.lang.Object> attributes = metadata.getAnnotationAttributes(org.broadleafcommerce.common.condition.ConditionalOnMissingBroadleafModule.class.getName());
+        org.broadleafcommerce.common.module.BroadleafModuleRegistration.BroadleafModuleEnum module = ((org.broadleafcommerce.common.module.BroadleafModuleRegistration.BroadleafModuleEnum) (attributes.get("value")));
+        java.lang.String moduleName = (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.condition.OnMissingBroadleafModuleCondition.__L313, ((org.broadleafcommerce.common.module.BroadleafModuleRegistration.BroadleafModuleEnum.IGNORED) != module))) ? module.getName() : ((java.lang.String) (attributes.get("moduleName")));
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.condition.OnMissingBroadleafModuleCondition.__L317, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.condition.OnMissingBroadleafModuleCondition.__L314, org.apache.commons.lang3.StringUtils.isNotEmpty(moduleName))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.condition.OnMissingBroadleafModuleCondition.__L316, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.condition.OnMissingBroadleafModuleCondition.__L315, org.broadleafcommerce.common.module.ModulePresentUtil.isPresent(moduleName))))))));
+    }
 
-/**
- * @author Brandon Hines
- */
-public class OnMissingBroadleafModuleCondition implements Condition {
+    public static perturbation.location.PerturbationLocation __L313;
 
-    @Override
-    public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-        Map<String, Object> attributes = metadata.getAnnotationAttributes(ConditionalOnMissingBroadleafModule.class.getName());
-        BroadleafModuleEnum module = (BroadleafModuleEnum) attributes.get("value");
-        String moduleName = (BroadleafModuleEnum.IGNORED != module) ? module.getName() : (String) attributes.get("moduleName");
+    public static perturbation.location.PerturbationLocation __L314;
 
-        return StringUtils.isNotEmpty(moduleName) && !ModulePresentUtil.isPresent(moduleName);
+    public static perturbation.location.PerturbationLocation __L315;
+
+    public static perturbation.location.PerturbationLocation __L316;
+
+    public static perturbation.location.PerturbationLocation __L317;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.condition.OnMissingBroadleafModuleCondition.__L313 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/condition/OnMissingBroadleafModuleCondition.java:38)", 313, "Boolean");
+        org.broadleafcommerce.common.condition.OnMissingBroadleafModuleCondition.__L314 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/condition/OnMissingBroadleafModuleCondition.java:40)", 314, "Boolean");
+        org.broadleafcommerce.common.condition.OnMissingBroadleafModuleCondition.__L315 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/condition/OnMissingBroadleafModuleCondition.java:40)", 315, "Boolean");
+        org.broadleafcommerce.common.condition.OnMissingBroadleafModuleCondition.__L316 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/condition/OnMissingBroadleafModuleCondition.java:40)", 316, "Boolean");
+        org.broadleafcommerce.common.condition.OnMissingBroadleafModuleCondition.__L317 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/condition/OnMissingBroadleafModuleCondition.java:40)", 317, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.condition.OnMissingBroadleafModuleCondition.initPerturbationLocation0();
     }
 }
+

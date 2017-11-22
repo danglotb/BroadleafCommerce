@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,35 +17,32 @@
  */
 package org.broadleafcommerce.common.web.payment.processor;
 
-import org.broadleafcommerce.common.extension.AbstractExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
-import org.broadleafcommerce.common.payment.PaymentGatewayType;
-import org.broadleafcommerce.common.payment.service.PaymentGatewayResolver;
-import java.util.Map;
-import javax.annotation.Resource;
 
-/**
- * @author Elbert Bautista (elbertbautista)
- */
-public abstract class AbstractCreditCardTypesExtensionHandler extends AbstractExtensionHandler
-        implements CreditCardTypesExtensionHandler {
+public abstract class AbstractCreditCardTypesExtensionHandler extends org.broadleafcommerce.common.extension.AbstractExtensionHandler implements org.broadleafcommerce.common.web.payment.processor.CreditCardTypesExtensionHandler {
+    @javax.annotation.Resource(name = "blPaymentGatewayResolver")
+    protected org.broadleafcommerce.common.payment.service.PaymentGatewayResolver paymentGatewayResolver;
 
-    @Resource(name = "blPaymentGatewayResolver")
-    protected PaymentGatewayResolver paymentGatewayResolver;
-
-    @Override
-    public ExtensionResultStatusType populateCreditCardMap(Map<String, String> creditCardTypes) {
-
-        if (paymentGatewayResolver.isHandlerCompatible(getHandlerType())) {
+    @java.lang.Override
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType populateCreditCardMap(java.util.Map<java.lang.String, java.lang.String> creditCardTypes) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.payment.processor.AbstractCreditCardTypesExtensionHandler.__L7372, paymentGatewayResolver.isHandlerCompatible(getHandlerType()))) {
             setCardTypes(creditCardTypes);
-            return ExtensionResultStatusType.HANDLED;
+            return org.broadleafcommerce.common.extension.ExtensionResultStatusType.HANDLED;
         }
-
-        return ExtensionResultStatusType.NOT_HANDLED;
+        return org.broadleafcommerce.common.extension.ExtensionResultStatusType.NOT_HANDLED;
     }
 
-    public abstract PaymentGatewayType getHandlerType();
+    public abstract org.broadleafcommerce.common.payment.PaymentGatewayType getHandlerType();
 
-    public abstract void setCardTypes(Map<String, String> creditCardTypes);
+    public abstract void setCardTypes(java.util.Map<java.lang.String, java.lang.String> creditCardTypes);
 
+    public static perturbation.location.PerturbationLocation __L7372;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.payment.processor.AbstractCreditCardTypesExtensionHandler.__L7372 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/payment/processor/AbstractCreditCardTypesExtensionHandler.java:39)", 7372, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.payment.processor.AbstractCreditCardTypesExtensionHandler.initPerturbationLocation0();
+    }
 }
+

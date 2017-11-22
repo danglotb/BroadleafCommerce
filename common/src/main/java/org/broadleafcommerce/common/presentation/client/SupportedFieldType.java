@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,46 +17,7 @@
  */
 package org.broadleafcommerce.common.presentation.client;
 
-/**
- * 
- * @author jfischer
- *
- */
+
 public enum SupportedFieldType {
-    UNKNOWN,
-    ID,
-    BOOLEAN,
-    BOOLEAN_LINK,
-    DATE,
-    INTEGER,
-    DECIMAL,
-    STRING,
-    COLLECTION,
-    PASSWORD,
-    PASSWORD_CONFIRM,
-    EMAIL,
-    FOREIGN_KEY,
-    ADDITIONAL_FOREIGN_KEY,
-    MONEY,
-    BROADLEAF_ENUMERATION,
-    EXPLICIT_ENUMERATION,
-    EMPTY_ENUMERATION,
-    DATA_DRIVEN_ENUMERATION,
-    HTML,
-    HTML_BASIC,
-    UPLOAD,
-    HIDDEN,
-    ASSET_URL,
-    ASSET_LOOKUP,
-    MEDIA,
-    RULE_SIMPLE,
-    RULE_SIMPLE_TIME,
-    RULE_WITH_QUANTITY,
-    STRING_LIST,
-    IMAGE,
-    COLOR,
-    CODE,
-    GENERATED_URL,
-    GENERATED_FIELD_VALUE,
-    DESCRIPTION
-}
+    UNKNOWN, ID, BOOLEAN, BOOLEAN_LINK, DATE, INTEGER, DECIMAL, STRING, COLLECTION, PASSWORD, PASSWORD_CONFIRM, EMAIL, FOREIGN_KEY, ADDITIONAL_FOREIGN_KEY, MONEY, BROADLEAF_ENUMERATION, EXPLICIT_ENUMERATION, EMPTY_ENUMERATION, DATA_DRIVEN_ENUMERATION, HTML, HTML_BASIC, UPLOAD, HIDDEN, ASSET_URL, ASSET_LOOKUP, MEDIA, RULE_SIMPLE, RULE_SIMPLE_TIME, RULE_WITH_QUANTITY, STRING_LIST, IMAGE, COLOR, CODE, GENERATED_URL, GENERATED_FIELD_VALUE, DESCRIPTION;}
+

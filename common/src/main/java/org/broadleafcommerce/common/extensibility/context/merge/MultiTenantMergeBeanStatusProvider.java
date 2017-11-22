@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,21 +17,22 @@
  */
 package org.broadleafcommerce.common.extensibility.context.merge;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
 
-/**
- * This {@link MergeBeanStatusProvider} can be utilized by modules that are trying to provide functionality that 
- * is only required when MultiTenant is loaded.
- * 
- * @author Andre Azzolini (apazzolini)
- */
-@Component("blMultiTenantMergeBeanStatusProvider")
-public class MultiTenantMergeBeanStatusProvider implements MergeBeanStatusProvider {
-
-    @Override
-    public boolean isProcessingEnabled(Object bean, String beanName, ApplicationContext appCtx) {
-        return appCtx.containsBean("blMultiTenantFilterClassTransformer");
+@org.springframework.stereotype.Component("blMultiTenantMergeBeanStatusProvider")
+public class MultiTenantMergeBeanStatusProvider implements org.broadleafcommerce.common.extensibility.context.merge.MergeBeanStatusProvider {
+    @java.lang.Override
+    public boolean isProcessingEnabled(java.lang.Object bean, java.lang.String beanName, org.springframework.context.ApplicationContext appCtx) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.context.merge.MultiTenantMergeBeanStatusProvider.__L1802, appCtx.containsBean("blMultiTenantFilterClassTransformer"));
     }
 
+    public static perturbation.location.PerturbationLocation __L1802;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.extensibility.context.merge.MultiTenantMergeBeanStatusProvider.__L1802 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/MultiTenantMergeBeanStatusProvider.java:34)", 1802, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.extensibility.context.merge.MultiTenantMergeBeanStatusProvider.initPerturbationLocation0();
+    }
 }
+

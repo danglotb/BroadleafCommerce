@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,38 +17,29 @@
  */
 package org.broadleafcommerce.common.site.domain;
 
-import org.broadleafcommerce.common.persistence.Status;
 
-import java.io.Serializable;
-import java.util.List;
-import java.lang.Comparable;
+public interface Catalog extends java.io.Serializable , java.lang.Comparable<org.broadleafcommerce.common.site.domain.Catalog> , org.broadleafcommerce.common.persistence.Status {
+    java.lang.Long getId();
 
-/**
- * @author Jeff Fischer
- */
-public interface Catalog extends Status, Serializable, Comparable<Catalog> {
+    void setId(java.lang.Long id);
 
-    Long getId();
+    java.lang.String getName();
 
-    void setId(Long id);
+    void setName(java.lang.String name);
 
-    String getName();
+    @java.lang.Deprecated
+    java.util.List<org.broadleafcommerce.common.site.domain.Site> getSites();
 
-    void setName(String name);
+    @java.lang.Deprecated
+    void setSites(java.util.List<org.broadleafcommerce.common.site.domain.Site> sites);
 
-    @Deprecated
-    List<Site> getSites();
+    public java.util.List<org.broadleafcommerce.common.site.domain.SiteCatalogXref> getSiteXrefs();
 
-    @Deprecated
-    void setSites(List<Site> sites);
-    
-    public List<SiteCatalogXref> getSiteXrefs();
+    public void setSiteXrefs(java.util.List<org.broadleafcommerce.common.site.domain.SiteCatalogXref> siteXrefs);
 
-    public void setSiteXrefs(List<SiteCatalogXref> siteXrefs);
+    @java.lang.Override
+    public int compareTo(org.broadleafcommerce.common.site.domain.Catalog other);
 
-    @Override
-    public int compareTo(Catalog other);
-
-    Catalog clone();
-
+    org.broadleafcommerce.common.site.domain.Catalog clone();
 }
+

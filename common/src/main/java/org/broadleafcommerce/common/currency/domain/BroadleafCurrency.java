@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,25 +17,20 @@
  */
 package org.broadleafcommerce.common.currency.domain;
 
-import java.io.Serializable;
 
-/**
- * Author: jerryocanas
- * Date: 9/6/12
- */
-public interface BroadleafCurrency extends Serializable {
+public interface BroadleafCurrency extends java.io.Serializable {
+    public java.lang.String getCurrencyCode();
 
-    public String getCurrencyCode();
-    
     public java.util.Currency getJavaCurrency();
 
-    public void setCurrencyCode(String code);
+    public void setCurrencyCode(java.lang.String code);
 
-    public String getFriendlyName();
+    public java.lang.String getFriendlyName();
 
-    public void setFriendlyName(String friendlyName);
+    public void setFriendlyName(java.lang.String friendlyName);
 
     public boolean getDefaultFlag();
 
     public void setDefaultFlag(boolean defaultFlag);
 }
+

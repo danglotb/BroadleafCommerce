@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,87 +17,86 @@
  */
 package org.broadleafcommerce.common.payment.service;
 
-import org.broadleafcommerce.common.payment.PaymentGatewayType;
 
-public class AbstractPaymentGatewayConfiguration implements PaymentGatewayConfiguration {
-
-    @Override
+public class AbstractPaymentGatewayConfiguration implements org.broadleafcommerce.common.payment.service.PaymentGatewayConfiguration {
+    @java.lang.Override
     public boolean isPerformAuthorizeAndCapture() {
-        throw new UnsupportedOperationException("Not Implemented");
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
+    @java.lang.Override
     public void setPerformAuthorizeAndCapture(boolean performAuthorizeAndCapture) {
-        throw new UnsupportedOperationException("Not Implemented");
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
+    @java.lang.Override
     public int getFailureReportingThreshold() {
-        throw new UnsupportedOperationException("Not Implemented");
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
+    @java.lang.Override
     public void setFailureReportingThreshold(int failureReportingThreshold) {
-        throw new UnsupportedOperationException("Not Implemented");
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
+    @java.lang.Override
     public boolean handlesAuthorize() {
-        throw new UnsupportedOperationException("Not Implemented");
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
+    @java.lang.Override
     public boolean handlesCapture() {
-        throw new UnsupportedOperationException("Not Implemented");
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
+    @java.lang.Override
     public boolean handlesAuthorizeAndCapture() {
-        throw new UnsupportedOperationException("Not Implemented");
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
+    @java.lang.Override
     public boolean handlesReverseAuthorize() {
-        throw new UnsupportedOperationException("Not Implemented");
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
+    @java.lang.Override
     public boolean handlesVoid() {
-        throw new UnsupportedOperationException("Not Implemented");
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
+    @java.lang.Override
     public boolean handlesRefund() {
-        throw new UnsupportedOperationException("Not Implemented");
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
+    @java.lang.Override
     public boolean handlesPartialCapture() {
-        throw new UnsupportedOperationException("Not Implemented");
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
+    @java.lang.Override
     public boolean handlesMultipleShipment() {
-        throw new UnsupportedOperationException("Not Implemented");
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
+    @java.lang.Override
     public boolean handlesRecurringPayment() {
-        throw new UnsupportedOperationException("Not Implemented");
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
+    @java.lang.Override
     public boolean handlesSavedCustomerPayment() {
-        throw new UnsupportedOperationException("Not Implemented");
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
+    @java.lang.Override
     public boolean handlesMultiplePayments() {
-        throw new UnsupportedOperationException("Not Implemented");
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 
-    @Override
-    public PaymentGatewayType getGatewayType() {
-        throw new UnsupportedOperationException("Not Implemented");
+    @java.lang.Override
+    public org.broadleafcommerce.common.payment.PaymentGatewayType getGatewayType() {
+        throw new java.lang.UnsupportedOperationException("Not Implemented");
     }
 }
+

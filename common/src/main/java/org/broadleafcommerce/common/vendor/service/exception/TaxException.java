@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,35 +17,34 @@
  */
 package org.broadleafcommerce.common.vendor.service.exception;
 
-import org.broadleafcommerce.common.vendor.service.message.TaxResponse;
 
-public class TaxException extends Exception {
-
+public class TaxException extends java.lang.Exception {
     private static final long serialVersionUID = 1L;
 
-    protected TaxResponse taxResponse;
+    protected org.broadleafcommerce.common.vendor.service.message.TaxResponse taxResponse;
 
     public TaxException() {
         super();
     }
 
-    public TaxException(String message, Throwable cause) {
+    public TaxException(java.lang.String message, java.lang.Throwable cause) {
         super(message, cause);
     }
 
-    public TaxException(String message) {
+    public TaxException(java.lang.String message) {
         super(message);
     }
 
-    public TaxException(Throwable cause) {
+    public TaxException(java.lang.Throwable cause) {
         super(cause);
     }
 
-    public TaxResponse getTaxResponse() {
+    public org.broadleafcommerce.common.vendor.service.message.TaxResponse getTaxResponse() {
         return taxResponse;
     }
 
-    public void setTaxResponse(TaxResponse taxResponse) {
+    public void setTaxResponse(org.broadleafcommerce.common.vendor.service.message.TaxResponse taxResponse) {
         this.taxResponse = taxResponse;
     }
 }
+

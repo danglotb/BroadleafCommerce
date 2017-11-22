@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,26 +17,11 @@
  */
 package org.broadleafcommerce.common.web;
 
-import org.broadleafcommerce.common.site.domain.Site;
-import org.broadleafcommerce.common.site.domain.Theme;
-import org.springframework.web.context.request.WebRequest;
 
-import javax.servlet.http.HttpServletRequest;
-
-/**
- * Responsible for returning the theme used by Broadleaf Commerce for the current request.
- * For a single site installation, this should return a theme whose path and name are empty string.
- *
- * @author bpolster
- */
 public interface BroadleafThemeResolver {
-    
-    /**
-     * 
-     * @deprecated Use {@link #resolveTheme(WebRequest)} instead
-     */
-    @Deprecated
-    public Theme resolveTheme(HttpServletRequest request, Site site);
-    
-    public Theme resolveTheme(WebRequest request);
+    @java.lang.Deprecated
+    public org.broadleafcommerce.common.site.domain.Theme resolveTheme(javax.servlet.http.HttpServletRequest request, org.broadleafcommerce.common.site.domain.Site site);
+
+    public org.broadleafcommerce.common.site.domain.Theme resolveTheme(org.springframework.web.context.request.WebRequest request);
 }
+

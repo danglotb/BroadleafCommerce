@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,69 +17,58 @@
  */
 package org.broadleafcommerce.common.extensibility.jpa.copy;
 
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.BeanFactoryAware;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 
-import java.lang.instrument.IllegalClassFormatException;
-import java.security.ProtectionDomain;
+public class OptionalDirectCopyClassTransformer extends org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyClassTransformer implements org.springframework.beans.factory.BeanFactoryAware {
+    protected java.lang.String propertyName;
 
-/**
- * Based on a Spring property value resolving to a boolean, this ClassTransformer will optionally perform
- * bytecode transformations.
- *
- * @author Jeff Fischer
- */
-public class OptionalDirectCopyClassTransformer extends DirectCopyClassTransformer implements BeanFactoryAware {
+    protected org.springframework.beans.factory.config.ConfigurableBeanFactory beanFactory;
 
-    protected String propertyName;
-    protected ConfigurableBeanFactory beanFactory;
-
-    public OptionalDirectCopyClassTransformer(String moduleName) {
+    public OptionalDirectCopyClassTransformer(java.lang.String moduleName) {
         super(moduleName);
     }
 
-    @Override
-    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-        this.beanFactory = (ConfigurableBeanFactory) beanFactory;
+    @java.lang.Override
+    public void setBeanFactory(org.springframework.beans.factory.BeanFactory beanFactory) throws org.springframework.beans.BeansException {
+        this.beanFactory = ((org.springframework.beans.factory.config.ConfigurableBeanFactory) (beanFactory));
     }
 
-    /**
-     * Will return null if the Spring property value defined in {@link #propertyName} resolves to false, or if
-     * an exception occurs while trying to determine the value for the property.
-     *
-     * @param loader
-     * @param className
-     * @param classBeingRedefined
-     * @param protectionDomain
-     * @param classfileBuffer
-     * @return
-     * @throws IllegalClassFormatException
-     */
-    @Override
-    public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
-            ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
-
-        Boolean shouldProceed;
+    @java.lang.Override
+    public byte[] transform(java.lang.ClassLoader loader, java.lang.String className, java.lang.Class<?> classBeingRedefined, java.security.ProtectionDomain protectionDomain, byte[] classfileBuffer) throws java.lang.instrument.IllegalClassFormatException {
+        java.lang.Boolean shouldProceed;
         try {
-            String value = beanFactory.resolveEmbeddedValue("${" + propertyName + ":false}");
-            shouldProceed = Boolean.parseBoolean(value);
-        } catch (Exception e) {
-            shouldProceed = false;
+            java.lang.String value = beanFactory.resolveEmbeddedValue((("${" + (propertyName)) + ":false}"));
+            shouldProceed = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.OptionalDirectCopyClassTransformer.__L2149, java.lang.Boolean.parseBoolean(value));
+        } catch (java.lang.Exception e) {
+            shouldProceed = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.OptionalDirectCopyClassTransformer.__L2150, false);
         }
-        if (!shouldProceed) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.extensibility.jpa.copy.OptionalDirectCopyClassTransformer.__L2151, (!shouldProceed))) {
             return null;
         }
-
         return super.transform(loader, className, classBeingRedefined, protectionDomain, classfileBuffer);
     }
 
-    public String getPropertyName() {
+    public java.lang.String getPropertyName() {
         return propertyName;
     }
 
-    public void setPropertyName(String propertyName) {
+    public void setPropertyName(java.lang.String propertyName) {
         this.propertyName = propertyName;
     }
+
+    public static perturbation.location.PerturbationLocation __L2149;
+
+    public static perturbation.location.PerturbationLocation __L2150;
+
+    public static perturbation.location.PerturbationLocation __L2151;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.extensibility.jpa.copy.OptionalDirectCopyClassTransformer.__L2149 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/OptionalDirectCopyClassTransformer.java:67)", 2149, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.OptionalDirectCopyClassTransformer.__L2150 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/OptionalDirectCopyClassTransformer.java:69)", 2150, "Boolean");
+        org.broadleafcommerce.common.extensibility.jpa.copy.OptionalDirectCopyClassTransformer.__L2151 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/jpa/copy/OptionalDirectCopyClassTransformer.java:71)", 2151, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.extensibility.jpa.copy.OptionalDirectCopyClassTransformer.initPerturbationLocation0();
+    }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,75 +15,114 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-/**
- * The OWASP CSRFGuard Project, BSD License
- * Eric Sheridan (eric@infraredsecurity.com), Copyright (c) 2011 
- * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *    1. Redistributions of source code must retain the above copyright notice,
- *       this list of conditions and the following disclaimer.
- *    2. Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *    3. Neither the name of OWASP nor the names of its contributors may be used
- *       to endorse or promote products derived from this software without specific
- *       prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
 package org.broadleafcommerce.common.security;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
 public final class RandomGenerator {
-
-    private final static char[] CHARSET = new char[] { 'A', 'B', 'C', 'D', 'E',
-            'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
-            'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4',
-            '5', '6', '7', '8', '9' };
+    private static final char[] CHARSET = new char[]{ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 
     private RandomGenerator() {
-        /**
-         * Intentionally blank to force static usage
-         */
     }
 
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        throw new CloneNotSupportedException();
+    @java.lang.Override
+    public java.lang.Object clone() throws java.lang.CloneNotSupportedException {
+        throw new java.lang.CloneNotSupportedException();
     }
 
-    public static String generateRandomId(String prng, int len) throws NoSuchAlgorithmException {
-        return generateRandomId(SecureRandom.getInstance(prng), len);
+    public static java.lang.String generateRandomId(java.lang.String prng, int len) throws java.security.NoSuchAlgorithmException {
+        return org.broadleafcommerce.common.security.RandomGenerator.generateRandomId(java.security.SecureRandom.getInstance(prng), perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.RandomGenerator.__L5145, len));
     }
 
-    public static String generateRandomId(SecureRandom sr, int len) {
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 1; i < len + 1; i++) {
-            int index = sr.nextInt(CHARSET.length);
-            char c = CHARSET[index];
+    public static java.lang.String generateRandomId(java.security.SecureRandom sr, int len) {
+        java.lang.StringBuilder sb = new java.lang.StringBuilder();
+        for (int i = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.RandomGenerator.__L5146, 1); perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.RandomGenerator.__L5151, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.RandomGenerator.__L5147, i)) < (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.RandomGenerator.__L5150, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.RandomGenerator.__L5148, len)) + (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.RandomGenerator.__L5149, 1))))))); perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.RandomGenerator.__L5152, (i++))) {
+            int index = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.RandomGenerator.__L5154, sr.nextInt(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.RandomGenerator.__L5153, org.broadleafcommerce.common.security.RandomGenerator.CHARSET.length)));
+            char c = org.broadleafcommerce.common.security.RandomGenerator.CHARSET[perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.RandomGenerator.__L5155, index)];
             sb.append(c);
-
-            if ((i % 4) == 0 && i != 0 && i < len) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.RandomGenerator.__L5168, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.RandomGenerator.__L5164, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.RandomGenerator.__L5160, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.RandomGenerator.__L5158, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.RandomGenerator.__L5156, i)) % (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.RandomGenerator.__L5157, 4))))) == (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.RandomGenerator.__L5159, 0))))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.RandomGenerator.__L5163, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.RandomGenerator.__L5161, i)) != (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.RandomGenerator.__L5162, 0)))))))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.security.RandomGenerator.__L5167, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.RandomGenerator.__L5165, i)) < (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.security.RandomGenerator.__L5166, len)))))))) {
                 sb.append('-');
             }
         }
-
         return sb.toString();
     }
 
+    public static perturbation.location.PerturbationLocation __L5145;
+
+    public static perturbation.location.PerturbationLocation __L5146;
+
+    public static perturbation.location.PerturbationLocation __L5147;
+
+    public static perturbation.location.PerturbationLocation __L5148;
+
+    public static perturbation.location.PerturbationLocation __L5149;
+
+    public static perturbation.location.PerturbationLocation __L5150;
+
+    public static perturbation.location.PerturbationLocation __L5151;
+
+    public static perturbation.location.PerturbationLocation __L5152;
+
+    public static perturbation.location.PerturbationLocation __L5153;
+
+    public static perturbation.location.PerturbationLocation __L5154;
+
+    public static perturbation.location.PerturbationLocation __L5155;
+
+    public static perturbation.location.PerturbationLocation __L5156;
+
+    public static perturbation.location.PerturbationLocation __L5157;
+
+    public static perturbation.location.PerturbationLocation __L5158;
+
+    public static perturbation.location.PerturbationLocation __L5159;
+
+    public static perturbation.location.PerturbationLocation __L5160;
+
+    public static perturbation.location.PerturbationLocation __L5161;
+
+    public static perturbation.location.PerturbationLocation __L5162;
+
+    public static perturbation.location.PerturbationLocation __L5163;
+
+    public static perturbation.location.PerturbationLocation __L5164;
+
+    public static perturbation.location.PerturbationLocation __L5165;
+
+    public static perturbation.location.PerturbationLocation __L5166;
+
+    public static perturbation.location.PerturbationLocation __L5167;
+
+    public static perturbation.location.PerturbationLocation __L5168;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.security.RandomGenerator.__L5145 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:70)", 5145, "Numerical");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5146 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:76)", 5146, "Numerical");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5147 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:76)", 5147, "Numerical");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5148 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:76)", 5148, "Numerical");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5149 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:76)", 5149, "Numerical");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5150 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:76)", 5150, "Numerical");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5151 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:76)", 5151, "Boolean");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5152 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:76)", 5152, "Numerical");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5153 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:77)", 5153, "Numerical");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5154 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:77)", 5154, "Numerical");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5155 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:78)", 5155, "Numerical");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5156 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:81)", 5156, "Numerical");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5157 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:81)", 5157, "Numerical");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5158 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:81)", 5158, "Numerical");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5159 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:81)", 5159, "Numerical");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5160 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:81)", 5160, "Boolean");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5161 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:81)", 5161, "Numerical");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5162 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:81)", 5162, "Numerical");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5163 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:81)", 5163, "Boolean");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5164 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:81)", 5164, "Boolean");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5165 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:81)", 5165, "Numerical");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5166 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:81)", 5166, "Numerical");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5167 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:81)", 5167, "Boolean");
+        org.broadleafcommerce.common.security.RandomGenerator.__L5168 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/security/RandomGenerator.java:81)", 5168, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.security.RandomGenerator.initPerturbationLocation0();
+    }
 }
+

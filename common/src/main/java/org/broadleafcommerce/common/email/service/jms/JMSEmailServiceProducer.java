@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,31 +17,14 @@
  */
 package org.broadleafcommerce.common.email.service.jms;
 
-import org.broadleafcommerce.common.email.service.message.EmailServiceProducer;
-import org.springframework.jms.core.JmsTemplate;
 
-import javax.jms.Destination;
+public interface JMSEmailServiceProducer extends org.broadleafcommerce.common.email.service.message.EmailServiceProducer {
+    public org.springframework.jms.core.JmsTemplate getEmailServiceTemplate();
 
-public interface JMSEmailServiceProducer extends EmailServiceProducer {
+    public void setEmailServiceTemplate(org.springframework.jms.core.JmsTemplate emailServiceTemplate);
 
-    /**
-     * @return the emailServiceTemplate
-     */
-    public JmsTemplate getEmailServiceTemplate();
+    public javax.jms.Destination getEmailServiceDestination();
 
-    /**
-     * @param emailServiceTemplate the emailServiceTemplate to set
-     */
-    public void setEmailServiceTemplate(JmsTemplate emailServiceTemplate);
-
-    /**
-     * @return the emailServiceDestination
-     */
-    public Destination getEmailServiceDestination();
-
-    /**
-     * @param emailServiceDestination the emailServiceDestination to set
-     */
-    public void setEmailServiceDestination(Destination emailServiceDestination);
-
+    public void setEmailServiceDestination(javax.jms.Destination emailServiceDestination);
 }
+

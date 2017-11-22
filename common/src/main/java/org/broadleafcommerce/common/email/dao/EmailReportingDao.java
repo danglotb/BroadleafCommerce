@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,19 +17,16 @@
  */
 package org.broadleafcommerce.common.email.dao;
 
-import org.broadleafcommerce.common.email.domain.EmailTarget;
-import org.broadleafcommerce.common.email.domain.EmailTracking;
 
-/**
- * @author jfischer
- *
- */
 public interface EmailReportingDao {
+    public java.lang.Long createTracking(java.lang.String emailAddress, java.lang.String type, java.lang.String extraValue);
 
-    public Long createTracking(String emailAddress, String type, String extraValue) ;
-    public void recordOpen(Long emailId, String userAgent);
-    public void recordClick(Long emailId, String customerId, String destinationUri, String queryString);
-    public EmailTracking retrieveTracking(Long emailId);
-    public EmailTarget createTarget();
+    public void recordOpen(java.lang.Long emailId, java.lang.String userAgent);
 
+    public void recordClick(java.lang.Long emailId, java.lang.String customerId, java.lang.String destinationUri, java.lang.String queryString);
+
+    public org.broadleafcommerce.common.email.domain.EmailTracking retrieveTracking(java.lang.Long emailId);
+
+    public org.broadleafcommerce.common.email.domain.EmailTarget createTarget();
 }
+

@@ -1,6 +1,6 @@
 /*
  * #%L
- * BroadleafCommerce Common Enterprise
+ * BroadleafCommerce Common Libraries
  * %%
  * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
@@ -17,47 +17,47 @@
  */
 package org.broadleafcommerce.common.cache;
 
-import org.broadleafcommerce.common.extension.StandardCacheItem;
-import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
-import java.util.List;
-
-/**
- * Default implementation of {@link OverridePreCacheService}. Simply contains no-ops methods.
- *
- * @author Jeff Fischer
- */
-@Service("blOverridePreCacheService")
-public class DefaultOverridePreCacheServiceImpl implements OverridePreCacheService {
-
-    @Override
-    public List<StandardCacheItem> findElements(String... cacheKeys) {
+@org.springframework.stereotype.Service("blOverridePreCacheService")
+public class DefaultOverridePreCacheServiceImpl implements org.broadleafcommerce.common.cache.OverridePreCacheService {
+    @java.lang.Override
+    public java.util.List<org.broadleafcommerce.common.extension.StandardCacheItem> findElements(java.lang.String... cacheKeys) {
         return null;
     }
 
-    @Override
-    public boolean isActiveForType(String type) {
-        return false;
+    @java.lang.Override
+    public boolean isActiveForType(java.lang.String type) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.DefaultOverridePreCacheServiceImpl.__L240, false);
     }
 
-    @Override
-    public boolean isActiveIsolatedSiteForType(Long siteId, String entityType) {
-        return false;
+    @java.lang.Override
+    public boolean isActiveIsolatedSiteForType(java.lang.Long siteId, java.lang.String entityType) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.cache.DefaultOverridePreCacheServiceImpl.__L241, false);
     }
 
-    @Override
-    public void groomCacheBySiteOverride(String entityType, Long cloneId, boolean isRemove) {
-        //do nothing
+    @java.lang.Override
+    public void groomCacheBySiteOverride(java.lang.String entityType, java.lang.Long cloneId, boolean isRemove) {
     }
 
-    @Override
-    public void groomCacheByTargetEntity(String entityType, Serializable id) {
-        //do nothing
+    @java.lang.Override
+    public void groomCacheByTargetEntity(java.lang.String entityType, java.io.Serializable id) {
     }
 
-    @Override
+    @java.lang.Override
     public void refreshCache() {
-        //do nothing
+    }
+
+    public static perturbation.location.PerturbationLocation __L240;
+
+    public static perturbation.location.PerturbationLocation __L241;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.cache.DefaultOverridePreCacheServiceImpl.__L240 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/DefaultOverridePreCacheServiceImpl.java:41)", 240, "Boolean");
+        org.broadleafcommerce.common.cache.DefaultOverridePreCacheServiceImpl.__L241 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/cache/DefaultOverridePreCacheServiceImpl.java:46)", 241, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.cache.DefaultOverridePreCacheServiceImpl.initPerturbationLocation0();
     }
 }
+

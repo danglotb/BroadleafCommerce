@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,72 +17,107 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.apache.commons.lang.StringUtils;
-import org.owasp.esapi.ESAPI;
-
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
 
 public class UrlUtil {
-    public static String generateUrlKey(String toConvert) {
-        if (toConvert != null) {
+    public static java.lang.String generateUrlKey(java.lang.String toConvert) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UrlUtil.__L6869, (toConvert != null))) {
             toConvert = toConvert.replaceAll(" ", "-");
-            if (toConvert.matches(".*?\\W.*?")) {
-                //remove all non-word characters
-                String result = toConvert.replaceAll("[^\\w-]+", "");
-                //uncapitalizes the first letter of the url key
-                return StringUtils.uncapitalize(result);
-            } else {
-                return StringUtils.uncapitalize(toConvert);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UrlUtil.__L6870, toConvert.matches(".*?\\W.*?"))) {
+                java.lang.String result = toConvert.replaceAll("[^\\w-]+", "");
+                return org.apache.commons.lang.StringUtils.uncapitalize(result);
+            }else {
+                return org.apache.commons.lang.StringUtils.uncapitalize(toConvert);
             }
         }
         return toConvert;
     }
-    
-    /**
-     * If the url does not include "//" then the system will ensure that the
-     * application context is added to the start of the URL.
-     *
-     * @param url
-     * @return
-     */
-    public static String fixRedirectUrl(String contextPath, String url) {
-        if (url.indexOf("//") < 0) {
 
-            if (contextPath != null && (!"".equals(contextPath))) {
-                if (!url.startsWith("/")) {
+    public static java.lang.String fixRedirectUrl(java.lang.String contextPath, java.lang.String url) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UrlUtil.__L6873, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UrlUtil.__L6871, url.indexOf("//"))) < (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.util.UrlUtil.__L6872, 0))))) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UrlUtil.__L6877, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UrlUtil.__L6874, (contextPath != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UrlUtil.__L6876, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UrlUtil.__L6875, "".equals(contextPath))))))))) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UrlUtil.__L6879, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UrlUtil.__L6878, url.startsWith("/")))))) {
                     url = "/" + url;
                 }
-                if (!url.startsWith(contextPath)) {
+                if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UrlUtil.__L6881, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UrlUtil.__L6880, url.startsWith(contextPath)))))) {
                     url = contextPath + url;
                 }
             }
         }
         return url;
-
     }
 
-    /**
-     * Returns validated URL. Validation is done by
-     * @see org.owasp.esapi.Validator#isValidRedirectLocation(String, String, boolean),
-     * which only works on relative URLs.
-     *
-     * Throws an IOExcption if isValidRedirectLocation is false.
-     *
-     * @param url
-     * @param request
-     * @throws IOException
-     */
-    public static void validateUrl(String url, HttpServletRequest request) throws IOException {
-        String serverName = request.getServerName();
-        String port = ":" + request.getServerPort();
-        String scheme = request.getScheme() + "://";
-        String relativeUrl = url.replace(scheme, "").replace(serverName, "").replace(port, "");
-
-        if (!"/".equals(relativeUrl) && !ESAPI.validator().isValidRedirectLocation("Redirect", relativeUrl, false)) {
-            throw new IOException("Redirect failed");
+    public static void validateUrl(java.lang.String url, javax.servlet.http.HttpServletRequest request) throws java.io.IOException {
+        java.lang.String serverName = request.getServerName();
+        java.lang.String port = ":" + (request.getServerPort());
+        java.lang.String scheme = (request.getScheme()) + "://";
+        java.lang.String relativeUrl = url.replace(scheme, "").replace(serverName, "").replace(port, "");
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UrlUtil.__L6887, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UrlUtil.__L6883, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UrlUtil.__L6882, "/".equals(relativeUrl)))))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UrlUtil.__L6886, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UrlUtil.__L6885, org.owasp.esapi.ESAPI.validator().isValidRedirectLocation("Redirect", relativeUrl, perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.UrlUtil.__L6884, false)))))))))) {
+            throw new java.io.IOException("Redirect failed");
         }
     }
-        
+
+    public static perturbation.location.PerturbationLocation __L6869;
+
+    public static perturbation.location.PerturbationLocation __L6870;
+
+    public static perturbation.location.PerturbationLocation __L6871;
+
+    public static perturbation.location.PerturbationLocation __L6872;
+
+    public static perturbation.location.PerturbationLocation __L6873;
+
+    public static perturbation.location.PerturbationLocation __L6874;
+
+    public static perturbation.location.PerturbationLocation __L6875;
+
+    public static perturbation.location.PerturbationLocation __L6876;
+
+    public static perturbation.location.PerturbationLocation __L6877;
+
+    public static perturbation.location.PerturbationLocation __L6878;
+
+    public static perturbation.location.PerturbationLocation __L6879;
+
+    public static perturbation.location.PerturbationLocation __L6880;
+
+    public static perturbation.location.PerturbationLocation __L6881;
+
+    public static perturbation.location.PerturbationLocation __L6882;
+
+    public static perturbation.location.PerturbationLocation __L6883;
+
+    public static perturbation.location.PerturbationLocation __L6884;
+
+    public static perturbation.location.PerturbationLocation __L6885;
+
+    public static perturbation.location.PerturbationLocation __L6886;
+
+    public static perturbation.location.PerturbationLocation __L6887;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.UrlUtil.__L6869 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UrlUtil.java:29)", 6869, "Boolean");
+        org.broadleafcommerce.common.util.UrlUtil.__L6870 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UrlUtil.java:31)", 6870, "Boolean");
+        org.broadleafcommerce.common.util.UrlUtil.__L6871 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UrlUtil.java:51)", 6871, "Numerical");
+        org.broadleafcommerce.common.util.UrlUtil.__L6872 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UrlUtil.java:51)", 6872, "Numerical");
+        org.broadleafcommerce.common.util.UrlUtil.__L6873 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UrlUtil.java:51)", 6873, "Boolean");
+        org.broadleafcommerce.common.util.UrlUtil.__L6874 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UrlUtil.java:53)", 6874, "Boolean");
+        org.broadleafcommerce.common.util.UrlUtil.__L6875 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UrlUtil.java:53)", 6875, "Boolean");
+        org.broadleafcommerce.common.util.UrlUtil.__L6876 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UrlUtil.java:53)", 6876, "Boolean");
+        org.broadleafcommerce.common.util.UrlUtil.__L6877 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UrlUtil.java:53)", 6877, "Boolean");
+        org.broadleafcommerce.common.util.UrlUtil.__L6878 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UrlUtil.java:54)", 6878, "Boolean");
+        org.broadleafcommerce.common.util.UrlUtil.__L6879 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UrlUtil.java:54)", 6879, "Boolean");
+        org.broadleafcommerce.common.util.UrlUtil.__L6880 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UrlUtil.java:57)", 6880, "Boolean");
+        org.broadleafcommerce.common.util.UrlUtil.__L6881 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UrlUtil.java:57)", 6881, "Boolean");
+        org.broadleafcommerce.common.util.UrlUtil.__L6882 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UrlUtil.java:83)", 6882, "Boolean");
+        org.broadleafcommerce.common.util.UrlUtil.__L6883 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UrlUtil.java:83)", 6883, "Boolean");
+        org.broadleafcommerce.common.util.UrlUtil.__L6884 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UrlUtil.java:83)", 6884, "Boolean");
+        org.broadleafcommerce.common.util.UrlUtil.__L6885 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UrlUtil.java:83)", 6885, "Boolean");
+        org.broadleafcommerce.common.util.UrlUtil.__L6886 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UrlUtil.java:83)", 6886, "Boolean");
+        org.broadleafcommerce.common.util.UrlUtil.__L6887 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/UrlUtil.java:83)", 6887, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.UrlUtil.initPerturbationLocation0();
+    }
 }
+

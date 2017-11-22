@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,39 +17,30 @@
  */
 package org.broadleafcommerce.common.extensibility.context.merge;
 
-import org.springframework.core.PriorityOrdered;
 
-/**
- * Use this merge bean post processor for merging tasks that should take place before the persistence layer is
- * initialized. This would include adding class transformers for load time weaving, and the like. See
- * {@link AbstractMergeBeanPostProcessor} for usage information.
- *
- * @see AbstractMergeBeanPostProcessor
- * @author Jeff Fischer
- */
-public class EarlyStageMergeBeanPostProcessor extends AbstractMergeBeanPostProcessor implements PriorityOrdered {
+public class EarlyStageMergeBeanPostProcessor extends org.broadleafcommerce.common.extensibility.context.merge.AbstractMergeBeanPostProcessor implements org.springframework.core.PriorityOrdered {
+    protected int order = java.lang.Integer.MIN_VALUE;
 
-    protected int order = Integer.MIN_VALUE;
-
-    /**
-     * This is the priority order for this post processor and will determine when this processor is run in relation
-     * to other priority ordered processors (e.g. {@link org.springframework.context.annotation.CommonAnnotationBeanPostProcessor})
-     * The default value if Integer.MIN_VALUE.
-     */
-    @Override
+    @java.lang.Override
     public int getOrder() {
-        return order;
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor.__L1614, order);
     }
 
-    /**
-     * This is the priority order for this post processor and will determine when this processor is run in relation
-     * to other priority ordered processors (e.g. {@link org.springframework.context.annotation.CommonAnnotationBeanPostProcessor})
-     * The default value if Integer.MIN_VALUE.
-     *
-     * @param order the priority ordering
-     */
     public void setOrder(int order) {
-        this.order = order;
+        this.order = perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor.__L1615, order);
     }
 
+    public static perturbation.location.PerturbationLocation __L1614;
+
+    public static perturbation.location.PerturbationLocation __L1615;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor.__L1614 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/EarlyStageMergeBeanPostProcessor.java:41)", 1614, "Numerical");
+        org.broadleafcommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor.__L1615 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/extensibility/context/merge/EarlyStageMergeBeanPostProcessor.java:52)", 1615, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.extensibility.context.merge.EarlyStageMergeBeanPostProcessor.initPerturbationLocation0();
+    }
 }
+

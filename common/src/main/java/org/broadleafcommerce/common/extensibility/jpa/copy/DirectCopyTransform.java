@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,19 +17,10 @@
  */
 package org.broadleafcommerce.common.extensibility.jpa.copy;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 
-/**
- *
- * @author Jeff Fischer
- */
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
+@java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
+@java.lang.annotation.Target({ java.lang.annotation.ElementType.TYPE })
 public @interface DirectCopyTransform {
-
-    DirectCopyTransformMember[] value();
-
+    org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember[] value();
 }
+

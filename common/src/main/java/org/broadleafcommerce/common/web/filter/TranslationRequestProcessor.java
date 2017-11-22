@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,35 +17,33 @@
  */
 package org.broadleafcommerce.common.web.filter;
 
-import org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext;
-import org.broadleafcommerce.common.i18n.service.TranslationService;
-import org.broadleafcommerce.common.util.BLCSystemProperty;
-import org.broadleafcommerce.common.web.AbstractBroadleafWebRequestProcessor;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.WebRequest;
 
-import javax.annotation.Resource;
+@org.springframework.stereotype.Component("blTranslationRequestProcessor")
+public class TranslationRequestProcessor extends org.broadleafcommerce.common.web.AbstractBroadleafWebRequestProcessor {
+    @javax.annotation.Resource(name = "blTranslationService")
+    protected org.broadleafcommerce.common.i18n.service.TranslationService translationService;
 
-/**
- * This processor is responsible for setting up the translation context.   It is intended to be used
- * by both typical Web applications and called from a ServletFilter (such as "TranslationFilter") or 
- * from a portletFilter (such as "TranslationInterceptor")
- * 
- * @author bpolster
- */
-@Component("blTranslationRequestProcessor")
-public class TranslationRequestProcessor extends AbstractBroadleafWebRequestProcessor {
-    
-    @Resource(name = "blTranslationService")
-    protected TranslationService translationService;
-    
     protected boolean getTranslationEnabled() {
-        return BLCSystemProperty.resolveBooleanSystemProperty("i18n.translation.enabled");
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.filter.TranslationRequestProcessor.__L7247, org.broadleafcommerce.common.util.BLCSystemProperty.resolveBooleanSystemProperty("i18n.translation.enabled"));
     }
 
-    @Override
-    public void process(WebRequest request) {
-        TranslationConsiderationContext.setTranslationConsiderationContext(getTranslationEnabled());
-        TranslationConsiderationContext.setTranslationService(translationService);
+    @java.lang.Override
+    public void process(org.springframework.web.context.request.WebRequest request) {
+        org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.setTranslationConsiderationContext(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.filter.TranslationRequestProcessor.__L7248, getTranslationEnabled()));
+        org.broadleafcommerce.common.i18n.service.TranslationConsiderationContext.setTranslationService(translationService);
+    }
+
+    public static perturbation.location.PerturbationLocation __L7247;
+
+    public static perturbation.location.PerturbationLocation __L7248;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.filter.TranslationRequestProcessor.__L7247 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/filter/TranslationRequestProcessor.java:43)", 7247, "Boolean");
+        org.broadleafcommerce.common.web.filter.TranslationRequestProcessor.__L7248 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/filter/TranslationRequestProcessor.java:48)", 7248, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.filter.TranslationRequestProcessor.initPerturbationLocation0();
     }
 }
+

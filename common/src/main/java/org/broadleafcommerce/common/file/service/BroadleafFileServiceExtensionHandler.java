@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce CMS Module
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,15 +17,8 @@
  */
 package org.broadleafcommerce.common.file.service;
 
-import org.broadleafcommerce.common.extension.ExtensionHandler;
-import org.broadleafcommerce.common.extension.ExtensionResultHolder;
-import org.broadleafcommerce.common.extension.ExtensionResultStatusType;
 
-/**
- * @author Jeff Fischer
- */
-public interface BroadleafFileServiceExtensionHandler extends ExtensionHandler {
-
-    public ExtensionResultStatusType processPathForSite(String prefix, String resourceName, ExtensionResultHolder<String> holder);
-
+public interface BroadleafFileServiceExtensionHandler extends org.broadleafcommerce.common.extension.ExtensionHandler {
+    public org.broadleafcommerce.common.extension.ExtensionResultStatusType processPathForSite(java.lang.String prefix, java.lang.String resourceName, org.broadleafcommerce.common.extension.ExtensionResultHolder<java.lang.String> holder);
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,296 +17,297 @@
  */
 package org.broadleafcommerce.common.sandbox.domain;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.admin.domain.AdminMainEntity;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.persistence.ArchiveStatus;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.ValidationConfiguration;
-import org.broadleafcommerce.common.presentation.client.SupportedFieldType;
-import org.broadleafcommerce.common.presentation.client.VisibilityEnum;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Index;
-import org.hibernate.annotations.Parameter;
-import org.hibernate.annotations.SQLDelete;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+@javax.persistence.Entity
+@javax.persistence.Inheritance(strategy = javax.persistence.InheritanceType.JOINED)
+@javax.persistence.Table(name = "BLC_SANDBOX")
+@org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE, region = "blSandBoxElements")
+@org.hibernate.annotations.SQLDelete(sql = "UPDATE BLC_SANDBOX SET ARCHIVED = 'Y' WHERE SANDBOX_ID = ?")
+@org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform({ @org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember(templateTokens = org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes.AUDITABLE_ONLY) })
+public class SandBoxImpl implements org.broadleafcommerce.common.admin.domain.AdminMainEntity , org.broadleafcommerce.common.sandbox.domain.SandBox {
+    private static final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.class);
 
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@Table(name="BLC_SANDBOX")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blSandBoxElements")
-@SQLDelete(sql="UPDATE BLC_SANDBOX SET ARCHIVED = 'Y' WHERE SANDBOX_ID = ?")
-@DirectCopyTransform({
-    @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.AUDITABLE_ONLY)
-})
-public class SandBoxImpl implements SandBox, AdminMainEntity {
-
-    private static final Log LOG = LogFactory.getLog(SandBoxImpl.class);
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(generator = "SandBoxId")
-    @GenericGenerator(
-        name="SandBoxId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
-        parameters = {
-            @Parameter(name="segment_value", value="SandBoxImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.common.sandbox.domain.SandBoxImpl")
-        }
-    )
-    @Column(name = "SANDBOX_ID")
-    @AdminPresentation(visibility = VisibilityEnum.HIDDEN_ALL)
-    protected Long id;
-    
-    @Column(name = "SANDBOX_NAME")
-    @Index(name="SANDBOX_NAME_INDEX", columnNames={"SANDBOX_NAME"})
-    @AdminPresentation(friendlyName = "SandBoxImpl_Name", group = SandboxAdminPresentation.GroupName.Description, prominent = true, 
-            gridOrder = 2000, order = 1000,
-            validationConfigurations = { @ValidationConfiguration(validationImplementation = "blSandBoxNameValidator") })
-    protected String name;
-    
-    @Column(name="AUTHOR")
-    @AdminPresentation(friendlyName = "SandBoxImpl_Author", group = SandboxAdminPresentation.GroupName.Description,
-        gridOrder = 3000, order = 3000, visibility = VisibilityEnum.FORM_HIDDEN)
-    protected Long author;
+    @javax.persistence.Id
+    @javax.persistence.GeneratedValue(generator = "SandBoxId")
+    @org.hibernate.annotations.GenericGenerator(name = "SandBoxId", strategy = "org.broadleafcommerce.common.persistence.IdOverrideTableGenerator", parameters = { @org.hibernate.annotations.Parameter(name = "segment_value", value = "SandBoxImpl"), @org.hibernate.annotations.Parameter(name = "entity_name", value = "org.broadleafcommerce.common.sandbox.domain.SandBoxImpl") })
+    @javax.persistence.Column(name = "SANDBOX_ID")
+    @org.broadleafcommerce.common.presentation.AdminPresentation(visibility = org.broadleafcommerce.common.presentation.client.VisibilityEnum.HIDDEN_ALL)
+    protected java.lang.Long id;
 
-    @Column(name = "SANDBOX_TYPE")
-    @AdminPresentation(friendlyName = "SandBoxImpl_SandBox_Type", group = SandboxAdminPresentation.GroupName.Description,
-        visibility = VisibilityEnum.HIDDEN_ALL, readOnly = true,
-        fieldType = SupportedFieldType.BROADLEAF_ENUMERATION,
-        broadleafEnumeration="org.broadleafcommerce.common.sandbox.domain.SandBoxType")
-    //need to set a default value so that add sandbox works correctly in the admin
-    protected String sandboxType = SandBoxType.APPROVAL.getType();
+    @javax.persistence.Column(name = "SANDBOX_NAME")
+    @org.hibernate.annotations.Index(name = "SANDBOX_NAME_INDEX", columnNames = { "SANDBOX_NAME" })
+    @org.broadleafcommerce.common.presentation.AdminPresentation(friendlyName = "SandBoxImpl_Name", group = org.broadleafcommerce.common.sandbox.domain.SandboxAdminPresentation.GroupName.Description, prominent = true, gridOrder = 2000, order = 1000, validationConfigurations = { @org.broadleafcommerce.common.presentation.ValidationConfiguration(validationImplementation = "blSandBoxNameValidator") })
+    protected java.lang.String name;
 
-    @ManyToOne(targetEntity = SandBoxImpl.class)
-    @JoinColumn(name = "PARENT_SANDBOX_ID")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blSandBoxElements")
-    protected SandBox parentSandBox;
+    @javax.persistence.Column(name = "AUTHOR")
+    @org.broadleafcommerce.common.presentation.AdminPresentation(friendlyName = "SandBoxImpl_Author", group = org.broadleafcommerce.common.sandbox.domain.SandboxAdminPresentation.GroupName.Description, gridOrder = 3000, order = 3000, visibility = org.broadleafcommerce.common.presentation.client.VisibilityEnum.FORM_HIDDEN)
+    protected java.lang.Long author;
 
-    @OneToMany(mappedBy = "parentSandBox", targetEntity = SandBoxImpl.class)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blSandBoxElements")
-    protected List<SandBox> childSandBoxes;
+    @javax.persistence.Column(name = "SANDBOX_TYPE")
+    @org.broadleafcommerce.common.presentation.AdminPresentation(friendlyName = "SandBoxImpl_SandBox_Type", group = org.broadleafcommerce.common.sandbox.domain.SandboxAdminPresentation.GroupName.Description, visibility = org.broadleafcommerce.common.presentation.client.VisibilityEnum.HIDDEN_ALL, readOnly = true, fieldType = org.broadleafcommerce.common.presentation.client.SupportedFieldType.BROADLEAF_ENUMERATION, broadleafEnumeration = "org.broadleafcommerce.common.sandbox.domain.SandBoxType")
+    protected java.lang.String sandboxType = org.broadleafcommerce.common.sandbox.domain.SandBoxType.APPROVAL.getType();
 
-    @Column(name = "COLOR")
-    @AdminPresentation(friendlyName = "SandBoxImpl_Color", group = SandboxAdminPresentation.GroupName.Description, 
-        prominent = true, gridOrder = 1000, fieldType = SupportedFieldType.COLOR, order = 2000)
-    protected String color;
+    @javax.persistence.ManyToOne(targetEntity = org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.class)
+    @javax.persistence.JoinColumn(name = "PARENT_SANDBOX_ID")
+    @org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE, region = "blSandBoxElements")
+    protected org.broadleafcommerce.common.sandbox.domain.SandBox parentSandBox;
 
-    @Column(name = "DESCRIPTION")
-    @AdminPresentation(friendlyName = SandboxAdminPresentation.GroupName.Description, group = SandboxAdminPresentation.GroupName.Description,
-        prominent = true, gridOrder = 4000, order = 4000)
-    protected String description;
+    @javax.persistence.OneToMany(mappedBy = "parentSandBox", targetEntity = org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.class)
+    @org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE, region = "blSandBoxElements")
+    protected java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> childSandBoxes;
 
-    /*
-     * This field should not be used until logic for it is implemented.
-     * 
-     * @AdminPresentation(friendlyName = "SandBoxImpl_Go_Live_Date", group = SandboxAdminPresentation.GroupName.Description,
-     *   prominent = true, gridOrder = 5000, order = 3000)
-    */
-    @Column(name = "GO_LIVE_DATE")
-    protected Date goLiveDate;
+    @javax.persistence.Column(name = "COLOR")
+    @org.broadleafcommerce.common.presentation.AdminPresentation(friendlyName = "SandBoxImpl_Color", group = org.broadleafcommerce.common.sandbox.domain.SandboxAdminPresentation.GroupName.Description, prominent = true, gridOrder = 1000, fieldType = org.broadleafcommerce.common.presentation.client.SupportedFieldType.COLOR, order = 2000)
+    protected java.lang.String color;
 
-    @Embedded
-    protected ArchiveStatus archiveStatus = new ArchiveStatus();
+    @javax.persistence.Column(name = "DESCRIPTION")
+    @org.broadleafcommerce.common.presentation.AdminPresentation(friendlyName = org.broadleafcommerce.common.sandbox.domain.SandboxAdminPresentation.GroupName.Description, group = org.broadleafcommerce.common.sandbox.domain.SandboxAdminPresentation.GroupName.Description, prominent = true, gridOrder = 4000, order = 4000)
+    protected java.lang.String description;
 
-    @Override
-    public Long getId() {
+    @javax.persistence.Column(name = "GO_LIVE_DATE")
+    protected java.util.Date goLiveDate;
+
+    @javax.persistence.Embedded
+    protected org.broadleafcommerce.common.persistence.ArchiveStatus archiveStatus = new org.broadleafcommerce.common.persistence.ArchiveStatus();
+
+    @java.lang.Override
+    public java.lang.Long getId() {
         return id;
     }
 
-    @Override
-    public void setId(Long id) {
+    @java.lang.Override
+    public void setId(java.lang.Long id) {
         this.id = id;
     }
 
-    @Override
-    public String getName() {
+    @java.lang.Override
+    public java.lang.String getName() {
         return name;
     }
 
-    @Override
-    public void setName(String name) {
+    @java.lang.Override
+    public void setName(java.lang.String name) {
         this.name = name;
     }
 
-    @Override
-    public SandBoxType getSandBoxType() {
-        return SandBoxType.getInstance(sandboxType);
+    @java.lang.Override
+    public org.broadleafcommerce.common.sandbox.domain.SandBoxType getSandBoxType() {
+        return org.broadleafcommerce.common.sandbox.domain.SandBoxType.getInstance(sandboxType);
     }
 
-    @Override
-    public void setSandBoxType(final SandBoxType sandboxType) {
-        if (sandboxType != null) {
+    @java.lang.Override
+    public void setSandBoxType(final org.broadleafcommerce.common.sandbox.domain.SandBoxType sandboxType) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4708, (sandboxType != null))) {
             this.sandboxType = sandboxType.getType();
         }
     }
 
-    @Override
-    public Long getAuthor() {
+    @java.lang.Override
+    public java.lang.Long getAuthor() {
         return author;
     }
 
-    @Override
-    public void setAuthor(Long author) {
+    @java.lang.Override
+    public void setAuthor(java.lang.Long author) {
         this.author = author;
     }
 
-    @Override
-    public SandBox getParentSandBox() {
+    @java.lang.Override
+    public org.broadleafcommerce.common.sandbox.domain.SandBox getParentSandBox() {
         return parentSandBox;
     }
 
-    @Override
-    public void setParentSandBox(SandBox parentSandBox) {
+    @java.lang.Override
+    public void setParentSandBox(org.broadleafcommerce.common.sandbox.domain.SandBox parentSandBox) {
         this.parentSandBox = parentSandBox;
     }
 
-    @Override
-    public String getColor() {
-        if (StringUtils.isNotBlank(color)) {
+    @java.lang.Override
+    public java.lang.String getColor() {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4709, org.apache.commons.lang3.StringUtils.isNotBlank(color))) {
             return color;
         }
-
-        if (parentSandBox != null) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4710, ((parentSandBox) != null))) {
             return parentSandBox.getColor();
         }
-
         return null;
     }
 
-    @Override
-    public void setColor(String color) {
+    @java.lang.Override
+    public void setColor(java.lang.String color) {
         this.color = color;
     }
 
-    @Override
-    public Date getGoLiveDate() {
+    @java.lang.Override
+    public java.util.Date getGoLiveDate() {
         return goLiveDate;
     }
 
-    @Override
-    public void setGoLiveDate(Date goLiveDate) {
+    @java.lang.Override
+    public void setGoLiveDate(java.util.Date goLiveDate) {
         this.goLiveDate = goLiveDate;
     }
 
-    public List<SandBox> getChildSandBoxes() {
+    public java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> getChildSandBoxes() {
         return childSandBoxes;
     }
 
-    public void setChildSandBoxes(List<SandBox> childSandBoxes) {
+    public void setChildSandBoxes(java.util.List<org.broadleafcommerce.common.sandbox.domain.SandBox> childSandBoxes) {
         this.childSandBoxes = childSandBoxes;
     }
 
-    @Override
-    public List<Long> getSandBoxIdsForUpwardHierarchy(boolean includeInherited) {
-        return getSandBoxIdsForUpwardHierarchy(includeInherited, true);
+    @java.lang.Override
+    public java.util.List<java.lang.Long> getSandBoxIdsForUpwardHierarchy(boolean includeInherited) {
+        return getSandBoxIdsForUpwardHierarchy(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4711, includeInherited), perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4712, true));
     }
 
-    @Override
-    public List<Long> getSandBoxIdsForUpwardHierarchy(boolean includeInherited, boolean includeCurrent) {
-        List<Long> ids = new ArrayList<Long>();
-        if (includeCurrent) {
+    @java.lang.Override
+    public java.util.List<java.lang.Long> getSandBoxIdsForUpwardHierarchy(boolean includeInherited, boolean includeCurrent) {
+        java.util.List<java.lang.Long> ids = new java.util.ArrayList<java.lang.Long>();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4713, includeCurrent)) {
             ids.add(this.getId());
         }
-        if (includeInherited) {
-            SandBox current = this;
-            while (current.getParentSandBox() != null) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4714, includeInherited)) {
+            org.broadleafcommerce.common.sandbox.domain.SandBox current = this;
+            while (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4715, ((current.getParentSandBox()) != null))) {
                 current = current.getParentSandBox();
                 ids.add(current.getId());
-            }
-            Collections.reverse(ids);
+            } 
+            java.util.Collections.reverse(ids);
         }
         return ids;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
-        return new HashCodeBuilder(1, 31)
-            .append(author)
-            .append(id)
-            .append(name)
-            .append(color)
-            .append(goLiveDate)
-            .toHashCode();
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4718, new org.apache.commons.lang3.builder.HashCodeBuilder(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4716, 1), perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4717, 31)).append(author).append(id).append(name).append(color).append(goLiveDate).toHashCode());
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj != null && getClass().isAssignableFrom(obj.getClass())) {
-            SandBoxImpl other = (SandBoxImpl) obj;
-            return new EqualsBuilder()
-                .append(author, other.author)
-                .append(id, other.id)
-                .append(name, other.name)
-                .append(color, other.color)
-                .append(goLiveDate, other.goLiveDate)
-                .build();
+    @java.lang.Override
+    public boolean equals(java.lang.Object obj) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4721, ((perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4719, (obj != null))) && (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4720, getClass().isAssignableFrom(obj.getClass())))))) {
+            org.broadleafcommerce.common.sandbox.domain.SandBoxImpl other = ((org.broadleafcommerce.common.sandbox.domain.SandBoxImpl) (obj));
+            return new org.apache.commons.lang3.builder.EqualsBuilder().append(author, other.author).append(id, other.id).append(name, other.name).append(color, other.color).append(goLiveDate, other.goLiveDate).build();
         }
-        return false;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4722, false);
     }
 
-    @Override
-    public String getMainEntityName() {
+    @java.lang.Override
+    public java.lang.String getMainEntityName() {
         return getName();
     }
-    
-    @Override
-    public boolean getIsInDefaultHierarchy() {
-        if (SandBoxType.DEFAULT.equals(getSandBoxType())) {
-            return true;
-        }
 
-        if (getParentSandBox() != null) {
-            return getParentSandBox().getIsInDefaultHierarchy();
+    @java.lang.Override
+    public boolean getIsInDefaultHierarchy() {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4723, org.broadleafcommerce.common.sandbox.domain.SandBoxType.DEFAULT.equals(getSandBoxType()))) {
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4724, true);
         }
-        
-        return false;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4725, ((getParentSandBox()) != null))) {
+            return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4726, getParentSandBox().getIsInDefaultHierarchy());
+        }
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4727, false);
     }
 
-    @Override
-    public void setArchived(Character archived) {
-        if (archiveStatus == null) {
-            archiveStatus = new ArchiveStatus();
+    @java.lang.Override
+    public void setArchived(java.lang.Character archived) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4728, ((archiveStatus) == null))) {
+            archiveStatus = new org.broadleafcommerce.common.persistence.ArchiveStatus();
         }
         archiveStatus.setArchived(archived);
     }
 
-    @Override
-    public Character getArchived() {
-        ArchiveStatus temp;
-        if (archiveStatus == null) {
-            temp = new ArchiveStatus();
-        } else {
+    @java.lang.Override
+    public java.lang.Character getArchived() {
+        org.broadleafcommerce.common.persistence.ArchiveStatus temp;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4729, ((archiveStatus) == null))) {
+            temp = new org.broadleafcommerce.common.persistence.ArchiveStatus();
+        }else {
             temp = archiveStatus;
         }
         return temp.getArchived();
     }
 
-    @Override
+    @java.lang.Override
     public boolean isActive() {
-        return 'Y'!=getArchived();
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4730, ('Y' != (getArchived())));
+    }
+
+    public static perturbation.location.PerturbationLocation __L4708;
+
+    public static perturbation.location.PerturbationLocation __L4709;
+
+    public static perturbation.location.PerturbationLocation __L4710;
+
+    public static perturbation.location.PerturbationLocation __L4711;
+
+    public static perturbation.location.PerturbationLocation __L4712;
+
+    public static perturbation.location.PerturbationLocation __L4713;
+
+    public static perturbation.location.PerturbationLocation __L4714;
+
+    public static perturbation.location.PerturbationLocation __L4715;
+
+    public static perturbation.location.PerturbationLocation __L4716;
+
+    public static perturbation.location.PerturbationLocation __L4717;
+
+    public static perturbation.location.PerturbationLocation __L4718;
+
+    public static perturbation.location.PerturbationLocation __L4719;
+
+    public static perturbation.location.PerturbationLocation __L4720;
+
+    public static perturbation.location.PerturbationLocation __L4721;
+
+    public static perturbation.location.PerturbationLocation __L4722;
+
+    public static perturbation.location.PerturbationLocation __L4723;
+
+    public static perturbation.location.PerturbationLocation __L4724;
+
+    public static perturbation.location.PerturbationLocation __L4725;
+
+    public static perturbation.location.PerturbationLocation __L4726;
+
+    public static perturbation.location.PerturbationLocation __L4727;
+
+    public static perturbation.location.PerturbationLocation __L4728;
+
+    public static perturbation.location.PerturbationLocation __L4729;
+
+    public static perturbation.location.PerturbationLocation __L4730;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4708 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:162)", 4708, "Boolean");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4709 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:189)", 4709, "Boolean");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4710 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:193)", 4710, "Boolean");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4711 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:225)", 4711, "Boolean");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4712 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:225)", 4712, "Boolean");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4713 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:231)", 4713, "Boolean");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4714 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:234)", 4714, "Boolean");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4715 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:236)", 4715, "Boolean");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4716 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:247)", 4716, "Numerical");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4717 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:247)", 4717, "Numerical");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4718 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:247)", 4718, "Numerical");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4719 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:258)", 4719, "Boolean");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4720 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:258)", 4720, "Boolean");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4721 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:258)", 4721, "Boolean");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4722 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:268)", 4722, "Boolean");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4723 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:278)", 4723, "Boolean");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4724 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:279)", 4724, "Boolean");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4725 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:282)", 4725, "Boolean");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4726 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:283)", 4726, "Boolean");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4727 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:286)", 4727, "Boolean");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4728 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:291)", 4728, "Boolean");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4729 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:300)", 4729, "Boolean");
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.__L4730 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/sandbox/domain/SandBoxImpl.java:310)", 4730, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.sandbox.domain.SandBoxImpl.initPerturbationLocation0();
     }
 }
+

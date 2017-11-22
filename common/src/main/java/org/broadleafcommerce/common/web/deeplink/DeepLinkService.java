@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -18,36 +18,18 @@
 package org.broadleafcommerce.common.web.deeplink;
 
 
-import org.broadleafcommerce.common.web.BaseUrlResolver;
-
-import java.util.List;
-
-import javax.annotation.Resource;
-
-/**
- * This abstract class should be extended by services that provide deep links for specific entities.
- * 
- * @author Andre Azzolini (apazzolini)
- */
 public abstract class DeepLinkService<T> {
-    
-    @Resource(name = "blBaseUrlResolver")
-    protected BaseUrlResolver baseUrlResolver;
-    
-    /**
-     * Returns a list of {@link DeepLink} objects that represent the location of 1 or more admin elements
-     * 
-     * @param item
-     * @return the list of DeepLinks
-     */
-    public final List<DeepLink> getLinks(T item) {
+    @javax.annotation.Resource(name = "blBaseUrlResolver")
+    protected org.broadleafcommerce.common.web.BaseUrlResolver baseUrlResolver;
+
+    public final java.util.List<org.broadleafcommerce.common.web.deeplink.DeepLink> getLinks(T item) {
         return getLinksInternal(item);
     }
-    
-    protected String getAdminBaseUrl() {
+
+    protected java.lang.String getAdminBaseUrl() {
         return baseUrlResolver.getAdminBaseUrl();
     }
 
-    protected abstract List<DeepLink> getLinksInternal(T item);
-
+    protected abstract java.util.List<org.broadleafcommerce.common.web.deeplink.DeepLink> getLinksInternal(T item);
 }
+

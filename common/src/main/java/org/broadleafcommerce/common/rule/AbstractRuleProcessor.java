@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,62 +17,46 @@
  */
 package org.broadleafcommerce.common.rule;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.broadleafcommerce.common.util.EfficientLRUMap;
-import org.mvel2.MVEL;
-import org.mvel2.ParserContext;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+public abstract class AbstractRuleProcessor<T> implements org.broadleafcommerce.common.rule.RuleProcessor<T> {
+    protected final org.apache.commons.logging.Log LOG = org.apache.commons.logging.LogFactory.getLog(this.getClass());
 
+    protected org.mvel2.ParserContext parserContext;
 
-public abstract class AbstractRuleProcessor<T> implements RuleProcessor<T> {
-    
-    protected final Log LOG = LogFactory.getLog(this.getClass());
+    protected java.util.Map<java.lang.String, java.lang.String> contextClassNames = new java.util.HashMap<java.lang.String, java.lang.String>();
 
-    protected ParserContext parserContext;
-    protected Map<String, String> contextClassNames = new HashMap<String, String> ();
-
-    /**
-     * Having a parser context that imports the classes speeds MVEL by up to 60%.
-     */
-    protected ParserContext getParserContext() {
-        if (parserContext == null) {
-            parserContext = new ParserContext();
-            parserContext.addImport("MVEL", MVEL.class);
-            parserContext.addImport("MvelHelper", MvelHelper.class);
+    protected org.mvel2.ParserContext getParserContext() {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.AbstractRuleProcessor.__L4619, ((parserContext) == null))) {
+            parserContext = new org.mvel2.ParserContext();
+            parserContext.addImport("MVEL", org.mvel2.MVEL.class);
+            parserContext.addImport("MvelHelper", org.broadleafcommerce.common.rule.MvelHelper.class);
         }
         return parserContext;
     }
 
-    /**
-     * Helpful method for processing a boolean MVEL expression and associated arguments.
-     *
-     * Caches the expression in an LRUCache.
-     * @param expression
-     * @param vars
-     * @return the result of the expression
-     */
-    protected Boolean executeExpression(String expression, Map<String, Object> vars) {
-        return MvelHelper.evaluateRule(expression, vars);
+    protected java.lang.Boolean executeExpression(java.lang.String expression, java.util.Map<java.lang.String, java.lang.Object> vars) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.rule.AbstractRuleProcessor.__L4620, org.broadleafcommerce.common.rule.MvelHelper.evaluateRule(expression, vars));
     }
 
-    /**
-     * List of class names to add to the MVEL ParserContext.
-     * @see {@link ParserContext}
-     */
-    public Map<String, String> getContextClassNames() {
+    public java.util.Map<java.lang.String, java.lang.String> getContextClassNames() {
         return contextClassNames;
     }
 
-    /**
-     * List of class names to add to the MVEL ParserContext.
-     * @see {@link ParserContext}
-     */
-    public void setContextClassNames(Map<String, String> contextClassNames) {
+    public void setContextClassNames(java.util.Map<java.lang.String, java.lang.String> contextClassNames) {
         this.contextClassNames = contextClassNames;
     }
 
+    public static perturbation.location.PerturbationLocation __L4619;
+
+    public static perturbation.location.PerturbationLocation __L4620;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.rule.AbstractRuleProcessor.__L4619 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/AbstractRuleProcessor.java:42)", 4619, "Boolean");
+        org.broadleafcommerce.common.rule.AbstractRuleProcessor.__L4620 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/rule/AbstractRuleProcessor.java:59)", 4620, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.rule.AbstractRuleProcessor.initPerturbationLocation0();
+    }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,26 +15,14 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
 package org.broadleafcommerce.common.payment.service;
 
-import org.broadleafcommerce.common.payment.dto.PaymentRequestDTO;
-import org.broadleafcommerce.common.payment.dto.PaymentResponseDTO;
-import org.broadleafcommerce.common.vendor.service.exception.PaymentException;
 
-/**
- * <p>Several payment gateways allow you to manage Customer and Credit Card Information from the gateway allowing
- * you to create a transaction from the tokenized customer or payment method at a later date.
- * Note: These are usually extra features you need to pay for when you sign up with the Gateway</p>
- *
- * @author Elbert Bautista (elbertbautista)
- */
 public interface PaymentGatewayCreditCardService {
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO createGatewayCreditCard(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException;
 
-    public PaymentResponseDTO createGatewayCreditCard(PaymentRequestDTO requestDTO) throws PaymentException;
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO updateGatewayCreditCard(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException;
 
-    public PaymentResponseDTO updateGatewayCreditCard(PaymentRequestDTO requestDTO) throws PaymentException;
-
-    public PaymentResponseDTO deleteGatewayCreditCard(PaymentRequestDTO requestDTO) throws PaymentException;
-
+    public org.broadleafcommerce.common.payment.dto.PaymentResponseDTO deleteGatewayCreditCard(org.broadleafcommerce.common.payment.dto.PaymentRequestDTO requestDTO) throws org.broadleafcommerce.common.vendor.service.exception.PaymentException;
 }
+

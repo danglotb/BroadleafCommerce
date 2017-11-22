@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,144 +17,124 @@
  */
 package org.broadleafcommerce.common.enumeration.domain;
 
-import org.broadleafcommerce.common.copy.CreateResponse;
-import org.broadleafcommerce.common.copy.MultiTenantCopyContext;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember;
-import org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes;
-import org.broadleafcommerce.common.presentation.AdminPresentation;
-import org.broadleafcommerce.common.presentation.AdminPresentationClass;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Index;
-import org.hibernate.annotations.Parameter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-/**
- * @author Jeff Fischer
- */
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@Table(name="BLC_DATA_DRVN_ENUM_VAL")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region="blStandardElements")
-@AdminPresentationClass(friendlyName = "DataDrivenEnumerationValueImpl_friendyName")
-@DirectCopyTransform({
-        @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.SANDBOX, skipOverlaps=true),
-        @DirectCopyTransformMember(templateTokens = DirectCopyTransformTypes.MULTITENANT_SITE)
-})
-public class DataDrivenEnumerationValueImpl implements DataDrivenEnumerationValue {
-
+@javax.persistence.Entity
+@javax.persistence.Inheritance(strategy = javax.persistence.InheritanceType.JOINED)
+@javax.persistence.Table(name = "BLC_DATA_DRVN_ENUM_VAL")
+@org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE, region = "blStandardElements")
+@org.broadleafcommerce.common.presentation.AdminPresentationClass(friendlyName = "DataDrivenEnumerationValueImpl_friendyName")
+@org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransform({ @org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember(templateTokens = org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes.SANDBOX, skipOverlaps = true), @org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember(templateTokens = org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformTypes.MULTITENANT_SITE) })
+public class DataDrivenEnumerationValueImpl implements org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(generator = "DataDrivenEnumerationValueId")
-    @GenericGenerator(
-        name="DataDrivenEnumerationValueId",
-        strategy="org.broadleafcommerce.common.persistence.IdOverrideTableGenerator",
-        parameters = {
-            @Parameter(name="segment_value", value="DataDrivenEnumerationValueImpl"),
-            @Parameter(name="entity_name", value="org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValueImpl")
-        }
-    )
-    @Column(name = "ENUM_VAL_ID")
-    protected Long id;
+    @javax.persistence.Id
+    @javax.persistence.GeneratedValue(generator = "DataDrivenEnumerationValueId")
+    @org.hibernate.annotations.GenericGenerator(name = "DataDrivenEnumerationValueId", strategy = "org.broadleafcommerce.common.persistence.IdOverrideTableGenerator", parameters = { @org.hibernate.annotations.Parameter(name = "segment_value", value = "DataDrivenEnumerationValueImpl"), @org.hibernate.annotations.Parameter(name = "entity_name", value = "org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValueImpl") })
+    @javax.persistence.Column(name = "ENUM_VAL_ID")
+    protected java.lang.Long id;
 
-    @ManyToOne(targetEntity = DataDrivenEnumerationImpl.class, cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "ENUM_TYPE")
-    protected DataDrivenEnumeration type;
+    @javax.persistence.ManyToOne(targetEntity = org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationImpl.class, cascade = javax.persistence.CascadeType.REFRESH)
+    @javax.persistence.JoinColumn(name = "ENUM_TYPE")
+    protected org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumeration type;
 
-    @Column(name = "ENUM_KEY")
-    @Index(name = "ENUM_VAL_KEY_INDEX", columnNames = {"ENUM_KEY"})
-    @AdminPresentation(friendlyName = "DataDrivenEnumerationValueImpl_Key", order = 1, gridOrder = 1, prominent = true)
-    protected String key;
+    @javax.persistence.Column(name = "ENUM_KEY")
+    @org.hibernate.annotations.Index(name = "ENUM_VAL_KEY_INDEX", columnNames = { "ENUM_KEY" })
+    @org.broadleafcommerce.common.presentation.AdminPresentation(friendlyName = "DataDrivenEnumerationValueImpl_Key", order = 1, gridOrder = 1, prominent = true)
+    protected java.lang.String key;
 
-    @Column(name = "DISPLAY")
-    @AdminPresentation(friendlyName = "DataDrivenEnumerationValueImpl_Display", order = 2, gridOrder = 2, prominent = true)
-    protected String display;
+    @javax.persistence.Column(name = "DISPLAY")
+    @org.broadleafcommerce.common.presentation.AdminPresentation(friendlyName = "DataDrivenEnumerationValueImpl_Display", order = 2, gridOrder = 2, prominent = true)
+    protected java.lang.String display;
 
-    @Column(name = "HIDDEN")
-    @Index(name = "HIDDEN_INDEX", columnNames = {"HIDDEN"})
-    @AdminPresentation(friendlyName = "DataDrivenEnumerationValueImpl_Hidden", order = 3, gridOrder = 3, prominent = true)
-    protected Boolean hidden = false;
+    @javax.persistence.Column(name = "HIDDEN")
+    @org.hibernate.annotations.Index(name = "HIDDEN_INDEX", columnNames = { "HIDDEN" })
+    @org.broadleafcommerce.common.presentation.AdminPresentation(friendlyName = "DataDrivenEnumerationValueImpl_Hidden", order = 3, gridOrder = 3, prominent = true)
+    protected java.lang.Boolean hidden = ((boolean) (false));
 
-    @Override
-    public String getDisplay() {
+    @java.lang.Override
+    public java.lang.String getDisplay() {
         return display;
     }
 
-    @Override
-    public void setDisplay(String display) {
+    @java.lang.Override
+    public void setDisplay(java.lang.String display) {
         this.display = display;
     }
 
-    @Override
-    public Boolean getHidden() {
-        if (hidden == null) {
-            return Boolean.FALSE;
-        } else {
+    @java.lang.Override
+    public java.lang.Boolean getHidden() {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValueImpl.__L1225, ((hidden) == null))) {
+            return java.lang.Boolean.FALSE;
+        }else {
             return hidden;
         }
     }
 
-    @Override
-    public void setHidden(Boolean hidden) {
+    @java.lang.Override
+    public void setHidden(java.lang.Boolean hidden) {
         this.hidden = hidden;
     }
 
-    @Override
-    public Long getId() {
+    @java.lang.Override
+    public java.lang.Long getId() {
         return id;
     }
 
-    @Override
-    public void setId(Long id) {
+    @java.lang.Override
+    public void setId(java.lang.Long id) {
         this.id = id;
     }
 
-    @Override
-    public String getKey() {
+    @java.lang.Override
+    public java.lang.String getKey() {
         return key;
     }
 
-    @Override
-    public void setKey(String key) {
+    @java.lang.Override
+    public void setKey(java.lang.String key) {
         this.key = key;
     }
 
-    @Override
-    public DataDrivenEnumeration getType() {
+    @java.lang.Override
+    public org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumeration getType() {
         return type;
     }
 
-    @Override
-    public void setType(DataDrivenEnumeration type) {
+    @java.lang.Override
+    public void setType(org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumeration type) {
         this.type = type;
     }
 
-    @Override
-    public <G extends DataDrivenEnumerationValue> CreateResponse<G> createOrRetrieveCopyInstance(MultiTenantCopyContext context) throws CloneNotSupportedException {
-        CreateResponse<G> createResponse = context.createOrRetrieveCopyInstance(this);
-        if (createResponse.isAlreadyPopulated()) {
+    @java.lang.Override
+    public <G extends org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue> org.broadleafcommerce.common.copy.CreateResponse<G> createOrRetrieveCopyInstance(org.broadleafcommerce.common.copy.MultiTenantCopyContext context) throws java.lang.CloneNotSupportedException {
+        org.broadleafcommerce.common.copy.CreateResponse<G> createResponse = context.createOrRetrieveCopyInstance(this);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValueImpl.__L1226, createResponse.isAlreadyPopulated())) {
             return createResponse;
         }
-        DataDrivenEnumerationValue cloned = createResponse.getClone();
+        org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue cloned = createResponse.getClone();
         cloned.setKey(key);
         cloned.setDisplay(display);
         cloned.setHidden(hidden);
-        if (type != null) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValueImpl.__L1227, ((type) != null))) {
             cloned.setType(type.createOrRetrieveCopyInstance(context).getClone());
         }
         return createResponse;
     }
+
+    public static perturbation.location.PerturbationLocation __L1225;
+
+    public static perturbation.location.PerturbationLocation __L1226;
+
+    public static perturbation.location.PerturbationLocation __L1227;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValueImpl.__L1225 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/enumeration/domain/DataDrivenEnumerationValueImpl.java:103)", 1225, "Boolean");
+        org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValueImpl.__L1226 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/enumeration/domain/DataDrivenEnumerationValueImpl.java:148)", 1226, "Boolean");
+        org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValueImpl.__L1227 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/enumeration/domain/DataDrivenEnumerationValueImpl.java:155)", 1227, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValueImpl.initPerturbationLocation0();
+    }
 }
+

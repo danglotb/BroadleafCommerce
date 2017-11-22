@@ -15,58 +15,48 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-/**
- * 
- */
 package org.broadleafcommerce.common.config.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.EventListener;
-import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.core.env.Environment;
-import org.springframework.core.env.PropertySource;
-import org.springframework.stereotype.Component;
 
-/**
- * Registers the {@link SystemPropertiesService} with the Spring {@link Environment}. This happens after
- * the Spring ApplicationContext has been refreshed in order to give a chance for all of the Broadleaf MT/Enterprise
- * InvocationProviders etc to be initialized.
- * 
- * @author Phillip Verheyden (phillipuniverse)
- */
-@Component("blSystemPropertiesPropertySourceRegistrar")
+@org.springframework.stereotype.Component("blSystemPropertiesPropertySourceRegistrar")
 public class SystemPropertiesPropertySourceRegistrar {
-
-    @Autowired
-    protected SystemPropertiesService propsSvc;
-    
-    @Autowired
-    protected Environment env;
-    
-    @EventListener
-    public void registerSystemPropertySource(ContextRefreshedEvent refreshed) {
-        ConfigurableEnvironment mutableEnv = (ConfigurableEnvironment) env;
-        mutableEnv.getPropertySources().addFirst(new SystemPropertyPropertySource(SystemPropertiesServiceImpl.PROPERTY_SOURCE_NAME, propsSvc));
-    }
-    
-    /**
-     * Hook point for our database-backed properties to the Spring Environment
-     * 
-     * @author Phillip Verheyden (phillipuniverse)
-     */
-    protected static class SystemPropertyPropertySource extends PropertySource<SystemPropertiesService> {
-
-        public SystemPropertyPropertySource(String name, SystemPropertiesService source) {
+    protected static class SystemPropertyPropertySource extends org.springframework.core.env.PropertySource<org.broadleafcommerce.common.config.service.SystemPropertiesService> {
+        public SystemPropertyPropertySource(java.lang.String name, org.broadleafcommerce.common.config.service.SystemPropertiesService source) {
             super(name, source);
         }
 
-        @Override
-        public Object getProperty(String name) {
-            SystemPropertiesServiceImpl.originatedFromEnvironment.set(true);
-            Object property = source.resolveSystemProperty(name);
-            SystemPropertiesServiceImpl.originatedFromEnvironment.set(false);
+        @java.lang.Override
+        public java.lang.Object getProperty(java.lang.String name) {
+            org.broadleafcommerce.common.config.service.SystemPropertiesServiceImpl.originatedFromEnvironment.set(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.config.service.SystemPropertiesPropertySourceRegistrar.SystemPropertyPropertySource.__L410, true));
+            java.lang.Object property = source.resolveSystemProperty(name);
+            org.broadleafcommerce.common.config.service.SystemPropertiesServiceImpl.originatedFromEnvironment.set(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.config.service.SystemPropertiesPropertySourceRegistrar.SystemPropertyPropertySource.__L411, false));
             return property;
         }
+
+        public static perturbation.location.PerturbationLocation __L410;
+
+        public static perturbation.location.PerturbationLocation __L411;
+
+        private static void initPerturbationLocation0() {
+            org.broadleafcommerce.common.config.service.SystemPropertiesPropertySourceRegistrar.SystemPropertyPropertySource.__L410 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/service/SystemPropertiesPropertySourceRegistrar.java:66)", 410, "Boolean");
+            org.broadleafcommerce.common.config.service.SystemPropertiesPropertySourceRegistrar.SystemPropertyPropertySource.__L411 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/service/SystemPropertiesPropertySourceRegistrar.java:68)", 411, "Boolean");
+        }
+
+        static {
+            org.broadleafcommerce.common.config.service.SystemPropertiesPropertySourceRegistrar.SystemPropertyPropertySource.initPerturbationLocation0();
+        }
+    }
+
+    @org.springframework.beans.factory.annotation.Autowired
+    protected org.broadleafcommerce.common.config.service.SystemPropertiesService propsSvc;
+
+    @org.springframework.beans.factory.annotation.Autowired
+    protected org.springframework.core.env.Environment env;
+
+    @org.springframework.context.event.EventListener
+    public void registerSystemPropertySource(org.springframework.context.event.ContextRefreshedEvent refreshed) {
+        org.springframework.core.env.ConfigurableEnvironment mutableEnv = ((org.springframework.core.env.ConfigurableEnvironment) (env));
+        mutableEnv.getPropertySources().addFirst(new org.broadleafcommerce.common.config.service.SystemPropertiesPropertySourceRegistrar.SystemPropertyPropertySource(org.broadleafcommerce.common.config.service.SystemPropertiesServiceImpl.PROPERTY_SOURCE_NAME, propsSvc));
     }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,27 +17,28 @@
  */
 package org.broadleafcommerce.common.weave;
 
-import java.io.Serializable;
 
-public class ConditionalFieldAnnotationCopyTransformMemberDTO implements Serializable {
-
+public class ConditionalFieldAnnotationCopyTransformMemberDTO implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
-    protected String[] templateNames;
-    protected String conditionalProperty;
 
-    public String[] getTemplateNames() {
+    protected java.lang.String[] templateNames;
+
+    protected java.lang.String conditionalProperty;
+
+    public java.lang.String[] getTemplateNames() {
         return templateNames;
     }
 
-    public void setTemplateNames(String[] templateNames) {
+    public void setTemplateNames(java.lang.String[] templateNames) {
         this.templateNames = templateNames;
     }
 
-    public String getConditionalProperty() {
+    public java.lang.String getConditionalProperty() {
         return conditionalProperty;
     }
 
-    public void setConditionalProperty(String propertyName) {
+    public void setConditionalProperty(java.lang.String propertyName) {
         this.conditionalProperty = propertyName;
     }
 }
+

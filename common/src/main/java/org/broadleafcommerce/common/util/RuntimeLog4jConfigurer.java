@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,31 +17,22 @@
  */
 package org.broadleafcommerce.common.util;
 
-import org.springframework.util.Log4jConfigurer;
 
-import java.io.FileNotFoundException;
-
-/**
- * @author Jeff Fischer
- * @deprecated This was originally intended to override existing log4j with a modified configuration file for load testing. 
- * We no longer use Log4J as the default and Spring has deprecated Log4jConfigurer in favor of using a method compatible with Log4J2. 
- * If the functionality provided by this class is required, that should be done as a customization.
- */
-@Deprecated
+@java.lang.Deprecated
 public class RuntimeLog4jConfigurer {
+    private java.lang.String log4jConfigLocation;
 
-    private String log4jConfigLocation;
-
-    public String getLog4jConfigLocation() {
+    public java.lang.String getLog4jConfigLocation() {
         return log4jConfigLocation;
     }
 
-    public void setLog4jConfigLocation(String log4jConfigLocation) {
+    public void setLog4jConfigLocation(java.lang.String log4jConfigLocation) {
         this.log4jConfigLocation = log4jConfigLocation;
         try {
-            Log4jConfigurer.initLogging(log4jConfigLocation);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            org.springframework.util.Log4jConfigurer.initLogging(log4jConfigLocation);
+        } catch (java.io.FileNotFoundException e) {
+            throw new java.lang.RuntimeException(e);
         }
     }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,13 +17,10 @@
  */
 package org.broadleafcommerce.common.enumeration.dao;
 
-import org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumeration;
-import org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue;
 
 public interface DataDrivenEnumerationDao {
+    public org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumeration readEnumByKey(java.lang.String enumKey);
 
-    public DataDrivenEnumeration readEnumByKey(String enumKey);
-
-    public DataDrivenEnumerationValue readEnumValueByKey(String enumKey, String enumValueKey);
-
+    public org.broadleafcommerce.common.enumeration.domain.DataDrivenEnumerationValue readEnumValueByKey(java.lang.String enumKey, java.lang.String enumValueKey);
 }
+

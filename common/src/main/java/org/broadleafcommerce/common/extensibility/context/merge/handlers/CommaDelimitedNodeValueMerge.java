@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,18 +17,16 @@
  */
 package org.broadleafcommerce.common.extensibility.context.merge.handlers;
 
-/**
- * @author Jeff Fischer
- */
-public class CommaDelimitedNodeValueMerge extends NodeValueMerge {
 
-    @Override
-    public String getDelimiter() {
+public class CommaDelimitedNodeValueMerge extends org.broadleafcommerce.common.extensibility.context.merge.handlers.NodeValueMerge {
+    @java.lang.Override
+    public java.lang.String getDelimiter() {
         return ",";
     }
 
-    @Override
-    public String getRegEx() {
+    @java.lang.Override
+    public java.lang.String getRegEx() {
         return getDelimiter();
     }
 }
+

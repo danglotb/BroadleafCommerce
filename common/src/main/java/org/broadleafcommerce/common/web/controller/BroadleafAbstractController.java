@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,106 +17,95 @@
  */
 package org.broadleafcommerce.common.web.controller;
 
-import org.apache.commons.lang3.StringUtils;
-import org.broadleafcommerce.common.web.BroadleafRequestContext;
-import org.broadleafcommerce.common.web.deeplink.DeepLink;
-import org.broadleafcommerce.common.web.deeplink.DeepLinkService;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-/**
- * An abstract controller that provides convenience methods and resource declarations for its  children
- * 
- * Operations that are shared between all controllers belong here.   To use composition rather than
- * extension, implementors can utilize BroadleafControllerUtility.
- * 
- * @see BroadleafControllerUtility
- * 
- * @author apazzolini
- * @author bpolster
- */
 public abstract class BroadleafAbstractController {
-    
-    
-    /**
-     * A helper method that returns whether or not the given request was invoked via an AJAX call
-     * 
-     * @param request
-     * @return - whether or not it was an AJAX request
-     */
-    protected boolean isAjaxRequest(HttpServletRequest request) {
-        return BroadleafControllerUtility.isAjaxRequest(request);       
+    protected boolean isAjaxRequest(javax.servlet.http.HttpServletRequest request) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7055, org.broadleafcommerce.common.web.controller.BroadleafControllerUtility.isAjaxRequest(request));
     }
-    
-    /**
-     * Returns the current servlet context path. This will return a "/" if the application is
-     * deployed as root. If it's not deployed as root, it will return the context path BOTH a 
-     * leading slash but without a trailing slash.
-     * 
-     * @param request
-     * @return the context path
-     */
-    protected String getContextPath(HttpServletRequest request) {
-        String ctxPath = request.getContextPath();
-        if (StringUtils.isBlank(ctxPath)) {
+
+    protected java.lang.String getContextPath(javax.servlet.http.HttpServletRequest request) {
+        java.lang.String ctxPath = request.getContextPath();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7056, org.apache.commons.lang3.StringUtils.isBlank(ctxPath))) {
             return "/";
-        } else {
-            if (ctxPath.charAt(0) != '/') {
+        }else {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7058, ((ctxPath.charAt(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7057, 0))) != '/'))) {
                 ctxPath = '/' + ctxPath;
             }
-            if (ctxPath.charAt(ctxPath.length() - 1) != '/') {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7062, ((ctxPath.charAt(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7061, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7059, ctxPath.length())) - (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7060, 1)))))) != '/'))) {
                 ctxPath = ctxPath + '/';
             }
-            
             return ctxPath;
         }
-        
     }
-    
-    protected <T> void addDeepLink(ModelAndView model, DeepLinkService<T> service, T item) {
-        if (service == null) {
-            return;
-        }
 
-        BroadleafRequestContext brc = BroadleafRequestContext.getBroadleafRequestContext();
-        if (brc.getSandBox() != null) {
-            List<DeepLink> links = service.getLinks(item);
-            if (links.size() == 1) {
-                model.addObject("adminDeepLink", links.get(0));
-            } else {
+    protected <T> void addDeepLink(org.springframework.web.servlet.ModelAndView model, org.broadleafcommerce.common.web.deeplink.DeepLinkService<T> service, T item) {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7063, (service == null))) {
+            return ;
+        }
+        org.broadleafcommerce.common.web.BroadleafRequestContext brc = org.broadleafcommerce.common.web.BroadleafRequestContext.getBroadleafRequestContext();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7064, ((brc.getSandBox()) != null))) {
+            java.util.List<org.broadleafcommerce.common.web.deeplink.DeepLink> links = service.getLinks(item);
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7067, ((perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7065, links.size())) == (perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7066, 1))))) {
+                model.addObject("adminDeepLink", links.get(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7068, 0)));
+            }else {
                 model.addObject("adminDeepLink", links);
             }
         }
     }
-    
-    /**
-     * Typically, controller methods are set to return a String that points to the necessary template path.
-     * 
-     * However, there may be occasions where the error state for a controller action should instead return
-     * JSON instead of a fully rendered template. This convenience method will achieve that by setting the
-     * appropriate headers and serializing the given map.
-     * 
-     * @param response
-     * @param responseMap
-     * @throws JsonGenerationException
-     * @throws JsonMappingException
-     * @throws IOException
-     */
-    protected String jsonResponse(HttpServletResponse response, Map<?, ?> responseMap) 
-            throws JsonGenerationException, JsonMappingException, IOException {
+
+    protected java.lang.String jsonResponse(javax.servlet.http.HttpServletResponse response, java.util.Map<?, ?> responseMap) throws com.fasterxml.jackson.core.JsonGenerationException, com.fasterxml.jackson.databind.JsonMappingException, java.io.IOException {
         response.setHeader("Content-Type", "application/json");
-        new ObjectMapper().writeValue(response.getWriter(), responseMap);
+        new com.fasterxml.jackson.databind.ObjectMapper().writeValue(response.getWriter(), responseMap);
         return null;
     }
 
+    public static perturbation.location.PerturbationLocation __L7055;
+
+    public static perturbation.location.PerturbationLocation __L7056;
+
+    public static perturbation.location.PerturbationLocation __L7057;
+
+    public static perturbation.location.PerturbationLocation __L7058;
+
+    public static perturbation.location.PerturbationLocation __L7059;
+
+    public static perturbation.location.PerturbationLocation __L7060;
+
+    public static perturbation.location.PerturbationLocation __L7061;
+
+    public static perturbation.location.PerturbationLocation __L7062;
+
+    public static perturbation.location.PerturbationLocation __L7063;
+
+    public static perturbation.location.PerturbationLocation __L7064;
+
+    public static perturbation.location.PerturbationLocation __L7065;
+
+    public static perturbation.location.PerturbationLocation __L7066;
+
+    public static perturbation.location.PerturbationLocation __L7067;
+
+    public static perturbation.location.PerturbationLocation __L7068;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7055 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafAbstractController.java:58)", 7055, "Boolean");
+        org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7056 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafAbstractController.java:71)", 7056, "Boolean");
+        org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7057 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafAbstractController.java:74)", 7057, "Numerical");
+        org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7058 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafAbstractController.java:74)", 7058, "Boolean");
+        org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7059 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafAbstractController.java:77)", 7059, "Numerical");
+        org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7060 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafAbstractController.java:77)", 7060, "Numerical");
+        org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7061 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafAbstractController.java:77)", 7061, "Numerical");
+        org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7062 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafAbstractController.java:77)", 7062, "Boolean");
+        org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7063 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafAbstractController.java:87)", 7063, "Boolean");
+        org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7064 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafAbstractController.java:92)", 7064, "Boolean");
+        org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7065 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafAbstractController.java:94)", 7065, "Numerical");
+        org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7066 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafAbstractController.java:94)", 7066, "Numerical");
+        org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7067 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafAbstractController.java:94)", 7067, "Boolean");
+        org.broadleafcommerce.common.web.controller.BroadleafAbstractController.__L7068 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/web/controller/BroadleafAbstractController.java:95)", 7068, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.web.controller.BroadleafAbstractController.initPerturbationLocation0();
+    }
 }
+

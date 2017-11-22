@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,34 +17,38 @@
  */
 package org.broadleafcommerce.common.jmx;
 
-import org.springframework.beans.factory.FactoryBean;
 
-/**
- * 
- * @author jfischer
- *
- */
-public class ExplicitNameFactoryBean implements FactoryBean {
-    
-    private final String name;
-    private final String suffix;
-    
-    public ExplicitNameFactoryBean(String name, String suffix) {
+public class ExplicitNameFactoryBean implements org.springframework.beans.factory.FactoryBean {
+    private final java.lang.String name;
+
+    private final java.lang.String suffix;
+
+    public ExplicitNameFactoryBean(java.lang.String name, java.lang.String suffix) {
         this.name = name;
         this.suffix = suffix;
     }
 
-    public Object getObject() throws Exception {
-        return name + "-" + suffix;
+    public java.lang.Object getObject() throws java.lang.Exception {
+        return ((name) + "-") + (suffix);
     }
 
-    @SuppressWarnings("unchecked")
-    public Class getObjectType() {
-        return String.class;
+    @java.lang.SuppressWarnings("unchecked")
+    public java.lang.Class getObjectType() {
+        return java.lang.String.class;
     }
 
     public boolean isSingleton() {
-        return false;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.jmx.ExplicitNameFactoryBean.__L3275, false);
     }
 
+    public static perturbation.location.PerturbationLocation __L3275;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.jmx.ExplicitNameFactoryBean.__L3275 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/jmx/ExplicitNameFactoryBean.java:47)", 3275, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.jmx.ExplicitNameFactoryBean.initPerturbationLocation0();
+    }
 }
+

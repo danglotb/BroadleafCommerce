@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -18,16 +18,7 @@
 package org.broadleafcommerce.common.util;
 
 
-/**
- * A class that provides for a typed closure that will return a the specified type value from the specified type
- * 
- * @author Andre Azzolini (apazzolini)
- *
- * @param <K> the type of the key to be returned
- * @param <V> the type of the value to generate a key for
- */
 public interface TypedClosure<K, V> {
-    
     public K getKey(V value);
-
 }
+

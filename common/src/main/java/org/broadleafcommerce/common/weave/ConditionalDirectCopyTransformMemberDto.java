@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,61 +17,65 @@
  */
 package org.broadleafcommerce.common.weave;
 
-import java.io.Serializable;
 
-/**
- * Simple data object to hold direct copy transform config information. This object also
- * defines the Spring property whose value must be true for the configuration to take effect.
- * This information is roughly analogous to the {@link org.broadleafcommerce.common.extensibility.jpa.copy.DirectCopyTransformMember}
- * annotation.
- *
- * @author Jeff Fischer
- */
-public class ConditionalDirectCopyTransformMemberDto implements Serializable {
+public class ConditionalDirectCopyTransformMemberDto implements java.io.Serializable {
+    protected java.lang.String[] templateTokens;
 
-    protected String[] templateTokens;
     protected boolean renameMethodOverlaps = false;
 
-    /**
-     * <p>Defaults to false.</p>
-     * <p>skipOverlaps is useful if you want to make sure the load time weaving does not try to insert methods you have
-     * already implemented. For example, if you have already implemented the Status interface and methods (e.g. Offer),
-     * then you don't want the system to try to overwrite these.</p>
-     *
-     * @return
-     */
     protected boolean skipOverlaps = false;
-    protected String conditionalProperty;
 
-    public String[] getTemplateTokens() {
+    protected java.lang.String conditionalProperty;
+
+    public java.lang.String[] getTemplateTokens() {
         return templateTokens;
     }
 
-    public void setTemplateTokens(String[] templateTokens) {
+    public void setTemplateTokens(java.lang.String[] templateTokens) {
         this.templateTokens = templateTokens;
     }
 
     public boolean isRenameMethodOverlaps() {
-        return renameMethodOverlaps;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.weave.ConditionalDirectCopyTransformMemberDto.__L7033, renameMethodOverlaps);
     }
 
     public void setRenameMethodOverlaps(boolean renameMethodOverlaps) {
-        this.renameMethodOverlaps = renameMethodOverlaps;
+        this.renameMethodOverlaps = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.weave.ConditionalDirectCopyTransformMemberDto.__L7034, renameMethodOverlaps);
     }
 
     public boolean isSkipOverlaps() {
-        return skipOverlaps;
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.weave.ConditionalDirectCopyTransformMemberDto.__L7035, skipOverlaps);
     }
 
     public void setSkipOverlaps(boolean skipOverlaps) {
-        this.skipOverlaps = skipOverlaps;
+        this.skipOverlaps = perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.weave.ConditionalDirectCopyTransformMemberDto.__L7036, skipOverlaps);
     }
 
-    public String getConditionalProperty() {
+    public java.lang.String getConditionalProperty() {
         return conditionalProperty;
     }
 
-    public void setConditionalProperty(String conditionalProperty) {
+    public void setConditionalProperty(java.lang.String conditionalProperty) {
         this.conditionalProperty = conditionalProperty;
     }
+
+    public static perturbation.location.PerturbationLocation __L7033;
+
+    public static perturbation.location.PerturbationLocation __L7034;
+
+    public static perturbation.location.PerturbationLocation __L7035;
+
+    public static perturbation.location.PerturbationLocation __L7036;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.weave.ConditionalDirectCopyTransformMemberDto.__L7033 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/weave/ConditionalDirectCopyTransformMemberDto.java:55)", 7033, "Boolean");
+        org.broadleafcommerce.common.weave.ConditionalDirectCopyTransformMemberDto.__L7034 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/weave/ConditionalDirectCopyTransformMemberDto.java:59)", 7034, "Boolean");
+        org.broadleafcommerce.common.weave.ConditionalDirectCopyTransformMemberDto.__L7035 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/weave/ConditionalDirectCopyTransformMemberDto.java:63)", 7035, "Boolean");
+        org.broadleafcommerce.common.weave.ConditionalDirectCopyTransformMemberDto.__L7036 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/weave/ConditionalDirectCopyTransformMemberDto.java:67)", 7036, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.weave.ConditionalDirectCopyTransformMemberDto.initPerturbationLocation0();
+    }
 }
+

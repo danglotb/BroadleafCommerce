@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -15,17 +15,6 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-
-/**
- *
- * @author Joshua Skorton (jskorton)
- */
-
-@XmlSchema(
-        namespace = "http://www.sitemaps.org/schemas/sitemap/0.9",
-        elementFormDefault = XmlNsForm.QUALIFIED)
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.sitemaps.org/schemas/sitemap/0.9", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package org.broadleafcommerce.common.sitemap.wrapper;
-
-import javax.xml.bind.annotation.XmlNsForm;
-import javax.xml.bind.annotation.XmlSchema;
 

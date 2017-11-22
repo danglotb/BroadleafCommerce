@@ -15,38 +15,32 @@
  * between you and Broadleaf Commerce. You may not use this file except in compliance with the applicable license.
  * #L%
  */
-/**
- * 
- */
 package org.broadleafcommerce.common.config;
 
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.context.annotation.AnnotationBeanNameGenerator;
-import org.springframework.util.StringUtils;
 
+public class BroadleafBeanNameGenerator extends org.springframework.context.annotation.AnnotationBeanNameGenerator {
+    public static final java.lang.String BROADLEAF_BEAN_PREFIX = "bl";
 
-/**
- * <p>
- * Prefixes a default Spring-generated bean name with 'bl', and also uppercases the first character of the default bean name.
- * If the bean name is already prefixed with {@code bl}|, this does nothing.
- * 
- * <p>
- * Example: {@code catalogEndpoint -> blCatalogEndpoint}, {@code blCatalogService -> blCatalogService}
- * 
- * @author Phillip Verheyden (phillipuniverse)
- */
-public class BroadleafBeanNameGenerator extends AnnotationBeanNameGenerator {
-
-    public static final String BROADLEAF_BEAN_PREFIX = "bl";
-    
-    @Override
-    public String generateBeanName(BeanDefinition definition, BeanDefinitionRegistry registry) {
-        String beanName = super.generateBeanName(definition, registry);
-        if (!beanName.startsWith(BROADLEAF_BEAN_PREFIX)) {
-            beanName = BROADLEAF_BEAN_PREFIX + StringUtils.capitalize(beanName);
+    @java.lang.Override
+    public java.lang.String generateBeanName(org.springframework.beans.factory.config.BeanDefinition definition, org.springframework.beans.factory.support.BeanDefinitionRegistry registry) {
+        java.lang.String beanName = super.generateBeanName(definition, registry);
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.config.BroadleafBeanNameGenerator.__L471, (!(perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.config.BroadleafBeanNameGenerator.__L470, beanName.startsWith(org.broadleafcommerce.common.config.BroadleafBeanNameGenerator.BROADLEAF_BEAN_PREFIX)))))) {
+            beanName = (org.broadleafcommerce.common.config.BroadleafBeanNameGenerator.BROADLEAF_BEAN_PREFIX) + (org.springframework.util.StringUtils.capitalize(beanName));
         }
-        
         return beanName;
     }
+
+    public static perturbation.location.PerturbationLocation __L470;
+
+    public static perturbation.location.PerturbationLocation __L471;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.config.BroadleafBeanNameGenerator.__L470 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/BroadleafBeanNameGenerator.java:46)", 470, "Boolean");
+        org.broadleafcommerce.common.config.BroadleafBeanNameGenerator.__L471 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/config/BroadleafBeanNameGenerator.java:46)", 471, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.config.BroadleafBeanNameGenerator.initPerturbationLocation0();
+    }
 }
+

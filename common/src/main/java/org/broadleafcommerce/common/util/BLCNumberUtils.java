@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,27 +17,26 @@
  */
 package org.broadleafcommerce.common.util;
 
-/**
- * Convenience methods for interacting with Java number types
- * 
- * @author Daniel Colgrove (dcolgrove)
- */
+
 public class BLCNumberUtils {
-    
-    /**
-     * Given an Object of type Integer or Long, converts the Object instance to a Long.  This will throw a ClassCastException
-     * if the past parameter is not either an Integer or a Long.
-     * 
-     * @param Object
-     * @return Long
-     */
-    public static Long toLong(Object objectToConvert) {
-        Long convertedLongValue;
-        if (objectToConvert instanceof Integer) {
-            convertedLongValue = new Long((Integer) objectToConvert);
-        } else {
-            convertedLongValue = (Long) objectToConvert;
+    public static java.lang.Long toLong(java.lang.Object objectToConvert) {
+        java.lang.Long convertedLongValue;
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.BLCNumberUtils.__L6161, (objectToConvert instanceof java.lang.Integer))) {
+            convertedLongValue = new java.lang.Long(((java.lang.Integer) (objectToConvert)));
+        }else {
+            convertedLongValue = ((java.lang.Long) (objectToConvert));
         }
         return convertedLongValue;
     }
+
+    public static perturbation.location.PerturbationLocation __L6161;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.BLCNumberUtils.__L6161 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/BLCNumberUtils.java:36)", 6161, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.BLCNumberUtils.initPerturbationLocation0();
+    }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,28 +17,18 @@
  */
 package org.broadleafcommerce.common.web;
 
-import org.springframework.web.context.request.WebRequest;
 
-import javax.servlet.http.HttpServletRequest;
-
-/**
- * This resolver is responsible for returning the Customer object that is currently present on the request.
- * 
- * @author Andre Azzolini (apazzolini)
- */
 public interface BroadleafRequestCustomerResolver {
+    public java.lang.Object getCustomer(javax.servlet.http.HttpServletRequest request);
 
-    public Object getCustomer(HttpServletRequest request);
+    public java.lang.Object getCustomer();
 
-    public Object getCustomer();
+    public java.lang.Object getCustomer(org.springframework.web.context.request.WebRequest request);
 
-    public Object getCustomer(WebRequest request);
+    public void setCustomer(java.lang.Object customer);
 
-    public void setCustomer(Object customer);
+    public java.lang.String getCustomerRequestAttributeName();
 
-    public String getCustomerRequestAttributeName();
-
-    public void setCustomerRequestAttributeName(String customerRequestAttributeName);
-
-
+    public void setCustomerRequestAttributeName(java.lang.String customerRequestAttributeName);
 }
+

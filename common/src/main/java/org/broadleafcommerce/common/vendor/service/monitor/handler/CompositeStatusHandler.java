@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,28 +17,22 @@
  */
 package org.broadleafcommerce.common.vendor.service.monitor.handler;
 
-import org.broadleafcommerce.common.vendor.service.monitor.StatusHandler;
-import org.broadleafcommerce.common.vendor.service.type.ServiceStatusType;
 
-import java.util.ArrayList;
-import java.util.List;
+public class CompositeStatusHandler implements org.broadleafcommerce.common.vendor.service.monitor.StatusHandler {
+    protected java.util.List<org.broadleafcommerce.common.vendor.service.monitor.StatusHandler> handlers = new java.util.ArrayList<org.broadleafcommerce.common.vendor.service.monitor.StatusHandler>();
 
-public class CompositeStatusHandler implements StatusHandler {
-
-    protected List<StatusHandler> handlers = new ArrayList<StatusHandler>();
-
-    public void handleStatus(String serviceName, ServiceStatusType status) {
-        for (StatusHandler statusHandler : handlers) {
+    public void handleStatus(java.lang.String serviceName, org.broadleafcommerce.common.vendor.service.type.ServiceStatusType status) {
+        for (org.broadleafcommerce.common.vendor.service.monitor.StatusHandler statusHandler : handlers) {
             statusHandler.handleStatus(serviceName, status);
         }
     }
 
-    public List<StatusHandler> getHandlers() {
+    public java.util.List<org.broadleafcommerce.common.vendor.service.monitor.StatusHandler> getHandlers() {
         return handlers;
     }
 
-    public void setHandlers(List<StatusHandler> handlers) {
+    public void setHandlers(java.util.List<org.broadleafcommerce.common.vendor.service.monitor.StatusHandler> handlers) {
         this.handlers = handlers;
     }
-
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,105 +17,125 @@
  */
 package org.broadleafcommerce.common.structure.dto;
 
-import java.util.List;
-import java.util.Map;
 
-/**
- * Provides a wrapper class that can be used to alter the priority of a structuredcontentdto.
- * @author bpolster
- *
- */
-public class StructuredContentDTOWrapper extends StructuredContentDTO {
-
+public class StructuredContentDTOWrapper extends org.broadleafcommerce.common.structure.dto.StructuredContentDTO {
     private static final long serialVersionUID = 1L;
-    private StructuredContentDTO structuredContentDTO;
-    private Integer priority;
 
-    public StructuredContentDTOWrapper(StructuredContentDTO structuredContentDTO) {
+    private org.broadleafcommerce.common.structure.dto.StructuredContentDTO structuredContentDTO;
+
+    private java.lang.Integer priority;
+
+    public StructuredContentDTOWrapper(org.broadleafcommerce.common.structure.dto.StructuredContentDTO structuredContentDTO) {
         this.structuredContentDTO = structuredContentDTO;
     }
 
-    public boolean equals(Object arg0) {
-        return structuredContentDTO.equals(arg0);
+    public boolean equals(java.lang.Object arg0) {
+        return perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.structure.dto.StructuredContentDTOWrapper.__L5577, structuredContentDTO.equals(arg0));
     }
 
-    public Object getPropertyValue(String propertyName) {
+    public java.lang.Object getPropertyValue(java.lang.String propertyName) {
         return structuredContentDTO.getPropertyValue(propertyName);
     }
 
-    public Long getId() {
+    public java.lang.Long getId() {
         return structuredContentDTO.getId();
     }
 
-    public String getContentName() {
+    public java.lang.String getContentName() {
         return structuredContentDTO.getContentName();
     }
 
-    public String getContentType() {
+    public java.lang.String getContentType() {
         return structuredContentDTO.getContentType();
     }
 
-    public String getLocaleCode() {
+    public java.lang.String getLocaleCode() {
         return structuredContentDTO.getLocaleCode();
     }
 
-    public Integer getPriority() {
-        if (priority != null) {
-            return priority;
-        } else {
-            return structuredContentDTO.getPriority();
+    public java.lang.Integer getPriority() {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.structure.dto.StructuredContentDTOWrapper.__L5578, ((priority) != null))) {
+            return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.structure.dto.StructuredContentDTOWrapper.__L5579, priority);
+        }else {
+            return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.structure.dto.StructuredContentDTOWrapper.__L5580, structuredContentDTO.getPriority());
         }
     }
 
-    public Map getValues() {
+    public java.util.Map getValues() {
         return structuredContentDTO.getValues();
     }
 
-    public String getRuleExpression() {
+    public java.lang.String getRuleExpression() {
         return structuredContentDTO.getRuleExpression();
     }
 
-    public List<ItemCriteriaDTO> getItemCriteriaDTOList() {
+    public java.util.List<org.broadleafcommerce.common.structure.dto.ItemCriteriaDTO> getItemCriteriaDTOList() {
         return structuredContentDTO.getItemCriteriaDTOList();
     }
 
     public int hashCode() {
-        return structuredContentDTO.hashCode();
+        return perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.structure.dto.StructuredContentDTOWrapper.__L5581, structuredContentDTO.hashCode());
     }
 
-    public void setId(Long id) {
+    public void setId(java.lang.Long id) {
         structuredContentDTO.setId(id);
     }
 
-    public void setContentName(String contentName) {
+    public void setContentName(java.lang.String contentName) {
         structuredContentDTO.setContentName(contentName);
     }
 
-    public void setContentType(String contentType) {
+    public void setContentType(java.lang.String contentType) {
         structuredContentDTO.setContentType(contentType);
     }
 
-    public void setLocaleCode(String localeCode) {
+    public void setLocaleCode(java.lang.String localeCode) {
         structuredContentDTO.setLocaleCode(localeCode);
     }
 
-    public void setPriority(Integer priority) {
-        structuredContentDTO.setPriority(priority);
+    public void setPriority(java.lang.Integer priority) {
+        structuredContentDTO.setPriority(perturbation.PerturbationEngine.pint(org.broadleafcommerce.common.structure.dto.StructuredContentDTOWrapper.__L5582, priority));
     }
 
-    public void setValues(Map values) {
+    public void setValues(java.util.Map values) {
         structuredContentDTO.setValues(values);
     }
 
-    public void setRuleExpression(String ruleExpression) {
+    public void setRuleExpression(java.lang.String ruleExpression) {
         structuredContentDTO.setRuleExpression(ruleExpression);
     }
 
-    public void setItemCriteriaDTOList(List<ItemCriteriaDTO> itemCriteriaDTOList) {
+    public void setItemCriteriaDTOList(java.util.List<org.broadleafcommerce.common.structure.dto.ItemCriteriaDTO> itemCriteriaDTOList) {
         structuredContentDTO.setItemCriteriaDTOList(itemCriteriaDTOList);
     }
 
-    public String toString() {
+    public java.lang.String toString() {
         return structuredContentDTO.toString();
     }
+
+    public static perturbation.location.PerturbationLocation __L5577;
+
+    public static perturbation.location.PerturbationLocation __L5578;
+
+    public static perturbation.location.PerturbationLocation __L5579;
+
+    public static perturbation.location.PerturbationLocation __L5580;
+
+    public static perturbation.location.PerturbationLocation __L5581;
+
+    public static perturbation.location.PerturbationLocation __L5582;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.structure.dto.StructuredContentDTOWrapper.__L5577 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/structure/dto/StructuredContentDTOWrapper.java:39)", 5577, "Boolean");
+        org.broadleafcommerce.common.structure.dto.StructuredContentDTOWrapper.__L5578 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/structure/dto/StructuredContentDTOWrapper.java:63)", 5578, "Boolean");
+        org.broadleafcommerce.common.structure.dto.StructuredContentDTOWrapper.__L5579 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/structure/dto/StructuredContentDTOWrapper.java:64)", 5579, "Numerical");
+        org.broadleafcommerce.common.structure.dto.StructuredContentDTOWrapper.__L5580 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/structure/dto/StructuredContentDTOWrapper.java:66)", 5580, "Numerical");
+        org.broadleafcommerce.common.structure.dto.StructuredContentDTOWrapper.__L5581 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/structure/dto/StructuredContentDTOWrapper.java:83)", 5581, "Numerical");
+        org.broadleafcommerce.common.structure.dto.StructuredContentDTOWrapper.__L5582 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/structure/dto/StructuredContentDTOWrapper.java:103)", 5582, "Numerical");
+    }
+
+    static {
+        org.broadleafcommerce.common.structure.dto.StructuredContentDTOWrapper.initPerturbationLocation0();
+    }
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,38 +17,18 @@
  */
 package org.broadleafcommerce.common.site.domain;
 
-import java.io.Serializable;
 
-/**
- * Created by bpolster.
- */
-public interface Theme extends Serializable {
-    
-    /**
-     * @return the id
-     */
-    public Long getId();
+public interface Theme extends java.io.Serializable {
+    public java.lang.Long getId();
 
-    /**
-     * Sets the id
-     * @param id
-     */
-    public void setId(Long id);
+    public void setId(java.lang.Long id);
 
-    public String getName();
+    public java.lang.String getName();
 
-    public void setName(String name);
+    public void setName(java.lang.String name);
 
-    /**
-     * The display name for a site.  Returns blank if no theme if no path is available.   Should return
-     * a path that does not start with "/" and that does not ends with a "/".
-     * @return
-     */
-    public String getPath();
+    public java.lang.String getPath();
 
-    /**
-     * Sets the path of the theme.
-     * @param path
-     */
-    public void setPath(String path);
+    public void setPath(java.lang.String path);
 }
+

@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,30 +17,25 @@
  */
 package org.broadleafcommerce.common.event;
 
-import org.springframework.util.Assert;
 
-import java.util.Collections;
-import java.util.Map;
-
-public class ItemsReturnedEvent extends BroadleafApplicationEvent {
-
+public class ItemsReturnedEvent extends org.broadleafcommerce.common.event.BroadleafApplicationEvent {
     private static final long serialVersionUID = 1L;
 
-    protected final Map<Long, Integer> itemsAndQuantitiesReturned;
+    protected final java.util.Map<java.lang.Long, java.lang.Integer> itemsAndQuantitiesReturned;
 
-    public ItemsReturnedEvent(Long orderId, Map<Long, Integer> returnedItems) {
+    public ItemsReturnedEvent(java.lang.Long orderId, java.util.Map<java.lang.Long, java.lang.Integer> returnedItems) {
         super(orderId);
-        Assert.notNull(orderId);
-        Assert.notEmpty(returnedItems);
-        this.itemsAndQuantitiesReturned = Collections.unmodifiableMap(returnedItems);
+        org.springframework.util.Assert.notNull(orderId);
+        org.springframework.util.Assert.notEmpty(returnedItems);
+        this.itemsAndQuantitiesReturned = java.util.Collections.unmodifiableMap(returnedItems);
     }
 
-    public Long getOrderId() {
-        return (Long) super.getSource();
+    public java.lang.Long getOrderId() {
+        return ((java.lang.Long) (super.getSource()));
     }
 
-    public Map<Long, Integer> getItemsAndQuantitiesReturned() {
+    public java.util.Map<java.lang.Long, java.lang.Integer> getItemsAndQuantitiesReturned() {
         return itemsAndQuantitiesReturned;
     }
-
 }
+

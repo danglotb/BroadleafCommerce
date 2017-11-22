@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,41 +17,38 @@
  */
 package org.broadleafcommerce.common.i18n.dao;
 
-import org.broadleafcommerce.common.i18n.domain.ISOCountry;
-import org.broadleafcommerce.common.i18n.domain.ISOCountryImpl;
-import org.broadleafcommerce.common.persistence.EntityConfiguration;
-import org.hibernate.ejb.QueryHints;
-import org.springframework.stereotype.Repository;
-import java.util.List;
-import javax.annotation.Resource;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
-/**
- * @author Elbert Bautista (elbertbautista)
- */
-@Repository("blISODao")
-public class ISODaoImpl implements ISODao {
+@org.springframework.stereotype.Repository("blISODao")
+public class ISODaoImpl implements org.broadleafcommerce.common.i18n.dao.ISODao {
+    @javax.persistence.PersistenceContext(unitName = "blPU")
+    protected javax.persistence.EntityManager em;
 
-    @PersistenceContext(unitName = "blPU")
-    protected EntityManager em;
+    @javax.annotation.Resource(name = "blEntityConfiguration")
+    protected org.broadleafcommerce.common.persistence.EntityConfiguration entityConfiguration;
 
-    @Resource(name = "blEntityConfiguration")
-    protected EntityConfiguration entityConfiguration;
-
-    public ISOCountry findISOCountryByAlpha2Code(String alpha2) {
-        return (ISOCountry) em.find(ISOCountryImpl.class, alpha2);
+    public org.broadleafcommerce.common.i18n.domain.ISOCountry findISOCountryByAlpha2Code(java.lang.String alpha2) {
+        return ((org.broadleafcommerce.common.i18n.domain.ISOCountry) (em.find(org.broadleafcommerce.common.i18n.domain.ISOCountryImpl.class, alpha2)));
     }
 
-    @SuppressWarnings("unchecked")
-    public List<ISOCountry> findISOCountries() {
-        Query query = em.createNamedQuery("BC_FIND_ISO_COUNTRIES");
-        query.setHint(QueryHints.HINT_CACHEABLE, true);
+    @java.lang.SuppressWarnings("unchecked")
+    public java.util.List<org.broadleafcommerce.common.i18n.domain.ISOCountry> findISOCountries() {
+        javax.persistence.Query query = em.createNamedQuery("BC_FIND_ISO_COUNTRIES");
+        query.setHint(org.hibernate.ejb.QueryHints.HINT_CACHEABLE, perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.i18n.dao.ISODaoImpl.__L2738, true));
         return query.getResultList();
     }
 
-    public ISOCountry save(ISOCountry isoCountry) {
+    public org.broadleafcommerce.common.i18n.domain.ISOCountry save(org.broadleafcommerce.common.i18n.domain.ISOCountry isoCountry) {
         return em.merge(isoCountry);
     }
+
+    public static perturbation.location.PerturbationLocation __L2738;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.i18n.dao.ISODaoImpl.__L2738 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/i18n/dao/ISODaoImpl.java:50)", 2738, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.i18n.dao.ISODaoImpl.initPerturbationLocation0();
+    }
 }
+

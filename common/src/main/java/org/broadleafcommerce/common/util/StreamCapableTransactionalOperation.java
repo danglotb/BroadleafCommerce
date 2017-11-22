@@ -1,8 +1,8 @@
 /*
  * #%L
- * BroadleafCommerce Workflow
+ * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,21 +17,18 @@
  */
 package org.broadleafcommerce.common.util;
 
-/**
- * @author Jeff Fischer
- */
-public interface StreamCapableTransactionalOperation extends TransactionalOperation {
 
-    void pagedExecute(Object[] param) throws Throwable;
+public interface StreamCapableTransactionalOperation extends org.broadleafcommerce.common.util.TransactionalOperation {
+    void pagedExecute(java.lang.Object[] param) throws java.lang.Throwable;
 
-    Object[] retrievePage(int startPos, int pageSize);
+    java.lang.Object[] retrievePage(int startPos, int pageSize);
 
-    Long retrieveTotalCount();
+    java.lang.Long retrieveTotalCount();
 
-    void executeAfterCommit(Object[] param);
+    void executeAfterCommit(java.lang.Object[] param);
 
     boolean shouldRetryOnTransactionLockAcquisitionFailure();
 
     int retryMaxCountOverrideForLockAcquisitionFailure();
-
 }
+

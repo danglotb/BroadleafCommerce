@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,28 +17,16 @@
  */
 package org.broadleafcommerce.common.money.util;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
-import java.util.Currency;
 
-/**
- * Unfortunately, JAXB doesn't know how to deal with java.util.Currency because it doesn't have a
- * default constructor.
- * 
- * Source via: http://weblogs.java.net/blog/kohsuke/archive/2005/09/using_jaxb_20s.html
- * 
- * @author phillipverheyden
- *
- */
-public class CurrencyAdapter extends XmlAdapter<String, Currency> {
-
-    @Override
-    public String marshal(Currency currency) throws Exception {
+public class CurrencyAdapter extends javax.xml.bind.annotation.adapters.XmlAdapter<java.lang.String, java.util.Currency> {
+    @java.lang.Override
+    public java.lang.String marshal(java.util.Currency currency) throws java.lang.Exception {
         return currency.toString();
     }
 
-    @Override
-    public Currency unmarshal(String currencyString) throws Exception {
-        return Currency.getInstance(currencyString);
+    @java.lang.Override
+    public java.util.Currency unmarshal(java.lang.String currencyString) throws java.lang.Exception {
+        return java.util.Currency.getInstance(currencyString);
     }
-
 }
+

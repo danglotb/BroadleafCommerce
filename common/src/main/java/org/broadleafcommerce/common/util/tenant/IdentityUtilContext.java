@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,56 +17,66 @@
  */
 package org.broadleafcommerce.common.util.tenant;
 
-import org.broadleafcommerce.common.classloader.release.ThreadLocalManager;
-import org.broadleafcommerce.common.site.domain.Site;
 
-import java.util.Stack;
-
-/**
- * A thread local context to store the unique name for this request thread.
- *
- * @author Jeff Fischer
- */
-public class IdentityUtilContext extends Stack<IdentityUtilContext> {
-
+public class IdentityUtilContext extends java.util.Stack<org.broadleafcommerce.common.util.tenant.IdentityUtilContext> {
     private static final long serialVersionUID = 1819548808605962648L;
 
-    private static final ThreadLocal<IdentityUtilContext> IDENTITYUTILCONTEXT = ThreadLocalManager.createThreadLocal(IdentityUtilContext.class);
+    private static final java.lang.ThreadLocal<org.broadleafcommerce.common.util.tenant.IdentityUtilContext> IDENTITYUTILCONTEXT = org.broadleafcommerce.common.classloader.release.ThreadLocalManager.createThreadLocal(org.broadleafcommerce.common.util.tenant.IdentityUtilContext.class);
 
-    protected Site identifier;
-    
-    public static IdentityUtilContext getUtilContext() {
-        IdentityUtilContext anyIdentityUtilContext = IDENTITYUTILCONTEXT.get();
-        if (anyIdentityUtilContext != null) {
+    protected org.broadleafcommerce.common.site.domain.Site identifier;
+
+    public static org.broadleafcommerce.common.util.tenant.IdentityUtilContext getUtilContext() {
+        org.broadleafcommerce.common.util.tenant.IdentityUtilContext anyIdentityUtilContext = org.broadleafcommerce.common.util.tenant.IdentityUtilContext.IDENTITYUTILCONTEXT.get();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.tenant.IdentityUtilContext.__L6071, (anyIdentityUtilContext != null))) {
             return anyIdentityUtilContext.peek();
         }
         return anyIdentityUtilContext;
     }
 
-    public static void setUtilContext(IdentityUtilContext identityUtilContext) {
-        IdentityUtilContext anyIdentityUtilContext = IDENTITYUTILCONTEXT.get();
-        if (anyIdentityUtilContext != null) {
-            if (identityUtilContext == null) {
+    public static void setUtilContext(org.broadleafcommerce.common.util.tenant.IdentityUtilContext identityUtilContext) {
+        org.broadleafcommerce.common.util.tenant.IdentityUtilContext anyIdentityUtilContext = org.broadleafcommerce.common.util.tenant.IdentityUtilContext.IDENTITYUTILCONTEXT.get();
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.tenant.IdentityUtilContext.__L6072, (anyIdentityUtilContext != null))) {
+            if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.tenant.IdentityUtilContext.__L6073, (identityUtilContext == null))) {
                 anyIdentityUtilContext.pop();
-                return;
-            } else {
+                return ;
+            }else {
                 anyIdentityUtilContext.push(identityUtilContext);
-                return;
+                return ;
             }
         }
-        if (identityUtilContext == null) {
-            ThreadLocalManager.remove(IDENTITYUTILCONTEXT);
-        } else {
+        if (perturbation.PerturbationEngine.pboolean(org.broadleafcommerce.common.util.tenant.IdentityUtilContext.__L6074, (identityUtilContext == null))) {
+            org.broadleafcommerce.common.classloader.release.ThreadLocalManager.remove(org.broadleafcommerce.common.util.tenant.IdentityUtilContext.IDENTITYUTILCONTEXT);
+        }else {
             identityUtilContext.push(identityUtilContext);
-            IDENTITYUTILCONTEXT.set(identityUtilContext);
+            org.broadleafcommerce.common.util.tenant.IdentityUtilContext.IDENTITYUTILCONTEXT.set(identityUtilContext);
         }
     }
 
-    public Site getIdentifier() {
+    public org.broadleafcommerce.common.site.domain.Site getIdentifier() {
         return identifier;
     }
 
-    public void setIdentifier(Site identifier) {
+    public void setIdentifier(org.broadleafcommerce.common.site.domain.Site identifier) {
         this.identifier = identifier;
     }
+
+    public static perturbation.location.PerturbationLocation __L6071;
+
+    public static perturbation.location.PerturbationLocation __L6072;
+
+    public static perturbation.location.PerturbationLocation __L6073;
+
+    public static perturbation.location.PerturbationLocation __L6074;
+
+    private static void initPerturbationLocation0() {
+        org.broadleafcommerce.common.util.tenant.IdentityUtilContext.__L6071 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/tenant/IdentityUtilContext.java:40)", 6071, "Boolean");
+        org.broadleafcommerce.common.util.tenant.IdentityUtilContext.__L6072 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/tenant/IdentityUtilContext.java:48)", 6072, "Boolean");
+        org.broadleafcommerce.common.util.tenant.IdentityUtilContext.__L6073 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/tenant/IdentityUtilContext.java:49)", 6073, "Boolean");
+        org.broadleafcommerce.common.util.tenant.IdentityUtilContext.__L6074 = new perturbation.location.PerturbationLocationImpl("(/home/bdanglot/blc/BroadleafCommerce/common/src/main/java/org/broadleafcommerce/common/util/tenant/IdentityUtilContext.java:57)", 6074, "Boolean");
+    }
+
+    static {
+        org.broadleafcommerce.common.util.tenant.IdentityUtilContext.initPerturbationLocation0();
+    }
 }
+

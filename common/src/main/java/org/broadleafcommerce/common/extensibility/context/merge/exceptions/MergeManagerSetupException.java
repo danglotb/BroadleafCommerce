@@ -2,7 +2,7 @@
  * #%L
  * BroadleafCommerce Common Libraries
  * %%
- * Copyright (C) 2009 - 2016 Broadleaf Commerce
+ * Copyright (C) 2009 - 2017 Broadleaf Commerce
  * %%
  * Licensed under the Broadleaf Fair Use License Agreement, Version 1.0
  * (the "Fair Use License" located  at http://license.broadleafcommerce.org/fair_use_license-1.0.txt)
@@ -17,31 +17,24 @@
  */
 package org.broadleafcommerce.common.extensibility.context.merge.exceptions;
 
-/**
- * This exception is thrown when a problem is encountered during
- * the MergeManager initialization
- * 
- * @author jfischer
- *
- */
-public class MergeManagerSetupException extends Exception {
 
+public class MergeManagerSetupException extends java.lang.Exception {
     private static final long serialVersionUID = 1L;
-    
+
     public MergeManagerSetupException() {
         super();
     }
 
-    public MergeManagerSetupException(String arg0, Throwable arg1) {
+    public MergeManagerSetupException(java.lang.String arg0, java.lang.Throwable arg1) {
         super(arg0, arg1);
     }
 
-    public MergeManagerSetupException(String arg0) {
+    public MergeManagerSetupException(java.lang.String arg0) {
         super(arg0);
     }
 
-    public MergeManagerSetupException(Throwable arg0) {
+    public MergeManagerSetupException(java.lang.Throwable arg0) {
         super(arg0);
     }
-
 }
+
